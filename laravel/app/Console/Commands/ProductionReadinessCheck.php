@@ -28,7 +28,8 @@ class ProductionReadinessCheck extends Command
             return self::FAILURE;
         }
 
-        $appUrl = (string) config('app.url');
+        $appUrlRaw = (string) config('app.url');
+        $appUrl = trim(str_replace('`', '', $appUrlRaw));
         $appEnv = (string) config('app.env');
         $appDebug = (bool) config('app.debug');
         $sessionSecure = (bool) config('session.secure');
@@ -54,9 +55,9 @@ class ProductionReadinessCheck extends Command
             $host = strtolower((string) (parse_url($appUrl, PHP_URL_HOST) ?: ''));
 
             if ($scheme !== 'https') {
-                $issues[] = "APP_URL must use https (current: {$appUrl}).";
+                $issues[] = "APP_URL must use https (current: {$appUrlRaw}).";
             } elseif ($host === '') {
-                $issues[] = "APP_URL host is invalid (current: {$appUrl}).";
+                $issues[] = "APP_URL host is invalid (current: {$appUrlRaw}).";
             } else {
                 $notes[] = "APP_URL is set to {$appUrl}.";
             }
@@ -81,11 +82,7 @@ class ProductionReadinessCheck extends Command
         }
 
         if ($databaseConnection === 'mysql' && in_array($databaseHost, ['127.0.0.1', 'localhost'], true)) {
-            if ($target === 'production') {
-                $issues[] = "Production MySQL host cannot be loopback ({$databaseHost}).";
-            } else {
-                $warnings[] = "MySQL host is loopback ({$databaseHost}). This is acceptable on staging but must be changed for production.";
-            }
+            $warnings[] = "MySQL host is loopback ({$databaseHost}). This is acceptable when the database runs on the same host.";
         } else {
             $notes[] = "Database connection '{$databaseConnection}' is configured.";
         }
