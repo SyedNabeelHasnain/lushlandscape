@@ -1,0 +1,15 @@
+# Force PHP 8.4 via CloudLinux alt-php or LiteSpeed lsphp
+<IfModule mime_module>
+  AddHandler application/x-httpd-alt-php84 .php .php8 .phtml
+</IfModule>
+<FilesMatch "\.(php4|php5|php3|php2|php|phtml)$">
+    SetHandler application/x-lsphp84
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # If the requested URI doesn't already contain public_html, route it there
+    RewriteCond %{REQUEST_URI} !public_html/
+    RewriteRule ^(.*)$ public_html/$1 [L]
+</IfModule>

@@ -1,0 +1,2816 @@
+<?php
+
+/**
+ * Unified Block Registry — single source of truth for all page blocks.
+ *
+ * Replaces both page_builder.php (sections) and content_blocks.php (content blocks).
+ *
+ * Block Categories:
+ *   • data          — Dynamic blocks that pull from database (services, testimonials, etc.)
+ *   • content       — Static content blocks (heading, paragraph, rich text, etc.)
+ *   • layout        — Structural blocks (columns, tabs, accordions, etc.)
+ *   • media         — Visual blocks (image, video, gallery, slider, etc.)
+ *   • interactive   — Engagement blocks (CTA, form, map, counter, etc.)
+ *
+ * Each block type defines:
+ *   - label, icon, category
+ *   - content_fields: static content fields
+ *   - data_source: dynamic data configuration (for data blocks)
+ *   - style_fields: styling options
+ *   - defaults
+ */
+
+return [
+
+    'section_map' => [
+        'hero' => 'hero',
+        'stats_bar' => 'stats_bar',
+        'services_grid' => 'services_grid',
+        'local_about' => 'local_about',
+        'process_steps' => 'process_steps',
+        'portfolio_gallery' => 'portfolio_gallery',
+        'testimonials' => 'testimonials',
+        'faq_section' => 'faq_section',
+        'trust_badges' => 'trust_badges',
+        'cta_section' => 'cta_section',
+        'city_grid' => 'city_grid',
+        'blog_strip' => 'blog_strip',
+        'service_hero' => 'hero',
+        'scp_hero' => 'hero',
+        'service_body' => 'rich_text',
+        'local_intro' => 'rich_text',
+        'benefits_grid' => 'stats_bar',
+        'portfolio_preview' => 'portfolio_gallery',
+        'city_availability' => 'city_availability',
+    ],
+
+    'strict_unified_page_types' => [
+        'home',
+        'services_hub',
+        'service_category',
+        'service',
+        'locations_hub',
+        'city',
+        'theme_layout',
+        'template_card',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Universal Style Fields (applies to every block)
+    |--------------------------------------------------------------------------
+    */
+    'style_fields' => [
+        // Background
+        [
+            'key' => 'bg_color',
+            'label' => 'Background Color',
+            'type' => 'select',
+            'tab' => 'background',
+            'options' => [
+                'none' => 'Transparent',
+                'white' => 'White',
+                'cream' => 'Cream',
+                'gray' => 'Light Gray',
+                'forest' => 'Forest Green',
+                'dark' => 'Dark',
+            ]
+        ],
+        ['key' => 'bg_image_id', 'label' => 'Background Image', 'type' => 'media', 'tab' => 'background'],
+        [
+            'key' => 'bg_overlay',
+            'label' => 'Overlay',
+            'type' => 'select',
+            'tab' => 'background',
+            'options' => ['none' => 'None', 'dark' => 'Dark', 'light' => 'Light', 'forest' => 'Forest']
+        ],
+        [
+            'key' => 'bg_overlay_opacity',
+            'label' => 'Overlay Opacity',
+            'type' => 'range',
+            'tab' => 'background',
+            'min' => 0,
+            'max' => 100,
+            'step' => 5,
+            'default' => 50
+        ],
+        [
+            'key' => 'surface_style',
+            'label' => 'Surface Style',
+            'type' => 'select',
+            'tab' => 'background',
+            'options' => [
+                'none' => 'Default',
+                'sage-gradient' => 'Sage Gradient',
+                'forest-gradient' => 'Forest Gradient',
+                'cream-panel' => 'Cream Panel',
+                'glass-light' => 'Glass Light',
+                'glass-dark' => 'Glass Dark',
+                'stone-wash' => 'Stone Wash',
+            ]
+        ],
+        [
+            'key' => 'glass_effect',
+            'label' => 'Glass Effect',
+            'type' => 'select',
+            'tab' => 'background',
+            'options' => ['none' => 'None', 'subtle' => 'Subtle', 'strong' => 'Strong']
+        ],
+
+        // Spacing
+        [
+            'key' => 'spacing_preset',
+            'label' => 'Spacing Preset',
+            'type' => 'select',
+            'tab' => 'spacing',
+            'options' => ['none' => 'None', 'compact' => 'Compact', 'section' => 'Section', 'feature' => 'Feature', 'hero' => 'Hero']
+        ],
+        [
+            'key' => 'padding_top',
+            'label' => 'Padding Top',
+            'type' => 'select',
+            'tab' => 'spacing',
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+        ],
+        [
+            'key' => 'padding_bottom',
+            'label' => 'Padding Bottom',
+            'type' => 'select',
+            'tab' => 'spacing',
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+        ],
+        [
+            'key' => 'padding_left',
+            'label' => 'Padding Left',
+            'type' => 'select',
+            'tab' => 'spacing',
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+        ],
+        [
+            'key' => 'padding_right',
+            'label' => 'Padding Right',
+            'type' => 'select',
+            'tab' => 'spacing',
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+        ],
+        [
+            'key' => 'margin_top',
+            'label' => 'Margin Top',
+            'type' => 'select',
+            'tab' => 'spacing',
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+        ],
+        [
+            'key' => 'margin_bottom',
+            'label' => 'Margin Bottom',
+            'type' => 'select',
+            'tab' => 'spacing',
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+        ],
+
+        // Layout
+        [
+            'key' => 'max_width',
+            'label' => 'Max Width',
+            'type' => 'select',
+            'tab' => 'layout',
+            'options' => ['full' => 'Full Width', 'xl' => '7xl (1280px)', 'lg' => '5xl (1024px)', 'md' => '3xl (768px)', 'sm' => 'xl (576px)']
+        ],
+        [
+            'key' => 'text_color',
+            'label' => 'Text Color',
+            'type' => 'select',
+            'tab' => 'layout',
+            'options' => ['default' => 'Default', 'white' => 'White', 'dark' => 'Dark', 'forest' => 'Forest Green']
+        ],
+        [
+            'key' => 'text_align',
+            'label' => 'Text Align',
+            'type' => 'select',
+            'tab' => 'layout',
+            'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right']
+        ],
+
+        // Appearance
+        [
+            'key' => 'section_shell',
+            'label' => 'Section Shell',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => ['none' => 'None', 'inset-panel' => 'Inset Panel', 'luxury-panel' => 'Luxury Panel', 'soft-panel' => 'Soft Panel']
+        ],
+        [
+            'key' => 'divider_style',
+            'label' => 'Divider Style',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => [
+                'none' => 'None',
+                'top' => 'Top Border',
+                'bottom' => 'Bottom Border',
+                'both' => 'Top + Bottom',
+                'gold-top' => 'Gold Top',
+                'gold-bottom' => 'Gold Bottom',
+            ]
+        ],
+        ['key' => 'rounded', 'label' => 'Rounded Corners', 'type' => 'toggle', 'tab' => 'appearance'],
+        [
+            'key' => 'border',
+            'label' => 'Border',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => ['none' => 'None', 'light' => 'Light', 'medium' => 'Medium']
+        ],
+        [
+            'key' => 'shadow',
+            'label' => 'Shadow',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+        ],
+        ['key' => 'custom_class', 'label' => 'Custom CSS Class', 'type' => 'text', 'tab' => 'appearance'],
+
+        // Advanced (Typography & Layering)
+        [
+            'key' => 'font_size',
+            'label' => 'Global Font Size',
+            'type' => 'select',
+            'tab' => 'typography',
+            'options' => ['default' => 'Default', 'sm' => 'Small', 'lg' => 'Large', 'xl' => 'Extra Large']
+        ],
+        [
+            'key' => 'font_weight',
+            'label' => 'Global Font Weight',
+            'type' => 'select',
+            'tab' => 'typography',
+            'options' => ['normal' => 'Normal', 'medium' => 'Medium', 'semibold' => 'Semibold', 'bold' => 'Bold']
+        ],
+        ['key' => 'z_index', 'label' => 'Z-Index', 'type' => 'number', 'tab' => 'layout', 'default' => 0],
+        [
+            'key' => 'overflow',
+            'label' => 'Overflow',
+            'type' => 'select',
+            'tab' => 'layout',
+            'options' => ['visible' => 'Visible', 'hidden' => 'Hidden', 'clip' => 'Clip']
+        ],
+    ],
+
+    'style_defaults' => [
+        'desktop' => [
+            'bg_color' => 'none',
+            'bg_image_id' => null,
+            'bg_overlay' => 'none',
+            'bg_overlay_opacity' => 50,
+            'surface_style' => 'none',
+            'glass_effect' => 'none',
+            'spacing_preset' => 'section',
+            'padding_top' => 'lg',
+            'padding_bottom' => 'lg',
+            'padding_left' => 'md',
+            'padding_right' => 'md',
+            'margin_top' => 'none',
+            'margin_bottom' => 'lg',
+            'max_width' => 'full',
+            'text_color' => 'default',
+            'text_align' => 'left',
+            'section_shell' => 'none',
+            'divider_style' => 'none',
+            'rounded' => false,
+            'border' => 'none',
+            'shadow' => 'none',
+            'custom_class' => '',
+        ],
+        'tablet' => [],
+        'mobile' => [],
+    ],
+
+    'theme_style_defaults' => [
+        'desktop' => [
+            'bg_color' => 'none',
+            'bg_image_id' => null,
+            'bg_overlay' => 'none',
+            'bg_overlay_opacity' => 50,
+            'surface_style' => 'none',
+            'glass_effect' => 'none',
+            'spacing_preset' => 'none',
+            'padding_top' => 'none',
+            'padding_bottom' => 'none',
+            'padding_left' => 'none',
+            'padding_right' => 'none',
+            'margin_top' => 'none',
+            'margin_bottom' => 'none',
+            'max_width' => 'full',
+            'text_color' => 'default',
+            'text_align' => 'left',
+            'section_shell' => 'none',
+            'divider_style' => 'none',
+            'rounded' => false,
+            'border' => 'none',
+            'shadow' => 'none',
+            'custom_class' => '',
+        ],
+        'tablet' => [],
+        'mobile' => [],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Block Type Registry
+    |--------------------------------------------------------------------------
+    */
+    'types' => [
+
+        // =====================================================================
+        // DATA BLOCKS — Dynamic content from database
+        // =====================================================================
+
+        'hero' => [
+            'label' => 'Hero Banner',
+            'icon' => 'layout',
+            'category' => 'data',
+            'governance' => [
+                'required_fields' => ['heading'],
+                'variants' => [
+                    'editorial' => [
+                        'label' => 'Editorial',
+                        'visible_fields' => ['heading', 'subtitle', 'eyebrow', 'cta_primary_text', 'cta_primary_url', 'cta_secondary_text', 'cta_secondary_url', 'hero_media_id', 'video_url', 'extra_image_ids', 'overlay_preset', 'overlay_opacity', 'align', 'height'],
+                    ],
+                ],
+            ],
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Subtitle', 'type' => 'textarea'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow/Tag', 'type' => 'text'],
+                ['key' => 'cta_primary_text', 'label' => 'Primary CTA Text', 'type' => 'text'],
+                ['key' => 'cta_primary_url', 'label' => 'Primary CTA URL', 'type' => 'text'],
+                ['key' => 'cta_secondary_text', 'label' => 'Secondary CTA Text', 'type' => 'text'],
+                ['key' => 'cta_secondary_url', 'label' => 'Secondary CTA URL', 'type' => 'text'],
+                ['key' => 'hero_media_id', 'label' => 'Hero Image', 'type' => 'media'],
+                ['key' => 'video_url', 'label' => 'Background Video URL', 'type' => 'text'],
+                ['key' => 'extra_image_ids', 'label' => 'Additional Slider Images', 'type' => 'media_multi'],
+                [
+                    'key' => 'overlay_preset',
+                    'label' => 'Overlay Preset',
+                    'type' => 'select',
+                    'options' => [
+                        'gradient' => 'Gradient',
+                        'solid' => 'Solid',
+                        'none' => 'None',
+                    ],
+                ],
+                ['key' => 'overlay_opacity', 'label' => 'Overlay Opacity', 'type' => 'text'],
+                [
+                    'key' => 'align',
+                    'label' => 'Text Alignment',
+                    'type' => 'select',
+                    'options' => [
+                        'center' => 'Center',
+                        'left' => 'Left',
+                    ],
+                ],
+                [
+                    'key' => 'height',
+                    'label' => 'Hero Height',
+                    'type' => 'select',
+                    'options' => [
+                        'viewport' => 'Viewport',
+                        'tall' => 'Tall',
+                        'standard' => 'Standard',
+                    ],
+                ],
+            ],
+            'data_source' => null, // hero is content-driven
+            'defaults' => [
+                'heading' => '',
+                'subtitle' => '',
+                'eyebrow' => '',
+                'cta_primary_text' => 'Book a Consultation',
+                'cta_primary_url' => '/contact',
+                'cta_secondary_text' => '',
+                'cta_secondary_url' => '/portfolio',
+                'hero_media_id' => null,
+                'video_url' => '',
+                'extra_image_ids' => [],
+                'overlay_preset' => 'gradient',
+                'overlay_opacity' => '50',
+                'align' => 'center',
+                'height' => 'viewport',
+                'variant' => 'editorial',
+            ],
+        ],
+        /*
+        |--------------------------------------------------------------------------
+        | Theme / Site Builder Blocks (FSE)
+        |--------------------------------------------------------------------------
+        */
+        'site_logo' => [
+            'label' => 'Site Logo',
+            'icon' => 'image',
+            'category' => 'theme',
+            'content_fields' => [
+                [
+                    'key' => 'source',
+                    'label' => 'Logo Source',
+                    'type' => 'select',
+                    'options' => [
+                        'auto' => 'Auto',
+                        'header_desktop' => 'Header Desktop Logo',
+                        'header_mobile' => 'Header Mobile Logo',
+                        'footer' => 'Footer Logo',
+                    ],
+                ],
+                [
+                    'key' => 'size',
+                    'label' => 'Logo Size',
+                    'type' => 'select',
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['auto' => 'Auto', 'light' => 'Light', 'dark' => 'Dark', 'muted' => 'Muted'],
+                ],
+                ['key' => 'show_tagline', 'label' => 'Show Tagline', 'type' => 'toggle'],
+                ['key' => 'tagline', 'label' => 'Custom Tagline Override', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'source' => 'auto',
+                'size' => 'lg',
+                'tone' => 'auto',
+                'show_tagline' => false,
+                'tagline' => '',
+            ],
+        ],
+        'theme_header_shell' => [
+            'label' => 'Theme Header Shell',
+            'icon' => 'panel-top',
+            'category' => 'theme',
+            'governance' => [
+                'allowed_page_types' => ['theme_layout'],
+                'supports_children_rules' => [
+                    'slot_key' => '_layout_slot',
+                    'allowed_slots' => ['left', 'center', 'right', 'mobile'],
+                    'required_slots' => ['left', 'center', 'right'],
+                ],
+            ],
+            'supports_children' => true,
+            'content_fields' => [
+                [
+                    'key' => 'mode',
+                    'label' => 'Header Surface',
+                    'type' => 'select',
+                    'options' => ['glass' => 'Glass', 'solid' => 'Solid', 'transparent' => 'Transparent'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark / White Text', 'light' => 'Light / Ink Text'],
+                ],
+                ['key' => 'sticky', 'label' => 'Sticky Header', 'type' => 'toggle'],
+                ['key' => 'compact_on_scroll', 'label' => 'Compact on Scroll', 'type' => 'toggle'],
+                ['key' => 'show_divider', 'label' => 'Show Bottom Divider', 'type' => 'toggle'],
+                ['key' => 'show_shadow_on_scroll', 'label' => 'Show Shadow on Scroll', 'type' => 'toggle'],
+                [
+                    'key' => 'desktop_height',
+                    'label' => 'Desktop Height',
+                    'type' => 'select',
+                    'options' => ['compact' => 'Compact', 'standard' => 'Standard', 'tall' => 'Tall'],
+                ],
+                [
+                    'key' => 'scrolled_height',
+                    'label' => 'Scrolled Height',
+                    'type' => 'select',
+                    'options' => ['tight' => 'Tight', 'compact' => 'Compact', 'standard' => 'Standard'],
+                ],
+                [
+                    'key' => 'content_width',
+                    'label' => 'Content Width',
+                    'type' => 'select',
+                    'options' => ['7xl' => '7xl', 'wide' => 'Wide', 'full' => 'Full Width'],
+                ],
+                [
+                    'key' => 'mobile_overlay_style',
+                    'label' => 'Mobile Overlay Style',
+                    'type' => 'select',
+                    'options' => ['fullscreen' => 'Fullscreen', 'sheet' => 'Sheet'],
+                ],
+                [
+                    'key' => 'mobile_overlay_tone',
+                    'label' => 'Mobile Overlay Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark', 'light' => 'Light'],
+                ],
+                ['key' => 'mobile_menu_label', 'label' => 'Mobile Menu Label', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'mode' => 'glass',
+                'tone' => 'dark',
+                'sticky' => true,
+                'compact_on_scroll' => true,
+                'show_divider' => true,
+                'show_shadow_on_scroll' => true,
+                'desktop_height' => 'standard',
+                'scrolled_height' => 'compact',
+                'content_width' => '7xl',
+                'mobile_overlay_style' => 'fullscreen',
+                'mobile_overlay_tone' => 'dark',
+                'mobile_menu_label' => 'Menu',
+            ],
+        ],
+        'navigation_menu' => [
+            'label' => 'Navigation Menu',
+            'icon' => 'menu',
+            'category' => 'theme',
+            'content_fields' => [
+                [
+                    'key' => 'layout',
+                    'label' => 'Menu Layout',
+                    'type' => 'select',
+                    'options' => ['horizontal' => 'Horizontal', 'vertical' => 'Vertical', 'footer' => 'Footer Links', 'mobile_overlay' => 'Mobile Overlay'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark / White Text', 'light' => 'Light / Forest Text', 'muted' => 'Muted'],
+                ],
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['luxury' => 'Luxury', 'minimal' => 'Minimal'],
+                ],
+                ['key' => 'show_services', 'label' => 'Show Services', 'type' => 'toggle'],
+                ['key' => 'show_locations', 'label' => 'Show Locations', 'type' => 'toggle'],
+                ['key' => 'show_portfolio', 'label' => 'Show Portfolio', 'type' => 'toggle'],
+                ['key' => 'show_about', 'label' => 'Show About', 'type' => 'toggle'],
+                ['key' => 'show_contact', 'label' => 'Show Contact', 'type' => 'toggle'],
+                ['key' => 'service_limit', 'label' => 'Services Limit', 'type' => 'number'],
+                ['key' => 'city_limit', 'label' => 'Cities Limit', 'type' => 'number'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'layout' => 'horizontal',
+                'tone' => 'dark',
+                'style' => 'luxury',
+                'show_services' => true,
+                'show_locations' => true,
+                'show_portfolio' => true,
+                'show_about' => true,
+                'show_contact' => true,
+                'service_limit' => 6,
+                'city_limit' => 8,
+            ],
+        ],
+        'post_content' => [
+            'label' => 'Post Content',
+            'icon' => 'file-text',
+            'category' => 'theme',
+            'content_fields' => [],
+            'data_source' => null,
+            'defaults' => [],
+        ],
+        'theme_meta_data' => [
+            'label' => 'Theme Meta Data',
+            'icon' => 'hash',
+            'category' => 'theme',
+            'content_fields' => [
+                ['key' => 'meta_key', 'label' => 'Meta Key (e.g. phone, footer_copyright_text)', 'type' => 'text'],
+                [
+                    'key' => 'display',
+                    'label' => 'Display',
+                    'type' => 'select',
+                    'options' => ['inline' => 'Inline', 'stacked' => 'Stacked', 'pill' => 'Pill', 'paragraph' => 'Paragraph'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['inherit' => 'Inherit', 'light' => 'Light', 'dark' => 'Dark', 'accent' => 'Accent'],
+                ],
+                [
+                    'key' => 'icon',
+                    'label' => 'Icon',
+                    'type' => 'select',
+                    'options' => ['auto' => 'Auto', 'none' => 'None', 'phone' => 'Phone', 'mail' => 'Email', 'map-pin' => 'Map Pin', 'star' => 'Star', 'clock' => 'Clock'],
+                ],
+                ['key' => 'prefix', 'label' => 'Label Prefix', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'meta_key' => 'phone',
+                'display' => 'inline',
+                'tone' => 'inherit',
+                'icon' => 'auto',
+                'prefix' => '',
+            ],
+        ],
+        'theme_contact_strip' => [
+            'label' => 'Theme Contact Strip',
+            'icon' => 'phone-call',
+            'category' => 'theme',
+            'content_fields' => [
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['compact' => 'Compact', 'chips' => 'Chips', 'stacked' => 'Stacked'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark', 'light' => 'Light', 'muted' => 'Muted'],
+                ],
+                ['key' => 'show_phone', 'label' => 'Show Phone', 'type' => 'toggle'],
+                ['key' => 'show_email', 'label' => 'Show Email', 'type' => 'toggle'],
+                ['key' => 'show_rating', 'label' => 'Show Google Rating', 'type' => 'toggle'],
+                ['key' => 'show_hours', 'label' => 'Show Hours', 'type' => 'toggle'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'variant' => 'compact',
+                'tone' => 'dark',
+                'show_phone' => true,
+                'show_email' => false,
+                'show_rating' => true,
+                'show_hours' => false,
+            ],
+        ],
+        'theme_cta_group' => [
+            'label' => 'Theme CTA Group',
+            'icon' => 'mouse-pointer-click',
+            'category' => 'theme',
+            'content_fields' => [
+                [
+                    'key' => 'align',
+                    'label' => 'Alignment',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark', 'light' => 'Light'],
+                ],
+                ['key' => 'primary_text', 'label' => 'Primary Button Text', 'type' => 'text'],
+                ['key' => 'primary_url', 'label' => 'Primary Button URL', 'type' => 'text'],
+                [
+                    'key' => 'primary_style',
+                    'label' => 'Primary Button Style',
+                    'type' => 'select',
+                    'options' => ['primary' => 'Primary', 'white' => 'White', 'ghost' => 'Ghost'],
+                ],
+                ['key' => 'secondary_text', 'label' => 'Secondary Button Text', 'type' => 'text'],
+                ['key' => 'secondary_url', 'label' => 'Secondary Button URL', 'type' => 'text'],
+                [
+                    'key' => 'secondary_style',
+                    'label' => 'Secondary Button Style',
+                    'type' => 'select',
+                    'options' => ['ghost' => 'Ghost', 'primary' => 'Primary', 'white' => 'White'],
+                ],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'align' => 'right',
+                'tone' => 'dark',
+                'primary_text' => 'Book a Consultation',
+                'primary_url' => '/contact',
+                'primary_style' => 'ghost',
+                'secondary_text' => '',
+                'secondary_url' => '',
+                'secondary_style' => 'white',
+            ],
+        ],
+        'theme_social_links' => [
+            'label' => 'Theme Social Links',
+            'icon' => 'share-2',
+            'category' => 'theme',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                [
+                    'key' => 'source',
+                    'label' => 'Source',
+                    'type' => 'select',
+                    'options' => ['settings' => 'Use Site Settings', 'manual' => 'Manual Links'],
+                ],
+                [
+                    'key' => 'align',
+                    'label' => 'Alignment',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark', 'light' => 'Light'],
+                ],
+                [
+                    'key' => 'size',
+                    'label' => 'Icon Size',
+                    'type' => 'select',
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
+                ],
+                [
+                    'key' => 'links',
+                    'label' => 'Manual Links',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'platform', 'label' => 'Platform', 'type' => 'text'],
+                        ['key' => 'url', 'label' => 'URL', 'type' => 'text'],
+                    ],
+                ],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'heading' => '',
+                'source' => 'settings',
+                'align' => 'left',
+                'tone' => 'dark',
+                'size' => 'md',
+                'links' => [],
+            ],
+        ],
+        'theme_newsletter_panel' => [
+            'label' => 'Theme Newsletter Panel',
+            'icon' => 'mail-plus',
+            'category' => 'theme',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark', 'cream' => 'Cream', 'light' => 'Light'],
+                ],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['split' => 'Split', 'stacked' => 'Stacked'],
+                ],
+                ['key' => 'placeholder', 'label' => 'Input Placeholder', 'type' => 'text'],
+                ['key' => 'button_text', 'label' => 'Button Text', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Stay Updated',
+                'heading' => '',
+                'description' => '',
+                'tone' => 'dark',
+                'layout' => 'split',
+                'placeholder' => 'your@email.com',
+                'button_text' => 'Subscribe',
+            ],
+        ],
+        'theme_footer_columns' => [
+            'label' => 'Theme Footer Columns',
+            'icon' => 'columns-3',
+            'category' => 'theme',
+            'content_fields' => [
+                [
+                    'key' => 'source',
+                    'label' => 'Columns Source',
+                    'type' => 'select',
+                    'options' => ['settings' => 'Footer Settings', 'auto' => 'Auto Generated'],
+                ],
+                ['key' => 'show_services', 'label' => 'Show Services Column', 'type' => 'toggle'],
+                ['key' => 'show_locations', 'label' => 'Show Locations Column', 'type' => 'toggle'],
+                ['key' => 'show_company', 'label' => 'Show Company Column', 'type' => 'toggle'],
+                ['key' => 'services_heading', 'label' => 'Services Heading', 'type' => 'text'],
+                ['key' => 'locations_heading', 'label' => 'Locations Heading', 'type' => 'text'],
+                ['key' => 'company_heading', 'label' => 'Company Heading', 'type' => 'text'],
+                ['key' => 'show_call_panel', 'label' => 'Show Call Panel', 'type' => 'toggle'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'source' => 'settings',
+                'show_services' => true,
+                'show_locations' => true,
+                'show_company' => true,
+                'services_heading' => 'Services',
+                'locations_heading' => 'Locations',
+                'company_heading' => 'Company',
+                'show_call_panel' => true,
+            ],
+        ],
+        'theme_legal_bar' => [
+            'label' => 'Theme Legal Bar',
+            'icon' => 'scale',
+            'category' => 'theme',
+            'content_fields' => [
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark', 'light' => 'Light'],
+                ],
+                ['key' => 'show_copyright', 'label' => 'Show Copyright', 'type' => 'toggle'],
+                [
+                    'key' => 'links_source',
+                    'label' => 'Links Source',
+                    'type' => 'select',
+                    'options' => ['settings' => 'Footer Settings', 'default' => 'Default Links', 'custom' => 'Custom Links'],
+                ],
+                ['key' => 'custom_links_text', 'label' => 'Custom Links (Label|URL per line)', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'tone' => 'dark',
+                'show_copyright' => true,
+                'links_source' => 'settings',
+                'custom_links_text' => '',
+            ],
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Standard Blocks
+        |--------------------------------------------------------------------------
+        */
+        'dynamic_loop' => [
+            'label' => 'Dynamic Loop',
+            'icon' => 'repeat',
+            'category' => 'data',
+            'governance' => [
+                'required_fields' => ['template_id'],
+            ],
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'list' => 'List', 'masonry' => 'Masonry', 'slider' => 'Slider']
+                ],
+                [
+                    'key' => 'columns',
+                    'label' => 'Desktop Columns',
+                    'type' => 'select',
+                    'options' => ['1' => '1', '2' => '2', '3' => '3', '4' => '4']
+                ],
+                [
+                    'key' => 'data_model',
+                    'label' => 'Data Source (Model)',
+                    'type' => 'select',
+                    'options' => [
+                        'App\Models\Service' => 'Services',
+                        'App\Models\ServiceCategory' => 'Service Categories',
+                        'App\Models\City' => 'Cities',
+                        'App\Models\PortfolioProject' => 'Portfolio Projects',
+                        'App\Models\Review' => 'Reviews',
+                        'App\Models\BlogPost' => 'Blog Posts',
+                    ]
+                ],
+                ['key' => 'template_id', 'label' => 'Card Template ID', 'type' => 'number'],
+                ['key' => 'limit', 'label' => 'Item Limit', 'type' => 'text'],
+            ],
+            'data_source' => [
+                'model' => 'auto', // Resolved dynamically from data_model content field
+                'scope' => 'published',
+                'filters' => [
+                    'parent_id' => 'auto',
+                    'category_id' => 'auto',
+                ],
+                'limit' => 'auto', // Resolved from content
+                'order_by' => 'id',
+                'order_dir' => 'desc',
+            ],
+            'defaults' => [
+                'heading' => '',
+                'subtitle' => '',
+                'layout' => 'grid',
+                'columns' => '3',
+                'data_model' => 'App\Models\Service',
+                'limit' => '12',
+            ],
+        ],
+
+        'services_grid' => [
+            'label' => 'Services Grid',
+            'icon' => 'grid-2x2',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'list' => 'List', 'cards' => 'Cards']
+                ],
+                [
+                    'key' => 'columns',
+                    'label' => 'Columns',
+                    'type' => 'select',
+                    'options' => ['2' => '2', '3' => '3', '4' => '4']
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Card Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'architectural' => 'Architectural', 'minimal' => 'Minimal'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+                ['key' => 'show_category_nav', 'label' => 'Show Category Navigation', 'type' => 'toggle'],
+                ['key' => 'show_view_all', 'label' => 'Show View All Link', 'type' => 'toggle'],
+                ['key' => 'view_all_text', 'label' => 'View All Text', 'type' => 'text'],
+                ['key' => 'view_all_url', 'label' => 'View All URL', 'type' => 'text'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\Service',
+                'scope' => 'published',
+                'filters' => [
+                    'category_id' => 'auto',   // auto = current category, or specific ID, or 'all'
+                    'parent_id' => 'auto',     // auto = sub-services of current service if applicable
+                ],
+                'limit' => 8,
+                'order_by' => 'sort_order',
+                'order_dir' => 'asc',
+                'manual_ids' => [],
+                'with' => ['category', 'heroMedia'],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'layout' => 'grid',
+                'columns' => '3',
+                'variant' => 'architectural',
+                'tone' => 'light',
+                'show_category_nav' => true,
+                'show_view_all' => true,
+                'view_all_text' => 'View All Services',
+                'view_all_url' => '/services',
+            ],
+        ],
+
+        'service_categories' => [
+            'label' => 'Service Categories',
+            'icon' => 'layers',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'list' => 'List']
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'minimal' => 'Minimal'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+                ['key' => 'show_service_preview', 'label' => 'Show Service Preview Links', 'type' => 'toggle'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\ServiceCategory',
+                'scope' => 'published',
+                'filters' => [
+                    'parent_id' => 'auto',     // auto = sub-categories of current category, or null for top-level
+                ],
+                'limit' => 10,
+                'order_by' => 'sort_order',
+                'order_dir' => 'asc',
+                'manual_ids' => [],
+                'with' => [
+                    'services' => [
+                        'where' => ['status' => 'published'],
+                        'orderBy' => 'sort_order',
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'layout' => 'grid',
+                'variant' => 'editorial',
+                'tone' => 'light',
+                'show_service_preview' => true,
+            ],
+        ],
+
+        'testimonials' => [
+            'label' => 'Testimonials / Reviews',
+            'icon' => 'star',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'slider' => 'Slider']
+                ],
+                ['key' => 'featured_only', 'label' => 'Featured Only', 'type' => 'toggle'],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'compact' => 'Compact', 'highlight' => 'Highlight'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['cream' => 'Cream', 'light' => 'Light', 'dark' => 'Dark'],
+                ],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\Review',
+                'scope' => 'published',
+                'filters' => [
+                    'city_relevance' => 'auto',  // auto = from page context
+                    'is_featured' => true,
+                ],
+                'limit' => 9,
+                'order_by' => 'review_date',
+                'order_dir' => 'desc',
+                'manual_ids' => [],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'layout' => 'grid',
+                'featured_only' => true,
+                'variant' => 'editorial',
+                'tone' => 'cream',
+            ],
+        ],
+
+        'portfolio_gallery' => [
+            'label' => 'Portfolio Gallery',
+            'icon' => 'image',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider']
+                ],
+                [
+                    'key' => 'columns',
+                    'label' => 'Columns',
+                    'type' => 'select',
+                    'options' => ['2' => '2', '3' => '3', '4' => '4']
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'stacked' => 'Stacked', 'minimal' => 'Minimal', 'compact' => 'Compact'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'dark' => 'Dark', 'cream' => 'Cream'],
+                ],
+                ['key' => 'show_view_all', 'label' => 'Show View All Link', 'type' => 'toggle'],
+                ['key' => 'view_all_text', 'label' => 'View All Text', 'type' => 'text'],
+                ['key' => 'view_all_url', 'label' => 'View All URL', 'type' => 'text'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\PortfolioProject',
+                'scope' => 'published',
+                'filters' => [
+                    'category_id' => 'auto',
+                    'city_id' => 'auto',
+                    'service_id' => 'auto',
+                ],
+                'limit' => 6,
+                'order_by' => 'completion_date',
+                'order_dir' => 'desc',
+                'manual_ids' => [],
+                'with' => ['heroMedia', 'city', 'service'],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'layout' => 'grid',
+                'columns' => '3',
+                'variant' => 'editorial',
+                'tone' => 'light',
+                'show_view_all' => true,
+                'view_all_text' => 'View All Projects',
+                'view_all_url' => '/portfolio',
+            ],
+        ],
+
+        'portfolio_directory' => [
+            'label' => 'Portfolio Directory',
+            'icon' => 'gallery-horizontal',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+                ['key' => 'show_filters', 'label' => 'Show Filter Controls', 'type' => 'toggle'],
+                ['key' => 'show_featured_hero', 'label' => 'Show Featured Hero Card', 'type' => 'toggle'],
+                ['key' => 'show_category_pills', 'label' => 'Show Category Pills', 'type' => 'toggle'],
+                ['key' => 'empty_title', 'label' => 'Empty State Title', 'type' => 'text'],
+                ['key' => 'empty_description', 'label' => 'Empty State Description', 'type' => 'textarea'],
+                ['key' => 'empty_button_text', 'label' => 'Empty State Button Text', 'type' => 'text'],
+                ['key' => 'empty_button_url', 'label' => 'Empty State Button URL', 'type' => 'text'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\PortfolioProject',
+                'scope' => 'published',
+                'filters' => [
+                    'category_id' => 'auto',
+                    'city_id' => 'auto',
+                ],
+                'limit' => 12,
+                'order_by' => 'completion_date',
+                'order_dir' => 'desc',
+                'manual_ids' => [],
+                'with' => ['heroMedia', 'city', 'service', 'category'],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => 'Our Project Portfolio',
+                'subtitle' => 'Real projects, real results. Browse our completed landscaping work across Ontario.',
+                'tone' => 'light',
+                'show_filters' => true,
+                'show_featured_hero' => true,
+                'show_category_pills' => true,
+                'empty_title' => 'No projects found',
+                'empty_description' => 'Try adjusting your filters or browse all projects.',
+                'empty_button_text' => 'View All Projects',
+                'empty_button_url' => '/portfolio',
+            ],
+        ],
+
+        'faq_section' => [
+            'label' => 'FAQs',
+            'icon' => 'help-circle',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['accordion' => 'Accordion', 'list' => 'List']
+                ],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\Faq',
+                'scope' => 'published',
+                'filters' => [
+                    'category_id' => null,
+                    'city_relevance' => 'auto',
+                    'is_featured' => false,
+                ],
+                'limit' => 6,
+                'order_by' => 'display_order',
+                'order_dir' => 'asc',
+                'manual_ids' => [],
+                'with' => ['category'],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'subtitle' => '',
+                'style' => 'accordion',
+            ],
+        ],
+
+        'blog_strip' => [
+            'label' => 'Blog / News Strip',
+            'icon' => 'newspaper',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'slider' => 'Slider']
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'minimal' => 'Minimal'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+                ['key' => 'show_view_all', 'label' => 'Show View All Link', 'type' => 'toggle'],
+                ['key' => 'view_all_text', 'label' => 'View All Text', 'type' => 'text'],
+                ['key' => 'view_all_url', 'label' => 'View All URL', 'type' => 'text'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\BlogPost',
+                'scope' => 'published',
+                'filters' => [
+                    'category_id' => 'auto',
+                ],
+                'limit' => 3,
+                'order_by' => 'published_at',
+                'order_dir' => 'desc',
+                'manual_ids' => [],
+                'with' => ['heroMedia', 'category'],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'layout' => 'grid',
+                'variant' => 'editorial',
+                'tone' => 'light',
+                'show_view_all' => true,
+                'view_all_text' => 'View All Posts',
+                'view_all_url' => '/blog',
+            ],
+        ],
+
+        'blog_directory' => [
+            'label' => 'Blog Directory',
+            'icon' => 'newspaper',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+                ['key' => 'show_featured_hero', 'label' => 'Show Featured Hero Article', 'type' => 'toggle'],
+                ['key' => 'show_category_tabs', 'label' => 'Show Category Tabs', 'type' => 'toggle'],
+                ['key' => 'empty_title', 'label' => 'Empty State Title', 'type' => 'text'],
+                ['key' => 'empty_description', 'label' => 'Empty State Description', 'type' => 'textarea'],
+                ['key' => 'empty_button_text', 'label' => 'Empty State Button Text', 'type' => 'text'],
+                ['key' => 'empty_button_url', 'label' => 'Empty State Button URL', 'type' => 'text'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\BlogPost',
+                'scope' => 'published',
+                'filters' => [
+                    'category_id' => 'auto',
+                ],
+                'limit' => 12,
+                'order_by' => 'published_at',
+                'order_dir' => 'desc',
+                'manual_ids' => [],
+                'with' => ['heroMedia', 'category', 'author'],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => 'Landscaping Blog',
+                'subtitle' => 'Expert tips, cost guides, and project inspiration for Ontario homeowners.',
+                'tone' => 'light',
+                'show_featured_hero' => true,
+                'show_category_tabs' => true,
+                'empty_title' => 'No articles published yet',
+                'empty_description' => 'We are preparing expert guidance, project insights, and planning articles for Ontario homeowners.',
+                'empty_button_text' => 'Back to Home',
+                'empty_button_url' => '/',
+            ],
+        ],
+
+        'city_grid' => [
+            'label' => 'Service Areas Grid',
+            'icon' => 'map-pin',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'list' => 'List', 'strip' => 'City Strip', 'compact' => 'Compact Cards']
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'dark' => 'Dark', 'cream' => 'Cream'],
+                ],
+                ['key' => 'show_view_all', 'label' => 'Show View All Link', 'type' => 'toggle'],
+                ['key' => 'view_all_text', 'label' => 'View All Text', 'type' => 'text'],
+                ['key' => 'view_all_url', 'label' => 'View All URL', 'type' => 'text'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\City',
+                'scope' => 'published',
+                'filters' => [],
+                'limit' => 16,
+                'order_by' => 'sort_order',
+                'order_dir' => 'asc',
+                'manual_ids' => [],
+                'with' => [
+                    'neighborhoods' => [
+                        'where' => ['status' => 'published'],
+                        'orderBy' => 'sort_order',
+                        'limit' => 3,
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'layout' => 'grid',
+                'tone' => 'light',
+                'show_view_all' => true,
+                'view_all_text' => 'View All Areas',
+                'view_all_url' => '/locations',
+            ],
+        ],
+
+        'stats_bar' => [
+            'label' => 'Trust Stats Bar',
+            'icon' => 'bar-chart-2',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['metrics' => 'Metrics', 'trust_band' => 'Trust Band', 'hero_panel' => 'Hero Panel'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'dark' => 'Dark', 'forest' => 'Forest'],
+                ],
+                [
+                    'key' => 'stats',
+                    'label' => 'Stats',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'number', 'label' => 'Number', 'type' => 'text'],
+                        ['key' => 'label', 'label' => 'Label', 'type' => 'text'],
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                    ]
+                ],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'variant' => 'metrics',
+                'tone' => 'light',
+                'stats' => [
+                    ['number' => '10+', 'label' => 'Years Experience', 'icon' => 'award'],
+                    ['number' => '500+', 'label' => 'Projects Completed', 'icon' => 'check-circle'],
+                    ['number' => '10', 'label' => 'Year Warranty', 'icon' => 'shield-check'],
+                    ['number' => '100%', 'label' => 'Satisfaction Rate', 'icon' => 'heart'],
+                ],
+            ],
+        ],
+
+        'process_steps' => [
+            'label' => 'Process Steps',
+            'icon' => 'list-ordered',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['numbered' => 'Numbered', 'feature_rows' => 'Feature Rows', 'timeline' => 'Timeline'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+                [
+                    'key' => 'steps',
+                    'label' => 'Steps',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Step Title', 'type' => 'text'],
+                        ['key' => 'desc', 'label' => 'Description', 'type' => 'textarea'],
+                    ]
+                ],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => 'Our Process',
+                'subtitle' => '',
+                'variant' => 'numbered',
+                'tone' => 'light',
+                'steps' => [
+                    ['icon' => 'phone', 'title' => 'On-Site Consultation', 'desc' => 'We visit your property, assess your space, and align on goals and constraints.'],
+                    ['icon' => 'file-text', 'title' => 'Scope & Proposal', 'desc' => 'Clear scope plan and material direction for your review.'],
+                    ['icon' => 'hard-hat', 'title' => 'Expert Installation', 'desc' => 'Certified crew handles every detail with precision.'],
+                    ['icon' => 'shield-check', 'title' => '10-Year Warranty', 'desc' => 'Backed by our industry-leading workmanship guarantee.'],
+                ],
+            ],
+        ],
+
+        'cta_section' => [
+            'label' => 'CTA Banner',
+            'icon' => 'megaphone',
+            'category' => 'data',
+            'governance' => [
+                'required_fields' => ['title', 'button_text', 'button_url'],
+                'variants' => [
+                    'panel' => [
+                        'label' => 'Panel',
+                        'visible_fields' => ['eyebrow', 'title', 'subtitle', 'variant', 'tone', 'button_text', 'button_url'],
+                    ],
+                    'split' => [
+                        'label' => 'Split',
+                        'visible_fields' => ['eyebrow', 'title', 'subtitle', 'variant', 'tone', 'button_text', 'button_url', 'button_secondary_text', 'button_secondary_url'],
+                    ],
+                    'inline' => [
+                        'label' => 'Inline',
+                        'visible_fields' => ['title', 'variant', 'tone', 'button_text', 'button_url'],
+                    ],
+                ],
+            ],
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['panel' => 'Panel', 'split' => 'Split', 'inline' => 'Inline'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark', 'forest' => 'Forest'],
+                ],
+                ['key' => 'button_text', 'label' => 'Button Text', 'type' => 'text'],
+                ['key' => 'button_url', 'label' => 'Button URL', 'type' => 'text'],
+                ['key' => 'button_secondary_text', 'label' => 'Secondary Button Text', 'type' => 'text'],
+                ['key' => 'button_secondary_url', 'label' => 'Secondary Button URL', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => '',
+                'title' => '',
+                'subtitle' => '',
+                'variant' => 'panel',
+                'tone' => 'cream',
+                'button_text' => 'Book a Consultation',
+                'button_url' => '/contact',
+                'button_secondary_text' => '',
+                'button_secondary_url' => '',
+            ],
+        ],
+
+        'trust_badges' => [
+            'label' => 'Trust Badges',
+            'icon' => 'shield-check',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'compact' => 'Compact', 'cards' => 'Cards'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+                [
+                    'key' => 'badges',
+                    'label' => 'Badges',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'desc', 'label' => 'Description', 'type' => 'text'],
+                    ]
+                ],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => '',
+                'heading' => '',
+                'subtitle' => '',
+                'variant' => 'grid',
+                'tone' => 'light',
+                'badges' => [
+                    ['icon' => 'shield-check', 'title' => 'Licensed & Insured', 'desc' => 'Fully licensed and insured for your peace of mind.'],
+                    ['icon' => 'award', 'title' => '10-Year Warranty', 'desc' => 'Industry-leading workmanship guarantee.'],
+                    ['icon' => 'clock', 'title' => 'On-Time Delivery', 'desc' => 'We complete projects on schedule, every time.'],
+                    ['icon' => 'leaf', 'title' => 'Premium Materials', 'desc' => 'Only the highest quality materials sourced responsibly.'],
+                ],
+            ],
+        ],
+
+        'local_about' => [
+            'label' => 'About & Neighbourhoods',
+            'icon' => 'map-pin',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\Neighborhood',
+                'scope' => 'published',
+                'filters' => ['city_id' => 'auto'],
+                'limit' => 10,
+                'order_by' => 'sort_order',
+                'order_dir' => 'asc',
+            ],
+            'defaults' => ['heading' => '', 'subtitle' => ''],
+        ],
+
+        'city_availability' => [
+            'label' => 'Cities We Serve',
+            'icon' => 'map',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\City',
+                'scope' => 'published',
+                'filters' => [],
+                'limit' => 20,
+                'order_by' => 'name',
+                'order_dir' => 'asc',
+            ],
+            'defaults' => ['heading' => '', 'subtitle' => ''],
+        ],
+
+        // =====================================================================
+        // CONTENT BLOCKS — Static content
+        // =====================================================================
+
+        'heading' => [
+            'label' => 'Heading',
+            'icon' => 'heading',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'text', 'label' => 'Heading Text', 'type' => 'text'],
+                [
+                    'key' => 'level',
+                    'label' => 'Level',
+                    'type' => 'select',
+                    'options' => ['h1' => 'H1', 'h2' => 'H2', 'h3' => 'H3', 'h4' => 'H4', 'h5' => 'H5', 'h6' => 'H6']
+                ],
+                [
+                    'key' => 'align',
+                    'label' => 'Alignment',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right']
+                ],
+            ],
+            'defaults' => ['text' => '', 'level' => 'h2', 'align' => 'left'],
+        ],
+
+        'paragraph' => [
+            'label' => 'Paragraph',
+            'icon' => 'align-left',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'text', 'label' => 'Text', 'type' => 'textarea'],
+            ],
+            'defaults' => ['text' => ''],
+        ],
+
+        'rich_text' => [
+            'label' => 'Rich Text',
+            'icon' => 'file-text',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'html', 'label' => 'Content (HTML)', 'type' => 'richtext'],
+            ],
+            'defaults' => ['html' => ''],
+        ],
+
+        'section_header' => [
+            'label' => 'Section Header',
+            'icon' => 'type',
+            'category' => 'content',
+            'governance' => [
+                'required_fields' => ['heading'],
+            ],
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Subtitle', 'type' => 'textarea'],
+                ['key' => 'cta_text', 'label' => 'CTA Text', 'type' => 'text'],
+                ['key' => 'cta_url', 'label' => 'CTA URL', 'type' => 'text'],
+                [
+                    'key' => 'align',
+                    'label' => 'Alignment',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'center' => 'Center']
+                ],
+                ['key' => 'tag', 'label' => 'Tag/Label', 'type' => 'text'],
+                ['key' => 'show_line', 'label' => 'Show Decorative Line', 'type' => 'toggle'],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'split' => 'Split Intro', 'compact' => 'Compact'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['forest' => 'Forest', 'dark' => 'Dark', 'light' => 'Light'],
+                ],
+                [
+                    'key' => 'width',
+                    'label' => 'Content Width',
+                    'type' => 'select',
+                    'options' => ['md' => 'Narrow', 'lg' => 'Medium', 'xl' => 'Wide'],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'subtitle' => '',
+                'cta_text' => '',
+                'cta_url' => '',
+                'align' => 'center',
+                'tag' => '',
+                'show_line' => true,
+                'variant' => 'editorial',
+                'tone' => 'forest',
+                'width' => 'lg',
+            ],
+        ],
+
+        'cards_grid' => [
+            'label' => 'Cards Grid',
+            'icon' => 'layout-grid',
+            'category' => 'content',
+            'governance' => [
+                'required_fields' => ['cards'],
+            ],
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Subtitle', 'type' => 'textarea'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                [
+                    'key' => 'columns',
+                    'label' => 'Columns',
+                    'type' => 'select',
+                    'options' => ['2' => '2', '3' => '3', '4' => '4'],
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Card Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'minimal' => 'Minimal', 'icon' => 'Icon Focused'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'forest' => 'Forest'],
+                ],
+                [
+                    'key' => 'cards',
+                    'label' => 'Cards',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'meta', 'label' => 'Meta / Eyebrow', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                        ['key' => 'media_id', 'label' => 'Image', 'type' => 'media'],
+                        ['key' => 'link_text', 'label' => 'Link Text', 'type' => 'text'],
+                        ['key' => 'link_url', 'label' => 'Link URL', 'type' => 'text'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'subtitle' => '',
+                'eyebrow' => '',
+                'columns' => '3',
+                'variant' => 'editorial',
+                'tone' => 'light',
+                'cards' => [],
+            ],
+        ],
+
+        'template_card_shell' => [
+            'label' => 'Template Card Shell',
+            'icon' => 'credit-card',
+            'category' => 'content',
+            'governance' => [
+                'allowed_page_types' => ['template_card'],
+                'required_fields' => ['title'],
+            ],
+            'content_fields' => [
+                ['key' => 'image_url', 'label' => 'Image URL (supports variables)', 'type' => 'text'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'forest' => 'Forest', 'dark' => 'Dark'],
+                ],
+                [
+                    'key' => 'image_ratio',
+                    'label' => 'Image Ratio',
+                    'type' => 'select',
+                    'options' => ['4:3' => '4:3', '16:9' => '16:9', '1:1' => '1:1', '3:2' => '3:2'],
+                ],
+                [
+                    'key' => 'show_cta',
+                    'label' => 'Show CTA',
+                    'type' => 'toggle',
+                ],
+                ['key' => 'cta_text', 'label' => 'CTA Text', 'type' => 'text'],
+                ['key' => 'cta_url', 'label' => 'CTA URL (supports variables)', 'type' => 'text'],
+            ],
+            'defaults' => [
+                'image_url' => '',
+                'eyebrow' => '',
+                'title' => '',
+                'subtitle' => '',
+                'tone' => 'light',
+                'image_ratio' => '4:3',
+                'show_cta' => false,
+                'cta_text' => 'View',
+                'cta_url' => '{item.url}',
+            ],
+        ],
+
+        'image_text' => [
+            'label' => 'Image + Text',
+            'icon' => 'panel-left',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'media_id', 'label' => 'Image', 'type' => 'media'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'text', 'label' => 'Body (HTML)', 'type' => 'richtext'],
+                ['key' => 'button_text', 'label' => 'Button Text', 'type' => 'text'],
+                ['key' => 'button_url', 'label' => 'Button URL', 'type' => 'text'],
+                [
+                    'key' => 'image_side',
+                    'label' => 'Image Side',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'right' => 'Right'],
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'panel' => 'Panel', 'overlap' => 'Overlap'],
+                ],
+                [
+                    'key' => 'media_ratio',
+                    'label' => 'Image Ratio',
+                    'type' => 'select',
+                    'options' => ['4:3' => '4:3', '3:4' => '3:4', '16:9' => '16:9', '1:1' => '1:1'],
+                ],
+            ],
+            'defaults' => [
+                'media_id' => null,
+                'eyebrow' => '',
+                'heading' => '',
+                'text' => '',
+                'button_text' => '',
+                'button_url' => '',
+                'image_side' => 'left',
+                'variant' => 'editorial',
+                'media_ratio' => '4:3',
+            ],
+        ],
+
+        'feature_list' => [
+            'label' => 'Feature List',
+            'icon' => 'list-checks',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                [
+                    'key' => 'columns',
+                    'label' => 'Columns',
+                    'type' => 'select',
+                    'options' => ['1' => '1', '2' => '2'],
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['editorial' => 'Editorial', 'minimal' => 'Minimal'],
+                ],
+                [
+                    'key' => 'features',
+                    'label' => 'Features',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'eyebrow' => '',
+                'columns' => '2',
+                'variant' => 'editorial',
+                'features' => [],
+            ],
+        ],
+        'area_served' => [
+            'label' => 'Areas Served',
+            'icon' => 'map-pin',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'inline' => 'Inline Text'],
+                ],
+                [
+                    'key' => 'columns',
+                    'label' => 'Columns',
+                    'type' => 'select',
+                    'options' => ['2' => '2', '3' => '3', '4' => '4'],
+                ],
+                [
+                    'key' => 'areas',
+                    'label' => 'Areas',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'name', 'label' => 'Name', 'type' => 'text'],
+                        ['key' => 'url', 'label' => 'URL', 'type' => 'text'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'description' => '',
+                'layout' => 'grid',
+                'columns' => '3',
+                'areas' => [],
+            ],
+        ],
+        'number_counter' => [
+            'label' => 'Number Counter',
+            'icon' => 'hash',
+            'category' => 'content',
+            'content_fields' => [
+                [
+                    'key' => 'bg',
+                    'label' => 'Background',
+                    'type' => 'select',
+                    'options' => [
+                        'white' => 'White',
+                        'cream' => 'Cream',
+                        'forest' => 'Forest',
+                        'dark' => 'Dark',
+                    ],
+                ],
+                [
+                    'key' => 'counters',
+                    'label' => 'Counters',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'target', 'label' => 'Target', 'type' => 'text'],
+                        ['key' => 'suffix', 'label' => 'Suffix', 'type' => 'text'],
+                        ['key' => 'label', 'label' => 'Label', 'type' => 'text'],
+                        ['key' => 'icon', 'label' => 'Icon', 'type' => 'text'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'bg' => 'white',
+                'counters' => [],
+            ],
+        ],
+        'interactive_map' => [
+            'label' => 'Interactive Map',
+            'icon' => 'map',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                [
+                    'key' => 'map_mode',
+                    'label' => 'Mode',
+                    'type' => 'select',
+                    'options' => [
+                        'all_cities' => 'All Cities',
+                        'single_city' => 'Single City',
+                    ],
+                ],
+                ['key' => 'city_slug', 'label' => 'City Slug (single_city)', 'type' => 'text'],
+                ['key' => 'center_lat', 'label' => 'Center Lat', 'type' => 'text'],
+                ['key' => 'center_lng', 'label' => 'Center Lng', 'type' => 'text'],
+                ['key' => 'zoom', 'label' => 'Zoom', 'type' => 'text'],
+                ['key' => 'height', 'label' => 'Height (px)', 'type' => 'text'],
+                ['key' => 'show_chips', 'label' => 'Show Filters', 'type' => 'boolean'],
+                [
+                    'key' => 'marker_color',
+                    'label' => 'Marker Color',
+                    'type' => 'select',
+                    'options' => [
+                        'forest' => 'Forest',
+                        'accent' => 'Accent',
+                        'blue' => 'Blue',
+                        'red' => 'Red',
+                    ],
+                ],
+                ['key' => 'popup_cta_text', 'label' => 'Popup CTA Text', 'type' => 'text'],
+                ['key' => 'schema_type', 'label' => 'Schema Type', 'type' => 'text'],
+                [
+                    'key' => 'markers',
+                    'label' => 'Custom Markers',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'name', 'label' => 'Name', 'type' => 'text'],
+                        ['key' => 'lat', 'label' => 'Lat', 'type' => 'text'],
+                        ['key' => 'lng', 'label' => 'Lng', 'type' => 'text'],
+                        ['key' => 'popup_heading', 'label' => 'Popup Heading', 'type' => 'text'],
+                        ['key' => 'popup_description', 'label' => 'Popup Description', 'type' => 'textarea'],
+                        ['key' => 'popup_cta_text', 'label' => 'Popup CTA Text', 'type' => 'text'],
+                        ['key' => 'popup_cta_url', 'label' => 'Popup CTA URL', 'type' => 'text'],
+                        ['key' => 'popup_services', 'label' => 'Popup Services', 'type' => 'text'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'description' => '',
+                'map_mode' => 'all_cities',
+                'city_slug' => '',
+                'center_lat' => '43.55',
+                'center_lng' => '-79.65',
+                'zoom' => '9',
+                'height' => '500',
+                'show_chips' => true,
+                'marker_color' => 'forest',
+                'popup_cta_text' => 'Book a Consultation',
+                'schema_type' => 'LocalBusiness',
+                'markers' => [],
+            ],
+        ],
+        'icon_grid' => [
+            'label' => 'Icon Grid',
+            'icon' => 'grid-2x2',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                [
+                    'key' => 'columns',
+                    'label' => 'Columns',
+                    'type' => 'select',
+                    'options' => ['2' => '2', '3' => '3', '4' => '4', '6' => '6'],
+                ],
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => [
+                        'card' => 'Card',
+                        'circle' => 'Circle',
+                        'inline' => 'Inline',
+                    ],
+                ],
+                [
+                    'key' => 'items',
+                    'label' => 'Items',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'icon', 'label' => 'Icon', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'columns' => '3',
+                'style' => 'card',
+                'items' => [],
+            ],
+        ],
+        'timeline' => [
+            'label' => 'Timeline',
+            'icon' => 'clock',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                [
+                    'key' => 'items',
+                    'label' => 'Items',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'date', 'label' => 'Date/Label', 'type' => 'text'],
+                        ['key' => 'icon', 'label' => 'Icon', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'items' => [],
+            ],
+        ],
+        'steps_process' => [
+            'label' => 'Steps Process',
+            'icon' => 'list-ordered',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => [
+                        'horizontal' => 'Horizontal',
+                        'vertical' => 'Vertical',
+                        'alternating' => 'Alternating',
+                    ],
+                ],
+                [
+                    'key' => 'steps',
+                    'label' => 'Steps',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'icon', 'label' => 'Icon', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'layout' => 'horizontal',
+                'steps' => [],
+            ],
+        ],
+        'testimonial_card' => [
+            'label' => 'Testimonial Card',
+            'icon' => 'message-square-quote',
+            'category' => 'content',
+            'content_fields' => [
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => [
+                        'card' => 'Card',
+                        'minimal' => 'Minimal',
+                        'featured' => 'Featured',
+                    ],
+                ],
+                ['key' => 'quote', 'label' => 'Quote', 'type' => 'textarea'],
+                ['key' => 'author', 'label' => 'Author', 'type' => 'text'],
+                ['key' => 'role', 'label' => 'Role', 'type' => 'text'],
+                ['key' => 'rating', 'label' => 'Rating', 'type' => 'text'],
+                ['key' => 'media_id', 'label' => 'Author Photo', 'type' => 'media'],
+            ],
+            'defaults' => [
+                'style' => 'card',
+                'quote' => '',
+                'author' => '',
+                'role' => '',
+                'rating' => '5',
+                'media_id' => null,
+            ],
+        ],
+        'cta_banner' => [
+            'label' => 'CTA Banner (Transitional)',
+            'icon' => 'megaphone',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'subheading', 'label' => 'Subheading', 'type' => 'textarea'],
+                ['key' => 'button_text', 'label' => 'Button Text', 'type' => 'text'],
+                ['key' => 'button_url', 'label' => 'Button URL', 'type' => 'text'],
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => [
+                        'forest' => 'Forest',
+                        'cream' => 'Cream',
+                        'white' => 'White',
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'subheading' => '',
+                'button_text' => 'Book a Consultation',
+                'button_url' => '/contact',
+                'style' => 'forest',
+            ],
+        ],
+        'editorial_split_feature' => [
+            'label' => 'Editorial Split Feature',
+            'icon' => 'panel-left-dashed',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'media_id', 'label' => 'Feature Image', 'type' => 'media'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'forest' => 'Forest', 'dark' => 'Dark'],
+                ],
+                [
+                    'key' => 'media_side',
+                    'label' => 'Media Side',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'right' => 'Right'],
+                ],
+                [
+                    'key' => 'media_ratio',
+                    'label' => 'Media Ratio',
+                    'type' => 'select',
+                    'options' => ['4:5' => '4:5 Portrait', '4:3' => '4:3 Landscape', '16:9' => '16:9', '1:1' => '1:1'],
+                ],
+                [
+                    'key' => 'ornament_style',
+                    'label' => 'Media Ornament',
+                    'type' => 'select',
+                    'options' => ['oval' => 'Oval Ring', 'offset' => 'Offset Panel', 'none' => 'None'],
+                ],
+                [
+                    'key' => 'feature_layout',
+                    'label' => 'Feature Layout',
+                    'type' => 'select',
+                    'options' => ['stacked' => 'Stacked Rows', 'cards' => 'Feature Cards'],
+                ],
+                [
+                    'key' => 'features',
+                    'label' => 'Feature Rows',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                    ],
+                ],
+                ['key' => 'cta_text', 'label' => 'CTA Text', 'type' => 'text'],
+                ['key' => 'cta_url', 'label' => 'CTA URL', 'type' => 'text'],
+            ],
+            'defaults' => [
+                'media_id' => null,
+                'eyebrow' => '',
+                'heading' => '',
+                'description' => '',
+                'tone' => 'light',
+                'media_side' => 'left',
+                'media_ratio' => '4:5',
+                'ornament_style' => 'oval',
+                'feature_layout' => 'stacked',
+                'features' => [],
+                'cta_text' => '',
+                'cta_url' => '',
+            ],
+        ],
+
+        'blockquote' => [
+            'label' => 'Blockquote',
+            'icon' => 'quote',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'text', 'label' => 'Quote Text', 'type' => 'textarea'],
+                ['key' => 'author', 'label' => 'Author/Source', 'type' => 'text'],
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['bordered' => 'Left Border', 'card' => 'Card', 'large' => 'Large Centered']
+                ],
+            ],
+            'defaults' => ['text' => '', 'author' => '', 'style' => 'bordered'],
+        ],
+
+        'alert_box' => [
+            'label' => 'Alert / Notice Box',
+            'icon' => 'alert-circle',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'text', 'label' => 'Message', 'type' => 'textarea'],
+                ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                [
+                    'key' => 'type',
+                    'label' => 'Type',
+                    'type' => 'select',
+                    'options' => ['info' => 'Info', 'success' => 'Success', 'warning' => 'Warning', 'error' => 'Error', 'tip' => 'Pro Tip']
+                ],
+                ['key' => 'dismissible', 'label' => 'Dismissible', 'type' => 'toggle'],
+            ],
+            'defaults' => ['text' => '', 'title' => '', 'type' => 'info', 'dismissible' => false],
+        ],
+
+        // =====================================================================
+        // LAYOUT BLOCKS
+        // =====================================================================
+
+        'two_column' => [
+            'label' => 'Two Column',
+            'icon' => 'columns',
+            'category' => 'layout',
+            'governance' => [
+                'supports_children_rules' => [
+                    'slot_key' => '_layout_slot',
+                    'allowed_slots' => ['left', 'right'],
+                    'required_slots' => ['left', 'right'],
+                ],
+            ],
+            'content_fields' => [
+                ['key' => 'left_html', 'label' => 'Left Column Content (HTML)', 'type' => 'textarea'],
+                ['key' => 'right_html', 'label' => 'Right Column Content (HTML)', 'type' => 'textarea'],
+                [
+                    'key' => 'ratio',
+                    'label' => 'Column Ratio',
+                    'type' => 'select',
+                    'options' => ['1:1' => '50/50', '1:2' => '33/67', '2:1' => '67/33']
+                ],
+                ['key' => 'reverse_mobile', 'label' => 'Reverse on Mobile', 'type' => 'toggle'],
+                [
+                    'key' => 'gap',
+                    'label' => 'Gap Size',
+                    'type' => 'select',
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+                ],
+            ],
+            'supports_children' => true,
+            'defaults' => ['left_html' => '', 'right_html' => '', 'ratio' => '1:1', 'reverse_mobile' => false, 'gap' => 'md'],
+        ],
+
+        'three_column' => [
+            'label' => 'Three Column',
+            'icon' => 'columns-3',
+            'category' => 'layout',
+            'governance' => [
+                'supports_children_rules' => [
+                    'slot_key' => '_layout_slot',
+                    'allowed_slots' => ['col1', 'col2', 'col3'],
+                    'required_slots' => ['col1', 'col2', 'col3'],
+                ],
+            ],
+            'content_fields' => [
+                ['key' => 'col1_html', 'label' => 'Column 1 Content (HTML)', 'type' => 'textarea'],
+                ['key' => 'col2_html', 'label' => 'Column 2 Content (HTML)', 'type' => 'textarea'],
+                ['key' => 'col3_html', 'label' => 'Column 3 Content (HTML)', 'type' => 'textarea'],
+                [
+                    'key' => 'gap',
+                    'label' => 'Gap Size',
+                    'type' => 'select',
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+                ],
+            ],
+            'supports_children' => true,
+            'defaults' => ['col1_html' => '', 'col2_html' => '', 'col3_html' => '', 'gap' => 'md'],
+        ],
+
+        'tabs' => [
+            'label' => 'Tabs',
+            'icon' => 'folder-open',
+            'category' => 'layout',
+            'content_fields' => [
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['underline' => 'Underline', 'pills' => 'Pills', 'boxed' => 'Boxed']
+                ],
+                [
+                    'key' => 'tabs',
+                    'label' => 'Tab Panels',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'title', 'label' => 'Tab Title', 'type' => 'text'],
+                        ['key' => 'content', 'label' => 'Content (HTML)', 'type' => 'richtext'],
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                    ]
+                ],
+            ],
+            'defaults' => ['style' => 'underline', 'tabs' => []],
+        ],
+
+        'accordion' => [
+            'label' => 'Accordion',
+            'icon' => 'list-collapse',
+            'category' => 'layout',
+            'content_fields' => [
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['default' => 'Default', 'bordered' => 'Bordered', 'minimal' => 'Minimal']
+                ],
+                [
+                    'key' => 'items',
+                    'label' => 'Accordion Items',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'content', 'label' => 'Content (HTML)', 'type' => 'richtext'],
+                        ['key' => 'open', 'label' => 'Open by Default', 'type' => 'toggle'],
+                    ]
+                ],
+            ],
+            'defaults' => ['style' => 'default', 'items' => []],
+        ],
+
+        'divider' => [
+            'label' => 'Divider / Separator',
+            'icon' => 'minus',
+            'category' => 'layout',
+            'content_fields' => [
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['solid' => 'Solid', 'dashed' => 'Dashed', 'dotted' => 'Dotted', 'gradient' => 'Gradient']
+                ],
+                [
+                    'key' => 'width',
+                    'label' => 'Width',
+                    'type' => 'select',
+                    'options' => ['full' => 'Full', 'centered' => 'Centered']
+                ],
+            ],
+            'defaults' => ['style' => 'solid', 'width' => 'full'],
+        ],
+
+        'spacer' => [
+            'label' => 'Spacer',
+            'icon' => 'move-vertical',
+            'category' => 'layout',
+            'content_fields' => [
+                [
+                    'key' => 'height',
+                    'label' => 'Height',
+                    'type' => 'select',
+                    'options' => ['xs' => 'Extra Small', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+                ],
+            ],
+            'defaults' => ['height' => 'md'],
+        ],
+
+        // =====================================================================
+        // MEDIA BLOCKS
+        // =====================================================================
+
+        'image' => [
+            'label' => 'Image',
+            'icon' => 'image',
+            'category' => 'media',
+            'content_fields' => [
+                ['key' => 'media_id', 'label' => 'Image', 'type' => 'media'],
+                ['key' => 'alt', 'label' => 'Alt Text', 'type' => 'text'],
+                ['key' => 'caption', 'label' => 'Caption', 'type' => 'text'],
+                ['key' => 'link_url', 'label' => 'Link URL', 'type' => 'text'],
+                [
+                    'key' => 'aspect_ratio',
+                    'label' => 'Aspect Ratio',
+                    'type' => 'select',
+                    'options' => ['auto' => 'Auto', '16:9' => '16:9', '4:3' => '4:3', '1:1' => '1:1', '3:2' => '3:2']
+                ],
+                ['key' => 'rounded', 'label' => 'Rounded', 'type' => 'toggle'],
+            ],
+            'defaults' => ['media_id' => null, 'alt' => '', 'caption' => '', 'link_url' => '', 'aspect_ratio' => 'auto', 'rounded' => false],
+        ],
+
+        'video' => [
+            'label' => 'Video',
+            'icon' => 'play',
+            'category' => 'media',
+            'content_fields' => [
+                ['key' => 'url', 'label' => 'Video URL (YouTube/Vimeo)', 'type' => 'text'],
+                ['key' => 'media_id', 'label' => 'Or Upload Video', 'type' => 'media'],
+                ['key' => 'autoplay', 'label' => 'Autoplay', 'type' => 'toggle'],
+                ['key' => 'muted', 'label' => 'Muted', 'type' => 'toggle'],
+                ['key' => 'loop', 'label' => 'Loop', 'type' => 'toggle'],
+                [
+                    'key' => 'aspect_ratio',
+                    'label' => 'Aspect Ratio',
+                    'type' => 'select',
+                    'options' => ['16:9' => '16:9', '4:3' => '4:3', '1:1' => '1:1']
+                ],
+            ],
+            'defaults' => ['url' => '', 'media_id' => null, 'autoplay' => false, 'muted' => true, 'loop' => false, 'aspect_ratio' => '16:9'],
+        ],
+
+        'gallery' => [
+            'label' => 'Image Gallery',
+            'icon' => 'images',
+            'category' => 'media',
+            'content_fields' => [
+                ['key' => 'media_ids', 'label' => 'Images', 'type' => 'media_multi'],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider']
+                ],
+                [
+                    'key' => 'columns',
+                    'label' => 'Columns',
+                    'type' => 'select',
+                    'options' => ['2' => '2', '3' => '3', '4' => '4']
+                ],
+                ['key' => 'lightbox', 'label' => 'Enable Lightbox', 'type' => 'toggle'],
+            ],
+            'defaults' => ['media_ids' => [], 'layout' => 'grid', 'columns' => '3', 'lightbox' => true],
+        ],
+
+        'before_after' => [
+            'label' => 'Before / After',
+            'icon' => 'arrow-left-right',
+            'category' => 'media',
+            'content_fields' => [
+                ['key' => 'before_media_id', 'label' => 'Before Image', 'type' => 'media'],
+                ['key' => 'after_media_id', 'label' => 'After Image', 'type' => 'media'],
+                ['key' => 'caption', 'label' => 'Caption', 'type' => 'text'],
+            ],
+            'defaults' => ['before_media_id' => null, 'after_media_id' => null, 'caption' => ''],
+        ],
+
+        // =====================================================================
+        // INTERACTIVE BLOCKS
+        // =====================================================================
+
+        'cta_button' => [
+            'label' => 'CTA Button',
+            'icon' => 'mouse-pointer-click',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'text', 'label' => 'Button Text', 'type' => 'text'],
+                ['key' => 'url', 'label' => 'URL', 'type' => 'text'],
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['primary' => 'Primary', 'secondary' => 'Secondary', 'outline' => 'Outline', 'ghost' => 'Ghost']
+                ],
+                [
+                    'key' => 'size',
+                    'label' => 'Size',
+                    'type' => 'select',
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+                ],
+                ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                [
+                    'key' => 'icon_position',
+                    'label' => 'Icon Position',
+                    'type' => 'select',
+                    'options' => ['right' => 'Right', 'left' => 'Left']
+                ],
+                ['key' => 'open_new_tab', 'label' => 'Open in New Tab', 'type' => 'toggle'],
+            ],
+            'defaults' => ['text' => 'Learn More', 'url' => '#', 'style' => 'primary', 'size' => 'md', 'icon' => '', 'icon_position' => 'right', 'open_new_tab' => false],
+        ],
+
+        'form_block' => [
+            'label' => 'Form',
+            'icon' => 'file-input',
+            'category' => 'interactive',
+            'governance' => [
+                'required_fields' => ['form_slug'],
+            ],
+            'content_fields' => [
+                [
+                    'key' => 'form_slug',
+                    'label' => 'Form',
+                    'type' => 'select_model',
+                    'model' => 'App\\Models\\Form',
+                    'label_field' => 'name',
+                    'value_field' => 'slug'
+                ],
+                ['key' => 'show_title', 'label' => 'Show Form Title', 'type' => 'toggle'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading Override', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['minimal' => 'Minimal', 'panel' => 'Panel', 'split' => 'Split Contact Panel', 'inline' => 'Inline'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'dark' => 'Dark', 'cream' => 'Cream'],
+                ],
+                [
+                    'key' => 'panel_style',
+                    'label' => 'Panel Style',
+                    'type' => 'select',
+                    'options' => ['luxury' => 'Luxury Panel', 'glass' => 'Glass Panel', 'minimal' => 'Minimal'],
+                ],
+                [
+                    'key' => 'field_style',
+                    'label' => 'Field Style',
+                    'type' => 'select',
+                    'options' => ['luxury' => 'Luxury', 'soft' => 'Soft', 'underline' => 'Underline'],
+                ],
+                [
+                    'key' => 'field_columns',
+                    'label' => 'Field Layout',
+                    'type' => 'select',
+                    'options' => ['auto' => 'Use Field Widths', '1' => 'Single Column', '2' => 'Two Columns'],
+                ],
+                ['key' => 'submit_text', 'label' => 'Submit Button Text', 'type' => 'text'],
+                ['key' => 'show_contact_details', 'label' => 'Show Contact Details Side', 'type' => 'toggle'],
+                ['key' => 'contact_phone', 'label' => 'Contact Phone Override', 'type' => 'text'],
+                ['key' => 'contact_email', 'label' => 'Contact Email Override', 'type' => 'text'],
+                ['key' => 'contact_address', 'label' => 'Contact Address Override', 'type' => 'textarea'],
+                ['key' => 'support_cta_text', 'label' => 'Support CTA Text', 'type' => 'text'],
+                ['key' => 'support_cta_url', 'label' => 'Support CTA URL', 'type' => 'text'],
+            ],
+            'defaults' => [
+                'form_slug' => 'contact-us',
+                'show_title' => true,
+                'eyebrow' => '',
+                'heading' => '',
+                'description' => '',
+                'variant' => 'minimal',
+                'tone' => 'light',
+                'panel_style' => 'luxury',
+                'field_style' => 'luxury',
+                'field_columns' => 'auto',
+                'submit_text' => 'Submit',
+                'show_contact_details' => false,
+                'contact_phone' => '',
+                'contact_email' => '',
+                'contact_address' => '',
+                'support_cta_text' => '',
+                'support_cta_url' => '',
+            ],
+        ],
+
+        'contact_info' => [
+            'label' => 'Contact Information',
+            'icon' => 'contact',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'phone', 'label' => 'Phone', 'type' => 'text'],
+                ['key' => 'email', 'label' => 'Email', 'type' => 'text'],
+                ['key' => 'address', 'label' => 'Address', 'type' => 'textarea'],
+                ['key' => 'hours', 'label' => 'Hours', 'type' => 'textarea'],
+                [
+                    'key' => 'style',
+                    'label' => 'Style',
+                    'type' => 'select',
+                    'options' => ['horizontal' => 'Horizontal', 'vertical' => 'Vertical', 'card' => 'Cards', 'panel' => 'Panel'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'dark' => 'Dark'],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'phone' => '',
+                'email' => '',
+                'address' => '',
+                'hours' => '',
+                'style' => 'horizontal',
+                'tone' => 'light',
+            ],
+        ],
+
+        'social_links' => [
+            'label' => 'Social Links',
+            'icon' => 'share-2',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                [
+                    'key' => 'source',
+                    'label' => 'Source',
+                    'type' => 'select',
+                    'options' => ['manual' => 'Manual', 'settings' => 'Site Settings'],
+                ],
+                [
+                    'key' => 'align',
+                    'label' => 'Alignment',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
+                ],
+                [
+                    'key' => 'size',
+                    'label' => 'Size',
+                    'type' => 'select',
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
+                ],
+                [
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['filled' => 'Filled', 'outline' => 'Outline', 'minimal' => 'Minimal'],
+                ],
+                [
+                    'key' => 'links',
+                    'label' => 'Links',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'platform', 'label' => 'Platform', 'type' => 'text'],
+                        ['key' => 'url', 'label' => 'URL', 'type' => 'text'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'source' => 'manual',
+                'align' => 'center',
+                'size' => 'md',
+                'variant' => 'filled',
+                'links' => [],
+            ],
+        ],
+
+        'newsletter_cta' => [
+            'label' => 'Newsletter CTA',
+            'icon' => 'mail-plus',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                [
+                    'key' => 'bg',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['cream' => 'Cream', 'forest' => 'Forest', 'white' => 'White'],
+                ],
+                [
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['inline' => 'Inline', 'stacked' => 'Stacked'],
+                ],
+                ['key' => 'placeholder', 'label' => 'Input Placeholder', 'type' => 'text'],
+                ['key' => 'button_text', 'label' => 'Button Text', 'type' => 'text'],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'description' => '',
+                'eyebrow' => 'Stay Updated',
+                'bg' => 'cream',
+                'layout' => 'inline',
+                'placeholder' => 'Enter your email',
+                'button_text' => 'Subscribe',
+            ],
+        ],
+
+        'button_group' => [
+            'label' => 'Button Group',
+            'icon' => 'panel-bottom-open',
+            'category' => 'interactive',
+            'content_fields' => [
+                [
+                    'key' => 'align',
+                    'label' => 'Alignment',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
+                ],
+                ['key' => 'stack_mobile', 'label' => 'Stack on Mobile', 'type' => 'toggle'],
+                [
+                    'key' => 'buttons',
+                    'label' => 'Buttons',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'text', 'label' => 'Text', 'type' => 'text'],
+                        ['key' => 'url', 'label' => 'URL', 'type' => 'text'],
+                        [
+                            'key' => 'style',
+                            'label' => 'Style',
+                            'type' => 'select',
+                            'options' => ['primary' => 'Primary', 'outline' => 'Outline', 'ghost' => 'Ghost'],
+                        ],
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                        ['key' => 'new_tab', 'label' => 'Open in New Tab', 'type' => 'toggle'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'align' => 'left',
+                'stack_mobile' => false,
+                'buttons' => [],
+            ],
+        ],
+
+        'map' => [
+            'label' => 'Google Map',
+            'icon' => 'map',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'address', 'label' => 'Address', 'type' => 'text'],
+                ['key' => 'zoom', 'label' => 'Zoom Level', 'type' => 'number'],
+                ['key' => 'height', 'label' => 'Map Height', 'type' => 'text'],
+            ],
+            'defaults' => ['address' => '', 'zoom' => 12, 'height' => '400px'],
+        ],
+
+        'counter' => [
+            'label' => 'Counter / Stat',
+            'icon' => 'hash',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'number', 'label' => 'Number', 'type' => 'text'],
+                ['key' => 'suffix', 'label' => 'Suffix (e.g. +, %, K)', 'type' => 'text'],
+                ['key' => 'label', 'label' => 'Label', 'type' => 'text'],
+                ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                ['key' => 'animate', 'label' => 'Animate on Scroll', 'type' => 'toggle'],
+            ],
+            'defaults' => ['number' => '0', 'suffix' => '', 'label' => '', 'icon' => '', 'animate' => true],
+        ],
+
+        'html_embed' => [
+            'label' => 'HTML / Embed',
+            'icon' => 'code',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'html', 'label' => 'HTML Code', 'type' => 'code'],
+            ],
+            'defaults' => ['html' => ''],
+        ],
+
+    ],
+];

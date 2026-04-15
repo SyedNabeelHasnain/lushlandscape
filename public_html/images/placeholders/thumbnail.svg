@@ -1,0 +1,5 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F0F5F0"/>
+  <text x="200" y="145" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#6B7280">Thumbnail</text>
+  <text x="200" y="168" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#9CA3AF">400 x 300</text>
+</svg>

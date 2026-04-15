@@ -1,0 +1,39 @@
+name: Deploy (Staging Fresh)
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+concurrency:
+  group: lush-staging-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+
+      - name: Add known hosts
+        run: |
+          mkdir -p ~/.ssh
+          PORT="${{ secrets.STAGING_SSH_PORT }}"
+          if [ -z "$PORT" ]; then PORT=22; fi
+          ssh-keyscan -p "$PORT" "${{ secrets.STAGING_SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy (fresh)
+        env:
+          HOST: ${{ secrets.STAGING_SSH_HOST }}
+          PORT: ${{ secrets.STAGING_SSH_PORT }}
+          USER: ${{ secrets.STAGING_SSH_USER }}
+          DIR: ${{ secrets.STAGING_DEPLOY_DIR }}
+        run: |
+          if [ -z "$PORT" ]; then PORT=22; fi
+          ssh -p "$PORT" "$USER@$HOST" "cd \"$DIR\" && git fetch --all && git reset --hard origin/main && DEPLOY_TARGET=staging bash deploy.sh --fresh"
