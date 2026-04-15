@@ -223,6 +223,11 @@
             $navCtaUrl = '/contact';
         }
 
+        $footerBottomLinksRaw = $getSetting('footer_bottom_links_json', '');
+        $footerBottomLinks = $footerBottomLinksRaw ? (json_decode($footerBottomLinksRaw, true) ?? []) : [];
+        $footerColumnsRaw = $getSetting('footer_columns_json', '');
+        $footerColumns = ($footerColumnsRaw && $footerColumnsRaw !== '[]') ? (json_decode($footerColumnsRaw, true) ?? []) : [];
+
         $linkIsAllowed = function ($link): bool {
             if (!is_array($link)) {
                 return false;
@@ -266,10 +271,6 @@
         $footerTagline = $getSetting('footer_tagline', $tagline);
         $footerCopyright = $getSetting('footer_copyright_text', '© {year} ' . $siteName . '. All rights reserved. Licensed & Insured. Serving Ontario, Canada.');
         $footerCopyright = str_replace('{year}', date('Y'), $footerCopyright);
-        $footerBottomLinksRaw = $getSetting('footer_bottom_links_json', '');
-        $footerBottomLinks = $footerBottomLinksRaw ? (json_decode($footerBottomLinksRaw, true) ?? []) : [];
-        $footerColumnsRaw = $getSetting('footer_columns_json', '');
-        $footerColumns = ($footerColumnsRaw && $footerColumnsRaw !== '[]') ? (json_decode($footerColumnsRaw, true) ?? []) : [];
         $nlEnabled = $getSetting('footer_newsletter_enabled', '1') === '1';
         $nlHeading = $getSetting('footer_newsletter_heading', 'Landscape Insights & Project Planning');
         $nlSubtext = $getSetting('footer_newsletter_subtext', 'Join 2,000+ Ontario homeowners getting our free monthly newsletter.');
