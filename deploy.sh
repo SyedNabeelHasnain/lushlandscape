@@ -125,6 +125,16 @@ ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
 if ! command -v npm &> /dev/null; then
+    for BIN_DIR in /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin; do
+        if [ -x "${BIN_DIR}/node" ] && [ -x "${BIN_DIR}/npm" ]; then
+            export PATH="${BIN_DIR}:$PATH"
+            log "Using NodeJS from ${BIN_DIR}"
+            break
+        fi
+    done
+fi
+
+if ! command -v npm &> /dev/null; then
     export NVM_DIR="$HOME/.nvm"
     if [ -s "$NVM_DIR/nvm.sh" ]; then
         \. "$NVM_DIR/nvm.sh"
@@ -136,7 +146,7 @@ if ! command -v npm &> /dev/null; then
         elif command -v wget &> /dev/null; then
             wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
         else
-            abort "npm is missing and neither curl nor wget is available to install nvm."
+            abort "npm is missing. Install NodeJS on this server (Hostinger NodeJS selector) or provide curl/wget so nvm can be installed."
         fi
 
         export NVM_DIR="$HOME/.nvm"
