@@ -19,7 +19,7 @@
 - [ ] Shell consistency validated (header/footer + CTA model)
 - [ ] Builder/editor flows validated (block editor load/save, nested blocks, templates, media)
 - [ ] Consultation/contact flows validated (rendering, OTP, submission, success messaging)
-- [x] No critical JS / console / application errors during normal use (public pages)
+- [ ] No critical runtime errors during normal use (public pages)
 
 ## 2) Premium frontend QA (release-grade)
 
@@ -64,9 +64,24 @@
 
 ## Validation sweep log (Phase 5)
 
+## UAT audit summary (Phase 5 final pass)
+
+- UAT compared directly against repo by reproducing failures on `https://test.lushlandscape.ca` and tracing Laravel logs.
+- Primary incidents were UAT/repo alignment failures (stale caches, missing build artifacts, committed bootstrap caches, and a frontend Blade regression).
+- Local regression suite executed after fixes: `phpunit` (79 tests, 379 assertions) passed.
+
+## Repo vs UAT alignment findings (Phase 5 final pass)
+
+| Issue | UAT symptom | Root cause | Fix applied | Files |
+| --- | --- | --- | --- | --- |
+| Missing Vite manifest | Frontend `500` with `Vite manifest not found .../public_html/build/manifest.json` | Deploy skipped build when Node/NPM missing; stale `hot` could also force dev lookup | Deploy now installs/uses Node 20, forces build, asserts manifest exists, removes `hot` | `deploy.sh` |
+| Pail service provider crash | `php artisan ...` fails with `Class "Laravel\\Pail\\PailServiceProvider" not found` | `bootstrap/cache/services.php` and `packages.php` were committed from a dev install and referenced dev-only providers | Stop tracking bootstrap cache PHP and purge on deploy | `laravel/bootstrap/cache/.gitignore`, `laravel/.gitignore`, `deploy.sh` |
+| Frontend layout fatal | Frontend `500` with `Undefined variable $footerBottomLinks` | Layout filtered footer links before variables were initialized | Initialize footer link arrays before filtering | `laravel/resources/views/frontend/layouts/app.blade.php` |
+| Readiness false-blockers | `app:readiness-check` failed on loopback DB host on staging | Readiness treated loopback MySQL host as a blocker | Local MySQL host treated as warning; APP_URL sanitized for backticks | `laravel/app/Console/Commands/ProductionReadinessCheck.php` |
+
 | Surface | Status | Notes |
 | --- | --- | --- |
-| Home | Failed | `https://test.lushlandscape.ca/` still surfaces quote-led CTA language (nav/footer) and legacy form taxonomy; indicates environment not updated to latest code+defaults. |
+| Home | Blocked | UAT previously failed with missing manifest and later with `Undefined variable $footerBottomLinks`; both are fixed in repo but require UAT redeploy + cache clears to confirm. |
 | Services hub |  |  |
 | Service category |  |  |
 | Service detail |  |  |
@@ -82,7 +97,7 @@
 | Portfolio category |  |  |
 | Portfolio project |  |  |
 | Contact |  |  |
-| Consultation | Failed | `https://test.lushlandscape.ca/request-quote` still renders “Request a Quote / Free estimate / no obligation” language and old field taxonomy; indicates environment not updated. |
+| Consultation | Blocked | Requires redeploy + cache clear, then confirm consultation-led copy and CTA governance holds end-to-end. |
 | Search |  |  |
 | FAQ |  |  |
 | Legal pages |  |  |
@@ -90,10 +105,14 @@
 ## Touched files (Phase 5)
 
 - [x] [PHASE_5_TASKS.md](PHASE_5_TASKS.md)
+- [x] [deploy.sh](../../deploy.sh)
 - [x] [ThemePresentationService.php](../app/Services/ThemePresentationService.php)
 - [x] [BlockGovernanceService.php](../app/Services/BlockGovernanceService.php)
 - [x] [ProductionReadinessCheck.php](../app/Console/Commands/ProductionReadinessCheck.php)
 - [x] [RuntimeSmokeAudit.php](../app/Console/Commands/RuntimeSmokeAudit.php)
+- [x] [app.blade.php](../resources/views/frontend/layouts/app.blade.php)
+- [x] [bootstrap/cache/.gitignore](../bootstrap/cache/.gitignore)
+- [x] [laravel/.gitignore](../.gitignore)
 - [x] [ProductionReadinessCheckTest.php](../tests/Feature/ProductionReadinessCheckTest.php)
 - [x] [StrictModeLegacyGovernanceTest.php](../tests/Feature/StrictModeLegacyGovernanceTest.php)
 - [x] [ListingPageBlueprintService.php](../app/Console/Services/ListingPageBlueprintService.php)
@@ -107,12 +126,12 @@
 - [x] [_form-fields.blade.php](../resources/views/frontend/blocks/partials/_form-fields.blade.php)
 - [x] [form-block.blade.php](../resources/views/frontend/blocks/partials/form-block.blade.php)
 - [x] [dynamic-loop.blade.php](../resources/views/frontend/blocks/partials/dynamic-loop.blade.php)
-- [x] [app.blade.php](../resources/views/frontend/layouts/app.blade.php)
 - [x] [editorial-split-feature.blade.php](../resources/views/frontend/blocks/editorial-split-feature.blade.php)
 
 ## Release readiness status
 
 - Status: **Not ready**
 - Blockers (exact):
-  - Staging environment `test.lushlandscape.ca` appears out of sync with the Phase 4/5 code+defaults (quote-led CTA language + old inquiry taxonomy still visible on Home and Consultation pages).
-  - Admin/editor validation and smoke-audit cannot be completed until the authoritative environment is updated to the current code and caches are cleared.
+  - UAT is not yet fully verified post-fixes because `test.lushlandscape.ca` has experienced repeated deploy/caching mismatches (missing Vite build, committed bootstrap cache files, and a frontend Blade regression). A clean redeploy must complete successfully and the sweep table must be filled with confirmed PASS/FAIL statuses.
+  - `APP_URL` must be corrected in `laravel/.env` on the server (no backticks, no trailing period) so URL generation, sitemap, and readiness checks reflect the canonical host.
+  - Node/NPM execution must be stable on the server (NVM perms) so deploy can reliably produce `public_html/build/manifest.json` on every push.
