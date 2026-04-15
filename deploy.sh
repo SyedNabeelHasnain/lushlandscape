@@ -115,7 +115,10 @@ cd "$LARAVEL_DIR"
 COMPOSER_CMD="composer"
 command -v composer2 &> /dev/null && COMPOSER_CMD="composer2"
 
-$FRESH_DB && rm -rf vendor || true
+if [ "$FRESH_DB" = true ]; then
+    rm -rf vendor
+    rm -f composer.lock
+fi
 
 $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
@@ -150,6 +153,9 @@ command -v npm &> /dev/null || abort "npm is still not available after attemptin
 
 log "Installing NPM dependencies (fresh)..."
 rm -rf node_modules
+if [ "$FRESH_DB" = true ]; then
+    rm -f package-lock.json
+fi
 if [ -f package-lock.json ]; then
     npm ci --silent --no-audit --no-fund
 else
