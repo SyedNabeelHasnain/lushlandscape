@@ -84,7 +84,7 @@
 
     {{-- ── Image slider background ────────────────────────────── --}}
     @elseif($isSlider)
-    <div class="absolute inset-0 z-0 swiper hero-swiper overflow-hidden bg-forest">
+    <div class="absolute inset-0 z-0 hero-swiper overflow-hidden bg-forest">
         <div class="swiper-wrapper h-full">
             @foreach($allImages as $img)
             @php

@@ -325,7 +325,21 @@
 .section-lg  { padding-block: clamp(4rem, 8vw, 8rem); }
 
 /* ─── Swiper: Hero Slider ─────────────────────────────────────────────── */
+.hero-swiper {
+    width: 100%;
+    height: 100%;
+}
+.hero-swiper .swiper-wrapper {
+    width: 100%;
+    height: 100%;
+}
 .hero-swiper .swiper-slide { height: 100%; }
+.hero-swiper img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
 .hero-pagination .swiper-pagination-bullet {
     background: rgba(255, 255, 255, 0.3);
     opacity: 1;
