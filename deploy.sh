@@ -59,13 +59,21 @@ ok "Structure ready"
 # --- Deployment guardrails ---
 APP_ENV_VALUE=$(grep -E '^APP_ENV=' "$LARAVEL_DIR/.env" | head -1 | cut -d '=' -f2- | tr -d '"' || true)
 APP_DEBUG_VALUE=$(grep -E '^APP_DEBUG=' "$LARAVEL_DIR/.env" | head -1 | cut -d '=' -f2- | tr -d '"' || true)
-APP_URL_VALUE=$(grep -E '^APP_URL=' "$LARAVEL_DIR/.env" | head -1 | cut -d '=' -f2- | tr -d '"' || true)
+APP_URL_RAW=$(grep -E '^APP_URL=' "$LARAVEL_DIR/.env" | head -1 | cut -d '=' -f2- | tr -d '"' | tr -d '\r' || true)
+APP_URL_VALUE=$(echo "${APP_URL_RAW:-}" | tr -d '\`' | tr -d ' ')
 APP_HOST_VALUE="${APP_URL_VALUE#*://}"
 APP_HOST_VALUE="${APP_HOST_VALUE%%/*}"
 SCRIPT_DIR_BASENAME="$(basename "$SCRIPT_DIR" | tr '[:upper:]' '[:lower:]')"
 PWD_BASENAME="$(basename "$PWD" | tr '[:upper:]' '[:lower:]')"
 DEPLOY_TARGET_OVERRIDE="${DEPLOY_TARGET:-}"
 READINESS_TARGET="production"
+
+if [[ "${APP_URL_RAW:-}" == *\`* ]]; then
+    warn "APP_URL contains backticks in laravel/.env. Continuing with sanitized value: ${APP_URL_VALUE}"
+fi
+if [ -z "${APP_URL_VALUE:-}" ]; then
+    abort "APP_URL is missing or empty in laravel/.env"
+fi
 
 if [ -n "$DEPLOY_TARGET_OVERRIDE" ]; then
     case "$DEPLOY_TARGET_OVERRIDE" in
@@ -107,38 +115,57 @@ cd "$LARAVEL_DIR"
 COMPOSER_CMD="composer"
 command -v composer2 &> /dev/null && COMPOSER_CMD="composer2"
 
+$FRESH_DB && rm -rf vendor || true
+
 $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
 
-# --- NPM install ---
-# Try to load NVM if npm is not found
+log "Preparing Node + NPM toolchain..."
 if ! command -v npm &> /dev/null; then
     export NVM_DIR="$HOME/.nvm"
     if [ -s "$NVM_DIR/nvm.sh" ]; then
         \. "$NVM_DIR/nvm.sh"
-    elif [ -s "$HOME/.bashrc" ]; then
-        source "$HOME/.bashrc"
+    fi
+
+    if ! command -v npm &> /dev/null; then
+        if command -v curl &> /dev/null; then
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        elif command -v wget &> /dev/null; then
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        else
+            abort "npm is missing and neither curl nor wget is available to install nvm."
+        fi
+
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    fi
+
+    if command -v nvm &> /dev/null; then
+        nvm install 20
+        nvm use 20
     fi
 fi
 
-if command -v npm &> /dev/null; then
-    log "Installing NPM dependencies..."
-    npm install --silent
-    ok "NPM dependencies synced"
+command -v npm &> /dev/null || abort "npm is still not available after attempting to install it."
 
-    # --- Build frontend assets ---
-    log "Removing previous frontend build artifacts..."
-    rm -rf "$PUBLIC_DIR/build"
-    ok "Previous frontend build artifacts removed"
-
-    log "Building frontend assets (Vite)..."
-    npm run build
-    ok "Vite build completed → public_html/build/"
+log "Installing NPM dependencies (fresh)..."
+rm -rf node_modules
+if [ -f package-lock.json ]; then
+    npm ci --silent --no-audit --no-fund
 else
-    warn "NPM is not installed or not in PATH on this server."
-    warn "Skipping frontend asset compilation."
-    warn "Ensure you have compiled assets locally (npm run build) and uploaded the public_html/build directory!"
+    npm install --silent --no-audit --no-fund
 fi
+ok "NPM dependencies synced"
+
+log "Removing previous frontend build artifacts..."
+rm -rf "$PUBLIC_DIR/build"
+ok "Previous frontend build artifacts removed"
+
+log "Building frontend assets (Vite)..."
+npm run build
+
+[ -f "$PUBLIC_DIR/build/manifest.json" ] || abort "Vite manifest missing at $PUBLIC_DIR/build/manifest.json after build."
+ok "Vite build completed → public_html/build/"
 
 # --- PHP Command Resolution ---
 # Hostinger SSH defaults to an older PHP version. We explicitly use the PHP 8.4 binary.

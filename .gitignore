@@ -5,6 +5,8 @@
 /laravel/.env.*
 /laravel/vendor
 /laravel/node_modules
+/laravel/composer.lock
+/laravel/package-lock.json
 /laravel/public/build
 /laravel/public/hot
 /laravel/public/storage
@@ -15,4 +17,3 @@
 /laravel/database/*.db
 
 /public_html/storage
-

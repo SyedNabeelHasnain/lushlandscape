@@ -6,6 +6,8 @@
 /storage/app
 /storage/framework/testing
 /vendor
+composer.lock
+package-lock.json
 .env
 .env.backup
 .phpunit.result.cache
