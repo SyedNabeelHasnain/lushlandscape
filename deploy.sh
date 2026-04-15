@@ -125,6 +125,8 @@ $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
+NODE_VERSION_TARGET="20"
+
 if ! command -v npm &> /dev/null; then
     for BIN_DIR in /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin; do
         if [ -x "${BIN_DIR}/node" ] && [ -x "${BIN_DIR}/npm" ]; then
@@ -155,12 +157,16 @@ if ! command -v npm &> /dev/null; then
     fi
 
     if command -v nvm &> /dev/null; then
-        nvm install 20
-        nvm use 20
+        nvm install "${NODE_VERSION_TARGET}"
+        nvm use "${NODE_VERSION_TARGET}"
+        nvm alias default "${NODE_VERSION_TARGET}" >/dev/null 2>&1 || true
     fi
 fi
 
 command -v npm &> /dev/null || abort "npm is still not available after attempting to install it."
+chmod +x "$(command -v node)" 2>/dev/null || true
+chmod +x "$(command -v npm)" 2>/dev/null || true
+npm --version >/dev/null 2>&1 || abort "npm is present but not executable. Fix permissions for $(command -v npm) and re-run deploy."
 
 log "Installing NPM dependencies (fresh)..."
 rm -rf node_modules
