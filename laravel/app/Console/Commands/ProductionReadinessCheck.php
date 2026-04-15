@@ -81,7 +81,11 @@ class ProductionReadinessCheck extends Command
         }
 
         if ($databaseConnection === 'mysql' && in_array($databaseHost, ['127.0.0.1', 'localhost'], true)) {
-            $issues[] = "Production MySQL host cannot be loopback ({$databaseHost}).";
+            if ($target === 'production') {
+                $issues[] = "Production MySQL host cannot be loopback ({$databaseHost}).";
+            } else {
+                $warnings[] = "MySQL host is loopback ({$databaseHost}). This is acceptable on staging but must be changed for production.";
+            }
         } else {
             $notes[] = "Database connection '{$databaseConnection}' is configured.";
         }
