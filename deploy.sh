@@ -54,6 +54,7 @@ mkdir -p "$LARAVEL_DIR/storage/framework/cache/data"
 mkdir -p "$LARAVEL_DIR/storage/logs"
 mkdir -p "$PUBLIC_DIR/storage"
 chmod 775 "$LARAVEL_DIR/bootstrap/cache"
+rm -f "$LARAVEL_DIR/bootstrap/cache/"*.php || true
 ok "Structure ready"
 
 # --- Deployment guardrails ---
@@ -175,6 +176,7 @@ ok "NPM dependencies synced"
 
 log "Removing previous frontend build artifacts..."
 rm -rf "$PUBLIC_DIR/build"
+rm -f "$PUBLIC_DIR/hot"
 ok "Previous frontend build artifacts removed"
 
 log "Building frontend assets (Vite)..."
