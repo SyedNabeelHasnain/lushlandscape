@@ -63,4 +63,25 @@ class BlockBuilderServiceRegistryTest extends TestCase
         $this->assertSame('none', $themeDefaults['padding_bottom']);
         $this->assertSame('none', $themeDefaults['margin_bottom']);
     }
+
+    public function test_blocks_have_theme_style_defaults()
+    {
+        $config = config('blocks.theme_style_defaults');
+        $this->assertIsArray($config);
+        $this->assertArrayHasKey('desktop', $config);
+        $this->assertArrayHasKey('surface_preset', $config['desktop']);
+    }
+
+    public function test_blocks_have_phase_a_presentation_controls()
+    {
+        $styleFields = config('blocks.style_fields');
+        $keys = collect($styleFields)->pluck('key')->toArray();
+
+        $this->assertContains('surface_preset', $keys);
+        $this->assertContains('transition_top', $keys);
+        $this->assertContains('transition_bottom', $keys);
+        $this->assertContains('content_width', $keys);
+        $this->assertContains('heading_scale_preset', $keys);
+        $this->assertContains('card_skin_preset', $keys);
+    }
 }
