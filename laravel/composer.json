@@ -4,17 +4,17 @@
     "description": "Lush Landscape Service CMS",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^12.0",
-        "spatie/laravel-sitemap": "^8.0",
         "intervention/image-laravel": "^4.0",
-        "spatie/laravel-honeypot": "^4.0"
+        "laravel/framework": "^13.0",
+        "spatie/laravel-honeypot": "^4.0",
+        "spatie/laravel-sitemap": "^8.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.7",
         "larastan/larastan": "^3.9",
         "laravel/pail": "^1.0",
         "laravel/pint": "^1.0",
-        "phpunit/phpunit": "^11"
+        "phpunit/phpunit": "^13.0"
     },
     "autoload": {
         "psr-4": {

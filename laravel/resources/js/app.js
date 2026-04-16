@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
 import intersect from '@alpinejs/intersect';
+import focus from '@alpinejs/focus';
 import { createIcons, icons } from 'lucide';
 import Swiper from 'swiper';
 import { Pagination, Navigation as SwiperNavigation, Autoplay, Keyboard, EffectFade } from 'swiper/modules';
@@ -183,6 +184,7 @@ if (!prefersReducedMotion && motionPreset !== 'none') {
 // Alpine plugins
 Alpine.plugin(collapse);
 Alpine.plugin(intersect);
+Alpine.plugin(focus);
 window.Alpine = Alpine;
 
 // ─── Popup Alpine Component ───────────────────────────────────────────────────

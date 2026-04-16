@@ -10,6 +10,7 @@
 @import "tailwindcss";
 
 @theme {
+    /* Brand Colors */
     --color-forest: #1E4A2D;
     --color-forest-light: #2E5A3D;
     --color-forest-dark: #163823;
@@ -44,10 +45,17 @@
     --color-cream-light: #FDFBF8;
     --color-cream-dark: #EDE5D8;
 
+    /* Premium Neutrals */
     --color-surface: #FAFAFA;
     --color-surface-warm: #F5F5F5;
     --color-bg-primary: #FFFFFF;
     --color-bg-dark: #153823;
+    
+    /* Shell & Divider Colors */
+    --color-border-light: rgba(17, 17, 17, 0.08);
+    --color-border-dark: rgba(255, 255, 255, 0.14);
+    --color-divider-gold: var(--color-accent-200);
+
     --color-link: var(--color-forest);
     --color-link-hover: var(--color-accent);
 
@@ -56,25 +64,49 @@
     --color-white: #FFFFFF;
     --color-text-on-light: #111111;
     --color-text-on-dark: #FFFFFF;
+    
     --color-btn-primary-bg: var(--color-forest);
     --color-btn-primary-text: #FFFFFF;
     --color-btn-secondary-border: var(--color-forest);
+    
+    /* Airy Gradients */
     --surface-gradient-start: rgba(21, 56, 35, 0.6);
     --surface-gradient-end: rgba(21, 56, 35, 0.4);
     --surface-gradient-deep-start: rgba(21, 56, 35, 0.92);
     --surface-gradient-deep-end: rgba(22, 56, 35, 0.78);
+    
     --color-card-border: #DBDEDA;
     --color-card-hover-border: var(--color-accent);
     --color-field-bg: #F8F8F6;
     --color-field-border: #DADDD8;
     --color-field-focus: var(--color-accent);
+    
+    /* Radius Tiers */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1.5rem;
     --radius-btn: 0.75rem;
     --radius-card: 0rem;
     --radius-panel: 2rem;
-    --spacing-section: clamp(4.5rem, 8vw, 10rem);
+    
+    /* Shadow Tiers */
+    --shadow-luxury-sm: 0 4px 16px rgba(0, 0, 0, 0.03);
+    --shadow-luxury-md: 0 8px 32px rgba(0, 0, 0, 0.04);
+    --shadow-luxury-lg: 0 16px 48px rgba(0, 0, 0, 0.06), 0 32px 80px rgba(0, 0, 0, 0.03);
+
+    /* Section Spacing Scale */
+    --spacing-section-sm: clamp(2.5rem, 5vw, 3.5rem);
+    --spacing-section-md: clamp(3rem, 6vw, 5rem);
+    --spacing-section-lg: clamp(4.5rem, 8vw, 10rem);
+    --spacing-section-xl: clamp(6rem, 10vw, 12rem);
+    --spacing-section: var(--spacing-section-lg);
 
     --font-sans: var(--font-sans);
     --font-heading: var(--font-heading);
+    
+    /* Typography Overrides */
+    --tracking-luxury: 0.22em;
+    --line-height-luxury: 1.6;
 }
 
 @layer base {
@@ -162,6 +194,55 @@
 }
 .bg-luxury-dark {
     background: linear-gradient(180deg, #0a1f11 0%, #112a1a 50%, #0a1f11 100%);
+}
+
+/* ─── Luxury Surface Presets ────────────────────────────────────────────── */
+.surface-white { background-color: var(--color-bg-primary); color: var(--color-text); }
+.surface-airy-gradient {
+    background: linear-gradient(180deg, #FAFAFA 0%, #F0F5F1 100%);
+    color: var(--color-text);
+}
+.surface-deep-green {
+    background: var(--color-bg-dark);
+    color: var(--color-text-on-dark);
+}
+.surface-muted-light-green {
+    background-color: var(--color-forest-50);
+    color: var(--color-forest-900);
+}
+.surface-image-dark-overlay {
+    /* Image handled by inline styles, just apply dark text colors */
+    color: var(--color-text-on-dark);
+}
+.surface-dark-strip {
+    background-color: var(--color-ink);
+    color: var(--color-text-on-dark);
+}
+.surface-premium-neutral {
+    background-color: var(--color-cream-warm);
+    color: var(--color-text);
+}
+
+/* ─── Luxury Section Transitions ───────────────────────────────────────── */
+.transition-top-fade-to-white {
+    mask-image: linear-gradient(to bottom, transparent, black 15%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%);
+}
+.transition-bottom-fade-to-white {
+    mask-image: linear-gradient(to top, transparent, black 15%);
+    -webkit-mask-image: linear-gradient(to top, transparent, black 15%);
+}
+.transition-top-fade-to-airy {
+    background: linear-gradient(to bottom, var(--color-forest-50) 0%, transparent 15%);
+}
+.transition-bottom-fade-to-airy {
+    background: linear-gradient(to top, var(--color-forest-50) 0%, transparent 15%);
+}
+.transition-top-dark-blend {
+    background: linear-gradient(to bottom, var(--color-bg-dark) 0%, transparent 15%);
+}
+.transition-bottom-dark-blend {
+    background: linear-gradient(to top, var(--color-bg-dark) 0%, transparent 15%);
 }
 
 /* ─── Navigation ─────────────────────────────────────────────────────── */

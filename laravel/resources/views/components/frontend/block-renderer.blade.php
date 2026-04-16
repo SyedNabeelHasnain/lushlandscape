@@ -34,9 +34,20 @@
     $allCssClasses = [];
  
     if (!$isLayout) {
-        $maxWidth = $block->getStyle('max_width', 'desktop', 'full');
-        $widthMap = ['full' => '', 'xl' => 'max-w-7xl', 'lg' => 'max-w-5xl', 'md' => 'max-w-3xl', 'sm' => 'max-w-xl'];
-        $containerClass = $widthMap[$maxWidth] ?? '';
+        $contentWidth = $block->getStyle('content_width', 'desktop', 'default');
+        $legacyMaxWidth = $block->getStyle('max_width', 'desktop', 'full');
+        $activeWidth = $contentWidth !== 'default' ? $contentWidth : $legacyMaxWidth;
+        
+        $widthMap = [
+            'full' => '', 
+            '7xl' => 'max-w-7xl', 
+            '5xl' => 'max-w-5xl', 
+            '3xl' => 'max-w-3xl', 
+            'xl' => 'max-w-xl',
+            'sm' => 'max-w-sm',
+            'premium-narrow' => 'max-w-[880px]'
+        ];
+        $containerClass = $widthMap[$activeWidth] ?? '';
     } else {
         $containerClass = ''; // Layout sections handle their own containers
     }
@@ -44,6 +55,16 @@
     // Custom class
     $customClass = $block->getStyle('custom_class', 'desktop', '');
     if ($customClass) $allCssClasses[] = $customClass;
+
+    // Transitions
+    $transitionTop = $block->getStyle('transition_top', 'desktop', 'none');
+    if ($transitionTop !== 'none') $allCssClasses[] = 'transition-top-' . $transitionTop;
+    $transitionBottom = $block->getStyle('transition_bottom', 'desktop', 'none');
+    if ($transitionBottom !== 'none') $allCssClasses[] = 'transition-bottom-' . $transitionBottom;
+    
+    // Surface Presets (CSS Utility Classes)
+    $surfacePreset = $block->getStyle('surface_preset', 'desktop', 'none');
+    if ($surfacePreset !== 'none') $allCssClasses[] = 'surface-' . $surfacePreset;
     
     // Responsive visibility
     if (!$block->show_on_desktop) $allCssClasses[] = 'lg:hidden';

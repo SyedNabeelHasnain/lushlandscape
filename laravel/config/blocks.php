@@ -63,6 +63,22 @@ return [
     'style_fields' => [
         // Background
         [
+            'key' => 'surface_preset',
+            'label' => 'Surface Preset',
+            'type' => 'select',
+            'tab' => 'background',
+            'options' => [
+                'none' => 'Default',
+                'white' => 'White',
+                'airy-gradient' => 'Airy Gradient',
+                'deep-green' => 'Deep Green',
+                'muted-light-green' => 'Muted Light Green',
+                'image-dark-overlay' => 'Image-Backed Dark Overlay',
+                'dark-strip' => 'Dark Strip',
+                'premium-neutral' => 'Premium Neutral',
+            ],
+        ],
+        [
             'key' => 'bg_color',
             'label' => 'Background Color',
             'type' => 'select',
@@ -78,11 +94,16 @@ return [
         ],
         ['key' => 'bg_image_id', 'label' => 'Background Image', 'type' => 'media', 'tab' => 'background'],
         [
-            'key' => 'bg_overlay',
-            'label' => 'Overlay',
+            'key' => 'overlay_preset',
+            'label' => 'Overlay Preset',
             'type' => 'select',
             'tab' => 'background',
-            'options' => ['none' => 'None', 'dark' => 'Dark', 'light' => 'Light', 'forest' => 'Forest'],
+            'options' => [
+                'none' => 'None',
+                'light' => 'Light (Glass)',
+                'dark' => 'Dark',
+                'forest' => 'Forest Tint',
+            ],
         ],
         [
             'key' => 'bg_overlay_opacity',
@@ -96,7 +117,7 @@ return [
         ],
         [
             'key' => 'surface_style',
-            'label' => 'Surface Style',
+            'label' => 'Legacy Surface Style',
             'type' => 'select',
             'tab' => 'background',
             'options' => [
@@ -115,6 +136,36 @@ return [
             'type' => 'select',
             'tab' => 'background',
             'options' => ['none' => 'None', 'subtle' => 'Subtle', 'strong' => 'Strong'],
+        ],
+
+        // Transitions
+        [
+            'key' => 'transition_top',
+            'label' => 'Transition Top',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => [
+                'none' => 'None',
+                'fade-to-white' => 'Fade to White',
+                'fade-from-white' => 'Fade from White',
+                'fade-to-airy' => 'Fade to Airy',
+                'fade-from-airy' => 'Fade from Airy',
+                'dark-blend' => 'Dark Blend',
+            ],
+        ],
+        [
+            'key' => 'transition_bottom',
+            'label' => 'Transition Bottom',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => [
+                'none' => 'None',
+                'fade-to-white' => 'Fade to White',
+                'fade-from-white' => 'Fade from White',
+                'fade-to-airy' => 'Fade to Airy',
+                'fade-from-airy' => 'Fade from Airy',
+                'dark-blend' => 'Dark Blend',
+            ],
         ],
 
         // Spacing
@@ -170,11 +221,36 @@ return [
 
         // Layout
         [
+            'key' => 'content_width',
+            'label' => 'Content Width Preset',
+            'type' => 'select',
+            'tab' => 'layout',
+            'options' => [
+                'default' => 'Default (Container)',
+                'full' => 'Full Width',
+                '7xl' => 'Wide (1280px)',
+                '5xl' => 'Standard (1024px)',
+                '3xl' => 'Narrow (768px)',
+                'premium-narrow' => 'Editorial Narrow',
+            ],
+        ],
+        [
             'key' => 'max_width',
-            'label' => 'Max Width',
+            'label' => 'Legacy Max Width',
             'type' => 'select',
             'tab' => 'layout',
             'options' => ['full' => 'Full Width', 'xl' => '7xl (1280px)', 'lg' => '5xl (1024px)', 'md' => '3xl (768px)', 'sm' => 'xl (576px)'],
+        ],
+        [
+            'key' => 'section_density_preset',
+            'label' => 'Section Density',
+            'type' => 'select',
+            'tab' => 'layout',
+            'options' => [
+                'default' => 'Default',
+                'compact' => 'Compact',
+                'airy' => 'Airy (Luxury)',
+            ],
         ],
         [
             'key' => 'text_color',
@@ -184,14 +260,58 @@ return [
             'options' => ['default' => 'Default', 'white' => 'White', 'dark' => 'Dark', 'forest' => 'Forest Green'],
         ],
         [
+            'key' => 'text_align_preset',
+            'label' => 'Text Alignment Preset',
+            'type' => 'select',
+            'tab' => 'layout',
+            'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
+        ],
+        [
             'key' => 'text_align',
-            'label' => 'Text Align',
+            'label' => 'Legacy Text Align',
             'type' => 'select',
             'tab' => 'layout',
             'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
         ],
 
         // Appearance
+        [
+            'key' => 'card_skin_preset',
+            'label' => 'Card Skin Preset',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => [
+                'default' => 'Default',
+                'white-border' => 'White Bordered',
+                'soft-elevated' => 'Soft Elevated',
+                'quiet-hover' => 'Quiet Hover',
+                'dark-panel' => 'Dark Panel',
+            ],
+        ],
+        [
+            'key' => 'border_style_preset',
+            'label' => 'Border Style Preset',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => [
+                'none' => 'None',
+                'subtle' => 'Subtle (Light)',
+                'gold' => 'Gold Accent',
+                'dark' => 'Dark Edge',
+            ],
+        ],
+        [
+            'key' => 'shadow_elevation_preset',
+            'label' => 'Shadow Elevation Preset',
+            'type' => 'select',
+            'tab' => 'appearance',
+            'options' => [
+                'none' => 'None',
+                'sm' => 'Small (Subtle)',
+                'md' => 'Medium (Editorial)',
+                'lg' => 'Large (Luxury)',
+            ],
+        ],
         [
             'key' => 'section_shell',
             'label' => 'Section Shell',
@@ -216,14 +336,14 @@ return [
         ['key' => 'rounded', 'label' => 'Rounded Corners', 'type' => 'toggle', 'tab' => 'appearance'],
         [
             'key' => 'border',
-            'label' => 'Border',
+            'label' => 'Legacy Border',
             'type' => 'select',
             'tab' => 'appearance',
             'options' => ['none' => 'None', 'light' => 'Light', 'medium' => 'Medium'],
         ],
         [
             'key' => 'shadow',
-            'label' => 'Shadow',
+            'label' => 'Legacy Shadow',
             'type' => 'select',
             'tab' => 'appearance',
             'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
@@ -231,6 +351,19 @@ return [
         ['key' => 'custom_class', 'label' => 'Custom CSS Class', 'type' => 'text', 'tab' => 'appearance'],
 
         // Advanced (Typography & Layering)
+        [
+            'key' => 'heading_scale_preset',
+            'label' => 'Heading Scale Preset',
+            'type' => 'select',
+            'tab' => 'typography',
+            'options' => [
+                'default' => 'Default',
+                'display' => 'Display (Hero)',
+                'h1' => 'H1 (Primary)',
+                'h2' => 'H2 (Section)',
+                'h3' => 'H3 (Subsection)',
+            ],
+        ],
         [
             'key' => 'font_size',
             'label' => 'Global Font Size',
@@ -257,12 +390,15 @@ return [
 
     'style_defaults' => [
         'desktop' => [
+            'surface_preset' => 'none',
             'bg_color' => 'none',
             'bg_image_id' => null,
-            'bg_overlay' => 'none',
+            'overlay_preset' => 'none',
             'bg_overlay_opacity' => 50,
             'surface_style' => 'none',
             'glass_effect' => 'none',
+            'transition_top' => 'none',
+            'transition_bottom' => 'none',
             'spacing_preset' => 'section',
             'padding_top' => 'lg',
             'padding_bottom' => 'lg',
@@ -270,15 +406,22 @@ return [
             'padding_right' => 'md',
             'margin_top' => 'none',
             'margin_bottom' => 'lg',
+            'content_width' => 'default',
             'max_width' => 'full',
+            'section_density_preset' => 'default',
             'text_color' => 'default',
+            'text_align_preset' => 'left',
             'text_align' => 'left',
+            'card_skin_preset' => 'default',
+            'border_style_preset' => 'none',
+            'shadow_elevation_preset' => 'none',
             'section_shell' => 'none',
             'divider_style' => 'none',
             'rounded' => false,
             'border' => 'none',
             'shadow' => 'none',
             'custom_class' => '',
+            'heading_scale_preset' => 'default',
         ],
         'tablet' => [],
         'mobile' => [],
@@ -286,12 +429,15 @@ return [
 
     'theme_style_defaults' => [
         'desktop' => [
+            'surface_preset' => 'none',
             'bg_color' => 'none',
             'bg_image_id' => null,
-            'bg_overlay' => 'none',
+            'overlay_preset' => 'none',
             'bg_overlay_opacity' => 50,
             'surface_style' => 'none',
             'glass_effect' => 'none',
+            'transition_top' => 'none',
+            'transition_bottom' => 'none',
             'spacing_preset' => 'none',
             'padding_top' => 'none',
             'padding_bottom' => 'none',
@@ -299,15 +445,22 @@ return [
             'padding_right' => 'none',
             'margin_top' => 'none',
             'margin_bottom' => 'none',
+            'content_width' => 'default',
             'max_width' => 'full',
+            'section_density_preset' => 'default',
             'text_color' => 'default',
+            'text_align_preset' => 'left',
             'text_align' => 'left',
+            'card_skin_preset' => 'default',
+            'border_style_preset' => 'none',
+            'shadow_elevation_preset' => 'none',
             'section_shell' => 'none',
             'divider_style' => 'none',
             'rounded' => false,
             'border' => 'none',
             'shadow' => 'none',
             'custom_class' => '',
+            'heading_scale_preset' => 'default',
         ],
         'tablet' => [],
         'mobile' => [],
