@@ -61,6 +61,27 @@
                 </div>
             @endforeach
         </div>
+    @elseif($variant === 'premium-stack')
+        <div class="max-w-4xl mx-auto space-y-8">
+            @foreach($steps as $idx => $step)
+                <div class="bg-white border border-stone/60 rounded-[2.5rem] p-10 lg:p-14 shadow-editorial hover:shadow-luxury hover:border-forest/40 transition-all duration-700 animate-on-scroll flex flex-col md:flex-row gap-8 lg:gap-12" data-animation="fade-up" data-delay="{{ $idx * 50 }}">
+                    <div class="shrink-0 flex flex-col items-start gap-6">
+                        <div class="w-16 h-16 rounded-full border border-forest/20 flex items-center justify-center text-forest bg-forest-50/50">
+                            <span class="text-xl font-heading font-bold">{{ str_pad($idx + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                        </div>
+                        @if(!empty($step['icon']))
+                            <div class="w-12 h-12 flex items-center justify-center text-forest/40">
+                                <i data-lucide="{{ $step['icon'] }}" class="w-6 h-6"></i>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="flex-1 border-t md:border-t-0 md:border-l border-stone/40 pt-8 md:pt-0 md:pl-12">
+                        <h3 class="text-2xl lg:text-3xl font-heading font-bold text-ink mb-4">{{ $step['title'] }}</h3>
+                        <p class="text-lg text-text-secondary leading-relaxed font-light">{{ $step['desc'] }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     @elseif($variant === 'timeline')
         <div class="space-y-6">
             @foreach($steps as $i => $step)

@@ -12,6 +12,12 @@
     $viewAllText = $content['view_all_text'] ?? 'View All Services';
     $viewAllUrl = $content['view_all_url'] ?? '/services';
     
+    // Premium 2x2 and card specifics
+    $showIcon = $content['show_icon'] ?? true;
+    $showDivider = $content['show_divider'] ?? false;
+    $showUspList = $content['show_usp_list'] ?? false;
+    $cardCtaLabel = $content['card_cta_label'] ?? 'Details';
+    
     // Group by category if we have mixed results
     $grouped = $data->groupBy(fn($s) => $s->category_id ?? 0);
     $categoryMap = $data->pluck('category')->filter()->unique('id')->sortBy('sort_order')->values();
@@ -102,43 +108,16 @@
 
                     <div class="grid {{ $colClass }} gap-6 lg:gap-8">
                         @foreach($catServices as $sIdx => $service)
-                            @php
-                                $cardShell = match ($variant) {
-                                    'minimal' => 'px-2 py-3 border-b rounded-none hover:translate-y-0 hover:shadow-none',
-                                    'editorial' => 'editorial-card rounded-[1.75rem]',
-                                    default => 'rounded-[1.75rem] border p-8 hover:-translate-y-1 hover:shadow-luxury',
-                                };
-                                $linkUrl = $service->category ? $service->public_url : '/services/'.($service->slug_final ?? '');
-                            @endphp
-                            <a href="{{ $linkUrl }}"
-                               class="group relative transition-all duration-500 animate-on-scroll {{ $sectionTone['card'] }} {{ $cardShell }}"
-                               data-animation="fade-up"
-                               data-delay="{{ $sIdx * 40 }}">
-                                
-                                <div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <i data-lucide="arrow-up-right" class="w-5 h-5 {{ $tone === 'dark' ? 'text-white/35' : 'text-forest/40' }}"></i>
-                                </div>
-
-                                <div class="mb-8">
-                                    <div class="flex h-14 w-14 items-center justify-center transition-colors duration-500 shadow-sm {{ $variant === 'minimal' ? 'rounded-full' : 'rounded-2xl' }} {{ $sectionTone['iconShell'] }} {{ $tone === 'dark' ? 'group-hover:bg-white group-hover:text-forest' : 'group-hover:bg-forest group-hover:text-white' }}">
-                                        <i data-lucide="{{ $service->icon ?? 'wrench' }}" class="w-7 h-7 transition-colors duration-500"></i>
-                                    </div>
-                                </div>
-
-                                <h4 class="mb-3 text-xl font-bold transition-colors duration-300 {{ $sectionTone['heading'] }} {{ $tone === 'dark' ? 'group-hover:text-white' : 'group-hover:text-forest' }}">
-                                    {{ $service->name }}
-                                </h4>
-
-                                @if($service->service_summary)
-                                    <p class="mb-6 line-clamp-2 text-sm leading-relaxed {{ $sectionTone['cardSub'] }}">
-                                        {{ $service->service_summary }}
-                                    </p>
-                                @endif
-
-                                <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-all duration-300 {{ $sectionTone['link'] }} group-hover:gap-3">
-                                    Details <div class="w-4 h-px bg-forest/30"></div>
-                                </div>
-                            </a>
+                            <div class="animate-on-scroll" data-animation="fade-up" data-delay="{{ $sIdx * 40 }}">
+                                <x-frontend.service-card 
+                                    :service="$service" 
+                                    :url="$service->category ? $service->public_url : '/services/'.($service->slug_final ?? '')"
+                                    :variant="$variant"
+                                    :show-icon="$showIcon"
+                                    :show-divider="$showDivider"
+                                    :cta-label="$cardCtaLabel"
+                                />
+                            </div>
                         @endforeach
                     </div>
                 </div>

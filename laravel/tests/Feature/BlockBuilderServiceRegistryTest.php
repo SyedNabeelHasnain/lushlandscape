@@ -84,4 +84,15 @@ class BlockBuilderServiceRegistryTest extends TestCase
         $this->assertContains('heading_scale_preset', $keys);
         $this->assertContains('card_skin_preset', $keys);
     }
+
+    public function test_blocks_have_phase_b_premium_families()
+    {
+        $blockTypes = config('blocks.types', []);
+
+        $this->assertArrayHasKey('marquee_strip', $blockTypes);
+        $this->assertArrayHasKey('parallax_media_band', $blockTypes);
+        $this->assertArrayHasKey('authority_grid', $blockTypes);
+        $this->assertArrayHasKey('service_area_enclave', $blockTypes);
+        $this->assertArrayHasKey('split_consultation_panel', $blockTypes);
+    }
 }

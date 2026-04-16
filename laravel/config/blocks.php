@@ -1069,11 +1069,36 @@ return [
                     'options' => ['2' => '2', '3' => '3', '4' => '4'],
                 ],
                 [
-                    'key' => 'variant',
-                    'label' => 'Card Variant',
-                    'type' => 'select',
-                    'options' => ['editorial' => 'Editorial', 'architectural' => 'Architectural', 'minimal' => 'Minimal'],
-                ],
+            'key' => 'variant',
+            'label' => 'Card Variant',
+            'type' => 'select',
+            'options' => [
+                'editorial' => 'Editorial', 
+                'architectural' => 'Architectural', 
+                'minimal' => 'Minimal',
+                'premium-2x2' => 'Premium 2x2 Grid'
+            ],
+        ],
+        [
+            'key' => 'show_icon',
+            'label' => 'Show Icon',
+            'type' => 'toggle',
+        ],
+        [
+            'key' => 'show_divider',
+            'label' => 'Show Divider',
+            'type' => 'toggle',
+        ],
+        [
+            'key' => 'show_usp_list',
+            'label' => 'Show USP List',
+            'type' => 'toggle',
+        ],
+        [
+            'key' => 'card_cta_label',
+            'label' => 'Card CTA Label',
+            'type' => 'text',
+        ],
                 [
                     'key' => 'tone',
                     'label' => 'Tone',
@@ -1229,11 +1254,11 @@ return [
                 ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
                 ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
                 [
-                    'key' => 'layout',
-                    'label' => 'Layout',
-                    'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider'],
-                ],
+            'key' => 'layout',
+            'label' => 'Layout',
+            'type' => 'select',
+            'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider', 'rail' => 'Horizontal Rail'],
+        ],
                 [
                     'key' => 'columns',
                     'label' => 'Columns',
@@ -1579,11 +1604,11 @@ return [
                 ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
                 ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
                 [
-                    'key' => 'variant',
-                    'label' => 'Variant',
-                    'type' => 'select',
-                    'options' => ['numbered' => 'Numbered', 'feature_rows' => 'Feature Rows', 'timeline' => 'Timeline'],
-                ],
+            'key' => 'variant',
+            'label' => 'Variant',
+            'type' => 'select',
+            'options' => ['numbered' => 'Numbered', 'feature_rows' => 'Feature Rows', 'timeline' => 'Timeline', 'premium-stack' => 'Premium Stack'],
+        ],
                 [
                     'key' => 'tone',
                     'label' => 'Tone',
@@ -1825,11 +1850,18 @@ return [
                 ['key' => 'tag', 'label' => 'Tag/Label', 'type' => 'text'],
                 ['key' => 'show_line', 'label' => 'Show Decorative Line', 'type' => 'toggle'],
                 [
-                    'key' => 'variant',
-                    'label' => 'Variant',
-                    'type' => 'select',
-                    'options' => ['editorial' => 'Editorial', 'split' => 'Split Intro', 'compact' => 'Compact'],
-                ],
+            'key' => 'variant',
+            'label' => 'Variant',
+            'type' => 'select',
+            'options' => [
+                'editorial' => 'Editorial',
+                'full-editorial' => 'Full Editorial',
+                'split' => 'Split Intro',
+                'compact' => 'Compact',
+                'title-only' => 'Title Only',
+                'with-right-cta' => 'Title + Right CTA',
+            ],
+        ],
                 [
                     'key' => 'tone',
                     'label' => 'Tone',
@@ -2965,5 +2997,176 @@ return [
             'defaults' => ['html' => ''],
         ],
 
+        // ─── PREMIUM SECTION FAMILIES (PHASE B) ───────────────────────────────
+        'marquee_strip' => [
+            'label' => 'Marquee Strip',
+            'icon' => 'move-horizontal',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'text_items', 'label' => 'Text Items (Comma separated)', 'type' => 'textarea'],
+                [
+                    'key' => 'separator_style',
+                    'label' => 'Separator Style',
+                    'type' => 'select',
+                    'options' => ['dot' => 'Dot', 'star' => 'Star', 'line' => 'Line', 'none' => 'None'],
+                ],
+                [
+                    'key' => 'speed',
+                    'label' => 'Speed Preset',
+                    'type' => 'select',
+                    'options' => ['slow' => 'Slow', 'normal' => 'Normal', 'fast' => 'Fast'],
+                ],
+                [
+                    'key' => 'direction',
+                    'label' => 'Direction',
+                    'type' => 'select',
+                    'options' => ['left' => 'Left', 'right' => 'Right'],
+                ],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'dark' => 'Dark', 'forest' => 'Forest'],
+                ],
+            ],
+            'defaults' => [
+                'text_items' => 'Premium Landscape Design, Expert Installation, 10-Year Warranty, Interlocking & Stonework',
+                'separator_style' => 'star',
+                'speed' => 'normal',
+                'direction' => 'left',
+                'tone' => 'dark',
+            ],
+        ],
+
+        'parallax_media_band' => [
+            'label' => 'Parallax Media Band',
+            'icon' => 'monitor-play',
+            'category' => 'media',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Headline Overlay', 'type' => 'text'],
+                ['key' => 'subheadline', 'label' => 'Subheadline Overlay', 'type' => 'textarea'],
+                ['key' => 'media_id', 'label' => 'Background Image', 'type' => 'media'],
+                ['key' => 'video_url', 'label' => 'Video URL (Optional)', 'type' => 'text'],
+                [
+                    'key' => 'parallax_intensity',
+                    'label' => 'Parallax Intensity',
+                    'type' => 'select',
+                    'options' => ['none' => 'None', 'subtle' => 'Subtle', 'medium' => 'Medium', 'strong' => 'Strong'],
+                ],
+                [
+                    'key' => 'overlay_preset',
+                    'label' => 'Overlay Preset',
+                    'type' => 'select',
+                    'options' => ['dark' => 'Dark', 'light' => 'Light', 'forest' => 'Forest Gradient', 'none' => 'None'],
+                ],
+            ],
+            'defaults' => [
+                'heading' => '',
+                'subheadline' => '',
+                'media_id' => null,
+                'video_url' => '',
+                'parallax_intensity' => 'medium',
+                'overlay_preset' => 'dark',
+            ],
+        ],
+
+        'authority_grid' => [
+            'label' => 'Authority & Standards Grid',
+            'icon' => 'shield-check',
+            'category' => 'content',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'introduction', 'label' => 'Introduction', 'type' => 'textarea'],
+                [
+                    'key' => 'card_skin',
+                    'label' => 'Card Skin',
+                    'type' => 'select',
+                    'options' => ['premium-bordered' => 'Premium Bordered', 'elevated' => 'Elevated', 'minimal' => 'Minimal'],
+                ],
+                [
+                    'key' => 'items',
+                    'label' => 'Standards/Authority Items',
+                    'type' => 'repeater',
+                    'sub_fields' => [
+                        ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
+                        ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
+                        ['key' => 'description', 'label' => 'Short Description', 'type' => 'textarea'],
+                    ],
+                ],
+            ],
+            'defaults' => [
+                'eyebrow' => 'Our Standards',
+                'heading' => 'Built to Last',
+                'introduction' => '',
+                'card_skin' => 'premium-bordered',
+                'items' => [
+                    ['icon' => 'shield-check', 'title' => '10-Year Warranty', 'description' => 'Industry-leading protection.'],
+                    ['icon' => 'award', 'title' => 'Certified Installers', 'description' => 'ICPI & NCMA certified experts.'],
+                    ['icon' => 'leaf', 'title' => 'Premium Materials', 'description' => 'Only the best stone and flora.'],
+                ],
+            ],
+        ],
+
+        'service_area_enclave' => [
+            'label' => 'Service Area Enclave',
+            'icon' => 'map-pin',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'support_copy', 'label' => 'Support Copy', 'type' => 'textarea'],
+                [
+                    'key' => 'presentation_mode',
+                    'label' => 'Presentation Mode',
+                    'type' => 'select',
+                    'options' => ['text-led' => 'Premium Text-Led', 'tabbed-enclave' => 'Tabbed Enclave'],
+                ],
+            ],
+            'data_source' => [
+                'model' => 'App\\Models\\City',
+                'scope' => 'published',
+                'filters' => [],
+                'limit' => 20,
+                'order_by' => 'name',
+                'order_dir' => 'asc',
+                'manual_ids' => [],
+                'with' => [],
+            ],
+            'defaults' => [
+                'eyebrow' => 'Areas We Serve',
+                'heading' => 'Proudly Serving the GTA',
+                'support_copy' => '',
+                'presentation_mode' => 'text-led',
+            ],
+        ],
+
+        'split_consultation_panel' => [
+            'label' => 'Split Consultation Panel',
+            'icon' => 'split-square-horizontal',
+            'category' => 'interactive',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'editorial_copy', 'label' => 'Editorial Copy', 'type' => 'textarea'],
+                ['key' => 'trust_lines', 'label' => 'Trust Lines (Comma separated)', 'type' => 'textarea'],
+                ['key' => 'media_id', 'label' => 'Left Panel Image (Optional)', 'type' => 'media'],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'dark' => 'Dark', 'forest' => 'Forest'],
+                ],
+            ],
+            'defaults' => [
+                'eyebrow' => 'Get Started',
+                'heading' => 'Book a Consultation',
+                'editorial_copy' => 'Ready to transform your outdoor space? Reach out to our team to discuss your vision.',
+                'trust_lines' => 'No obligation quote, Expert design advice, Fast response time',
+                'tone' => 'dark',
+            ],
+        ],
+
+        // ─── END PREMIUM SECTION FAMILIES ─────────────────────────────────────
     ],
 ];

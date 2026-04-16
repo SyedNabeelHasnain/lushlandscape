@@ -245,6 +245,15 @@
     background: linear-gradient(to top, var(--color-bg-dark) 0%, transparent 15%);
 }
 
+/* ─── Utility Classes ─────────────────────────────────────────────────── */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
 /* ─── Navigation ─────────────────────────────────────────────────────── */
 .nav-glass {
     background: rgba(21, 56, 35, 0.92);

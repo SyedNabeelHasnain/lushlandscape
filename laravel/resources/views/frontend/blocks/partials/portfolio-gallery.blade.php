@@ -104,6 +104,14 @@
             </div>
         </div>
     </div>
+@elseif($layout === 'rail')
+    <div class="flex overflow-x-auto gap-6 lg:gap-8 pb-8 snap-x snap-mandatory hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
+        @foreach($data as $project)
+            <div class="snap-start shrink-0 w-[85vw] sm:w-[45vw] md:w-[35vw] lg:w-[28vw]">
+                {!! $renderCard($project) !!}
+            </div>
+        @endforeach
+    </div>
 @elseif($layout === 'masonry')
     <div class="{{ $masonryClass }} gap-6 lg:gap-8 [column-gap:1.5rem] lg:[column-gap:2rem]">
         @foreach($data as $project)
