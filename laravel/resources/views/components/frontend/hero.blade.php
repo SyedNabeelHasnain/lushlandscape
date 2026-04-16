@@ -94,7 +94,8 @@
                 <x-frontend.media
                     :asset="$img"
                     class="w-full h-full object-cover"
-                    @if($loop->first) fetchpriority="high" loading="eager" @endif
+                    fetchpriority="{{ $loop->first ? 'high' : 'auto' }}"
+                    loading="{{ $loop->first ? 'eager' : 'lazy' }}"
                 />
                 
                 @if($caption !== '')
