@@ -36,7 +36,7 @@ class LocationPageController extends Controller
             ['label' => $city->name],
         ];
         $schema = SchemaService::breadcrumbList($breadcrumbs).SchemaService::localBusiness($city->name);
-        
+
         // Unified blocks retrieval now includes legacy sections in order
         $blocks = BlockBuilderService::getBlocks('city', $city->id);
         $context = $pageContext->city($city, $servicePages);

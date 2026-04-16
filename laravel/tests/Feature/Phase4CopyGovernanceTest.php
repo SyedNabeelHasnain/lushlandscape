@@ -72,4 +72,3 @@ class Phase4CopyGovernanceTest extends TestCase
         $this->assertSame([], $matches);
     }
 }
-

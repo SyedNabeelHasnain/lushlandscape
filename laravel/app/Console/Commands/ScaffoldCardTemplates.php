@@ -35,4 +35,3 @@ class ScaffoldCardTemplates extends Command
         return self::SUCCESS;
     }
 }
-

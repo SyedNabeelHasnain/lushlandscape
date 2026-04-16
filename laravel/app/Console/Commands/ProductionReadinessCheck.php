@@ -70,7 +70,7 @@ class ProductionReadinessCheck extends Command
                 $issues[] = "APP_URL still points to a staging host ({$host}).";
             }
 
-            if ($target === 'staging' && !str_contains($host, 'staging') && !str_contains($host, 'test')) {
+            if ($target === 'staging' && ! str_contains($host, 'staging') && ! str_contains($host, 'test')) {
                 $issues[] = "APP_URL must point to a staging host for a staging readiness check (current host: {$host}).";
             }
         }

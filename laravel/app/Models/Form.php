@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,9 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool $requires_email_verification
  * @property bool $honeypot_enabled
  * @property string $status
- * 
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FormField[] $fields
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FormSubmission[] $submissions
+ * @property-read Collection|FormField[] $fields
+ * @property-read Collection|FormSubmission[] $submissions
  */
 class Form extends Model
 {

@@ -68,7 +68,7 @@ class PageBlock extends Model
     {
         // Treat 0 or '0' as null for home page consistency
         $pageId = ($pageId == 0 || $pageId === '0') ? null : $pageId;
-        
+
         return $query->where('page_type', $pageType)
             ->where(function ($q) use ($pageId) {
                 if ($pageId === null) {
@@ -138,6 +138,7 @@ class PageBlock extends Model
         $configDefaults = $this->category === 'theme'
             ? Config::get('blocks.theme_style_defaults.desktop', [])
             : Config::get('blocks.style_defaults.desktop', []);
+
         return $styles['desktop'][$key] ?? $configDefaults[$key] ?? $default;
     }
 
@@ -146,7 +147,7 @@ class PageBlock extends Model
      */
     public function getFinalDataSource(): array
     {
-        $typeConfig = Config::get('blocks.types.' . $this->block_type, []);
+        $typeConfig = Config::get('blocks.types.'.$this->block_type, []);
         $globalDataSource = $typeConfig['data_source'] ?? [];
         $instanceDataSource = $this->data_source ?? [];
 
@@ -166,6 +167,6 @@ class PageBlock extends Model
      */
     public function isDataBlock(): bool
     {
-        return $this->category === 'data' || !empty($this->getFinalDataSource());
+        return $this->category === 'data' || ! empty($this->getFinalDataSource());
     }
 }

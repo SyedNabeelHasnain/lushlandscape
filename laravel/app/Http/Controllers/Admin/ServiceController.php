@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Services\BlockBuilderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 
@@ -78,7 +79,7 @@ class ServiceController extends Controller
 
         $blocksJson = $request->input('blocks_json');
 
-        $service = \Illuminate\Support\Facades\DB::transaction(function () use ($validated, $cityIds, $blocksJson) {
+        $service = DB::transaction(function () use ($validated, $cityIds, $blocksJson) {
             $service = Service::create($validated);
             $service->cities()->sync($cityIds);
 
@@ -87,7 +88,7 @@ class ServiceController extends Controller
                 $blocksData = json_decode($blocksJson, true) ?? [];
                 BlockBuilderService::saveUnifiedBlocks('service', $service->id, $blocksData);
             }
-            
+
             return $service;
         });
 
@@ -152,7 +153,7 @@ class ServiceController extends Controller
 
         $blocksJson = $request->input('blocks_json', '[]');
 
-        \Illuminate\Support\Facades\DB::transaction(function () use ($service, $validated, $cityIds, $blocksJson) {
+        DB::transaction(function () use ($service, $validated, $cityIds, $blocksJson) {
             $service->update($validated);
             $service->cities()->sync($cityIds);
 

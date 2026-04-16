@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class Setting extends Model
 {
@@ -28,6 +29,7 @@ class Setting extends Model
     public static function get(string $key, mixed $default = null): mixed
     {
         $all = self::getAll();
+
         return $all[$key] ?? $default;
     }
 
@@ -37,10 +39,11 @@ class Setting extends Model
             try {
                 self::$cache = Cache::remember(self::CACHE_KEY, self::CACHE_TTL, fn () => static::pluck('value', 'key')->all());
             } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::error('Failed to load settings cache: ' . $e->getMessage());
+                Log::error('Failed to load settings cache: '.$e->getMessage());
                 self::$cache = [];
             }
         }
+
         return self::$cache;
     }
 

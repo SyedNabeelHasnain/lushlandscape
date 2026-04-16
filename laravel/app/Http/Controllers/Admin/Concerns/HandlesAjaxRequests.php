@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Concerns;
 
-use App\Services\BlockBuilderService;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 
 trait HandlesAjaxRequests
 {

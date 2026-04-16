@@ -11,6 +11,7 @@ use App\Models\ServiceCategory;
 use App\Models\ServiceCityPage;
 use App\Services\BlockBuilderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -245,16 +246,16 @@ class ServiceCityPageController extends Controller
             }
         }
 
-        \Illuminate\Support\Facades\DB::transaction(function () use ($toInsert, $toUpdateActive, $toUpdateInactive) {
-            if (!empty($toInsert)) {
+        DB::transaction(function () use ($toInsert, $toUpdateActive, $toUpdateInactive) {
+            if (! empty($toInsert)) {
                 ServiceCityPage::insert($toInsert);
             }
 
-            if (!empty($toUpdateActive)) {
+            if (! empty($toUpdateActive)) {
                 ServiceCityPage::whereIn('id', $toUpdateActive)->update(['is_active' => true]);
             }
 
-            if (!empty($toUpdateInactive)) {
+            if (! empty($toUpdateInactive)) {
                 ServiceCityPage::whereIn('id', $toUpdateInactive)->update(['is_active' => false]);
             }
         });
@@ -286,7 +287,7 @@ class ServiceCityPageController extends Controller
 
         $city = City::findOrFail($request->city_id);
         $services = Service::where('status', 'published')->get();
-        
+
         $existingServiceIds = ServiceCityPage::where('city_id', $city->id)
             ->pluck('service_id')
             ->toArray();
@@ -310,7 +311,7 @@ class ServiceCityPageController extends Controller
                 ];
             }
         }
-        
+
         $created = count($toInsert);
         if ($created > 0) {
             ServiceCityPage::insert($toInsert);

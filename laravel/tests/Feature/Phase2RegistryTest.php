@@ -31,4 +31,3 @@ class Phase2RegistryTest extends TestCase
         $this->assertSame(['template_card'], config('blocks.types.template_card_shell.governance.allowed_page_types'));
     }
 }
-

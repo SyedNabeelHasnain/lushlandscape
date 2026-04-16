@@ -5,9 +5,9 @@ namespace Tests\Feature;
 use App\Http\Controllers\Admin\MediaAssetController;
 use App\Models\MediaAsset;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class MediaAssetControllerTest extends TestCase

@@ -3,10 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\PageBlock;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Tests\TestCase;
 
 class ContentBlockExportControllerTest extends TestCase

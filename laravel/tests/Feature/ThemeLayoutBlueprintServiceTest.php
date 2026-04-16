@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Console\Services\ThemeLayoutBlueprintService;
 use App\Models\Setting;
 use App\Models\ThemeLayout;
 use App\Services\BlockBuilderService;
-use App\Console\Services\ThemeLayoutBlueprintService;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;

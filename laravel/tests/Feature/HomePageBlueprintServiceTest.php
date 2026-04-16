@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Console\Services\HomePageBlueprintService;
 use App\Models\PageBlock;
 use App\Models\Setting;
 use App\Services\BlockBuilderService;
-use App\Console\Services\HomePageBlueprintService;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;

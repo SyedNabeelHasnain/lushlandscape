@@ -16,8 +16,7 @@ class ListingPageBlueprintService
 {
     public function __construct(
         private readonly SingletonPageBuilderService $registry
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, mixed>
@@ -50,6 +49,7 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
@@ -652,6 +652,7 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
@@ -697,6 +698,7 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
@@ -742,6 +744,7 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 

@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\BlockBuilderService;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-
 use App\Http\Controllers\Admin\Concerns\HandlesAjaxRequests;
 use App\Http\Controllers\Controller;
 use App\Models\MediaAsset;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 
 class SettingController extends Controller
 {
@@ -29,7 +26,7 @@ class SettingController extends Controller
             }
         }
 
-        return \Illuminate\Support\Facades\View::make('admin.settings.index', compact('settings', 'mediaAssets'));
+        return View::make('admin.settings.index', compact('settings', 'mediaAssets'));
     }
 
     public function update(Request $request)
@@ -73,6 +70,6 @@ class SettingController extends Controller
             return $this->jsonSuccess('Settings saved successfully.');
         }
 
-        return \Illuminate\Support\Facades\Redirect::back()->with('success', 'Settings saved successfully.');
+        return Redirect::back()->with('success', 'Settings saved successfully.');
     }
 }

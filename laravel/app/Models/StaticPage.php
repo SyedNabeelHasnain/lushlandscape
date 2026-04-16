@@ -24,8 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $status
  * @property int $sort_order
  * @property-read string|null $frontend_url
- * 
- * @property-read \App\Models\MediaAsset|null $heroMedia
+ * @property-read MediaAsset|null $heroMedia
  */
 class StaticPage extends Model
 {

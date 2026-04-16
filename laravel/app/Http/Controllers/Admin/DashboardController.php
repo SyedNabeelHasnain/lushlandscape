@@ -2,20 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\BlockBuilderService;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-
 use App\Http\Controllers\Controller;
-use App\Models\BlogPost;
-use App\Models\City;
 use App\Models\FormSubmission;
-use App\Models\PortfolioProject;
-use App\Models\Review;
-use App\Models\Service;
-use App\Models\ServiceCityPage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class DashboardController extends Controller
 {
@@ -67,7 +57,7 @@ class DashboardController extends Controller
             ->mapWithKeys(fn ($s) => [$s->form->name ?? 'Unknown' => $s->total])
             ->all();
 
-        return \Illuminate\Support\Facades\View::make('admin.pages.dashboard', compact(
+        return View::make('admin.pages.dashboard', compact(
             'stats', 'recentSubmissions', 'submissionsChart', 'submissionsByForm'
         ));
     }

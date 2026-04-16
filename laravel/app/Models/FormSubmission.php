@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $referrer
  * @property array|null $utm_data
  * @property string $status
- * @property-read \App\Models\Form|null $form
+ * @property-read Form|null $form
  * @property-read int $total
  */
 class FormSubmission extends Model

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -37,17 +38,16 @@ use Illuminate\Support\Str;
  * @property bool $is_indexable
  * @property int $sort_order
  * @property-read string|null $frontend_url
- * 
- * @property-read \App\Models\Service|null $service
- * @property-read \App\Models\City|null $city
- * @property-read \App\Models\Neighborhood|null $neighborhood
- * @property-read \App\Models\MediaAsset|null $heroMedia
- * @property-read \App\Models\MediaAsset|null $heroImage2
- * @property-read \App\Models\MediaAsset|null $heroImage3
- * @property-read \App\Models\MediaAsset|null $heroImage4
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FaqAssignment[] $faqAssignments
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MediaPlacement[] $mediaPlacements
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Review[] $reviewAssignments
+ * @property-read Service|null $service
+ * @property-read City|null $city
+ * @property-read Neighborhood|null $neighborhood
+ * @property-read MediaAsset|null $heroMedia
+ * @property-read MediaAsset|null $heroImage2
+ * @property-read MediaAsset|null $heroImage3
+ * @property-read MediaAsset|null $heroImage4
+ * @property-read Collection|FaqAssignment[] $faqAssignments
+ * @property-read Collection|MediaPlacement[] $mediaPlacements
+ * @property-read Collection|Review[] $reviewAssignments
  */
 class ServiceCityPage extends Model
 {

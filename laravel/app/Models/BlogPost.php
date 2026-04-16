@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int $id
@@ -23,14 +26,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property array|null $schema_json
  * @property bool $is_featured
  * @property string $status
- * @property \Illuminate\Support\Carbon|null $published_at
+ * @property Carbon|null $published_at
  * @property-read string|null $frontend_url
- * 
- * @property-read \App\Models\BlogCategory|null $category
- * @property-read \App\Models\User|null $author
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BlogTag[] $tags
- * @property-read \App\Models\MediaAsset|null $featuredImage
- * @property-read \App\Models\MediaAsset|null $heroMedia
+ * @property-read BlogCategory|null $category
+ * @property-read User|null $author
+ * @property-read Collection|BlogTag[] $tags
+ * @property-read MediaAsset|null $featuredImage
+ * @property-read MediaAsset|null $heroMedia
  */
 class BlogPost extends Model
 {
@@ -79,7 +81,7 @@ class BlogPost extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('status', 'published')->whereNotNull('published_at')->where('published_at', '<=', \Illuminate\Support\Facades\DB::raw('NOW()'));
+        return $query->where('status', 'published')->whereNotNull('published_at')->where('published_at', '<=', DB::raw('NOW()'));
     }
 
     public function getFrontendUrlAttribute(): ?string

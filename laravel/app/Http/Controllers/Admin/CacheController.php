@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\BlockBuilderService;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 
 class CacheController extends Controller
 {
@@ -30,7 +27,7 @@ class CacheController extends Controller
         // Clear application cache (settings, redirects, security rules, etc.)
         Cache::forget('redirects_map');
         Cache::forget('security_blocked_ips');
-        \App\Models\Setting::flushCache();
+        Setting::flushCache();
 
         // Log out the current admin
         Auth::logout();
@@ -43,6 +40,6 @@ class CacheController extends Controller
         }
 
         // Return the cleanup page — handles client-side clearing then redirects to login
-        return \Illuminate\Support\Facades\View::make('admin.cache-cleared');
+        return View::make('admin.cache-cleared');
     }
 }

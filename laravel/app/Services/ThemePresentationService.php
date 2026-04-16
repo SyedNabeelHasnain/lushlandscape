@@ -7,7 +7,6 @@ use App\Models\MediaAsset;
 use App\Models\ServiceCategory;
 use App\Models\Setting;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 
 class ThemePresentationService
 {
@@ -126,7 +125,7 @@ class ThemePresentationService
         $raw = Setting::get('footer_bottom_links_json', '');
         $decoded = $raw ? (json_decode($raw, true) ?? []) : [];
 
-        $links = !empty($decoded) ? $decoded : [
+        $links = ! empty($decoded) ? $decoded : [
             ['label' => 'Privacy Policy', 'url' => '/privacy-policy'],
             ['label' => 'Terms & Conditions', 'url' => '/terms'],
             ['label' => 'Sitemap', 'url' => '/sitemap.xml'],
@@ -224,7 +223,7 @@ class ThemePresentationService
             ['platform' => 'google', 'url' => Setting::get('google_business_url', '')],
         ];
 
-        return array_values(array_filter($links, fn (array $link) => !empty($link['url'])));
+        return array_values(array_filter($links, fn (array $link) => ! empty($link['url'])));
     }
 
     public function navCategories(int $limit = 6): Collection

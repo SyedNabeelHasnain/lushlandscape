@@ -91,8 +91,8 @@ class BlockBuilderService
 
         return self::nestBlockCollection(
             PageBlock::forPage($pageType, $pageId)
-            ->orderBy('sort_order')
-            ->get()
+                ->orderBy('sort_order')
+                ->get()
         )
             ->map(fn ($block) => self::mapEditorBlock($block))
             ->values();
@@ -183,26 +183,26 @@ class BlockBuilderService
     private static function mapEditorBlock(PageBlock $block): array
     {
         return [
-                'id' => $block->id,
-                'block_type' => $block->block_type,
-                'is_layout_section' => self::isLayoutSection($block->block_type),
-                'category' => $block->category,
-                'is_enabled' => (bool) $block->is_enabled,
-                'show_on_desktop' => (bool) $block->show_on_desktop,
-                'show_on_tablet' => (bool) $block->show_on_tablet,
-                'show_on_mobile' => (bool) $block->show_on_mobile,
-                'sort_order' => (int) $block->sort_order,
-                'visible_from' => $block->visible_from?->toIso8601String(),
-                'visible_until' => $block->visible_until?->toIso8601String(),
-                'content' => $block->content ?? [],
-                'data_source' => $block->data_source ?? null,
-                'styles' => $block->styles ?? self::styleDefaults(),
-                'custom_id' => $block->custom_id,
-                'attributes' => $block->attributes ?? null,
-                'animation' => $block->animation,
-                'children' => $block->children->map(fn (PageBlock $child) => self::mapEditorBlock($child))->values()->all(),
-                '_uid' => 'block_'.($block->id ?: uniqid()),
-                '_open' => false,
+            'id' => $block->id,
+            'block_type' => $block->block_type,
+            'is_layout_section' => self::isLayoutSection($block->block_type),
+            'category' => $block->category,
+            'is_enabled' => (bool) $block->is_enabled,
+            'show_on_desktop' => (bool) $block->show_on_desktop,
+            'show_on_tablet' => (bool) $block->show_on_tablet,
+            'show_on_mobile' => (bool) $block->show_on_mobile,
+            'sort_order' => (int) $block->sort_order,
+            'visible_from' => $block->visible_from?->toIso8601String(),
+            'visible_until' => $block->visible_until?->toIso8601String(),
+            'content' => $block->content ?? [],
+            'data_source' => $block->data_source ?? null,
+            'styles' => $block->styles ?? self::styleDefaults(),
+            'custom_id' => $block->custom_id,
+            'attributes' => $block->attributes ?? null,
+            'animation' => $block->animation,
+            'children' => $block->children->map(fn (PageBlock $child) => self::mapEditorBlock($child))->values()->all(),
+            '_uid' => 'block_'.($block->id ?: uniqid()),
+            '_open' => false,
         ];
     }
 

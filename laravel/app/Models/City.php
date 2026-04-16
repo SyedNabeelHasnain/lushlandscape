@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 /**
@@ -37,17 +39,16 @@ use Illuminate\Support\Str;
  * @property string $status
  * @property int $sort_order
  * @property-read string|null $frontend_url
- * 
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Neighborhood[] $neighborhoods
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ServiceCityPage[] $servicePages
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ServiceCityPage[] $activeServicePages
- * @property-read \App\Models\MediaAsset|null $heroMedia
- * @property-read \App\Models\MediaAsset|null $heroImage2
- * @property-read \App\Models\MediaAsset|null $heroImage3
- * @property-read \App\Models\MediaAsset|null $heroImage4
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PortfolioProject[] $portfolioProjects
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ServiceCategory[] $serviceCategories
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Service[] $services
+ * @property-read Collection|Neighborhood[] $neighborhoods
+ * @property-read Collection|ServiceCityPage[] $servicePages
+ * @property-read Collection|ServiceCityPage[] $activeServicePages
+ * @property-read MediaAsset|null $heroMedia
+ * @property-read MediaAsset|null $heroImage2
+ * @property-read MediaAsset|null $heroImage3
+ * @property-read MediaAsset|null $heroImage4
+ * @property-read Collection|PortfolioProject[] $portfolioProjects
+ * @property-read Collection|ServiceCategory[] $serviceCategories
+ * @property-read Collection|Service[] $services
  */
 class City extends Model
 {
@@ -87,15 +88,15 @@ class City extends Model
         });
 
         static::saved(function ($model) {
-            \Illuminate\Support\Facades\Cache::forget('global_cities_footer');
-            \Illuminate\Support\Facades\Cache::forget('interactive_map_all_cities');
-            \Illuminate\Support\Facades\Cache::forget('home_schema_cities');
+            Cache::forget('global_cities_footer');
+            Cache::forget('interactive_map_all_cities');
+            Cache::forget('home_schema_cities');
         });
 
         static::deleted(function ($model) {
-            \Illuminate\Support\Facades\Cache::forget('global_cities_footer');
-            \Illuminate\Support\Facades\Cache::forget('interactive_map_all_cities');
-            \Illuminate\Support\Facades\Cache::forget('home_schema_cities');
+            Cache::forget('global_cities_footer');
+            Cache::forget('interactive_map_all_cities');
+            Cache::forget('home_schema_cities');
         });
     }
 

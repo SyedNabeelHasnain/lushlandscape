@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\City;
+use App\Models\PageBlock;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceCityPage;
-use App\Models\PageBlock;
 use Illuminate\Database\Seeder;
 
 class MapContentSeeder extends Seeder

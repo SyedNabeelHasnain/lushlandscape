@@ -26,6 +26,7 @@ class FormSubmitController extends Controller
                     ? ['required', 'array', 'min:1']
                     : ['nullable', 'array'];
                 $rules[$field->name.'.*'] = ['string', 'max:255'];
+
                 continue;
             }
 
@@ -91,7 +92,7 @@ class FormSubmitController extends Controller
         $appUrl = rtrim(config('app.url'), '/');
 
         // Admin notification email
-        if (!empty($form->email_to)) {
+        if (! empty($form->email_to)) {
             try {
                 $dataRows = [];
                 foreach ($validated as $k => $v) {
@@ -127,6 +128,7 @@ class FormSubmitController extends Controller
                     'submission_id' => $submission->id,
                     'error' => $e->getMessage(),
                 ]);
+
                 return response()->json(['success' => false, 'message' => 'There was an error sending your message. Please try again later or contact us directly.'], 500);
             }
         }

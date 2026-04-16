@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -36,32 +37,32 @@ class PortfolioProject extends Model
         ];
     }
 
-    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
 
-    public function service(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
     }
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(PortfolioCategory::class, 'category_id');
     }
 
-    public function heroMedia(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function heroMedia(): BelongsTo
     {
         return $this->belongsTo(MediaAsset::class, 'hero_media_id');
     }
 
-    public function beforeImage(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function beforeImage(): BelongsTo
     {
         return $this->belongsTo(MediaAsset::class, 'before_image_id');
     }
 
-    public function afterImage(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function afterImage(): BelongsTo
     {
         return $this->belongsTo(MediaAsset::class, 'after_image_id');
     }

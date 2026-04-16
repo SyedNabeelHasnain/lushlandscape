@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Concerns\HandlesAjaxRequests;
 use App\Http\Controllers\Controller;
 use App\Services\BlockBuilderService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -53,7 +54,7 @@ class ContentBlockExportController extends Controller
         }
 
         $parsed = $this->parseImportedPayload($request, $canonicalType);
-        if ($parsed instanceof \Illuminate\Http\JsonResponse) {
+        if ($parsed instanceof JsonResponse) {
             return $parsed;
         }
 
@@ -86,7 +87,7 @@ class ContentBlockExportController extends Controller
         }
 
         $parsed = $this->parseImportedPayload($request, $canonicalType);
-        if ($parsed instanceof \Illuminate\Http\JsonResponse) {
+        if ($parsed instanceof JsonResponse) {
             return $parsed;
         }
 

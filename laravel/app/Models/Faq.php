@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -36,15 +38,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $not_helpful_count
  * @property string $status
  * @property int $display_order
- * @property \Illuminate\Support\Carbon|null $published_at
- * @property \Illuminate\Support\Carbon|null $review_date
- * @property \Illuminate\Support\Carbon|null $expiry_date
+ * @property Carbon|null $published_at
+ * @property Carbon|null $review_date
+ * @property Carbon|null $expiry_date
  * @property-read string|null $frontend_url
- * 
- * @property-read \App\Models\FaqCategory|null $category
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FaqAssignment[] $assignments
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FaqFeedback[] $feedback
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\FaqTag[] $tags
+ * @property-read FaqCategory|null $category
+ * @property-read Collection|FaqAssignment[] $assignments
+ * @property-read Collection|FaqFeedback[] $feedback
+ * @property-read Collection|FaqTag[] $tags
  */
 class Faq extends Model
 {

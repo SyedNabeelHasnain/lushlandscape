@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -35,18 +36,17 @@ use Illuminate\Support\Str;
  * @property string $status
  * @property int $sort_order
  * @property-read string|null $frontend_url
- * 
- * @property-read \App\Models\ServiceCategory|null $category
- * @property-read \App\Models\Service|null $parent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Service[] $children
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ServiceCityPage[] $cityPages
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ServiceCityPage[] $activeCityPages
- * @property-read \App\Models\MediaAsset|null $heroMedia
- * @property-read \App\Models\MediaAsset|null $heroImage2
- * @property-read \App\Models\MediaAsset|null $heroImage3
- * @property-read \App\Models\MediaAsset|null $heroImage4
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PortfolioProject[] $portfolioProjects
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\City[] $cities
+ * @property-read ServiceCategory|null $category
+ * @property-read Service|null $parent
+ * @property-read Collection|Service[] $children
+ * @property-read Collection|ServiceCityPage[] $cityPages
+ * @property-read Collection|ServiceCityPage[] $activeCityPages
+ * @property-read MediaAsset|null $heroMedia
+ * @property-read MediaAsset|null $heroImage2
+ * @property-read MediaAsset|null $heroImage3
+ * @property-read MediaAsset|null $heroImage4
+ * @property-read Collection|PortfolioProject[] $portfolioProjects
+ * @property-read Collection|City[] $cities
  */
 class Service extends Model
 {

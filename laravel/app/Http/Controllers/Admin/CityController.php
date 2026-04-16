@@ -10,8 +10,10 @@ use App\Models\ServiceCategory;
 use App\Models\ServiceCityPage;
 use App\Services\BlockBuilderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class CityController extends Controller
 {
@@ -65,8 +67,8 @@ class CityController extends Controller
         ];
 
         $blocksJson = $request->input('blocks_json');
-        
-        $city = \Illuminate\Support\Facades\DB::transaction(function () use ($validated, $blocksJson) {
+
+        $city = DB::transaction(function () use ($validated, $blocksJson) {
             $city = City::create($validated);
 
             // Save blocks if submitted
@@ -74,7 +76,7 @@ class CityController extends Controller
                 $blocksData = json_decode($blocksJson, true) ?? [];
                 BlockBuilderService::saveUnifiedBlocks('city', $city->id, $blocksData);
             }
-            
+
             return $city;
         });
 
@@ -140,8 +142,8 @@ class CityController extends Controller
         unset($validated['category_ids']);
 
         $blocksJson = $request->input('blocks_json', '[]');
-        
-        \Illuminate\Support\Facades\DB::transaction(function () use ($city, $validated, $categoryIds, $blocksJson) {
+
+        DB::transaction(function () use ($city, $validated, $categoryIds, $blocksJson) {
             $city->update($validated);
 
             // Save unified blocks (Section manager + Block editor)
@@ -199,13 +201,13 @@ class CityController extends Controller
 
         foreach ($allCategories as $category) {
             $isEnabled = in_array($category->id, $enabledCategoryIds);
-            
+
             foreach ($category->services as $service) {
                 if ($existingPages->has($service->id)) {
                     $page = $existingPages->get($service->id);
-                    if ($isEnabled && !$page->is_active) {
+                    if ($isEnabled && ! $page->is_active) {
                         $toUpdateActive[] = $page->id;
-                    } elseif (!$isEnabled && $page->is_active) {
+                    } elseif (! $isEnabled && $page->is_active) {
                         $toUpdateInactive[] = $page->id;
                     }
                 } else {
@@ -218,8 +220,8 @@ class CityController extends Controller
                             'navigation_label' => $service->name,
                             'is_active' => true,
                             'is_indexable' => true,
-                            'system_slug' => \Illuminate\Support\Str::slug($service->name).'-'.\Illuminate\Support\Str::slug($city->name),
-                            'slug_final' => \Illuminate\Support\Str::slug($service->name).'-'.\Illuminate\Support\Str::slug($city->name),
+                            'system_slug' => Str::slug($service->name).'-'.Str::slug($city->name),
+                            'slug_final' => Str::slug($service->name).'-'.Str::slug($city->name),
                             'created_at' => now(),
                             'updated_at' => now(),
                         ];
@@ -228,15 +230,15 @@ class CityController extends Controller
             }
         }
 
-        if (!empty($toInsert)) {
+        if (! empty($toInsert)) {
             ServiceCityPage::insert($toInsert);
         }
 
-        if (!empty($toUpdateActive)) {
+        if (! empty($toUpdateActive)) {
             ServiceCityPage::whereIn('id', $toUpdateActive)->update(['is_active' => true]);
         }
 
-        if (!empty($toUpdateInactive)) {
+        if (! empty($toUpdateInactive)) {
             ServiceCityPage::whereIn('id', $toUpdateInactive)->update(['is_active' => false]);
         }
     }

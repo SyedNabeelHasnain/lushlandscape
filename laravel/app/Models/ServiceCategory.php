@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 /**
@@ -29,12 +31,11 @@ use Illuminate\Support\Str;
  * @property string $status
  * @property int $sort_order
  * @property-read string|null $frontend_url
- * 
- * @property-read \App\Models\ServiceCategory|null $parent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ServiceCategory[] $children
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Service[] $services
- * @property-read \App\Models\MediaAsset|null $heroMedia
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\City[] $cities
+ * @property-read ServiceCategory|null $parent
+ * @property-read Collection|ServiceCategory[] $children
+ * @property-read Collection|Service[] $services
+ * @property-read MediaAsset|null $heroMedia
+ * @property-read Collection|City[] $cities
  */
 class ServiceCategory extends Model
 {
@@ -66,13 +67,13 @@ class ServiceCategory extends Model
         });
 
         static::saved(function ($model) {
-            \Illuminate\Support\Facades\Cache::forget('global_service_categories_footer');
-            \Illuminate\Support\Facades\Cache::forget('mega_nav_categories_v2');
+            Cache::forget('global_service_categories_footer');
+            Cache::forget('mega_nav_categories_v2');
         });
 
         static::deleted(function ($model) {
-            \Illuminate\Support\Facades\Cache::forget('global_service_categories_footer');
-            \Illuminate\Support\Facades\Cache::forget('mega_nav_categories_v2');
+            Cache::forget('global_service_categories_footer');
+            Cache::forget('mega_nav_categories_v2');
         });
     }
 

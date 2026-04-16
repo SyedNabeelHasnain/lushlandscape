@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\BlockBuilderService;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-
 use App\Http\Controllers\Controller;
 use App\Models\SearchLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class SearchAnalyticsController extends Controller
 {
@@ -53,7 +49,7 @@ class SearchAnalyticsController extends Controller
         // Recent searches
         $recentSearches = SearchLog::orderByDesc('created_at')->limit(30)->get();
 
-        return \Illuminate\Support\Facades\View::make('admin.search-analytics.index', compact(
+        return View::make('admin.search-analytics.index', compact(
             'topQueries', 'zeroResults', 'dailyVolume',
             'totalSearches', 'uniqueQueries', 'zeroResultsPct',
             'recentSearches', 'period'

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\ContentBlock;
+use App\Models\MediaAsset;
 use App\Models\PageBlock;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Blade;
@@ -340,7 +341,7 @@ class BlockRendererTest extends TestCase
 
     public function test_editorial_split_feature_renders_media_features_and_cta(): void
     {
-        $media = new \App\Models\MediaAsset([
+        $media = new MediaAsset([
             'id' => 42,
             'path' => 'feature.jpg',
             'default_alt_text' => 'Precision landscape project',

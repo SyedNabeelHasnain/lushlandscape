@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\PageBlock;
 use App\Console\Services\ListingPageBlueprintService;
+use App\Models\PageBlock;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;

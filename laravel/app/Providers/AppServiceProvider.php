@@ -8,13 +8,15 @@ use App\Models\PortfolioProject;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceCityPage;
-use App\Models\StaticPage;
 use App\Models\Setting;
+use App\Models\StaticPage;
+use App\Models\ThemeLayout;
+use App\Services\BlockBuilderService;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -49,22 +51,22 @@ class AppServiceProvider extends ServiceProvider
             });
 
             $globalThemeHeader = Cache::remember('global_theme_header', 3600, function () {
-                return \App\Models\ThemeLayout::where('type', 'header')->where('is_active', true)->latest('updated_at')->first();
+                return ThemeLayout::where('type', 'header')->where('is_active', true)->latest('updated_at')->first();
             });
-            $globalThemeHeaderBlocks = $globalThemeHeader ? \App\Services\BlockBuilderService::getBlocks('theme_layout', $globalThemeHeader->id) : collect();
+            $globalThemeHeaderBlocks = $globalThemeHeader ? BlockBuilderService::getBlocks('theme_layout', $globalThemeHeader->id) : collect();
 
             $globalThemeFooter = Cache::remember('global_theme_footer', 3600, function () {
-                return \App\Models\ThemeLayout::where('type', 'footer')->where('is_active', true)->latest('updated_at')->first();
+                return ThemeLayout::where('type', 'footer')->where('is_active', true)->latest('updated_at')->first();
             });
-            $globalThemeFooterBlocks = $globalThemeFooter ? \App\Services\BlockBuilderService::getBlocks('theme_layout', $globalThemeFooter->id) : collect();
+            $globalThemeFooterBlocks = $globalThemeFooter ? BlockBuilderService::getBlocks('theme_layout', $globalThemeFooter->id) : collect();
 
             $view->with('globalSettings', $settings)
-                 ->with('globalCities', $globalCities)
-                 ->with('globalServiceCategories', $globalServiceCategories)
-                 ->with('globalThemeHeader', $globalThemeHeader)
-                 ->with('globalThemeHeaderBlocks', $globalThemeHeaderBlocks)
-                 ->with('globalThemeFooter', $globalThemeFooter)
-                 ->with('globalThemeFooterBlocks', $globalThemeFooterBlocks);
+                ->with('globalCities', $globalCities)
+                ->with('globalServiceCategories', $globalServiceCategories)
+                ->with('globalThemeHeader', $globalThemeHeader)
+                ->with('globalThemeHeaderBlocks', $globalThemeHeaderBlocks)
+                ->with('globalThemeFooter', $globalThemeFooter)
+                ->with('globalThemeFooterBlocks', $globalThemeFooterBlocks);
         });
     }
 }

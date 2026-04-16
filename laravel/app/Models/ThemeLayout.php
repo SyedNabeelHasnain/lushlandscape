@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class ThemeLayout extends Model
 {
@@ -24,8 +25,8 @@ class ThemeLayout extends Model
     protected static function booted(): void
     {
         static::saved(function (self $layout) {
-            \Illuminate\Support\Facades\Cache::forget('global_theme_header');
-            \Illuminate\Support\Facades\Cache::forget('global_theme_footer');
+            Cache::forget('global_theme_header');
+            Cache::forget('global_theme_footer');
 
             if (! $layout->is_active) {
                 return;
@@ -39,8 +40,8 @@ class ThemeLayout extends Model
         });
 
         static::deleted(function (self $layout) {
-            \Illuminate\Support\Facades\Cache::forget('global_theme_header');
-            \Illuminate\Support\Facades\Cache::forget('global_theme_footer');
+            Cache::forget('global_theme_header');
+            Cache::forget('global_theme_footer');
         });
     }
 

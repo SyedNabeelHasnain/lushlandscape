@@ -4,7 +4,6 @@ use App\Models\ContentBlock;
 use App\Models\PageBlock;
 use App\Models\PageSection;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -89,7 +88,7 @@ return new class extends Migration
         // (blocks migrated from page_sections and page_content_blocks)
         // Since we can't distinguish them after migration, require explicit confirmation
         if (! app()->environment('local', 'testing')) {
-            throw new \RuntimeException('This migration cannot be rolled back in production. It would delete all page blocks.');
+            throw new RuntimeException('This migration cannot be rolled back in production. It would delete all page blocks.');
         }
 
         PageBlock::whereNotNull('id')->delete();

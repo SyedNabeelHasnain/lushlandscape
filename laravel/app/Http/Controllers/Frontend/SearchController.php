@@ -11,6 +11,7 @@ use App\Models\SearchLog;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SearchController extends Controller
 {
@@ -95,7 +96,7 @@ class SearchController extends Controller
                 'ip' => $request->ip(),
             ]);
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('Search log failed: ' . $e->getMessage(), ['exception' => $e]);
+            Log::error('Search log failed: '.$e->getMessage(), ['exception' => $e]);
         }
 
         return response()->json([
@@ -200,7 +201,7 @@ class SearchController extends Controller
                 'ip' => $request->ip(),
             ]);
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('Search log failed (results page): ' . $e->getMessage(), ['exception' => $e]);
+            Log::error('Search log failed (results page): '.$e->getMessage(), ['exception' => $e]);
         }
 
         return view('frontend.pages.search', compact('q', 'type', 'services', 'categories', 'cities', 'blog', 'faqs', 'portfolio', 'total'));

@@ -74,7 +74,7 @@ return [
                 'gray' => 'Light Gray',
                 'forest' => 'Forest Green',
                 'dark' => 'Dark',
-            ]
+            ],
         ],
         ['key' => 'bg_image_id', 'label' => 'Background Image', 'type' => 'media', 'tab' => 'background'],
         [
@@ -82,7 +82,7 @@ return [
             'label' => 'Overlay',
             'type' => 'select',
             'tab' => 'background',
-            'options' => ['none' => 'None', 'dark' => 'Dark', 'light' => 'Light', 'forest' => 'Forest']
+            'options' => ['none' => 'None', 'dark' => 'Dark', 'light' => 'Light', 'forest' => 'Forest'],
         ],
         [
             'key' => 'bg_overlay_opacity',
@@ -92,7 +92,7 @@ return [
             'min' => 0,
             'max' => 100,
             'step' => 5,
-            'default' => 50
+            'default' => 50,
         ],
         [
             'key' => 'surface_style',
@@ -107,14 +107,14 @@ return [
                 'glass-light' => 'Glass Light',
                 'glass-dark' => 'Glass Dark',
                 'stone-wash' => 'Stone Wash',
-            ]
+            ],
         ],
         [
             'key' => 'glass_effect',
             'label' => 'Glass Effect',
             'type' => 'select',
             'tab' => 'background',
-            'options' => ['none' => 'None', 'subtle' => 'Subtle', 'strong' => 'Strong']
+            'options' => ['none' => 'None', 'subtle' => 'Subtle', 'strong' => 'Strong'],
         ],
 
         // Spacing
@@ -123,49 +123,49 @@ return [
             'label' => 'Spacing Preset',
             'type' => 'select',
             'tab' => 'spacing',
-            'options' => ['none' => 'None', 'compact' => 'Compact', 'section' => 'Section', 'feature' => 'Feature', 'hero' => 'Hero']
+            'options' => ['none' => 'None', 'compact' => 'Compact', 'section' => 'Section', 'feature' => 'Feature', 'hero' => 'Hero'],
         ],
         [
             'key' => 'padding_top',
             'label' => 'Padding Top',
             'type' => 'select',
             'tab' => 'spacing',
-            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'],
         ],
         [
             'key' => 'padding_bottom',
             'label' => 'Padding Bottom',
             'type' => 'select',
             'tab' => 'spacing',
-            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'],
         ],
         [
             'key' => 'padding_left',
             'label' => 'Padding Left',
             'type' => 'select',
             'tab' => 'spacing',
-            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
         ],
         [
             'key' => 'padding_right',
             'label' => 'Padding Right',
             'type' => 'select',
             'tab' => 'spacing',
-            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
         ],
         [
             'key' => 'margin_top',
             'label' => 'Margin Top',
             'type' => 'select',
             'tab' => 'spacing',
-            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'],
         ],
         [
             'key' => 'margin_bottom',
             'label' => 'Margin Bottom',
             'type' => 'select',
             'tab' => 'spacing',
-            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'],
         ],
 
         // Layout
@@ -174,21 +174,21 @@ return [
             'label' => 'Max Width',
             'type' => 'select',
             'tab' => 'layout',
-            'options' => ['full' => 'Full Width', 'xl' => '7xl (1280px)', 'lg' => '5xl (1024px)', 'md' => '3xl (768px)', 'sm' => 'xl (576px)']
+            'options' => ['full' => 'Full Width', 'xl' => '7xl (1280px)', 'lg' => '5xl (1024px)', 'md' => '3xl (768px)', 'sm' => 'xl (576px)'],
         ],
         [
             'key' => 'text_color',
             'label' => 'Text Color',
             'type' => 'select',
             'tab' => 'layout',
-            'options' => ['default' => 'Default', 'white' => 'White', 'dark' => 'Dark', 'forest' => 'Forest Green']
+            'options' => ['default' => 'Default', 'white' => 'White', 'dark' => 'Dark', 'forest' => 'Forest Green'],
         ],
         [
             'key' => 'text_align',
             'label' => 'Text Align',
             'type' => 'select',
             'tab' => 'layout',
-            'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right']
+            'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
         ],
 
         // Appearance
@@ -197,7 +197,7 @@ return [
             'label' => 'Section Shell',
             'type' => 'select',
             'tab' => 'appearance',
-            'options' => ['none' => 'None', 'inset-panel' => 'Inset Panel', 'luxury-panel' => 'Luxury Panel', 'soft-panel' => 'Soft Panel']
+            'options' => ['none' => 'None', 'inset-panel' => 'Inset Panel', 'luxury-panel' => 'Luxury Panel', 'soft-panel' => 'Soft Panel'],
         ],
         [
             'key' => 'divider_style',
@@ -211,7 +211,7 @@ return [
                 'both' => 'Top + Bottom',
                 'gold-top' => 'Gold Top',
                 'gold-bottom' => 'Gold Bottom',
-            ]
+            ],
         ],
         ['key' => 'rounded', 'label' => 'Rounded Corners', 'type' => 'toggle', 'tab' => 'appearance'],
         [
@@ -219,14 +219,14 @@ return [
             'label' => 'Border',
             'type' => 'select',
             'tab' => 'appearance',
-            'options' => ['none' => 'None', 'light' => 'Light', 'medium' => 'Medium']
+            'options' => ['none' => 'None', 'light' => 'Light', 'medium' => 'Medium'],
         ],
         [
             'key' => 'shadow',
             'label' => 'Shadow',
             'type' => 'select',
             'tab' => 'appearance',
-            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+            'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
         ],
         ['key' => 'custom_class', 'label' => 'Custom CSS Class', 'type' => 'text', 'tab' => 'appearance'],
 
@@ -236,14 +236,14 @@ return [
             'label' => 'Global Font Size',
             'type' => 'select',
             'tab' => 'typography',
-            'options' => ['default' => 'Default', 'sm' => 'Small', 'lg' => 'Large', 'xl' => 'Extra Large']
+            'options' => ['default' => 'Default', 'sm' => 'Small', 'lg' => 'Large', 'xl' => 'Extra Large'],
         ],
         [
             'key' => 'font_weight',
             'label' => 'Global Font Weight',
             'type' => 'select',
             'tab' => 'typography',
-            'options' => ['normal' => 'Normal', 'medium' => 'Medium', 'semibold' => 'Semibold', 'bold' => 'Bold']
+            'options' => ['normal' => 'Normal', 'medium' => 'Medium', 'semibold' => 'Semibold', 'bold' => 'Bold'],
         ],
         ['key' => 'z_index', 'label' => 'Z-Index', 'type' => 'number', 'tab' => 'layout', 'default' => 0],
         [
@@ -251,7 +251,7 @@ return [
             'label' => 'Overflow',
             'type' => 'select',
             'tab' => 'layout',
-            'options' => ['visible' => 'Visible', 'hidden' => 'Hidden', 'clip' => 'Clip']
+            'options' => ['visible' => 'Visible', 'hidden' => 'Hidden', 'clip' => 'Clip'],
         ],
     ],
 
@@ -850,13 +850,13 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'list' => 'List', 'masonry' => 'Masonry', 'slider' => 'Slider']
+                    'options' => ['grid' => 'Grid', 'list' => 'List', 'masonry' => 'Masonry', 'slider' => 'Slider'],
                 ],
                 [
                     'key' => 'columns',
                     'label' => 'Desktop Columns',
                     'type' => 'select',
-                    'options' => ['1' => '1', '2' => '2', '3' => '3', '4' => '4']
+                    'options' => ['1' => '1', '2' => '2', '3' => '3', '4' => '4'],
                 ],
                 [
                     'key' => 'data_model',
@@ -869,7 +869,7 @@ return [
                         'App\Models\PortfolioProject' => 'Portfolio Projects',
                         'App\Models\Review' => 'Reviews',
                         'App\Models\BlogPost' => 'Blog Posts',
-                    ]
+                    ],
                 ],
                 ['key' => 'template_id', 'label' => 'Card Template ID', 'type' => 'number'],
                 ['key' => 'limit', 'label' => 'Item Limit', 'type' => 'text'],
@@ -907,13 +907,13 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'list' => 'List', 'cards' => 'Cards']
+                    'options' => ['grid' => 'Grid', 'list' => 'List', 'cards' => 'Cards'],
                 ],
                 [
                     'key' => 'columns',
                     'label' => 'Columns',
                     'type' => 'select',
-                    'options' => ['2' => '2', '3' => '3', '4' => '4']
+                    'options' => ['2' => '2', '3' => '3', '4' => '4'],
                 ],
                 [
                     'key' => 'variant',
@@ -972,7 +972,7 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'list' => 'List']
+                    'options' => ['grid' => 'Grid', 'list' => 'List'],
                 ],
                 [
                     'key' => 'variant',
@@ -1028,7 +1028,7 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'slider' => 'Slider']
+                    'options' => ['grid' => 'Grid', 'slider' => 'Slider'],
                 ],
                 ['key' => 'featured_only', 'label' => 'Featured Only', 'type' => 'toggle'],
                 [
@@ -1079,13 +1079,13 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider']
+                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider'],
                 ],
                 [
                     'key' => 'columns',
                     'label' => 'Columns',
                     'type' => 'select',
-                    'options' => ['2' => '2', '3' => '3', '4' => '4']
+                    'options' => ['2' => '2', '3' => '3', '4' => '4'],
                 ],
                 [
                     'key' => 'variant',
@@ -1192,7 +1192,7 @@ return [
                     'key' => 'style',
                     'label' => 'Style',
                     'type' => 'select',
-                    'options' => ['accordion' => 'Accordion', 'list' => 'List']
+                    'options' => ['accordion' => 'Accordion', 'list' => 'List'],
                 ],
             ],
             'data_source' => [
@@ -1228,7 +1228,7 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'slider' => 'Slider']
+                    'options' => ['grid' => 'Grid', 'slider' => 'Slider'],
                 ],
                 [
                     'key' => 'variant',
@@ -1330,7 +1330,7 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'list' => 'List', 'strip' => 'City Strip', 'compact' => 'Compact Cards']
+                    'options' => ['grid' => 'Grid', 'list' => 'List', 'strip' => 'City Strip', 'compact' => 'Compact Cards'],
                 ],
                 [
                     'key' => 'tone',
@@ -1398,7 +1398,7 @@ return [
                         ['key' => 'number', 'label' => 'Number', 'type' => 'text'],
                         ['key' => 'label', 'label' => 'Label', 'type' => 'text'],
                         ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
-                    ]
+                    ],
                 ],
             ],
             'data_source' => null,
@@ -1445,7 +1445,7 @@ return [
                         ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
                         ['key' => 'title', 'label' => 'Step Title', 'type' => 'text'],
                         ['key' => 'desc', 'label' => 'Description', 'type' => 'textarea'],
-                    ]
+                    ],
                 ],
             ],
             'data_source' => null,
@@ -1548,7 +1548,7 @@ return [
                         ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
                         ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
                         ['key' => 'desc', 'label' => 'Description', 'type' => 'text'],
-                    ]
+                    ],
                 ],
             ],
             'data_source' => null,
@@ -1619,13 +1619,13 @@ return [
                     'key' => 'level',
                     'label' => 'Level',
                     'type' => 'select',
-                    'options' => ['h1' => 'H1', 'h2' => 'H2', 'h3' => 'H3', 'h4' => 'H4', 'h5' => 'H5', 'h6' => 'H6']
+                    'options' => ['h1' => 'H1', 'h2' => 'H2', 'h3' => 'H3', 'h4' => 'H4', 'h5' => 'H5', 'h6' => 'H6'],
                 ],
                 [
                     'key' => 'align',
                     'label' => 'Alignment',
                     'type' => 'select',
-                    'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right']
+                    'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
                 ],
             ],
             'defaults' => ['text' => '', 'level' => 'h2', 'align' => 'left'],
@@ -1667,7 +1667,7 @@ return [
                     'key' => 'align',
                     'label' => 'Alignment',
                     'type' => 'select',
-                    'options' => ['left' => 'Left', 'center' => 'Center']
+                    'options' => ['left' => 'Left', 'center' => 'Center'],
                 ],
                 ['key' => 'tag', 'label' => 'Tag/Label', 'type' => 'text'],
                 ['key' => 'show_line', 'label' => 'Show Decorative Line', 'type' => 'toggle'],
@@ -2256,7 +2256,7 @@ return [
                     'key' => 'style',
                     'label' => 'Style',
                     'type' => 'select',
-                    'options' => ['bordered' => 'Left Border', 'card' => 'Card', 'large' => 'Large Centered']
+                    'options' => ['bordered' => 'Left Border', 'card' => 'Card', 'large' => 'Large Centered'],
                 ],
             ],
             'defaults' => ['text' => '', 'author' => '', 'style' => 'bordered'],
@@ -2273,7 +2273,7 @@ return [
                     'key' => 'type',
                     'label' => 'Type',
                     'type' => 'select',
-                    'options' => ['info' => 'Info', 'success' => 'Success', 'warning' => 'Warning', 'error' => 'Error', 'tip' => 'Pro Tip']
+                    'options' => ['info' => 'Info', 'success' => 'Success', 'warning' => 'Warning', 'error' => 'Error', 'tip' => 'Pro Tip'],
                 ],
                 ['key' => 'dismissible', 'label' => 'Dismissible', 'type' => 'toggle'],
             ],
@@ -2302,14 +2302,14 @@ return [
                     'key' => 'ratio',
                     'label' => 'Column Ratio',
                     'type' => 'select',
-                    'options' => ['1:1' => '50/50', '1:2' => '33/67', '2:1' => '67/33']
+                    'options' => ['1:1' => '50/50', '1:2' => '33/67', '2:1' => '67/33'],
                 ],
                 ['key' => 'reverse_mobile', 'label' => 'Reverse on Mobile', 'type' => 'toggle'],
                 [
                     'key' => 'gap',
                     'label' => 'Gap Size',
                     'type' => 'select',
-                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
                 ],
             ],
             'supports_children' => true,
@@ -2335,7 +2335,7 @@ return [
                     'key' => 'gap',
                     'label' => 'Gap Size',
                     'type' => 'select',
-                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
                 ],
             ],
             'supports_children' => true,
@@ -2351,7 +2351,7 @@ return [
                     'key' => 'style',
                     'label' => 'Style',
                     'type' => 'select',
-                    'options' => ['underline' => 'Underline', 'pills' => 'Pills', 'boxed' => 'Boxed']
+                    'options' => ['underline' => 'Underline', 'pills' => 'Pills', 'boxed' => 'Boxed'],
                 ],
                 [
                     'key' => 'tabs',
@@ -2361,7 +2361,7 @@ return [
                         ['key' => 'title', 'label' => 'Tab Title', 'type' => 'text'],
                         ['key' => 'content', 'label' => 'Content (HTML)', 'type' => 'richtext'],
                         ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
-                    ]
+                    ],
                 ],
             ],
             'defaults' => ['style' => 'underline', 'tabs' => []],
@@ -2376,7 +2376,7 @@ return [
                     'key' => 'style',
                     'label' => 'Style',
                     'type' => 'select',
-                    'options' => ['default' => 'Default', 'bordered' => 'Bordered', 'minimal' => 'Minimal']
+                    'options' => ['default' => 'Default', 'bordered' => 'Bordered', 'minimal' => 'Minimal'],
                 ],
                 [
                     'key' => 'items',
@@ -2386,7 +2386,7 @@ return [
                         ['key' => 'title', 'label' => 'Title', 'type' => 'text'],
                         ['key' => 'content', 'label' => 'Content (HTML)', 'type' => 'richtext'],
                         ['key' => 'open', 'label' => 'Open by Default', 'type' => 'toggle'],
-                    ]
+                    ],
                 ],
             ],
             'defaults' => ['style' => 'default', 'items' => []],
@@ -2401,13 +2401,13 @@ return [
                     'key' => 'style',
                     'label' => 'Style',
                     'type' => 'select',
-                    'options' => ['solid' => 'Solid', 'dashed' => 'Dashed', 'dotted' => 'Dotted', 'gradient' => 'Gradient']
+                    'options' => ['solid' => 'Solid', 'dashed' => 'Dashed', 'dotted' => 'Dotted', 'gradient' => 'Gradient'],
                 ],
                 [
                     'key' => 'width',
                     'label' => 'Width',
                     'type' => 'select',
-                    'options' => ['full' => 'Full', 'centered' => 'Centered']
+                    'options' => ['full' => 'Full', 'centered' => 'Centered'],
                 ],
             ],
             'defaults' => ['style' => 'solid', 'width' => 'full'],
@@ -2422,7 +2422,7 @@ return [
                     'key' => 'height',
                     'label' => 'Height',
                     'type' => 'select',
-                    'options' => ['xs' => 'Extra Small', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large']
+                    'options' => ['xs' => 'Extra Small', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large', 'xl' => 'Extra Large'],
                 ],
             ],
             'defaults' => ['height' => 'md'],
@@ -2445,7 +2445,7 @@ return [
                     'key' => 'aspect_ratio',
                     'label' => 'Aspect Ratio',
                     'type' => 'select',
-                    'options' => ['auto' => 'Auto', '16:9' => '16:9', '4:3' => '4:3', '1:1' => '1:1', '3:2' => '3:2']
+                    'options' => ['auto' => 'Auto', '16:9' => '16:9', '4:3' => '4:3', '1:1' => '1:1', '3:2' => '3:2'],
                 ],
                 ['key' => 'rounded', 'label' => 'Rounded', 'type' => 'toggle'],
             ],
@@ -2466,7 +2466,7 @@ return [
                     'key' => 'aspect_ratio',
                     'label' => 'Aspect Ratio',
                     'type' => 'select',
-                    'options' => ['16:9' => '16:9', '4:3' => '4:3', '1:1' => '1:1']
+                    'options' => ['16:9' => '16:9', '4:3' => '4:3', '1:1' => '1:1'],
                 ],
             ],
             'defaults' => ['url' => '', 'media_id' => null, 'autoplay' => false, 'muted' => true, 'loop' => false, 'aspect_ratio' => '16:9'],
@@ -2482,13 +2482,13 @@ return [
                     'key' => 'layout',
                     'label' => 'Layout',
                     'type' => 'select',
-                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider']
+                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider'],
                 ],
                 [
                     'key' => 'columns',
                     'label' => 'Columns',
                     'type' => 'select',
-                    'options' => ['2' => '2', '3' => '3', '4' => '4']
+                    'options' => ['2' => '2', '3' => '3', '4' => '4'],
                 ],
                 ['key' => 'lightbox', 'label' => 'Enable Lightbox', 'type' => 'toggle'],
             ],
@@ -2522,20 +2522,20 @@ return [
                     'key' => 'style',
                     'label' => 'Style',
                     'type' => 'select',
-                    'options' => ['primary' => 'Primary', 'secondary' => 'Secondary', 'outline' => 'Outline', 'ghost' => 'Ghost']
+                    'options' => ['primary' => 'Primary', 'secondary' => 'Secondary', 'outline' => 'Outline', 'ghost' => 'Ghost'],
                 ],
                 [
                     'key' => 'size',
                     'label' => 'Size',
                     'type' => 'select',
-                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large']
+                    'options' => ['sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
                 ],
                 ['key' => 'icon', 'label' => 'Icon (Lucide)', 'type' => 'text'],
                 [
                     'key' => 'icon_position',
                     'label' => 'Icon Position',
                     'type' => 'select',
-                    'options' => ['right' => 'Right', 'left' => 'Left']
+                    'options' => ['right' => 'Right', 'left' => 'Left'],
                 ],
                 ['key' => 'open_new_tab', 'label' => 'Open in New Tab', 'type' => 'toggle'],
             ],
@@ -2556,7 +2556,7 @@ return [
                     'type' => 'select_model',
                     'model' => 'App\\Models\\Form',
                     'label_field' => 'name',
-                    'value_field' => 'slug'
+                    'value_field' => 'slug',
                 ],
                 ['key' => 'show_title', 'label' => 'Show Form Title', 'type' => 'toggle'],
                 ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],

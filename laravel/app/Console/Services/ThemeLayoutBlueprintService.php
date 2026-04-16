@@ -2,15 +2,17 @@
 
 namespace App\Console\Services;
 
+use App\Models\ThemeLayout;
 use App\Services\BlockBuilderService;
 use App\Services\ThemePresentationService;
-use App\Models\ThemeLayout;
 use Illuminate\Support\Facades\DB;
 
 class ThemeLayoutBlueprintService
 {
     public const HEADER_LAYOUT_NAME = 'Master Site Header';
+
     public const FOOTER_LAYOUT_NAME = 'Master Site Footer';
+
     public const HEADER_LAYOUT_VARIANTS = [
         ['name' => self::HEADER_LAYOUT_NAME, 'mode' => 'glass', 'tone' => 'dark'],
         ['name' => 'Master Site Header — Transparent (Dark)', 'mode' => 'transparent', 'tone' => 'dark'],
@@ -20,13 +22,12 @@ class ThemeLayoutBlueprintService
 
     public function __construct(
         private readonly ThemePresentationService $themePresentation,
-    ) {
-    }
+    ) {}
 
     /**
      * Scaffold the default header/footer theme layouts as reusable builder drafts.
      *
-     * @return array{header: \App\Models\ThemeLayout, footer: \App\Models\ThemeLayout}
+     * @return array{header: ThemeLayout, footer: ThemeLayout}
      */
     public function scaffold(bool $activate = false): array
     {

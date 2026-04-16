@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\BlogPost;
 use App\Models\City;
+use App\Models\MediaAsset;
 use App\Models\PortfolioProject;
 use App\Models\Service;
 use App\Models\ServiceCategory;
@@ -87,20 +88,20 @@ class GenerateSitemap extends Command
         $portfolioProjects = PortfolioProject::where('status', 'published')->with('heroMedia')->get();
         $allMediaIds = [];
         foreach ($portfolioProjects as $proj) {
-            if (!empty($proj->gallery_media_ids)) {
+            if (! empty($proj->gallery_media_ids)) {
                 $allMediaIds = array_merge($allMediaIds, $proj->gallery_media_ids);
             }
         }
         $allMediaIds = array_unique($allMediaIds);
-        $mediaAssets = $allMediaIds ? \App\Models\MediaAsset::whereIn('id', $allMediaIds)->get()->keyBy('id') : collect();
+        $mediaAssets = $allMediaIds ? MediaAsset::whereIn('id', $allMediaIds)->get()->keyBy('id') : collect();
 
         foreach ($portfolioProjects as $proj) {
             $entry = ['loc' => $baseUrl.'/portfolio/'.$proj->slug, 'changefreq' => 'monthly', 'priority' => '0.6'];
             if ($proj->heroMedia) {
                 $entry['images'][] = ['url' => $proj->heroMedia->getAttribute('url'), 'title' => $proj->title];
             }
-            
-            if (!empty($proj->gallery_media_ids)) {
+
+            if (! empty($proj->gallery_media_ids)) {
                 foreach ($proj->gallery_media_ids as $mediaId) {
                     if ($img = $mediaAssets->get($mediaId)) {
                         $entry['images'][] = ['url' => $img->getAttribute('url'), 'title' => $img->getAttribute('default_alt_text') ?? $proj->title];

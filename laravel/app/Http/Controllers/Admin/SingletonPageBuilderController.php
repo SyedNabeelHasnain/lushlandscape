@@ -9,7 +9,6 @@ use App\Services\SingletonPageBuilderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SingletonPageBuilderController extends Controller
 {
@@ -17,8 +16,7 @@ class SingletonPageBuilderController extends Controller
 
     public function __construct(
         private readonly SingletonPageBuilderService $registry
-    ) {
-    }
+    ) {}
 
     public function edit(string $page)
     {

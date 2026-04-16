@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\BlockBuilderService;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-
 use App\Http\Controllers\Admin\Concerns\HandlesAjaxRequests;
 use App\Http\Controllers\Controller;
 use App\Services\AiContentService;

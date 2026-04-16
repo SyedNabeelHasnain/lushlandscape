@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\BlockBuilderService;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
-
 use App\Http\Controllers\Admin\Concerns\HandlesAjaxRequests;
 use App\Http\Controllers\Controller;
 use App\Models\Form;
 use App\Models\FormSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 
 class FormSubmissionController extends Controller
 {
@@ -31,14 +28,14 @@ class FormSubmissionController extends Controller
         $submissions = $query->paginate(20);
         $forms = Form::orderBy('name')->pluck('name', 'id');
 
-        return \Illuminate\Support\Facades\View::make('admin.submissions.index', compact('submissions', 'forms'));
+        return View::make('admin.submissions.index', compact('submissions', 'forms'));
     }
 
     public function show(FormSubmission $submission)
     {
         $submission->load('form.fields');
 
-        return \Illuminate\Support\Facades\View::make('admin.submissions.show', compact('submission'));
+        return View::make('admin.submissions.show', compact('submission'));
     }
 
     public function update(Request $request, FormSubmission $submission)
@@ -53,7 +50,7 @@ class FormSubmissionController extends Controller
             return $this->jsonSuccess('Status updated.');
         }
 
-        return \Illuminate\Support\Facades\Redirect::back()->with('success', 'Submission status updated.');
+        return Redirect::back()->with('success', 'Submission status updated.');
     }
 
     public function destroy(Request $request, FormSubmission $submission)
@@ -64,6 +61,6 @@ class FormSubmissionController extends Controller
             return $this->jsonSuccess('Submission deleted.');
         }
 
-        return \Illuminate\Support\Facades\Redirect::route('admin.submissions.index')->with('success', 'Submission deleted.');
+        return Redirect::route('admin.submissions.index')->with('success', 'Submission deleted.');
     }
 }

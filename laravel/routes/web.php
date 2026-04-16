@@ -25,8 +25,8 @@ use App\Http\Controllers\Admin\SecurityRuleController;
 use App\Http\Controllers\Admin\ServiceCategoryController;
 use App\Http\Controllers\Admin\ServiceCityPageController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\SingletonPageBuilderController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SingletonPageBuilderController;
 use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController;
 use App\Http\Controllers\Admin\TaxonomyCrudController;
 use App\Http\Controllers\Admin\ThemeLayoutController;
@@ -39,6 +39,7 @@ use App\Http\Controllers\Frontend\LocationPageController;
 use App\Http\Controllers\Frontend\PortfolioController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\ServicePageController;
+use App\Http\Controllers\Frontend\SitemapController;
 use App\Http\Controllers\Frontend\SlugResolverController;
 use Illuminate\Support\Facades\Route;
 
@@ -109,7 +110,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 
 Route::get('/llms.txt', [LlmsTxtController::class, 'show'])->name('llms.txt');
 Route::get('/llms-full.txt', [LlmsTxtController::class, 'full'])->name('llms-full.txt');
-Route::get('/sitemap.xml', [\App\Http\Controllers\Frontend\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [ServicePageController::class, 'hub'])->name('services.hub');

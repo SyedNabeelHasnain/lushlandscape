@@ -7,6 +7,7 @@ use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 $app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,10 +28,11 @@ $app = Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->map(\InvalidArgumentException::class, function (\InvalidArgumentException $e) {
+        $exceptions->map(InvalidArgumentException::class, function (InvalidArgumentException $e) {
             if (request()->is('admin/page-builders/*')) {
-                return new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException($e->getMessage(), $e);
+                return new NotFoundHttpException($e->getMessage(), $e);
             }
+
             return $e;
         });
     })
