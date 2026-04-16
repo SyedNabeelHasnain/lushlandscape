@@ -22,21 +22,21 @@ class OtpService
         $result = DB::transaction(function () use ($email, $ipAddress, &$otp) {
             // Lock the row to prevent parallel requests bypassing the rate limit
             $recent = EmailVerification::where('email', $email)
-                ->where('created_at', '>', now()->subMinutes(2))
+                ->where('created_at', '>', now()->subSeconds(30))
                 ->where('is_verified', false)
                 ->lockForUpdate()
                 ->first();
 
             if ($recent) {
-                return ['success' => false, 'message' => 'Please wait 2 minutes before requesting a new code.'];
+                return ['success' => false, 'message' => 'Please wait 30 seconds before requesting a new code.'];
             }
 
-            // Daily cap: max 10 OTP requests per email per 24 hours
+            // Daily cap: max 50 OTP requests per email per 24 hours
             $dailyCount = EmailVerification::where('email', $email)
                 ->where('created_at', '>', now()->subHours(24))
                 ->count();
 
-            if ($dailyCount >= 10) {
+            if ($dailyCount >= 50) {
                 return ['success' => false, 'message' => 'Too many verification requests today. Please try again tomorrow.'];
             }
 

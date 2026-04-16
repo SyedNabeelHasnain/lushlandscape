@@ -21,7 +21,12 @@ class OtpController extends Controller
         $request->validate(['email' => 'required|email']);
         $result = OtpService::send($request->email, $request->ip());
 
-        return response()->json($result, $result['success'] ? 200 : 429);
+        $status = 200;
+        if (! $result['success']) {
+            $status = str_contains($result['message'] ?? '', 'wait') || str_contains($result['message'] ?? '', 'Too many') ? 429 : 400;
+        }
+
+        return response()->json($result, $status);
     }
 
     public function verify(Request $request)

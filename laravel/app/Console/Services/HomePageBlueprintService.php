@@ -110,7 +110,7 @@ class HomePageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [
                         [
-                            'icon' => 'compass-drafting',
+                            'icon' => 'compass',
                             'title' => 'Architect & Designer Collaboration',
                             'description' => 'Execution that respects architectural intent, permits, grading, and site-specific constraints.',
                         ],
