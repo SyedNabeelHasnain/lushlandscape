@@ -74,10 +74,10 @@ class ThemePresentationService
 
     public function ctaUrl(): string
     {
-        $url = (string) Setting::get('nav_cta_url', '/contact');
+        $url = (string) Setting::get('nav_cta_url', '/request-quote');
 
         if (preg_match('/request-quote/i', $url)) {
-            return '/contact';
+            return '/request-quote';
         }
 
         return $url;
@@ -85,10 +85,10 @@ class ThemePresentationService
 
     public function newsletterHeading(): string
     {
-        $heading = (string) Setting::get('footer_newsletter_heading', 'Landscape Insights & Project Planning');
+        $heading = (string) Setting::get('footer_newsletter_heading', 'Exclusive Landscape Insights');
 
         if (preg_match('/seasonal\s+deals/i', $heading)) {
-            return 'Landscape Insights & Project Planning';
+            return 'Exclusive Landscape Insights';
         }
 
         return $heading;
@@ -96,15 +96,25 @@ class ThemePresentationService
 
     public function newsletterSubtext(): string
     {
-        return (string) Setting::get('footer_newsletter_subtext', 'Join 2,000+ Ontario homeowners getting our free monthly newsletter.');
+        $subtext = (string) Setting::get('footer_newsletter_subtext', 'Curated design inspiration and project planning strategies for your estate.');
+
+        if (preg_match('/Join 2,000\+ Ontario homeowners/i', $subtext)) {
+            return 'Curated design inspiration and project planning strategies for your estate.';
+        }
+
+        return $subtext;
     }
 
     public function copyrightText(): string
     {
         $copyright = (string) Setting::get(
             'footer_copyright_text',
-            '© {year} {site_name}. All rights reserved. Licensed & Insured. Serving Ontario, Canada.'
+            '© {year} {site_name}. All rights reserved.'
         );
+
+        if (preg_match('/Licensed\s*&\s*Insured/i', $copyright)) {
+            $copyright = '© {year} {site_name}. All rights reserved.';
+        }
 
         $copyright = str_replace('{year}', date('Y'), $copyright);
 
@@ -122,23 +132,23 @@ class ThemePresentationService
             ['label' => 'Sitemap', 'url' => '/sitemap.xml'],
         ];
 
-        return array_values(array_filter($links, function ($link): bool {
+        return array_values(array_filter(array_map(function ($link) {
             if (! is_array($link)) {
-                return false;
+                return null;
             }
 
             $label = (string) ($link['label'] ?? '');
             $url = (string) ($link['url'] ?? '');
 
             if ($label !== '' && preg_match('/\b(quote|estimate)\b/i', $label)) {
-                return false;
+                $link['label'] = 'Consultation';
             }
             if ($url !== '' && preg_match('/request-quote/i', $url)) {
-                return false;
+                $link['url'] = '/request-quote';
             }
 
-            return true;
-        }));
+            return $link;
+        }, $links)));
     }
 
     public function configuredFooterColumns(): array
@@ -156,23 +166,23 @@ class ThemePresentationService
                 return $column;
             }
 
-            $column['links'] = array_values(array_filter($column['links'], function ($link): bool {
+            $column['links'] = array_values(array_filter(array_map(function ($link) {
                 if (! is_array($link)) {
-                    return false;
+                    return null;
                 }
 
                 $label = (string) ($link['label'] ?? '');
                 $url = (string) ($link['url'] ?? '');
 
                 if ($label !== '' && preg_match('/\b(quote|estimate)\b/i', $label)) {
-                    return false;
+                    $link['label'] = 'Consultation';
                 }
                 if ($url !== '' && preg_match('/request-quote/i', $url)) {
-                    return false;
+                    $link['url'] = '/request-quote';
                 }
 
-                return true;
-            }));
+                return $link;
+            }, $column['links'])));
 
             return $column;
         }, $columns));

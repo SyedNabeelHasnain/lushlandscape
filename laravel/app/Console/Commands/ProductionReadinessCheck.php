@@ -29,7 +29,7 @@ class ProductionReadinessCheck extends Command
         }
 
         $appUrlRaw = (string) config('app.url');
-        $appUrl = trim(str_replace('`', '', $appUrlRaw));
+        $appUrl = rtrim(trim(str_replace('`', '', $appUrlRaw)), '.');
         $appEnv = (string) config('app.env');
         $appDebug = (bool) config('app.debug');
         $sessionSecure = (bool) config('session.secure');

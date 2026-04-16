@@ -1,8 +1,8 @@
 @props([
-    'title'        => 'Landscaping Construction Contractors in Ontario',
-    'subtitle'     => 'Premium interlocking, concrete, and landscape construction services with a 10-year workmanship warranty.',
+    'title'        => 'Exceptional Landscapes for Distinctive Properties',
+    'subtitle'     => 'Expert landscape design and premium construction tailored to elevate your estate.',
     'ctaPrimary'   => ['text' => 'Book a Consultation', 'url' => '/contact'],
-    'ctaSecondary' => ['text' => 'View Our Work', 'url' => '/portfolio'],
+    'ctaSecondary' => ['text' => 'Explore Portfolio', 'url' => '/portfolio'],
     'mediaAsset'   => null,
     'eyebrow'      => null,
     'badges'       => [],
@@ -11,8 +11,8 @@
     'images'       => [],
     'overlayOpacity' => 50,
     'overlayPreset' => 'gradient',
-    'align' => 'center',
-    'height' => 'viewport',
+    'align' => 'left',
+    'height' => 'standard',
 ])
 @php
     $phone        = \App\Models\Setting::get('phone', '');
@@ -138,7 +138,9 @@
 
     {{-- ── No media fallback ─────────────────────────────────── --}}
     @else
-    <div class="absolute inset-0 z-0 bg-forest"></div>
+    <div class="absolute inset-0 z-0 bg-forest flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
+    </div>
     @endif
 
     {{-- ── Text content (centered) ────────────────────────────── --}}
@@ -178,18 +180,18 @@
         </div>
 
         {{-- ── Trust bar (integrated into hero) ───────────────── --}}
-        <div class="hidden lg:grid grid-cols-3 gap-px mt-24 max-w-4xl mx-auto border border-white/[0.18] bg-white/[0.14] reveal">
+        <div class="hidden lg:grid grid-cols-3 gap-px mt-24 max-w-4xl {{ $align === 'left' ? '' : 'mx-auto' }} border border-white/[0.18] bg-white/[0.14] reveal">
             <div class="bg-white/[0.04] px-8 py-6 text-left">
-                <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">Certified</p>
-                <p class="text-white text-2xl lg:text-[2rem] font-heading leading-none mt-2">CMHA Installers</p>
+                <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">Approach</p>
+                <p class="text-white text-2xl lg:text-[2rem] font-heading leading-none mt-2">Design & Build</p>
             </div>
             <div class="bg-white/[0.04] px-8 py-6 text-left">
-                <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">Protected</p>
-                <p class="text-white text-2xl lg:text-[2rem] font-heading leading-none mt-2">10-Year Warranty</p>
+                <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">Expertise</p>
+                <p class="text-white text-2xl lg:text-[2rem] font-heading leading-none mt-2">Master Craftsmanship</p>
             </div>
             <div class="bg-white/[0.04] px-8 py-6 text-left">
-                <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">Insured</p>
-                <p class="text-white text-2xl lg:text-[2rem] font-heading leading-none mt-2">$5M Liability</p>
+                <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">Assurance</p>
+                <p class="text-white text-2xl lg:text-[2rem] font-heading leading-none mt-2">Uncompromising Quality</p>
             </div>
         </div>
     </div>

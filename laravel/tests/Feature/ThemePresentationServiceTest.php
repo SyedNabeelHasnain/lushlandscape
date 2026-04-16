@@ -112,9 +112,12 @@ class ThemePresentationServiceTest extends TestCase
 
         $service = app(ThemePresentationService::class);
 
+        // Test CTA fallback (should allow /request-quote because it's now consultation)
+        $this->assertSame('/request-quote', $service->ctaUrl());
         $this->assertSame('Book a Consultation', $service->ctaText());
-        $this->assertSame('/contact', $service->ctaUrl());
-        $this->assertSame('Landscape Insights & Project Planning', $service->newsletterHeading());
+
+        // Test Newsletter heading fallback
+        $this->assertSame('Exclusive Landscape Insights', $service->newsletterHeading());
     }
 
     protected function tearDown(): void
