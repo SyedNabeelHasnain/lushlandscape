@@ -126,6 +126,7 @@ ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
 NODE_VERSION_TARGET="20.19.0"
+NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
 
 if ! command -v npm &> /dev/null; then
     for BIN_DIR in /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin; do
@@ -145,9 +146,9 @@ if ! command -v npm &> /dev/null; then
 
     if ! command -v npm &> /dev/null; then
         if command -v curl &> /dev/null; then
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+            curl -fsSL "$NVM_INSTALL_URL" | bash
         elif command -v wget &> /dev/null; then
-            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+            wget -qO- "$NVM_INSTALL_URL" | bash
         else
             abort "npm is missing. Install NodeJS on this server (Hostinger NodeJS selector) or provide curl/wget so nvm can be installed."
         fi
@@ -181,9 +182,9 @@ if [ "${NODE_MAJOR:-0}" -lt 20 ] || { [ "${NODE_MAJOR:-0}" -eq 20 ] && [ "${NODE
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     if ! command -v nvm &> /dev/null; then
         if command -v curl &> /dev/null; then
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+            curl -fsSL "$NVM_INSTALL_URL" | bash
         elif command -v wget &> /dev/null; then
-            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+            wget -qO- "$NVM_INSTALL_URL" | bash
         else
             abort "Node.js is too old for Vite, and neither curl nor wget is available to install nvm."
         fi
@@ -191,11 +192,12 @@ if [ "${NODE_MAJOR:-0}" -lt 20 ] || { [ "${NODE_MAJOR:-0}" -eq 20 ] && [ "${NODE
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     fi
     command -v nvm &> /dev/null || abort "nvm is not available to upgrade Node.js."
-    nvm install "${NODE_VERSION_TARGET}"
-    nvm use "${NODE_VERSION_TARGET}"
+    NVM_INSTALL_OUT="$(nvm install "${NODE_VERSION_TARGET}" 2>&1)" || abort "nvm install ${NODE_VERSION_TARGET} failed: ${NVM_INSTALL_OUT}"
+    NVM_USE_OUT="$(nvm use "${NODE_VERSION_TARGET}" 2>&1)" || abort "nvm use ${NODE_VERSION_TARGET} failed: ${NVM_USE_OUT}"
     nvm alias default "${NODE_VERSION_TARGET}" >/dev/null 2>&1 || true
     export PATH="${NVM_DIR}/versions/node/v${NODE_VERSION_TARGET}/bin:$PATH"
-    node -p 'process.versions.node' | grep -q '^20\.19\.' || abort "Node.js upgrade failed. Current: $(node -p 'process.versions.node')"
+    NODE_UPGRADED="$(node -p 'process.versions.node' 2>/dev/null || echo '')"
+    echo "$NODE_UPGRADED" | grep -q '^20\.19\.' || abort "Node.js upgrade failed. Current: ${NODE_UPGRADED}. nvm install output: ${NVM_INSTALL_OUT}. nvm use output: ${NVM_USE_OUT}"
 fi
 
 log "Installing NPM dependencies (fresh)..."
