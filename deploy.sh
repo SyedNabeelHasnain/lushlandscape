@@ -125,7 +125,7 @@ $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
-NODE_VERSION_TARGET="20"
+NODE_VERSION_TARGET="20.19.0"
 
 if ! command -v npm &> /dev/null; then
     for BIN_DIR in /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin; do
@@ -167,6 +167,36 @@ command -v npm &> /dev/null || abort "npm is still not available after attemptin
 chmod +x "$(command -v node)" 2>/dev/null || true
 chmod +x "$(command -v npm)" 2>/dev/null || true
 npm --version >/dev/null 2>&1 || abort "npm is present but not executable. Fix permissions for $(command -v npm) and re-run deploy."
+
+NODE_VERSION_CURRENT="$(node -p 'process.versions.node' 2>/dev/null || echo '')"
+NODE_MAJOR="${NODE_VERSION_CURRENT%%.*}"
+NODE_MINOR_TMP="${NODE_VERSION_CURRENT#*.}"
+NODE_MINOR="${NODE_MINOR_TMP%%.*}"
+if [ -z "${NODE_VERSION_CURRENT:-}" ]; then
+    abort "Unable to determine Node.js version."
+fi
+if [ "${NODE_MAJOR:-0}" -lt 20 ] || { [ "${NODE_MAJOR:-0}" -eq 20 ] && [ "${NODE_MINOR:-0}" -lt 19 ]; }; then
+    log "Node.js ${NODE_VERSION_CURRENT} detected. Upgrading to ${NODE_VERSION_TARGET} for Vite compatibility..."
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    if ! command -v nvm &> /dev/null; then
+        if command -v curl &> /dev/null; then
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        elif command -v wget &> /dev/null; then
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        else
+            abort "Node.js is too old for Vite, and neither curl nor wget is available to install nvm."
+        fi
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    fi
+    command -v nvm &> /dev/null || abort "nvm is not available to upgrade Node.js."
+    nvm install "${NODE_VERSION_TARGET}"
+    nvm use "${NODE_VERSION_TARGET}"
+    nvm alias default "${NODE_VERSION_TARGET}" >/dev/null 2>&1 || true
+    export PATH="${NVM_DIR}/versions/node/v${NODE_VERSION_TARGET}/bin:$PATH"
+    node -p 'process.versions.node' | grep -q '^20\.19\.' || abort "Node.js upgrade failed. Current: $(node -p 'process.versions.node')"
+fi
 
 log "Installing NPM dependencies (fresh)..."
 rm -rf node_modules
