@@ -44,8 +44,8 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           PORT="${{ secrets.STAGING_SSH_PORT }}"
-          if [ -z "$PORT" ]; then PORT=22; fi
-          ssh-keyscan -p "$PORT" "${{ secrets.STAGING_SSH_HOST }}" >> ~/.ssh/known_hosts
+          if [ -z "$PORT" ]; then PORT=65002; fi
+          ssh-keyscan -p "$PORT" -H "${{ secrets.STAGING_SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
 
       - name: Deploy (fresh)
         env:
@@ -54,5 +54,5 @@ jobs:
           USER: ${{ secrets.STAGING_SSH_USER }}
           DIR: ${{ secrets.STAGING_DEPLOY_DIR }}
         run: |
-          if [ -z "$PORT" ]; then PORT=22; fi
-          ssh -p "$PORT" "$USER@$HOST" "cd \"$DIR\" && git fetch --all && git reset --hard origin/main && DEPLOY_TARGET=staging bash deploy.sh --fresh"
+          if [ -z "$PORT" ]; then PORT=65002; fi
+          ssh -p "$PORT" -o BatchMode=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$USER@$HOST" "cd \"$DIR\" && git fetch --all && git reset --hard origin/main && DEPLOY_TARGET=staging bash deploy.sh --fresh"
