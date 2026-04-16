@@ -129,13 +129,17 @@ NODE_VERSION_TARGET="20.19.0"
 NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
 
 if ! command -v npm &> /dev/null; then
-    for BIN_DIR in /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin; do
-        if [ -x "${BIN_DIR}/node" ] && [ -x "${BIN_DIR}/npm" ]; then
-            export PATH="${BIN_DIR}:$PATH"
-            log "Using NodeJS from ${BIN_DIR}"
-            break
-        fi
-    done
+    BIN_DIRS_RAW="$(ls -d /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin 2>/dev/null || true)"
+    if [ -n "${BIN_DIRS_RAW:-}" ]; then
+        SORTED_BIN_DIRS="$(printf "%s\n" ${BIN_DIRS_RAW} | sort -Vr 2>/dev/null || printf "%s\n" ${BIN_DIRS_RAW} | sort -r)"
+        while IFS= read -r BIN_DIR; do
+            if [ -x "${BIN_DIR}/node" ] && [ -x "${BIN_DIR}/npm" ]; then
+                export PATH="${BIN_DIR}:$PATH"
+                log "Using NodeJS from ${BIN_DIR}"
+                break
+            fi
+        done <<< "$SORTED_BIN_DIRS"
+    fi
 fi
 
 if ! command -v npm &> /dev/null; then
