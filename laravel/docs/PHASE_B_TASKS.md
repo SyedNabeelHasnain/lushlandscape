@@ -40,7 +40,7 @@ Phase B is honestly considered complete.
 The following confirms the concrete registry implementations completed in Phase B, removing the "truth-alignment gap".
 
 ### 1. Registry Proof (Block Keys)
-The following block keys are fully defined in the authoritative `laravel/config/blocks.php` (`types` array, starting at line 3010) and mapped in the `section_map` array (starting at line 45):
+The following block keys are explicitly defined in the authoritative `laravel/config/blocks.php` immediately following the Theme Blocks (lines 994 to 1177) and mapped in the `section_map` array (starting at line 45):
 - `marquee_strip`
 - `parallax_media_band`
 - `authority_grid`
@@ -49,11 +49,11 @@ The following block keys are fully defined in the authoritative `laravel/config/
 
 ### 2. Control Proof (Field Keys)
 The following controls are explicitly defined within the `content_fields` schemas of the respective blocks in `laravel/config/blocks.php`:
-- `separator_style` (type: select) -> `marquee_strip`
-- `parallax_intensity` (type: select) -> `parallax_media_band`
-- `presentation_mode` (type: select) -> `service_area_enclave`
-- `show_usp_list` (type: toggle) -> `services_grid`
-- `card_cta_label` (type: text) -> `services_grid`
+- `separator_style` (type: select) -> `marquee_strip` (line 1007)
+- `parallax_intensity` (type: select) -> `parallax_media_band` (line 1049)
+- `presentation_mode` (type: select) -> `service_area_enclave` (line 1119)
+- `show_usp_list` (type: toggle) -> `services_grid` (line 1284)
+- `card_cta_label` (type: text) -> `services_grid` (line 1289)
 
 ### 3. Builder Proof
 All Phase B blocks dynamically appear in the Unified Builder selector because they are registered with valid `category` values (`content`, `media`, `data`, `interactive`) and are fully supported by FSE Folds. The editor renders these fields natively based on their `type` definitions (e.g., `select`, `toggle`, `media`) and `save`/`reload` is intrinsically handled by `BlockBuilderService` parsing.
