@@ -410,7 +410,7 @@
     "src": "node_modules/@fontsource/playfair-display/files/playfair-display-vietnamese-700-normal.woff2"
   },
   "resources/css/admin.css": {
-    "file": "assets/admin-C0MS3EKo.css",
+    "file": "assets/admin-DSAENEHg.css",
     "name": "admin",
     "names": [
       "admin.css"
@@ -419,7 +419,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-BtIdlo2C.css",
+    "file": "assets/app-DjSPWxYp.css",
     "name": "app",
     "names": [
       "app.css"
@@ -540,7 +540,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-B9MFz6ct.js",
+    "file": "assets/app-Wlx9SbeP.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
