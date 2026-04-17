@@ -294,19 +294,23 @@ class HomePageBlueprintService
      */
     private function showcaseMediaIds(): array
     {
-        return PortfolioProject::query()
-            ->where('status', 'published')
-            ->whereNotNull('hero_media_id')
-            ->orderByDesc('is_featured')
-            ->orderByDesc('completion_date')
-            ->orderBy('sort_order')
-            ->limit(6)
-            ->pluck('hero_media_id')
-            ->filter()
-            ->map(fn ($id) => (int) $id)
-            ->unique()
-            ->values()
-            ->all();
+        try {
+            return PortfolioProject::query()
+                ->where('status', 'published')
+                ->whereNotNull('hero_media_id')
+                ->orderByDesc('is_featured')
+                ->orderByDesc('completion_date')
+                ->orderBy('sort_order')
+                ->limit(6)
+                ->pluck('hero_media_id')
+                ->filter()
+                ->map(fn ($id) => (int) $id)
+                ->unique()
+                ->values()
+                ->all();
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     /**
