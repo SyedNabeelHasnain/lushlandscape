@@ -60,7 +60,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <label class="flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition"
                                    :class="triggerType === 'delay' ? 'border-forest bg-forest-50' : 'border-gray-200 hover:border-gray-300'">
-                                <input type="radio" name="trigger_type" value="delay" x-model="triggerType" class="mt-0.5 accent-forest">
+                                <input type="radio" id="trigger_type_delay" name="trigger_type" value="delay" x-model="triggerType" class="mt-0.5 accent-forest">
                                 <div>
                                     <p class="text-sm font-semibold text-text">Time Delay</p>
                                     <p class="text-xs text-text-secondary mt-0.5">Show after X seconds on page</p>

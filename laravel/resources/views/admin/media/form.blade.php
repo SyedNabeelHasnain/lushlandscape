@@ -11,8 +11,8 @@
             <x-admin.card title="Media Details">
                 @if(!isset($asset))
                 <div class="mb-5">
-                    <label class="block text-sm font-medium text-text mb-1.5">File <span class="text-red-500">*</span></label>
-                    <input type="file" name="file" required accept="image/*,video/mp4,video/webm" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm">
+                    <label for="file" class="block text-sm font-medium text-text mb-1.5">File <span class="text-red-500">*</span></label>
+                    <input type="file" id="file" name="file" required accept="image/*,video/mp4,video/webm" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm">
                     @error('file')<p class="text-xs text-red-600 mt-1">{{ $message }}</p>@enderror
                 </div>
                 @else
@@ -50,7 +50,8 @@
                             <span x-text="replacing ? 'Cancel Replace' : 'Replace File'"></span>
                         </button>
                         <div x-show="replacing" x-cloak class="mt-3">
-                            <input type="file" name="file" accept="image/*,video/mp4,video/webm" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm">
+                            <label for="replace_file" class="sr-only">Replace File</label>
+                            <input type="file" id="replace_file" name="file" accept="image/*,video/mp4,video/webm" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm">
                             <p class="text-xs text-text-secondary mt-1">Upload a new file to replace the current one. Metadata fields below will be preserved.</p>
                         </div>
                     </div>
@@ -83,7 +84,8 @@
                 <div x-data="sourceUrlDownloader()" class="space-y-4">
                     <p class="text-sm text-text-secondary">Set an external image URL. The system will download the image from this URL and save it locally.</p>
                     <div class="flex flex-col gap-3 sm:flex-row">
-                        <input type="url" name="source_url" value="{{ $asset->source_url ?? '' }}" placeholder="https://unilock.com/wp-content/uploads/2024/09/Driveway.png"
+                        <label for="source_url" class="sr-only">Source URL</label>
+                        <input type="url" id="source_url" name="source_url" value="{{ $asset->source_url ?? '' }}" placeholder="https://unilock.com/wp-content/uploads/2024/09/Driveway.png"
                                class="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm min-w-0" x-ref="sourceUrlInput">
                         <button type="button" x-on:click="downloadFromUrl()" :disabled="downloading"
                             class="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2.5 rounded-xl transition text-sm disabled:opacity-50">

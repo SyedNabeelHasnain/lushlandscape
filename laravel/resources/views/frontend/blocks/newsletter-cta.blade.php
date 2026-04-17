@@ -22,8 +22,10 @@
         <div x-data="contactForm('{{ $formId }}', 'subscribe')" x-cloak>
         <form id="{{ $formId }}" x-on:submit.prevent="submitForm()" class="{{ $layout === 'stacked' ? 'max-w-md mx-auto space-y-3' : 'flex flex-col sm:flex-row gap-3 max-w-md mx-auto' }}">
             <input type="hidden" name="source" value="newsletter_cta">
-            <input type="email" name="email" required
+            <label for="{{ $formId }}-email" class="sr-only">Email address</label>
+            <input type="email" id="{{ $formId }}-email" name="email" required
                    placeholder="{{ $content['placeholder'] ?? 'Enter your email' }}"
+                   autocomplete="email"
                    class="field-luxury flex-1 {{ $inputBg }}">
             <button type="submit" class="{{ $btnCls }} whitespace-nowrap">
                 <span x-text="formSubmitting ? '...' : @js($buttonText)">{{ $buttonText }}</span>

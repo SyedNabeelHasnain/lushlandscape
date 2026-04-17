@@ -37,8 +37,10 @@
             <div x-data="contactForm('{{ $formId }}', 'subscribe')" x-cloak>
                 <form id="{{ $formId }}" x-on:submit.prevent="submitForm()" class="flex flex-col sm:flex-row gap-3">
                     <input type="hidden" name="source" value="theme_newsletter">
-                    <input type="email" name="email" required
+                    <label for="{{ $formId }}-email" class="sr-only">Email address</label>
+                    <input type="email" id="{{ $formId }}-email" name="email" required
                         placeholder="{{ $content['placeholder'] ?? 'your@email.com' }}"
+                        autocomplete="email"
                         class="field-luxury flex-1 {{ $inputClass }}">
                     <button type="submit" :disabled="formSubmitting" class="{{ $buttonClass }} whitespace-nowrap">
                         <span x-text="formSubmitting ? '...' : @js($buttonText)">{{ $buttonText }}</span>

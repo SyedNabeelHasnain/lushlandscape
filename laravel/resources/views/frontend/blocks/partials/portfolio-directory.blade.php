@@ -136,7 +136,8 @@
                     <form method="GET" action="{{ url('/portfolio') }}" class="flex items-center gap-3">
                         @if($activeCategory)<input type="hidden" name="category" value="{{ $activeCategory }}">@endif
                         @if($featured)<input type="hidden" name="featured" value="1">@endif
-                        <select name="city" onchange="this.form.submit()" aria-label="Filter portfolio by city"
+                        <label for="portfolio-city-filter" class="sr-only">Filter portfolio by city</label>
+                        <select id="portfolio-city-filter" name="city" onchange="this.form.submit()" aria-label="Filter portfolio by city"
                             class="min-w-[12rem] rounded-full border border-stone bg-white px-4 py-2 text-sm text-ink focus:border-forest focus:outline-none focus:ring-1 focus:ring-forest">
                             <option value="">All Cities</option>
                             @foreach($cities as $city)

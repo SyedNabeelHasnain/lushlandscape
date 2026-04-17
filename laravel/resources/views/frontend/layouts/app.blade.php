@@ -335,6 +335,7 @@
                     <div x-data="contactForm('newsletter-form', 'subscribe')" x-cloak>
                         <form id="newsletter-form" x-on:submit.prevent="submitForm()" class="flex gap-0">
                             <input type="hidden" name="source" value="footer_newsletter">
+                            <label for="newsletter-email" class="sr-only">Email address for newsletter</label>
                             <input type="email" id="newsletter-email" name="email" autocomplete="email" required
                                 placeholder="your@email.com" aria-label="Email address for newsletter"
                                 class="flex-1 px-6 py-4 bg-white/6 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-white/25 transition">

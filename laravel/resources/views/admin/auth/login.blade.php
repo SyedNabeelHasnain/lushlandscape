@@ -31,12 +31,12 @@
                 @csrf
                 <div class="mb-5">
                     <label for="email" class="block text-sm font-medium text-text mb-2">Email Address</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="email"
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent transition">
                 </div>
                 <div class="mb-5">
                     <label for="password" class="block text-sm font-medium text-text mb-2">Password</label>
-                    <input type="password" id="password" name="password" required
+                    <input type="password" id="password" name="password" required autocomplete="current-password"
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent transition">
                 </div>
                 <div class="mb-6 flex items-center">

@@ -80,18 +80,44 @@
                 @if($form)
                 <div x-data="contactForm('contact-form', 'contact-us')" x-cloak>
                     <form x-on:submit.prevent="submitForm" id="contact-form">
-                        <input type="text" name="website_url_hp" value="" class="hidden" tabindex="-1" autocomplete="off">
+                        <label for="contact-form-website_url_hp" class="sr-only">Leave this field empty</label>
+                        <input type="text" id="contact-form-website_url_hp" name="website_url_hp" value="" class="hidden" tabindex="-1" autocomplete="off">
                         <div class="space-y-5">
                             @foreach($form->fields as $field)
+                            @php
+                                // Determine autocomplete attribute
+                                $autocomplete = 'on';
+                                if ($field->type === 'email') {
+                                    $autocomplete = 'email';
+                                } elseif ($field->type === 'tel') {
+                                    $autocomplete = 'tel';
+                                } elseif (in_array(strtolower($field->name), ['name', 'full_name', 'fullname'])) {
+                                    $autocomplete = 'name';
+                                } elseif (in_array(strtolower($field->name), ['first_name', 'firstname'])) {
+                                    $autocomplete = 'given-name';
+                                } elseif (in_array(strtolower($field->name), ['last_name', 'lastname'])) {
+                                    $autocomplete = 'family-name';
+                                } elseif (in_array(strtolower($field->name), ['company', 'organization'])) {
+                                    $autocomplete = 'organization';
+                                } elseif (in_array(strtolower($field->name), ['address'])) {
+                                    $autocomplete = 'street-address';
+                                } elseif (in_array(strtolower($field->name), ['city'])) {
+                                    $autocomplete = 'address-level2';
+                                } elseif (in_array(strtolower($field->name), ['postal_code', 'zip', 'zip_code'])) {
+                                    $autocomplete = 'postal-code';
+                                }
+                            @endphp
                             <div>
                                 <label for="cf_{{ $field->name }}" class="block text-sm font-medium text-text mb-1.5">
                                     {{ $field->label }}@if($field->is_required)<span class="text-red-500 ml-0.5">*</span>@endif
                                 </label>
                                 @if($field->type === 'textarea')
                                 <textarea id="cf_{{ $field->name }}" name="{{ $field->name }}" rows="4" @if($field->is_required) required @endif placeholder="{{ $field->placeholder ?? '' }}"
+                                    autocomplete="{{ $autocomplete }}"
                                     class="w-full px-4 py-3 border border-stone  focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition text-sm resize-none"></textarea>
                                 @elseif($field->type === 'select')
                                 <select id="cf_{{ $field->name }}" name="{{ $field->name }}" @if($field->is_required) required @endif
+                                    autocomplete="{{ $autocomplete }}"
                                     class="w-full px-4 py-3 border border-stone  text-sm bg-white focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition">
                                     <option value="">Select...</option>
                                     @if($field->options)
@@ -104,17 +130,20 @@
                                 <div class="relative">
                                     <input type="email" id="cf_{{ $field->name }}" name="{{ $field->name }}" @if($field->is_required) required @endif
                                         x-on:blur="checkEmail($event.target.value)"
+                                        autocomplete="{{ $autocomplete }}"
                                         class="w-full px-4 py-3 border border-stone  focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition text-sm">
                                     <button type="button" x-show="showVerifyBtn" x-on:click="sendOtp()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-forest text-white text-xs px-3 py-1.5 ">Verify</button>
                                     <span x-show="emailVerified" class="absolute right-3 top-1/2 -translate-y-1/2 text-green-600 text-xs font-semibold">✓ Verified</span>
                                 </div>
                                 <div x-show="showOtpField" class="mt-2 flex gap-2">
-                                    <input type="text" x-model="otpCode" maxlength="6" placeholder="Enter 6-digit code" aria-label="One-time verification code" class="flex-1 px-3 py-2 border border-stone  text-sm">
+                                    <label for="cf_otp_code" class="sr-only">One-time verification code</label>
+                                    <input type="text" id="cf_otp_code" name="otp_code" x-model="otpCode" maxlength="6" placeholder="Enter 6-digit code" aria-label="One-time verification code" autocomplete="one-time-code" class="flex-1 px-3 py-2 border border-stone  text-sm">
                                     <button type="button" x-on:click="verifyOtp()" class="bg-forest text-white text-xs px-3 py-2  font-medium">Confirm</button>
                                 </div>
                                 <p x-show="otpMessage" class="text-xs text-text-secondary mt-1" x-text="otpMessage"></p>
                                 @else
                                 <input type="{{ $field->type }}" id="cf_{{ $field->name }}" name="{{ $field->name }}" @if($field->is_required) required @endif placeholder="{{ $field->placeholder ?? '' }}"
+                                    autocomplete="{{ $autocomplete }}"
                                     class="w-full px-4 py-3 border border-stone  focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition text-sm">
                                 @endif
                             </div>

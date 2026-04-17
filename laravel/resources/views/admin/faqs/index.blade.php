@@ -7,11 +7,13 @@
 </x-admin.page-header>
 <div class="mb-6 flex flex-wrap gap-3">
     <form class="flex flex-wrap gap-3" method="GET" x-data="{}">
-        <select name="category" class="px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white" x-on:change="$el.form.submit()">
+        <label for="faq-category" class="sr-only">Filter by category</label>
+        <select id="faq-category" name="category" class="px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white" x-on:change="$el.form.submit()">
             <option value="">All Categories</option>
             @foreach($categories as $id => $name)<option value="{{ $id }}" {{ request('category') == $id ? 'selected' : '' }}>{{ $name }}</option>@endforeach
         </select>
-        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search..." class="px-3 py-2 border border-gray-200 rounded-xl text-sm">
+        <label for="faq-search" class="sr-only">Search FAQs</label>
+        <input type="text" id="faq-search" name="search" value="{{ request('search') }}" placeholder="Search..." class="px-3 py-2 border border-gray-200 rounded-xl text-sm">
         <button type="submit" class="px-4 py-2 bg-forest text-white rounded-xl text-sm">Filter</button>
     </form>
 </div>

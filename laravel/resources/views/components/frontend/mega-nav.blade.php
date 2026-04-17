@@ -180,6 +180,7 @@
                 <div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
                     <i data-lucide="search" class="w-4 h-4 text-white/40"></i>
                 </div>
+                <label for="desktop-search" class="sr-only">Search services, cities, and blog posts</label>
                 <input type="text"
                        id="desktop-search"
                        name="q"
@@ -558,6 +559,7 @@
             <div class="pt-3 pb-1">
                 <div class="relative">
                     <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40"></i>
+                    <label for="mobile-search" class="sr-only">Search services, cities, and blog posts</label>
                     <input type="text"
                            id="mobile-search"
                            name="q"

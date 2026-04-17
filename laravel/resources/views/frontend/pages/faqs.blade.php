@@ -25,7 +25,8 @@
         <form method="GET" action="{{ url('/faqs') }}" class="mt-8 max-w-xl mx-auto">
             <div class="relative">
                 <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-secondary pointer-events-none"></i>
-                <input type="text" name="q" value="{{ $searchQuery }}" placeholder="Search FAQs (e.g. driveway cost, permit requirements...)"
+                <label for="faq-search-input" class="sr-only">Search FAQs</label>
+                <input type="text" id="faq-search-input" name="q" value="{{ $searchQuery }}" placeholder="Search FAQs (e.g. driveway cost, permit requirements...)"
                        aria-label="Search FAQs"
                        class="w-full pl-12 pr-24 py-4 bg-white border border-stone  text-sm focus:outline-none focus:border-forest focus:ring-1 focus:ring-forest transition">
                 <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 btn-luxury btn-luxury-primary text-sm">
@@ -94,14 +95,16 @@
                 @if($activeType)<input type="hidden" name="type" value="{{ $activeType }}">@endif
                 @if($searchQuery)<input type="hidden" name="q" value="{{ $searchQuery }}">@endif
 
-                <select name="city" x-on:change="$el.form.submit()" aria-label="Filter by city" class="text-sm border border-stone  px-3 py-2 bg-white focus:border-forest focus:ring-1 focus:ring-forest">
+                <label for="faq-city-filter" class="sr-only">Filter by city</label>
+                <select id="faq-city-filter" name="city" x-on:change="$el.form.submit()" aria-label="Filter by city" class="text-sm border border-stone  px-3 py-2 bg-white focus:border-forest focus:ring-1 focus:ring-forest">
                     <option value="">All Cities</option>
                     @foreach($cities as $city)
                     <option value="{{ $city->name }}" {{ $activeCity === $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
                     @endforeach
                 </select>
 
-                <select name="service" x-on:change="$el.form.submit()" aria-label="Filter by service" class="text-sm border border-stone  px-3 py-2 bg-white focus:border-forest focus:ring-1 focus:ring-forest">
+                <label for="faq-service-filter" class="sr-only">Filter by service</label>
+                <select id="faq-service-filter" name="service" x-on:change="$el.form.submit()" aria-label="Filter by service" class="text-sm border border-stone  px-3 py-2 bg-white focus:border-forest focus:ring-1 focus:ring-forest">
                     <option value="">All Services</option>
                     @foreach($services as $service)
                     <option value="{{ $service->name }}" {{ $activeService === $service->name ? 'selected' : '' }}>{{ $service->name }}</option>

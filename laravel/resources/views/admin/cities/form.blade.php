@@ -93,8 +93,8 @@
                 <div class="space-y-5">
                     <x-admin.form-media name="hero_media_id" label="Primary Hero Image" :mediaAsset="$city->heroMedia ?? null" tooltip="Primary hero background image. Used as single background or as the first slide in slider mode." :croppable="true" />
                     <div>
-                        <label class="block text-sm font-medium text-text mb-1.5">Hero Video URL <span class="text-xs text-text-secondary font-normal ml-1">(mp4, overrides all images)</span></label>
-                        <input type="url" name="hero_video_url" value="{{ old('hero_video_url', $city->hero_video_url ?? '') }}" placeholder="https://cdn.example.com/hero.mp4" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition">
+                        <label for="hero_video_url" class="block text-sm font-medium text-text mb-1.5">Hero Video URL <span class="text-xs text-text-secondary font-normal ml-1">(mp4, overrides all images)</span></label>
+                        <input type="url" id="hero_video_url" name="hero_video_url" value="{{ old('hero_video_url', $city->hero_video_url ?? '') }}" placeholder="https://cdn.example.com/hero.mp4" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition">
                     </div>
                     <div class="border-t border-gray-100 pt-5">
                         <p class="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-3">Slider Images (shown when no video is set)</p>
@@ -117,6 +117,7 @@
                     @foreach($allCategories as $cat)
                     <label class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 transition cursor-pointer group">
                         <input type="checkbox"
+                               id="category_{{ $cat->id }}"
                                name="category_ids[]"
                                value="{{ $cat->id }}"
                                {{ in_array($cat->id, $activeCategoryIds ?? []) ? 'checked' : '' }}

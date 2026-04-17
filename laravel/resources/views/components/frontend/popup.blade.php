@@ -66,16 +66,37 @@
             <div x-data="contactForm('popup-form-{{ $popup->id }}', '{{ $formSlug }}')" x-cloak>
                 <form id="popup-form-{{ $popup->id }}" x-on:submit.prevent="submitForm()">
                     @foreach($popup->form->fields ?? [] as $field)
-                    @php $fName = $field['name'] ?? ''; $fLabel = $field['label'] ?? $fName; $fType = $field['type'] ?? 'text'; @endphp
+                    @php 
+                        $fName = $field['name'] ?? ''; 
+                        $fLabel = $field['label'] ?? $fName; 
+                        $fType = $field['type'] ?? 'text'; 
+                        $fId = 'popup-'.$popup->id.'-'.$fName;
+                        
+                        // Determine autocomplete
+                        $autocomplete = 'on';
+                        if ($fType === 'email') {
+                            $autocomplete = 'email';
+                        } elseif ($fType === 'tel') {
+                            $autocomplete = 'tel';
+                        } elseif (in_array(strtolower($fName), ['name', 'full_name', 'fullname'])) {
+                            $autocomplete = 'name';
+                        } elseif (in_array(strtolower($fName), ['first_name', 'firstname'])) {
+                            $autocomplete = 'given-name';
+                        } elseif (in_array(strtolower($fName), ['last_name', 'lastname'])) {
+                            $autocomplete = 'family-name';
+                        } elseif (in_array(strtolower($fName), ['company', 'organization'])) {
+                            $autocomplete = 'organization';
+                        }
+                    @endphp
                     @if($fType === 'textarea')
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-ink mb-1.5">{{ $fLabel }}</label>
-                        <textarea name="{{ $fName }}" rows="3" class="w-full px-4 py-3 border border-stone text-sm focus:outline-none focus:border-forest transition"></textarea>
+                        <label for="{{ $fId }}" class="block text-sm font-medium text-ink mb-1.5">{{ $fLabel }}</label>
+                        <textarea id="{{ $fId }}" name="{{ $fName }}" rows="3" autocomplete="{{ $autocomplete }}" class="w-full px-4 py-3 border border-stone text-sm focus:outline-none focus:border-forest transition"></textarea>
                     </div>
                     @elseif($fType === 'select' && !empty($field['options']))
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-ink mb-1.5">{{ $fLabel }}</label>
-                        <select name="{{ $fName }}" class="w-full px-4 py-3 border border-stone text-sm focus:outline-none focus:border-forest transition">
+                        <label for="{{ $fId }}" class="block text-sm font-medium text-ink mb-1.5">{{ $fLabel }}</label>
+                        <select id="{{ $fId }}" name="{{ $fName }}" autocomplete="{{ $autocomplete }}" class="w-full px-4 py-3 border border-stone text-sm focus:outline-none focus:border-forest transition">
                             <option value="">Select...</option>
                             @foreach($field['options'] as $opt)
                             <option value="{{ $opt }}">{{ $opt }}</option>
@@ -84,8 +105,8 @@
                     </div>
                     @else
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-ink mb-1.5">{{ $fLabel }}</label>
-                        <input type="{{ $fType }}" id="popup-{{ $fName }}" name="{{ $fName }}" autocomplete="{{ $fType === 'email' ? 'email' : ($fType === 'tel' ? 'tel' : 'off') }}" class="w-full px-4 py-3 border border-stone text-sm focus:outline-none focus:border-forest transition">
+                        <label for="{{ $fId }}" class="block text-sm font-medium text-ink mb-1.5">{{ $fLabel }}</label>
+                        <input type="{{ $fType }}" id="{{ $fId }}" name="{{ $fName }}" autocomplete="{{ $autocomplete }}" class="w-full px-4 py-3 border border-stone text-sm focus:outline-none focus:border-forest transition">
                     </div>
                     @endif
                     @endforeach

@@ -103,8 +103,10 @@
 {{-- Filters --}}
 <div class="mb-6">
     <form class="flex flex-col gap-3 sm:flex-row sm:flex-wrap" method="GET" x-data="{}">
-        <input type="text" name="search" value="{{ request('search') }}" placeholder="Search media..." class="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm sm:w-auto sm:min-w-[220px]">
-        <select name="type" class="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white sm:w-auto" x-on:change="$el.form.submit()">
+        <label for="media-search" class="sr-only">Search media</label>
+        <input type="text" id="media-search" name="search" value="{{ request('search') }}" placeholder="Search media..." class="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm sm:w-auto sm:min-w-[220px]">
+        <label for="media-type" class="sr-only">Filter by type</label>
+        <select id="media-type" name="type" class="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white sm:w-auto" x-on:change="$el.form.submit()">
             <option value="">All Types</option>
             <option value="image" {{ request('type') === 'image' ? 'selected' : '' }}>Images</option>
             <option value="video" {{ request('type') === 'video' ? 'selected' : '' }}>Videos</option>

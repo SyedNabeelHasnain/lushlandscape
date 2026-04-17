@@ -31,7 +31,8 @@
 @endphp
 
 <form id="{{ $formId }}" @submit.prevent="submitForm()" class="space-y-6">
-    <input type="text" name="website_url_hp" value="" class="hidden" tabindex="-1" autocomplete="off">
+    <label for="{{ $formId }}-website_url_hp" class="sr-only">Leave this field empty</label>
+    <input type="text" id="{{ $formId }}-website_url_hp" name="website_url_hp" value="" class="hidden" tabindex="-1" autocomplete="off">
 
     <div class="{{ $gridClass }}">
         @foreach($form->fields as $field)
@@ -40,6 +41,29 @@
                 $widthClass = $widthClassFor($field);
                 $fieldLabel = $field->label;
                 $fieldPlaceholder = $field->placeholder ?? '';
+                
+                // Determine autocomplete attribute
+                $autocomplete = 'on';
+                if ($field->type === 'email') {
+                    $autocomplete = 'email';
+                } elseif ($field->type === 'tel') {
+                    $autocomplete = 'tel';
+                } elseif (in_array(strtolower($field->name), ['name', 'full_name', 'fullname'])) {
+                    $autocomplete = 'name';
+                } elseif (in_array(strtolower($field->name), ['first_name', 'firstname'])) {
+                    $autocomplete = 'given-name';
+                } elseif (in_array(strtolower($field->name), ['last_name', 'lastname'])) {
+                    $autocomplete = 'family-name';
+                } elseif (in_array(strtolower($field->name), ['company', 'organization'])) {
+                    $autocomplete = 'organization';
+                } elseif (in_array(strtolower($field->name), ['address'])) {
+                    $autocomplete = 'street-address';
+                } elseif (in_array(strtolower($field->name), ['city'])) {
+                    $autocomplete = 'address-level2';
+                } elseif (in_array(strtolower($field->name), ['postal_code', 'zip', 'zip_code'])) {
+                    $autocomplete = 'postal-code';
+                }
+
                 $normalizedOptions = collect($field->options ?? [])
                     ->map(fn ($option) => is_array($option)
                         ? [
@@ -100,6 +124,7 @@
                         name="{{ $field->name }}"
                         placeholder="{{ $fieldPlaceholder }}"
                         class="{{ $inputClass }} min-h-[170px]"
+                        autocomplete="{{ $autocomplete }}"
                         {{ $requiresHtmlValidation ? 'required' : '' }}
                     ></textarea>
                 @elseif($field->type === 'select')
@@ -108,6 +133,7 @@
                             id="{{ $fieldId }}"
                             name="{{ $field->name }}"
                             class="{{ $inputClass }} appearance-none pr-12"
+                            autocomplete="{{ $autocomplete }}"
                             {{ $requiresHtmlValidation ? 'required' : '' }}
                         >
                             <option value="">{{ $fieldPlaceholder ?: 'Select an option' }}</option>
@@ -126,6 +152,7 @@
                                     name="{{ $field->name }}"
                                     value="{{ $option['value'] }}"
                                     class="field-choice-input peer sr-only"
+                                    autocomplete="{{ $autocomplete }}"
                                     {{ $requiresHtmlValidation && $index === 0 ? 'required' : '' }}
                                 >
                                 <span class="field-choice-panel rounded-2xl" data-tone="{{ $tone }}">
@@ -146,6 +173,7 @@
                                     id="{{ $fieldId }}-{{ $index }}"
                                     name="{{ $field->name }}[]"
                                     value="{{ $option['value'] }}"
+                                    autocomplete="{{ $autocomplete }}"
                                     class="field-choice-input peer sr-only"
                                 >
                                 <span class="field-choice-panel rounded-2xl" data-tone="{{ $tone }}">
@@ -164,6 +192,7 @@
                             id="{{ $fieldId }}"
                             name="{{ $field->name }}"
                             value="1"
+                            autocomplete="{{ $autocomplete }}"
                             class="field-choice-input peer sr-only"
                             {{ $requiresHtmlValidation ? 'required' : '' }}
                         >
@@ -186,6 +215,7 @@
                                 name="{{ $field->name }}"
                         placeholder="{{ $fieldPlaceholder }}"
                                 class="{{ $inputClass }}"
+                                autocomplete="{{ $autocomplete }}"
                                 @if($requiresVerification)
                                     x-on:blur="checkEmail($event.target.value)"
                                 @endif
@@ -208,12 +238,16 @@
 
                         @if($requiresVerification)
                             <div x-show="showOtpField" x-cloak class="flex flex-col gap-2 sm:flex-row">
+                                <label for="{{ $formId }}-otp" class="sr-only">One-time verification code</label>
                                 <input
                                     type="text"
+                                    id="{{ $formId }}-otp"
+                                    name="otp_code"
                                     x-model="otpCode"
                                     maxlength="6"
                                     placeholder="Enter 6-digit code"
                                     aria-label="One-time verification code"
+                                    autocomplete="one-time-code"
                                     class="{{ $inputClass }} flex-1"
                                 >
                                 <button type="button" x-on:click="verifyOtp()" class="btn-luxury btn-luxury-primary whitespace-nowrap">
@@ -229,6 +263,7 @@
                         id="{{ $fieldId }}"
                         name="{{ $field->name }}"
                         placeholder="{{ $fieldPlaceholder }}"
+                        autocomplete="{{ $autocomplete }}"
                         class="{{ $inputClass }}"
                         {{ $requiresHtmlValidation ? 'required' : '' }}
                     >

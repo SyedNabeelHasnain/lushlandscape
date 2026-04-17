@@ -56,7 +56,9 @@
         <span class="bg-forest text-white text-eyebrow px-3 py-1.5">{{ $afterLabel }}</span>
     </div>
 
-    <input type="range" id="ba-slider-{{ uniqid() }}" name="comparison" min="0" max="100" x-model="position"
+    @php $sliderId = 'ba-slider-' . uniqid(); @endphp
+    <label for="{{ $sliderId }}" class="sr-only">Slide to compare before and after</label>
+    <input type="range" id="{{ $sliderId }}" name="comparison" min="0" max="100" x-model="position"
         class="absolute bottom-0 left-0 right-0 w-full opacity-0 h-12 cursor-col-resize"
         aria-label="Slide to compare before and after">
 </div>

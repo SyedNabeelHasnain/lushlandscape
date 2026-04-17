@@ -63,8 +63,6 @@
                 
                 @if($form)
                     <div x-data="lushForm('{{ $formId }}', '{{ $form->slug }}')" class="relative">
-                        <form id="{{ $formId }}" @submit.prevent="submit" class="space-y-6">
-                            
                             @include('frontend.blocks.partials._form-fields', [
                                 'form' => $form,
                                 'formId' => $formId,
@@ -77,8 +75,6 @@
                                 'buttonClass' => 'w-full btn-luxury bg-forest text-white border-forest hover:bg-ink hover:border-ink mt-8 py-5 text-sm uppercase tracking-widest font-bold disabled:opacity-50 disabled:cursor-not-allowed',
                                 'submitText' => 'Book Consultation',
                             ])
-
-                        </form>
                         
                         {{-- Success State --}}
                         <div x-show="isSuccess" x-transition.opacity class="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center text-center p-8">
