@@ -49,6 +49,4 @@
     <x-frontend.block-renderer :block="$block" :context="$context" />
 @endforeach
 @endif
-
-<x-frontend.cta-section variant="light" />
 @endsection
