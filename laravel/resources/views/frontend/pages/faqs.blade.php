@@ -176,7 +176,7 @@
                             <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                                :class="open === '{{ $uid }}' ? 'rotate-180' : ''"></i>
                         </button>
-                        <div x-show="open === '{{ $uid }}'" x-collapse class="px-6 pb-5">
+                        <div x-show="open === '{{ $uid }}'" x-cloak x-collapse class="px-6 pb-5">
                             <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                                 {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                             </div>
@@ -209,7 +209,7 @@
                             <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                                :class="open === '{{ $uid }}' ? 'rotate-180' : ''"></i>
                         </button>
-                        <div x-show="open === '{{ $uid }}'" x-collapse class="px-6 pb-5">
+                        <div x-show="open === '{{ $uid }}'" x-cloak x-collapse class="px-6 pb-5">
                             <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                                 {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                             </div>
@@ -242,7 +242,7 @@
                             <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                                :class="open === '{{ $uid }}' ? 'rotate-180' : ''"></i>
                         </button>
-                        <div x-show="open === '{{ $uid }}'" x-collapse class="px-6 pb-5">
+                        <div x-show="open === '{{ $uid }}'" x-cloak x-collapse class="px-6 pb-5">
                             <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                                 {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                             </div>
@@ -275,7 +275,7 @@
                             <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                                :class="open === '{{ $uid }}' ? 'rotate-180' : ''"></i>
                         </button>
-                        <div x-show="open === '{{ $uid }}'" x-collapse class="px-6 pb-5">
+                        <div x-show="open === '{{ $uid }}'" x-cloak x-collapse class="px-6 pb-5">
                             <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                                 {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                             </div>
@@ -308,7 +308,7 @@
                             <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                                :class="open === '{{ $uid }}' ? 'rotate-180' : ''"></i>
                         </button>
-                        <div x-show="open === '{{ $uid }}'" x-collapse class="px-6 pb-5">
+                        <div x-show="open === '{{ $uid }}'" x-cloak x-collapse class="px-6 pb-5">
                             <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                                 {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                             </div>
@@ -354,7 +354,7 @@
                                     <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                                        :class="open === '{{ $uid }}' ? 'rotate-180' : ''"></i>
                                 </button>
-                                <div x-show="open === '{{ $uid }}'" x-collapse class="px-6 pb-5">
+                                <div x-show="open === '{{ $uid }}'" x-cloak x-collapse class="px-6 pb-5">
                                     <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                                         {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                                     </div>
@@ -394,7 +394,7 @@
                     <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                        :class="open === '{{ $uid }}' ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="open === '{{ $uid }}'" x-collapse class="px-6 pb-5">
+                <div x-show="open === '{{ $uid }}'" x-cloak x-collapse class="px-6 pb-5">
                     <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                         {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                     </div>
