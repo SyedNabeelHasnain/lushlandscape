@@ -40,26 +40,30 @@
     </div>
 
     {{-- Content Section --}}
-    <div class="{{ $variant === 'architectural' ? 'p-10' : '' }}">
+    <div class="{{ $variant === 'architectural' ? 'p-10' : '' }} flex flex-col h-full">
+        @if($variant === 'premium-2x2')
+            <div class="absolute top-0 right-0 w-32 h-32 bg-forest/[0.03] rounded-bl-full -mr-16 -mt-16 group-hover:bg-forest/[0.08] transition-colors duration-700 pointer-events-none"></div>
+        @endif
+
         @if($showIcon && ($service->icon ?? null))
-        <div class="mb-6">
-            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-light text-forest group-hover:bg-forest group-hover:text-white transition-colors duration-500 shadow-sm">
+        <div class="mb-6 relative z-10">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-forest group-hover:bg-forest group-hover:text-white transition-colors duration-500 shadow-sm border border-stone">
                 <i data-lucide="{{ $service->icon }}" class="w-7 h-7"></i>
             </div>
         </div>
         @endif
 
-        <h3 class="text-xl font-heading font-bold text-ink group-hover:text-forest transition-colors duration-300 leading-snug">{{ $service->name }}</h3>
+        <h3 class="text-xl font-heading font-bold text-ink group-hover:text-forest transition-colors duration-300 leading-snug relative z-10">{{ $service->name }}</h3>
         
         @if($showDivider)
-        <div class="w-12 h-px bg-forest/20 my-4 group-hover:w-20 group-hover:bg-accent transition-all duration-500"></div>
+        <div class="w-12 h-px bg-forest/20 my-4 group-hover:w-20 group-hover:bg-accent transition-all duration-500 relative z-10"></div>
         @endif
 
         @if($service->service_summary ?? null)
-        <p class="mt-4 text-sm text-text-secondary line-clamp-3 leading-relaxed">{{ $service->service_summary }}</p>
+        <p class="mt-4 text-[0.95rem] text-text-secondary line-clamp-3 leading-relaxed flex-grow relative z-10">{{ $service->service_summary }}</p>
         @endif
 
-        <div class="mt-8 flex items-center gap-2 text-forest text-[11px] font-semibold tracking-[0.15em] uppercase">
+        <div class="mt-8 flex items-center gap-2 text-forest text-[11px] font-semibold tracking-[0.15em] uppercase mt-auto pt-4 relative z-10">
             {{ $ctaLabel }} <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-400"></i>
         </div>
     </div>

@@ -35,11 +35,11 @@
 @endphp
 
 @if(!empty($steps))
-<div class="space-y-10">
+<div class="space-y-10 lg:space-y-16">
     <div class="max-w-3xl {{ $variant === 'timeline' ? '' : 'text-center mx-auto' }}">
-        @if($eyebrow)<p class="text-luxury-label {{ $toneMap['label'] }}">{{ $eyebrow }}</p>@endif
-        @if($heading)<h2 class="mt-4 text-h2 font-heading font-bold {{ $toneMap['heading'] }}">{{ $heading }}</h2>@endif
-        @if($subtitle)<p class="mt-4 text-body-lg {{ $toneMap['sub'] }}">{{ $subtitle }}</p>@endif
+        @if($eyebrow)<p class="text-luxury-label {{ $toneMap['label'] }} block mb-4">{{ $eyebrow }}</p>@endif
+        @if($heading)<h2 class="text-h2 font-heading font-bold text-balance {{ $toneMap['heading'] }}">{!! $heading !!}</h2>@endif
+        @if($subtitle)<p class="mt-6 text-body-lg text-balance mx-auto {{ $toneMap['sub'] }}">{!! $subtitle !!}</p>@endif
     </div>
 
     @if($variant === 'feature_rows')
@@ -64,7 +64,7 @@
     @elseif($variant === 'premium-stack')
         <div class="max-w-4xl mx-auto space-y-8">
             @foreach($steps as $idx => $step)
-                <div class="bg-white border border-stone/60 rounded-[2.5rem] p-10 lg:p-14 shadow-editorial hover:shadow-luxury hover:border-forest/40 transition-all duration-700 animate-on-scroll flex flex-col md:flex-row gap-8 lg:gap-12" data-animation="fade-up" data-delay="{{ $idx * 50 }}">
+                <div class="bg-white border border-stone/60 rounded-[2.5rem] p-10 lg:p-14 shadow-luxury hover:shadow-luxury-lg hover:border-forest/40 transition-all duration-700 animate-on-scroll flex flex-col md:flex-row gap-8 lg:gap-12" data-animation="fade-up" data-delay="{{ $idx * 50 }}">
                     <div class="shrink-0 flex flex-col items-start gap-6">
                         <div class="w-16 h-16 rounded-full border border-forest/20 flex items-center justify-center text-forest bg-forest-50/50">
                             <span class="text-xl font-heading font-bold">{{ str_pad($idx + 1, 2, '0', STR_PAD_LEFT) }}</span>
@@ -75,7 +75,7 @@
                             </div>
                         @endif
                     </div>
-                    <div class="flex-1 border-t md:border-t-0 md:border-l border-stone/40 pt-8 md:pt-0 md:pl-12">
+                    <div class="flex-1 border-t md:border-t-0 md:border-l border-stone/40 pt-8 md:pt-0 md:pl-12 flex flex-col justify-center">
                         <h3 class="text-2xl lg:text-3xl font-heading font-bold text-ink mb-4">{{ $step['title'] }}</h3>
                         <p class="text-lg text-text-secondary leading-relaxed font-light">{{ $step['desc'] }}</p>
                     </div>

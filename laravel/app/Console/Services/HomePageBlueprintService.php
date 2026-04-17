@@ -24,29 +24,22 @@ class HomePageBlueprintService
 
         $blocks = [
             $this->block(
-                'hero',
+                'parallax_media_band',
                 [
                     'heading' => 'Luxury Outdoor Living<br>Built with <span class="italic">Precision</span>',
-                    'subtitle' => 'Landscape construction for architects, designers, and discerning homeowners across the Greater Toronto Area.',
-                    'eyebrow' => 'Design-Build Firm',
-                    'cta_primary_text' => 'Request a Consultation',
-                    'cta_primary_url' => '/contact',
-                    'cta_secondary_text' => 'View Projects',
-                    'cta_secondary_url' => '/portfolio',
-                    'hero_media_id' => $heroMediaId,
-                    'extra_image_ids' => $sliderMediaIds,
+                    'subheadline' => 'Landscape construction for architects, designers, and discerning homeowners across the Greater Toronto Area.',
+                    'media_id' => $heroMediaId,
                     'video_url' => '',
-                    'overlay_opacity' => '55',
+                    'parallax_intensity' => 'subtle',
+                    'overlay_preset' => 'dark',
                 ],
                 $this->styles([
                     'spacing_preset' => 'none',
                     'padding_top' => 'none',
                     'padding_bottom' => 'none',
-                    'padding_left' => 'none',
-                    'padding_right' => 'none',
                     'margin_bottom' => 'none',
                     'max_width' => 'full',
-                    'overflow' => 'hidden',
+                    'surface_preset' => 'transparent',
                 ]),
                 customId: 'home-hero'
             ),
@@ -58,124 +51,107 @@ class HomePageBlueprintService
                     'subtitle' => 'From urban ravine lots to expansive executive estates, we engineer outdoor environments that endure.',
                     'layout' => 'grid',
                     'columns' => '3',
-                    'variant' => 'architectural',
-                    'tone' => 'light',
+                    'variant' => 'premium-2x2',
+                    'show_icon' => true,
+                    'show_divider' => true,
+                    'show_usp_list' => true,
+                    'card_cta_label' => 'Explore Discipline',
+                    'tone' => 'cream',
                     'show_category_nav' => false,
                     'show_view_all' => true,
-                    'view_all_text' => 'Explore All Services',
+                    'view_all_text' => 'View All Core Disciplines',
                     'view_all_url' => '/services',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
-                    'text_align' => 'left',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'cream',
                 ]),
                 customId: 'services'
             ),
             $this->block(
+                'editorial_split_feature',
+                [
+                    'eyebrow' => 'Elite Standards',
+                    'heading' => 'The Architectural Integrity Layer',
+                    'description' => 'We collaborate with architects, designers, and discerning homeowners to deliver structurally sound outdoor spaces with premium material discipline. Every project is engineered to respect architectural intent, municipal grading, and long-term performance.',
+                    'media_id' => $featureMediaId,
+                    'media_side' => 'right',
+                    'media_ratio' => '4:5',
+                    'tone' => 'light',
+                    'ornament_style' => 'oval',
+                    'feature_layout' => 'stacked',
+                    'features' => [],
+                    'cta_text' => 'Learn About Our Standards',
+                    'cta_url' => '/about',
+                ],
+                $this->styles([
+                    'max_width' => 'full',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'white',
+                ]),
+                customId: 'editorial'
+            ),
+            $this->block(
                 'portfolio_gallery',
                 [
-                    'eyebrow' => 'Completed Works',
-                    'heading' => 'Portfolio',
-                    'subtitle' => 'From urban ravine lots to expansive executive estates, we engineer outdoor environments that endure.',
-                    'layout' => 'grid',
+                    'eyebrow' => 'Selected Works',
+                    'heading' => 'Engineered Environments',
+                    'subtitle' => 'A curated selection of our completed landscape construction and hardscaping projects across the GTA.',
+                    'layout' => 'rail',
                     'columns' => '3',
                     'variant' => 'editorial',
                     'tone' => 'dark',
                     'show_view_all' => true,
-                    'view_all_text' => 'View More Projects',
+                    'view_all_text' => 'View Full Portfolio',
                     'view_all_url' => '/portfolio',
                 ],
                 $this->styles([
-                    'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
-                    'surface_style' => 'sage-gradient',
+                    'max_width' => 'full',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'forest-gradient',
                 ]),
                 customId: 'portfolio'
             ),
         ];
 
-        $blocks[] = $featureMediaId
-            ? $this->block(
-                'editorial_split_feature',
-                [
-                    'eyebrow' => 'Elite Standards',
-                    'heading' => 'The Architectural Integrity Layer',
-                    'description' => 'We collaborate with architects, designers, and discerning homeowners to deliver structurally sound outdoor spaces with premium material discipline.',
-                    'media_id' => $featureMediaId,
-                    'media_side' => 'left',
-                    'media_ratio' => '4:5',
-                    'tone' => 'light',
-                    'ornament_style' => 'oval',
-                    'feature_layout' => 'stacked',
-                    'features' => [
-                        [
-                            'icon' => 'compass',
-                            'title' => 'Architect & Designer Collaboration',
-                            'description' => 'Execution that respects architectural intent, permits, grading, and site-specific constraints.',
-                        ],
-                        [
-                            'icon' => 'scan-search',
-                            'title' => 'Precision Construction',
-                            'description' => 'Laser-guided grading, engineered bases, and disciplined sequencing that protect long-term performance.',
-                        ],
-                        [
-                            'icon' => 'gem',
-                            'title' => 'Premium Materials',
-                            'description' => 'Large-format porcelain, natural stone, and executive-grade pavers selected for endurance and finish.',
-                        ],
-                        [
-                            'icon' => 'calendar-check',
-                            'title' => 'Reliable Project Execution',
-                            'description' => 'Clear timelines, in-house coordination, and finish quality that feels composed from every angle.',
-                        ],
+        $blocks[] = $this->block(
+            'authority_grid',
+            [
+                'eyebrow' => 'Our Commitments',
+                'heading' => 'Built to Endure',
+                'introduction' => 'Professional discipline, premium materials, and accountable execution are built into every phase of our delivery.',
+                'card_skin' => 'elevated',
+                'items' => [
+                    [
+                        'icon' => 'shield-check',
+                        'title' => 'Licensed & Insured',
+                        'description' => 'Fully insured job sites and disciplined site protection.',
                     ],
-                    'cta_text' => 'Request a Consultation',
-                    'cta_url' => '/contact',
-                ],
-                $this->styles([
-                    'max_width' => 'full',
-                    'spacing_preset' => 'feature',
-                ]),
-                customId: 'standards'
-            )
-            : $this->block(
-                'trust_badges',
-                [
-                    'eyebrow' => 'Elite Standards',
-                    'heading' => 'The Architectural Integrity Layer',
-                    'subtitle' => 'Professional discipline, premium materials, and accountable execution are built into every phase.',
-                    'variant' => 'cards',
-                    'tone' => 'light',
-                    'badges' => [
-                        [
-                            'icon' => 'shield-check',
-                            'title' => 'Licensed & Insured',
-                            'desc' => 'Fully insured job sites and disciplined site protection.',
-                        ],
-                        [
-                            'icon' => 'award',
-                            'title' => '10-Year Warranty',
-                            'desc' => 'Workmanship protection that reflects premium delivery standards.',
-                        ],
-                        [
-                            'icon' => 'ruler',
-                            'title' => 'Precision Base Work',
-                            'desc' => 'Engineered preparation that supports long-term stability.',
-                        ],
-                        [
-                            'icon' => 'handshake',
-                            'title' => 'Fixed-Scope Clarity',
-                            'desc' => 'Transparent scopes, clean sequencing, and accountable communication.',
-                        ],
+                    [
+                        'icon' => 'award',
+                        'title' => '10-Year Warranty',
+                        'description' => 'Workmanship protection that reflects premium delivery standards.',
+                    ],
+                    [
+                        'icon' => 'ruler',
+                        'title' => 'Precision Base Work',
+                        'description' => 'Engineered preparation that supports long-term stability.',
+                    ],
+                    [
+                        'icon' => 'handshake',
+                        'title' => 'Fixed-Scope Clarity',
+                        'description' => 'Transparent scopes, clean sequencing, and accountable communication.',
                     ],
                 ],
-                $this->styles([
-                    'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
-                ]),
-                customId: 'standards'
-            );
+            ],
+            $this->styles([
+                'max_width' => 'xl',
+                'spacing_preset' => 'feature',
+                'surface_preset' => 'white',
+            ]),
+            customId: 'authority'
+        );
 
         $blocks[] = $this->block(
             'process_steps',
@@ -183,8 +159,8 @@ class HomePageBlueprintService
                 'eyebrow' => 'Project Rhythm',
                 'heading' => 'A structured path from consultation to completion',
                 'subtitle' => 'Every engagement follows a disciplined sequence so design intent, pricing clarity, and site execution stay aligned.',
-                'variant' => 'numbered',
-                'tone' => 'cream',
+                'variant' => 'premium-stack',
+                'tone' => 'light',
                 'steps' => [
                     [
                         'icon' => 'messages-square',
@@ -211,53 +187,45 @@ class HomePageBlueprintService
             $this->styles([
                 'max_width' => 'xl',
                 'spacing_preset' => 'section',
-                'surface_style' => 'cream-panel',
-                'section_shell' => 'soft-panel',
+                'surface_preset' => 'white',
             ]),
             customId: 'process'
         );
 
         $blocks[] = $this->block(
-            'city_grid',
+            'service_area_enclave',
             [
                 'eyebrow' => 'Service Areas',
                 'heading' => 'Serving Greater Toronto’s Premier Enclaves',
-                'subtitle' => 'Specialized authority in Mississauga, Oakville, Burlington, Toronto, Milton, and surrounding luxury neighborhoods.',
-                'layout' => 'strip',
-                'tone' => 'dark',
-                'show_view_all' => true,
-                'view_all_text' => 'View All Service Areas',
-                'view_all_url' => '/locations',
+                'support_copy' => 'Specialized authority in Mississauga, Oakville, Burlington, Toronto, Milton, and surrounding luxury neighborhoods.',
+                'presentation_mode' => 'tabbed-enclave',
             ],
             $this->styles([
                 'max_width' => 'xl',
-                'spacing_preset' => 'compact',
-                'surface_style' => 'forest-gradient',
+                'spacing_preset' => 'section',
+                'surface_preset' => 'cream',
             ]),
             customId: 'locations'
         );
 
         $blocks[] = $this->block(
-            'form_block',
+            'split_consultation_panel',
             [
-                'form_slug' => 'request-quote',
-                'show_title' => false,
                 'eyebrow' => 'Get Started',
                 'heading' => 'Start Your Landscape Transformation',
-                'description' => 'Schedule an on-site consultation to discuss your vision, technical requirements, and how we can elevate your property.',
-                'variant' => 'split',
-                'tone' => 'light',
-                'panel_style' => 'luxury',
-                'field_style' => 'luxury',
-                'field_columns' => 'auto',
-                'submit_text' => 'Request a Consultation',
-                'show_contact_details' => true,
-                'support_cta_text' => 'Contact Our Team',
-                'support_cta_url' => '/contact',
+                'editorial_copy' => 'Schedule an on-site consultation to discuss your vision, technical requirements, and how we can elevate your property. We respect your time and provide clear, actionable next steps.',
+                'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
+                'media_id' => $heroMediaId,
+                'form_slug' => 'contact-us',
+                'tone' => 'dark',
             ],
             $this->styles([
-                'max_width' => 'xl',
-                'spacing_preset' => 'feature',
+                'max_width' => 'full',
+                'spacing_preset' => 'none',
+                'padding_top' => 'none',
+                'padding_bottom' => 'none',
+                'margin_bottom' => 'none',
+                'surface_preset' => 'transparent',
             ]),
             customId: 'contact'
         );

@@ -70,7 +70,7 @@
         src="{{ $url }}"
         alt="{{ $resolvedAlt }}"
         class="{{ $class }}"
-        style="object-position: {{ $objectPosition }};"
+        @if(str_contains($class, 'object-cover') || str_contains($class, 'object-contain')) style="object-position: {{ $objectPosition }};" @endif
         loading="{{ $resolvedLoading }}"
         @if($resolvedFetch) fetchpriority="{{ $resolvedFetch }}" @endif
         decoding="{{ $decoding }}"

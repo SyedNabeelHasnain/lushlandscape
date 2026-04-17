@@ -60,19 +60,19 @@
 @endphp
 
 @if($data->isNotEmpty())
-    <div class="space-y-12">
-        <div class="mb-16 max-w-4xl">
+    <div class="space-y-12 lg:space-y-16">
+        <div class="mb-12 max-w-4xl">
             @if($eyebrow)
-                <p class="text-luxury-label {{ $sectionTone['label'] }}">{{ $eyebrow }}</p>
+                <p class="text-luxury-label {{ $sectionTone['label'] }} block mb-4">{{ $eyebrow }}</p>
             @endif
             @if($heading)
-                <h2 class="mt-4 text-h2 font-heading font-bold tracking-tight {{ $sectionTone['heading'] }} animate-on-scroll" data-animation="fade-up">
-                    {{ $heading }}
+                <h2 class="text-h2 font-heading font-bold tracking-tight text-balance {{ $sectionTone['heading'] }} animate-on-scroll" data-animation="fade-up">
+                    {!! $heading !!}
                 </h2>
             @endif
             @if($subtitle)
-                <p class="mt-4 max-w-2xl text-body-lg {{ $sectionTone['sub'] }} animate-on-scroll" data-animation="fade-up" data-delay="100">
-                    {{ $subtitle }}
+                <p class="mt-6 max-w-2xl text-body-lg leading-relaxed {{ $sectionTone['sub'] }} animate-on-scroll" data-animation="fade-up" data-delay="100">
+                    {!! $subtitle !!}
                 </p>
             @endif
         </div>

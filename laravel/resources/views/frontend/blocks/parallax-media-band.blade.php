@@ -48,15 +48,15 @@
 
     {{-- Content --}}
     @if($heading || $subheadline)
-        <div class="relative z-20 text-center max-w-4xl px-6 md:px-12 py-20 animate-on-scroll" data-animation="fade-up">
+        <div class="relative z-20 text-center max-w-4xl px-6 md:px-12 py-20 lg:py-32 animate-on-scroll" data-animation="fade-up">
             @if($heading)
-                <h2 class="text-4xl md:text-5xl lg:text-7xl font-heading font-bold mb-6 {{ $textClass }} leading-tight">
-                    {{ $heading }}
-                </h2>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 {{ $textClass }} leading-tight tracking-tight text-balance">
+                    {!! $heading !!}
+                </h1>
             @endif
             @if($subheadline)
                 <p class="text-lg md:text-xl lg:text-2xl font-light opacity-90 max-w-3xl mx-auto {{ $textClass }} leading-relaxed">
-                    {{ $subheadline }}
+                    {!! $subheadline !!}
                 </p>
             @endif
         </div>

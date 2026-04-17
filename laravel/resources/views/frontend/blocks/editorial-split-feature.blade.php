@@ -52,14 +52,14 @@
                 @endif
 
                 @if(!empty($content['heading']))
-                    <h2 class="text-h2 font-heading font-bold leading-[0.95] {{ $headingClass }}">
-                        {{ $content['heading'] }}
+                    <h2 class="text-h2 font-heading font-bold leading-[0.95] text-balance {{ $headingClass }}">
+                        {!! $content['heading'] !!}
                     </h2>
                 @endif
 
                 @if(!empty($content['description']))
                     <p class="mt-6 text-[1.02rem] leading-[1.7] {{ $bodyClass }}">
-                        {{ $content['description'] }}
+                        {!! $content['description'] !!}
                     </p>
                 @endif
 

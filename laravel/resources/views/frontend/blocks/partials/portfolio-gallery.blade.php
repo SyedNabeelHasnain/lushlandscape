@@ -43,10 +43,10 @@
     };
 @endphp
 
-<div class="mb-10 max-w-4xl">
-    @if($eyebrow)<p class="text-luxury-label {{ $toneMap['label'] }}">{{ $eyebrow }}</p>@endif
-    @if($heading)<h2 class="mt-4 text-h2 font-heading font-bold {{ $toneMap['heading'] }}">{{ $heading }}</h2>@endif
-    @if($subtitle)<p class="mt-4 text-body-lg {{ $toneMap['sub'] }}">{{ $subtitle }}</p>@endif
+<div class="mb-12 max-w-4xl">
+    @if($eyebrow)<p class="text-luxury-label {{ $toneMap['label'] }} block mb-4">{{ $eyebrow }}</p>@endif
+    @if($heading)<h2 class="text-h2 font-heading font-bold text-balance {{ $toneMap['heading'] }}">{!! $heading !!}</h2>@endif
+    @if($subtitle)<p class="mt-6 text-body-lg leading-relaxed text-balance {{ $toneMap['sub'] }}">{!! $subtitle !!}</p>@endif
 </div>
 
 @php

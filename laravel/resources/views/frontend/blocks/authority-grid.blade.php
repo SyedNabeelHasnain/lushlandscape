@@ -13,12 +13,12 @@
             <span class="text-luxury-label text-text-secondary block mb-3">{{ $eyebrow }}</span>
         @endif
         @if($heading)
-            <h2 class="text-h2 font-heading font-bold text-ink">{{ $heading }}</h2>
+            <h2 class="text-h2 font-heading font-bold text-ink text-balance">{!! $heading !!}</h2>
         @endif
         @if($introduction)
-            <p class="mt-4 text-body-lg text-text-secondary">{{ $introduction }}</p>
+            <p class="mt-4 text-body-lg text-text-secondary max-w-2xl mx-auto">{!! $introduction !!}</p>
         @endif
-        <div class="mt-6 w-12 h-px bg-forest/30 mx-auto"></div>
+        <div class="mt-8 w-12 h-px bg-forest/30 mx-auto"></div>
     </div>
 
     @if(!empty($items))

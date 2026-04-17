@@ -33,9 +33,9 @@
             
             <div class="relative z-10">
                 <span class="text-luxury-label opacity-70 block mb-6">{{ $eyebrow }}</span>
-                <h2 class="text-display font-heading font-bold mb-8 leading-tight">{{ $heading }}</h2>
+                <h2 class="text-display font-heading font-bold mb-8 leading-tight text-balance">{!! $heading !!}</h2>
                 <div class="w-16 h-px bg-current opacity-30 mb-8"></div>
-                <p class="text-xl font-light opacity-90 leading-relaxed max-w-lg">{{ $editorialCopy }}</p>
+                <p class="text-xl font-light opacity-90 leading-relaxed max-w-lg">{!! $editorialCopy !!}</p>
             </div>
             
             <div class="relative z-10 mt-16 pt-8 border-t border-current/10">
