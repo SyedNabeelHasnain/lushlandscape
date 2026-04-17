@@ -117,6 +117,4 @@
     @endforeach
 @endif
 
-<x-frontend.related-posts :posts="$relatedPosts" />
-<x-frontend.cta-section />
 @endsection

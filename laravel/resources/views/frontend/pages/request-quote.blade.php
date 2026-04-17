@@ -178,11 +178,9 @@
     </div>
 </section>
 
-<x-frontend.cta-section variant="light" title="Prefer to Speak First?" subtitle="Call us directly and we will answer questions, confirm fit, and outline the next step for your consultation." :buttonText="'Call ' . $phone" :buttonUrl="'tel:' . $phoneClean" />
-
 @if(isset($blocks) && $blocks->isNotEmpty())
     @foreach($blocks as $block)
-        <x-frontend.block-renderer :block="$block" :context="$context" />
+        <x-frontend.block-renderer :block="$block" :context="$context ?? []" />
     @endforeach
 @endif
 @endsection
