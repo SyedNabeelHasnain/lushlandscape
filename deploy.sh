@@ -140,6 +140,15 @@ if ! command -v npm &> /dev/null; then
 fi
 
 if ! command -v npm &> /dev/null; then
+    # Try finding it in typical user bin directories first
+    if [ -x "$HOME/bin/npm" ]; then
+        export PATH="$HOME/bin:$PATH"
+    elif [ -x "$HOME/.local/bin/npm" ]; then
+        export PATH="$HOME/.local/bin:$PATH"
+    fi
+fi
+
+if ! command -v npm &> /dev/null; then
     export NVM_DIR="$HOME/.nvm"
     if [ -s "$NVM_DIR/nvm.sh" ]; then
         \. "$NVM_DIR/nvm.sh"
@@ -148,7 +157,7 @@ if ! command -v npm &> /dev/null; then
     if ! command -v npm &> /dev/null; then
         NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
         if command -v curl &> /dev/null; then
-            curl -fsSL "$NVM_INSTALL_URL" | bash
+            curl -o- "$NVM_INSTALL_URL" | bash
         elif command -v wget &> /dev/null; then
             wget -qO- "$NVM_INSTALL_URL" | bash
         fi
@@ -158,9 +167,9 @@ if ! command -v npm &> /dev/null; then
     fi
 
     if command -v nvm &> /dev/null; then
-        nvm install 20.19.0
-        nvm use 20.19.0
-        nvm alias default 20.19.0 >/dev/null 2>&1 || true
+        nvm install 20
+        nvm use 20
+        nvm alias default 20 >/dev/null 2>&1 || true
     fi
 fi
 
@@ -181,14 +190,18 @@ if [ -z "${NODE_VERSION_CURRENT:-}" ]; then
     abort "Unable to determine Node.js version."
 fi
 if [ "${NODE_MAJOR:-0}" -lt 20 ]; then
-    log "Node.js ${NODE_VERSION_CURRENT} detected. Upgrading to 20.19.0 for Vite compatibility..."
+    log "Node.js ${NODE_VERSION_CURRENT} detected. Upgrading to Node 20 for Vite compatibility..."
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     if command -v nvm &> /dev/null; then
-        nvm install 20.19.0
-        nvm use 20.19.0
-        nvm alias default 20.19.0 >/dev/null 2>&1 || true
-        export PATH="${NVM_DIR}/versions/node/v20.19.0/bin:$PATH"
+        nvm install 20
+        nvm use 20
+        nvm alias default 20 >/dev/null 2>&1 || true
+        # Dynamically set PATH to the new nvm node bin directory
+        NVM_BIN="$(nvm which 20 | xargs dirname 2>/dev/null)"
+        if [ -n "$NVM_BIN" ]; then
+            export PATH="$NVM_BIN:$PATH"
+        fi
     fi
 fi
 log "Using Node.js version: ${NODE_VERSION_CURRENT}"
