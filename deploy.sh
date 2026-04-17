@@ -120,11 +120,32 @@ $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+if ! command -v npm &> /dev/null; then
+    # Hostinger often puts alt-nodejs in specific bins
+    BIN_DIRS_RAW="$(ls -d /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin 2>/dev/null || true)"
+    if [ -n "${BIN_DIRS_RAW:-}" ]; then
+        SORTED_BIN_DIRS="$(printf "%s\n" ${BIN_DIRS_RAW} | sort -Vr 2>/dev/null || printf "%s\n" ${BIN_DIRS_RAW} | sort -r)"
+        while IFS= read -r BIN_DIR; do
+            if [ -x "${BIN_DIR}/node" ] && [ -x "${BIN_DIR}/npm" ]; then
+                export PATH="${BIN_DIR}:$PATH"
+                log "Using NodeJS from ${BIN_DIR}"
+                break
+            fi
+        done <<< "$SORTED_BIN_DIRS"
+    fi
+fi
+
 if ! command -v npm &> /dev/null; then
     abort "npm is missing. Please ensure Node.js is installed and available in the system PATH or via nvm."
 fi
+
+# Ensure npm and node are executable if they are found
+chmod +x "$(command -v node)" 2>/dev/null || true
+chmod +x "$(command -v npm)" 2>/dev/null || true
 
 NODE_VERSION_CURRENT="$(node -v 2>/dev/null || echo '')"
 log "Using Node.js version: ${NODE_VERSION_CURRENT}"
