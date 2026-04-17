@@ -104,6 +104,10 @@ if [ "$READINESS_TARGET" = "staging" ] && [[ "${APP_HOST_VALUE:-}" != *staging* 
     abort "Staging deployment context detected, but APP_URL is '${APP_URL_VALUE:-unset}'. Set APP_URL=https://test.lushlandscape.ca in laravel/.env before deploying."
 fi
 
+if [ "$FRESH_DB" = true ] && [ "${ALLOW_NON_PRODUCTION}" != "true" ] && [ "$READINESS_TARGET" != "staging" ]; then
+    abort "--fresh is only allowed on a staging host by default. Detected target is '${READINESS_TARGET}'. Set APP_URL to staging, deploy from a staging directory, or pass --allow-non-production intentionally."
+fi
+
 # --- Composer install ---
 log "Installing Composer dependencies..."
 cd "$LARAVEL_DIR"
@@ -120,12 +124,10 @@ $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+NODE_VERSION_TARGET="20.19.0"
+NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
 
 if ! command -v npm &> /dev/null; then
-    # Hostinger often puts alt-nodejs in specific bins
     BIN_DIRS_RAW="$(ls -d /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin 2>/dev/null || true)"
     if [ -n "${BIN_DIRS_RAW:-}" ]; then
         SORTED_BIN_DIRS="$(printf "%s\n" ${BIN_DIRS_RAW} | sort -Vr 2>/dev/null || printf "%s\n" ${BIN_DIRS_RAW} | sort -r)"
@@ -160,6 +162,8 @@ if ! command -v npm &> /dev/null; then
             curl -o- "$NVM_INSTALL_URL" | bash
         elif command -v wget &> /dev/null; then
             wget -qO- "$NVM_INSTALL_URL" | bash
+        else
+            abort "npm is missing. Install NodeJS on this server (Hostinger NodeJS selector) or provide curl/wget so nvm can be installed."
         fi
 
         export NVM_DIR="$HOME/.nvm"
@@ -173,14 +177,9 @@ if ! command -v npm &> /dev/null; then
     fi
 fi
 
-if ! command -v npm &> /dev/null; then
-    abort "npm is missing. Please ensure Node.js is installed and available in the system PATH or via nvm."
-fi
-
-# Ensure npm and node are executable if they are found
+command -v npm &> /dev/null || abort "npm is still not available after attempting to install it."
 chmod +x "$(command -v node)" 2>/dev/null || true
 chmod +x "$(command -v npm)" 2>/dev/null || true
-
 # --- NPM Executable Check ---
 npm --version >/dev/null 2>&1 || abort "npm is present but not executable or broken. Try running 'npm install -g npm' or fix permissions."
 
@@ -206,7 +205,6 @@ if [ "${NODE_MAJOR:-0}" -lt 20 ]; then
 fi
 log "Using Node.js version: ${NODE_VERSION_CURRENT}"
 
-# --- NPM Execution ---
 log "Installing NPM dependencies..."
 npm install --silent --no-audit --no-fund || abort "NPM install failed with exit code $?"
 ok "NPM dependencies synced"
