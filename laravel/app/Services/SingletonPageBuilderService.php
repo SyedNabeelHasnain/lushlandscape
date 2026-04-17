@@ -63,7 +63,7 @@ class SingletonPageBuilderService
             'title' => 'Consultation Page Builder',
             'page_type' => 'consultation',
             'page_id' => 0,
-            'preview_path' => '/request-quote',
+            'preview_path' => '/consultation',
             'success_message' => 'Consultation page updated successfully.',
             'helper' => 'Add optional governed content blocks around the fixed inquiry form.',
         ],

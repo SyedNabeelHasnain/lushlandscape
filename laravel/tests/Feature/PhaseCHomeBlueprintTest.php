@@ -33,6 +33,6 @@ class PhaseCHomeBlueprintTest extends TestCase
         $this->assertEquals('elevated', $blocks[4]['content']['card_skin']);
         $this->assertEquals('premium-stack', $blocks[5]['content']['variant']);
         $this->assertEquals('tabbed-enclave', $blocks[6]['content']['presentation_mode']);
-        $this->assertEquals('contact-us', $blocks[7]['content']['form_slug']);
+        $this->assertEquals('consultation', $blocks[7]['content']['form_slug']);
     }
 }

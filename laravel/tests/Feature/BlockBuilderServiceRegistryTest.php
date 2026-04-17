@@ -141,7 +141,7 @@ class BlockBuilderServiceRegistryTest extends TestCase
 
         $splitDefaults = $blockTypes['split_consultation_panel']['defaults'];
         $this->assertStringNotContainsString('quote', strtolower($splitDefaults['trust_lines']));
-        $this->assertNotEquals('request-quote', $splitDefaults['form_slug']);
-        $this->assertEquals('contact-us', $splitDefaults['form_slug']);
+        $this->assertNotEquals('consultation', $splitDefaults['form_slug']);
+        $this->assertEquals('consultation', $splitDefaults['form_slug']);
     }
 }

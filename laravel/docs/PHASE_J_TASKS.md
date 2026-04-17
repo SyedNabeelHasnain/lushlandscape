@@ -6,7 +6,7 @@ This document tracks the final sitewide frontend refinement and UX/UI perfection
 
 ### Visual Consistency & Section Refinement
 - **Obsolete Component Cleanup**: Swept the frontend components and removed legacy non-governed CTA components (`cta-section.blade.php`, `related-posts.blade.php`, `sections/cta-section.blade.php`) that were bypassing the FSE builder.
-- **Consultation Page Discipline**: Removed the hardcoded `cta-section` at the bottom of `/request-quote`. The consultation page now relies strictly on the unified builder blocks (`process_steps`) mapped during Phase H.
+- **Consultation Page Discipline**: Removed the hardcoded `cta-section` at the bottom of `/consultation`. The consultation page now relies strictly on the unified builder blocks (`process_steps`) mapped during Phase H.
 - **Blog Post Page Discipline**: Removed the hardcoded `related-posts` and `cta-section` blocks at the bottom of `blog-post.blade.php`. Blog posts now strictly use the `services_grid` and `split_consultation_panel` builder zones mapped during Phase G.
 - **Static Legal Pages**: Removed the hardcoded `cta-section` fallback in `static.blade.php` to ensure legal pages are not polluted by marketing elements unless explicitly added via the CMS builder.
 
@@ -16,7 +16,7 @@ This document tracks the final sitewide frontend refinement and UX/UI perfection
 ## 2. Execution Details
 
 ### Files Refined & Cleaned Up
-- `laravel/resources/views/frontend/pages/request-quote.blade.php` (Removed rogue CTA component)
+- `laravel/resources/views/frontend/pages/consultation.blade.php` (Removed rogue CTA component)
 - `laravel/resources/views/frontend/pages/blog-post.blade.php` (Removed rogue CTA and Related Posts components)
 - `laravel/resources/views/frontend/pages/static.blade.php` (Ensured absolute shell discipline)
 - `laravel/resources/views/components/frontend/cta-section.blade.php` (Deleted)

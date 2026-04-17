@@ -26,7 +26,7 @@ class PhaseGBlogBlueprintTest extends TestCase
             'split_consultation_panel',
         ], $keys);
 
-        $this->assertEquals('contact-us', $blocks[2]['content']['form_slug']);
+        $this->assertEquals('consultation', $blocks[2]['content']['form_slug']);
     }
 
     public function test_phase_g_blog_category_mapping()

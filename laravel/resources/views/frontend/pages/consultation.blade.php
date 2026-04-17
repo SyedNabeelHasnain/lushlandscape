@@ -3,7 +3,7 @@
 <x-frontend.seo-head
     title="Project Consultation | Lush Landscape Service"
     description="Begin your project inquiry and request an on-site consultation with Lush Landscape Service. Share a few details and our team will follow up with next steps."
-    :canonical="url('/request-quote')"
+    :canonical="url('/consultation')"
     :schema="$schema"
 />
 @endsection
@@ -71,7 +71,7 @@
                 <p class="text-sm text-text-secondary mb-7">This form helps our team prepare the right next step for your consultation.</p>
 
                 @if($form)
-                <div x-data="contactForm('quote-form', 'request-quote')" x-cloak>
+                <div x-data="contactForm('quote-form', 'consultation')" x-cloak>
                     <form x-on:submit.prevent="submitForm" id="quote-form">
                         <label for="quote-form-website_url_hp" class="sr-only">Leave this field empty</label>
                         <input type="text" id="quote-form-website_url_hp" name="website_url_hp" value="" class="hidden" tabindex="-1" autocomplete="off">

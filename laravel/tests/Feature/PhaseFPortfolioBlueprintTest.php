@@ -27,7 +27,7 @@ class PhaseFPortfolioBlueprintTest extends TestCase
             'split_consultation_panel',
         ], $keys);
 
-        $this->assertEquals('contact-us', $blocks[3]['content']['form_slug']);
+        $this->assertEquals('consultation', $blocks[3]['content']['form_slug']);
     }
 
     public function test_phase_f_portfolio_category_mapping()
@@ -48,7 +48,7 @@ class PhaseFPortfolioBlueprintTest extends TestCase
             'split_consultation_panel',
         ], $keys);
 
-        $this->assertEquals('contact-us', $blocks[2]['content']['form_slug']);
+        $this->assertEquals('consultation', $blocks[2]['content']['form_slug']);
     }
 
     public function test_phase_f_portfolio_project_mapping()
@@ -71,6 +71,6 @@ class PhaseFPortfolioBlueprintTest extends TestCase
             'split_consultation_panel',
         ], $keys);
 
-        $this->assertEquals('contact-us', $blocks[4]['content']['form_slug']);
+        $this->assertEquals('consultation', $blocks[4]['content']['form_slug']);
     }
 }

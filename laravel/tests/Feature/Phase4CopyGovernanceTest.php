@@ -8,7 +8,7 @@ class Phase4CopyGovernanceTest extends TestCase
 {
     public function test_frontend_consultation_page_is_consultation_led(): void
     {
-        $path = base_path('resources/views/frontend/pages/request-quote.blade.php');
+        $path = base_path('resources/views/frontend/pages/consultation.blade.php');
         $contents = file_get_contents($path);
 
         $this->assertIsString($contents);

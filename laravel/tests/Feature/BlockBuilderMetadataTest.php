@@ -217,7 +217,7 @@ class BlockBuilderMetadataTest extends TestCase
                     'editorial_copy' => 'Copy',
                     'trust_lines' => 'A, B',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 'styles' => BlockBuilderService::styleDefaults(),
@@ -236,7 +236,7 @@ class BlockBuilderMetadataTest extends TestCase
         );
 
         $split = $editorBlocks->last();
-        $this->assertSame('contact-us', $split['content']['form_slug']);
+        $this->assertSame('consultation', $split['content']['form_slug']);
         $this->assertSame('Book a Consultation', $split['content']['heading']);
     }
 

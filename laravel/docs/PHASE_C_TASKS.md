@@ -87,7 +87,7 @@ During final review, a critical mismatch was identified between what this docume
 2. **Order Enforced:** The `editorial_split_feature` is now explicitly generated before the `portfolio_gallery`.
 3. **Hero Family Enforced:** The Hero is now `parallax_media_band` inside the blueprint array, replacing the generic `hero`.
 4. **Enclave Family Enforced:** The Service Areas section now scaffolds as `service_area_enclave`, entirely removing `city_grid`.
-5. **Consultation Family Enforced:** The Contact block now scaffolds as `split_consultation_panel` connected to the `contact-us` form slug, entirely removing the generic `form_block` with the `request-quote` slug.
+5. **Consultation Family Enforced:** The Contact block now scaffolds as `split_consultation_panel` connected to the `contact-us` form slug, entirely removing the generic `form_block` with the `consultation` slug.
 6. **Test Proof Added:** Created `laravel/tests/Feature/PhaseCHomeBlueprintTest.php` which executes the blueprint builder and asserts the exact array of block keys, variants, and form routes returned by the builder match this document mathematically.
 
 Phase C is now provably aligned across documentation, implementation, testing, and actual output behavior.

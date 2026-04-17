@@ -9,7 +9,7 @@ This document tracks the final mapping and build-out of the trust, inquiry, and 
 **Governed Builder Zones (Below Contact Section):**
 1. **Common Inquiries**: `faq_section` (Provides quick answers to frequent questions to reduce unnecessary friction before contacting.)
 
-### Consultation Page (`/request-quote` / `/consultation`)
+### Consultation Page (`/consultation` / `/consultation`)
 *(Note: The main page shell, custom sidebar ("What Happens Next?"), and the advanced project inquiry form with custom logic are preserved for stability.)*
 **Governed Builder Zones (Below Form):**
 1. **What to Expect**: `process_steps` (Numbered process overview outlining the journey from consultation to project completion.)
@@ -40,7 +40,7 @@ This document tracks the final mapping and build-out of the trust, inquiry, and 
 ### What Was Verified
 - **Shell Compatibility**: All three pages strictly adhere to the unified layout system without breaking existing form logic.
 - **CTA Discipline**: Contact and FAQ pages use consultation-led phrasing ("Talk to our team directly", "Common Inquiries") instead of generic filler text.
-- **Form Quality**: The complex OTP logic and specific field requirements on `/contact` and `/request-quote` remain untouched and functional.
+- **Form Quality**: The complex OTP logic and specific field requirements on `/contact` and `/consultation` remain untouched and functional.
 
 ## 3. Deferred Items
 - Legal pages and machine-readable output refinements.

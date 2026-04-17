@@ -22,15 +22,15 @@ class ContactController extends Controller
         return view('frontend.pages.contact', compact('form', 'breadcrumbs', 'schema', 'blocks', 'context'));
     }
 
-    public function quote()
+    public function consultation()
     {
-        $form = Form::where('slug', 'request-quote')->where('status', 'active')->with('fields')->firstOrFail();
+        $form = Form::where('slug', 'consultation')->where('status', 'active')->with('fields')->firstOrFail();
 
         $breadcrumbs = [['label' => 'Project Consultation']];
         $schema = SchemaService::breadcrumbList($breadcrumbs).SchemaService::localBusiness();
-        $context = app(PageContextService::class)->listing('Project Consultation', 'request-quote', url('/request-quote'));
+        $context = app(PageContextService::class)->listing('Project Consultation', 'consultation', url('/consultation'));
         $blocks = BlockBuilderService::getBlocks('consultation', 0);
 
-        return view('frontend.pages.request-quote', compact('form', 'breadcrumbs', 'schema', 'blocks', 'context'));
+        return view('frontend.pages.consultation', compact('form', 'breadcrumbs', 'schema', 'blocks', 'context'));
     }
 }

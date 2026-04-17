@@ -15,7 +15,7 @@
 
 - [x] Service-city pages refactored into clean template-orchestrated unified page type (builder zones + fixed shell where required)
 - [x] Contact page moved to template-orchestrated with builder zones
-- [x] Consultation page (existing `/request-quote`) moved to template-orchestrated with builder zones
+- [x] Consultation page (existing `/consultation`) moved to template-orchestrated with builder zones
 - [x] Blog post stays template-orchestrated; premium shell alignment improved
 - [x] Portfolio project stays template-orchestrated; premium close + CTA alignment improved
 - [x] Static longform pages governance tightened (builder-native vs template-orchestrated based on page purpose)
@@ -23,7 +23,7 @@
 
 ## 2) Consultation + contact experience upgrade (premium inquiry model)
 
-- [x] `/request-quote` reframed as consultation/inquiry (no estimate-led framing)
+- [x] `/consultation` reframed as consultation/inquiry (no estimate-led framing)
 - [x] Inquiry form taxonomy separated (property type vs project scope)
 - [x] Verification + honeypot + queued notifications preserved
 - [x] Success, consent, and email verification messaging upgraded
@@ -51,7 +51,7 @@
 - [x] [PHASE_4_TASKS.md](PHASE_4_TASKS.md)
 - [x] [ContactController.php](../app/Http/Controllers/Frontend/ContactController.php)
 - [x] [SingletonPageBuilderService.php](../app/Services/SingletonPageBuilderService.php)
-- [x] [request-quote.blade.php](../resources/views/frontend/pages/request-quote.blade.php)
+- [x] [consultation.blade.php](../resources/views/frontend/pages/consultation.blade.php)
 - [x] [contact.blade.php](../resources/views/frontend/pages/contact.blade.php)
 - [x] [static.blade.php](../resources/views/frontend/pages/static.blade.php)
 - [x] [mega-nav.blade.php](../resources/views/components/frontend/mega-nav.blade.php)

@@ -109,7 +109,7 @@ class RuntimeSmokeAudit extends Command
             $this->check('public', '/blog'),
             $this->check('public', '/portfolio'),
             $this->check('public', '/contact'),
-            $this->check('public', '/request-quote'),
+            $this->check('public', '/consultation'),
             $this->check('public', '/faqs'),
             $this->check('public', '/llms.txt'),
             $this->check('public', '/llms-full.txt'),
@@ -602,7 +602,7 @@ class RuntimeSmokeAudit extends Command
                 'forbidden' => $premiumForbidden,
                 'required' => [],
             ],
-            '/request-quote' => [
+            '/consultation' => [
                 'forbidden' => $premiumForbidden,
                 'required' => ['Project Consultation', 'Request a Consultation'],
             ],

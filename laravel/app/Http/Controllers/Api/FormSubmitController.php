@@ -154,8 +154,8 @@ class FormSubmitController extends Controller
                     subject: $subject,
                     greeting: $greeting,
                     lines: $lines,
-                    actionText: $form->slug === 'request-quote' ? 'View Our Portfolio' : null,
-                    actionUrl: $form->slug === 'request-quote' ? "{$appUrl}/portfolio" : null,
+                    actionText: $form->slug === 'consultation' ? 'View Our Portfolio' : null,
+                    actionUrl: $form->slug === 'consultation' ? "{$appUrl}/portfolio" : null,
                     outroLines: ['If you have any questions, feel free to reply to this email or call us directly.'],
                     preheader: $subject,
                 ));

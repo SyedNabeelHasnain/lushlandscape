@@ -62,7 +62,7 @@ class HomePageBlueprintServiceTest extends TestCase
         $this->assertSame('portfolio_gallery', $blocks[2]['block_type']);
         $this->assertSame('editorial_split_feature', $blocks[3]['block_type']);
         $this->assertSame(92, $blocks[3]['content']['media_id']);
-        $this->assertSame('request-quote', $blocks[6]['content']['form_slug']);
+        $this->assertSame('consultation', $blocks[6]['content']['form_slug']);
     }
 
     public function test_scaffold_skips_when_homepage_content_already_exists_and_replace_is_not_requested(): void

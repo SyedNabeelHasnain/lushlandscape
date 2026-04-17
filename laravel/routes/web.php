@@ -125,7 +125,7 @@ Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio
 Route::get('/portfolio/category/{slug}', [PortfolioController::class, 'category'])->name('portfolio.category');
 Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
-Route::get('/request-quote', [ContactController::class, 'quote'])->name('contact.quote');
+Route::get('/consultation', [ContactController::class, 'consultation'])->name('contact.consultation');
 Route::get('/search/live', [SearchController::class, 'live'])->middleware('throttle:30,1')->name('search.live');
 Route::get('/search', [SearchController::class, 'results'])->middleware('throttle:30,1')->name('search.results');
 Route::get('/faqs', [FaqPageController::class, 'index'])->name('faqs.index');

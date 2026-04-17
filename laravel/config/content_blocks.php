@@ -547,7 +547,7 @@ return [
                 ['key' => 'style',        'label' => 'Style',        'type' => 'select',
                     'options' => ['forest' => 'Forest Green', 'cream' => 'Cream', 'dark' => 'Dark']],
             ],
-            'defaults' => ['heading' => '', 'subheading' => '', 'button_text' => 'Book a Consultation', 'button_url' => '/request-quote', 'style' => 'forest'],
+            'defaults' => ['heading' => '', 'subheading' => '', 'button_text' => 'Book a Consultation', 'button_url' => '/consultation', 'style' => 'forest'],
         ],
 
         // 30. Button Group

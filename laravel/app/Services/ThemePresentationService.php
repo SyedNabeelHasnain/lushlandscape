@@ -73,10 +73,10 @@ class ThemePresentationService
 
     public function ctaUrl(): string
     {
-        $url = (string) Setting::get('nav_cta_url', '/request-quote');
+        $url = (string) Setting::get('nav_cta_url', '/consultation');
 
-        if (preg_match('/request-quote/i', $url)) {
-            return '/request-quote';
+        if (preg_match('/consultation/i', $url)) {
+            return '/consultation';
         }
 
         return $url;
@@ -142,8 +142,8 @@ class ThemePresentationService
             if ($label !== '' && preg_match('/\b(quote|estimate)\b/i', $label)) {
                 $link['label'] = 'Consultation';
             }
-            if ($url !== '' && preg_match('/request-quote/i', $url)) {
-                $link['url'] = '/request-quote';
+            if ($url !== '' && preg_match('/consultation/i', $url)) {
+                $link['url'] = '/consultation';
             }
 
             return $link;
@@ -176,8 +176,8 @@ class ThemePresentationService
                 if ($label !== '' && preg_match('/\b(quote|estimate)\b/i', $label)) {
                     $link['label'] = 'Consultation';
                 }
-                if ($url !== '' && preg_match('/request-quote/i', $url)) {
-                    $link['url'] = '/request-quote';
+                if ($url !== '' && preg_match('/consultation/i', $url)) {
+                    $link['url'] = '/consultation';
                 }
 
                 return $link;

@@ -1648,8 +1648,8 @@ class StaticPageContentSeeder extends Seeder
                 'content' => [
                     'html' => '<h2>4. Service Agreements</h2>'
                         .'<p>All landscaping services are governed by a written service agreement (contract) that is separate from these website Terms. The service agreement specifies the scope of work, materials, timeline, payment terms, warranty coverage, and other project-specific details. In the event of any conflict between these Terms and a signed service agreement, the service agreement shall prevail.</p>'
-                        .'<h3>Quotes and Estimates</h3>'
-                        .'<p>Quotes provided by Lush Landscape Service are valid for 30 days from the date of issue unless otherwise stated. Quotes are based on the information available at the time of the site assessment and are subject to change if site conditions differ from what was observed. Any changes to the scope of work after contract signing will be documented in a written change order, which requires your approval before additional work proceeds.</p>'
+                        .'<h3>Consultations and Estimates</h3>'
+                        .'<p>Estimates provided by Lush Landscape Service are valid for 30 days from the date of issue unless otherwise stated. Estimates are based on the information available at the time of the site assessment and are subject to change if site conditions differ from what was observed. Any changes to the scope of work after contract signing will be documented in a written change order, which requires your approval before additional work proceeds.</p>'
                         .'<h3>Project Timeline</h3>'
                         .'<p>Estimated project timelines are provided in good faith based on the anticipated scope of work. Timelines may be affected by weather conditions, permit processing delays, material availability, or unforeseen site conditions. We will communicate any anticipated delays promptly and provide updated timelines.</p>',
                 ],
@@ -1748,8 +1748,8 @@ class StaticPageContentSeeder extends Seeder
                             'answer' => 'Yes. Changes to the scope of work are handled through a formal change order process. We will provide a written description of the change, its impact on the timeline, and any cost adjustment. The change order must be approved and signed by both parties before the additional work begins.',
                         ],
                         [
-                            'question' => 'How long are your quotes valid?',
-                            'answer' => 'Unless otherwise stated, quotes are valid for 30 days from the date of issue. After 30 days, material prices and availability may have changed, and an updated quote may be required. We will always confirm pricing before asking you to sign a contract.',
+                            'question' => 'How long are your estimates valid?',
+                            'answer' => 'Unless otherwise stated, estimates are valid for 30 days from the date of issue. After 30 days, material prices and availability may have changed, and an updated estimate may be required. We will always confirm pricing before asking you to sign a contract.',
                         ],
                     ],
                 ],

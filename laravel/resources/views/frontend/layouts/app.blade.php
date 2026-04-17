@@ -219,7 +219,7 @@
         if (preg_match('/\\b(quote|estimate)\\b/i', $navCtaText)) {
             $navCtaText = 'Book a Consultation';
         }
-        if (preg_match('/request-quote/i', $navCtaUrl)) {
+        if (preg_match('/consultation/i', $navCtaUrl)) {
             $navCtaUrl = '/contact';
         }
 
@@ -239,7 +239,7 @@
             if ($label !== '' && preg_match('/\\b(quote|estimate)\\b/i', $label)) {
                 return false;
             }
-            if ($url !== '' && preg_match('/request-quote/i', $url)) {
+            if ($url !== '' && preg_match('/consultation/i', $url)) {
                 return false;
             }
 

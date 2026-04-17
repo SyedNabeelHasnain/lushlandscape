@@ -32,10 +32,10 @@ class FormSeeder extends Seeder
         ]);
 
         $quoteForm = Form::updateOrCreate(
-            ['slug' => 'request-quote'],
+            ['slug' => 'consultation'],
             [
-                'name' => 'Project Inquiry',
-                'form_type' => 'quote',
+                'name' => 'Project Consultation',
+                'form_type' => 'consultation',
                 'description' => 'Project inquiry and consultation request',
                 'success_message' => 'Thank you for your inquiry. Our team will review your submission and follow up with next steps.',
                 'email_to' => ['info@lushlandscape.ca'],

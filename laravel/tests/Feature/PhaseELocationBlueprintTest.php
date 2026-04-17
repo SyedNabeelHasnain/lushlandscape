@@ -31,7 +31,7 @@ class PhaseELocationBlueprintTest extends TestCase
         ], $keys);
 
         $this->assertEquals('tabbed-enclave', $blocks[1]['content']['presentation_mode']);
-        $this->assertEquals('contact-us', $blocks[3]['content']['form_slug']);
+        $this->assertEquals('consultation', $blocks[3]['content']['form_slug']);
     }
 
     public function test_phase_e_city_mapping()

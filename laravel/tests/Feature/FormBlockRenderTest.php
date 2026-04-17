@@ -14,7 +14,7 @@ class FormBlockRenderTest extends TestCase
     public function test_form_fields_partial_renders_widths_help_text_verification_and_checkbox_groups(): void
     {
         $form = (object) [
-            'slug' => 'contact-us',
+            'slug' => 'consultation',
             'requires_email_verification' => true,
             'fields' => new Collection([
                 (object) [
@@ -142,7 +142,7 @@ class FormBlockRenderTest extends TestCase
         DB::table('forms')->insert([
             'id' => 1,
             'name' => 'Project Inquiry',
-            'slug' => 'request-quote',
+            'slug' => 'consultation',
             'form_type' => 'quote',
             'status' => 'active',
             'requires_email_verification' => false,
@@ -169,7 +169,7 @@ class FormBlockRenderTest extends TestCase
             [
                 'block' => (object) ['id' => 99],
                 'content' => [
-                    'form_slug' => 'request-quote',
+                    'form_slug' => 'consultation',
                     'variant' => 'split',
                     'heading' => 'Start Your Landscape Transformation',
                     'description' => 'Schedule an on-site consultation to discuss your vision.',

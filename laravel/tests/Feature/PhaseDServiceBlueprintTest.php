@@ -25,7 +25,7 @@ class PhaseDServiceBlueprintTest extends TestCase
             'split_consultation_panel',
         ], $keys);
 
-        $this->assertEquals('contact-us', $blocks[4]['content']['form_slug']);
+        $this->assertEquals('consultation', $blocks[4]['content']['form_slug']);
     }
 
     public function test_phase_d_service_category_mapping()

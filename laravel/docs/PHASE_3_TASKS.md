@@ -58,7 +58,7 @@
 - [x] Overlay presets + overlay opacity support (field-backed)
 - [x] Focal-point aware image cropping
 - [x] Controlled heading scale + paragraph width
-- [x] Consultation-led defaults across all hero surfaces (no `/request-quote` fallback)
+- [x] Consultation-led defaults across all hero surfaces (no `/consultation` fallback)
 
 ## 6) Category grid + selected work upgrades
 

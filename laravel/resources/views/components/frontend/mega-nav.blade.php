@@ -378,7 +378,7 @@
                     <div class="bg-luxury-green-deep p-8 h-full flex flex-col">
                         <h3 class="text-white font-heading text-xl font-bold leading-snug mb-3">Begin Your Transformation</h3>
                         <p class="text-white/50 text-sm leading-relaxed mb-6">Complimentary consultation. 10-year warranty. No hidden costs.</p>
-                        <a href="{{ url('/request-quote') }}" class="btn-luxury btn-luxury-white text-[10px] mt-auto">
+                        <a href="{{ url('/consultation') }}" class="btn-luxury btn-luxury-white text-[10px] mt-auto">
                             Project Consultation
                         </a>
                         @if($phone)

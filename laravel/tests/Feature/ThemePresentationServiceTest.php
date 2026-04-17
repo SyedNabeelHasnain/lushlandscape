@@ -107,13 +107,13 @@ class ThemePresentationServiceTest extends TestCase
     public function test_theme_service_sanitizes_quote_led_cta_and_low_tier_newsletter_heading(): void
     {
         Setting::set('nav_cta_text', 'Get a Quote');
-        Setting::set('nav_cta_url', '/request-quote');
+        Setting::set('nav_cta_url', '/consultation');
         Setting::set('footer_newsletter_heading', 'Get Landscaping Tips & Seasonal Deals');
 
         $service = app(ThemePresentationService::class);
 
-        // Test CTA fallback (should allow /request-quote because it's now consultation)
-        $this->assertSame('/request-quote', $service->ctaUrl());
+        // Test CTA fallback (should allow /consultation because it's now consultation)
+        $this->assertSame('/consultation', $service->ctaUrl());
         $this->assertSame('Book a Consultation', $service->ctaText());
 
         // Test Newsletter heading fallback

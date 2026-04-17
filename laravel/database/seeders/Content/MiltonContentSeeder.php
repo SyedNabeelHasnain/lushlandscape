@@ -32,7 +32,7 @@ class MiltonContentSeeder extends Seeder
                     'keywords_json' => ContentBlockHelper::defaultKeywords($service->name, $city->name),
                     'cta_json' => [
                         'text' => 'Book a Consultation in Milton',
-                        'url' => '/request-quote?service='.urlencode($service->name).'&city=Milton',
+                        'url' => '/consultation?service='.urlencode($service->name).'&city=Milton',
                     ],
                 ])
             );

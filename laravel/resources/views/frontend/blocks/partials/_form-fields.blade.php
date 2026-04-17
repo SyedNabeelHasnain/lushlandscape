@@ -73,7 +73,7 @@
                         : ['value' => (string) $option, 'label' => (string) $option])
                     ->filter(fn ($option) => $option['label'] !== '');
 
-                if ($form->slug === 'request-quote') {
+                if ($form->slug === 'consultation') {
                     if ($field->name === 'service') {
                         $fieldLabel = 'Project Scope';
                         $normalizedOptions = collect([

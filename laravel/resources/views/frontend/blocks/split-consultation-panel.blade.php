@@ -6,7 +6,7 @@
     $trustLines = array_map('trim', explode(',', $content['trust_lines'] ?? ''));
     $tone = $content['tone'] ?? 'dark';
     $mediaId = $content['media_id'] ?? null;
-    $formSlug = $content['form_slug'] ?? 'contact-us';
+    $formSlug = $content['form_slug'] ?? 'consultation';
 
     $asset = $mediaId ? ($mediaLookup[$mediaId] ?? null) : null;
     $mediaUrl = $asset ? $asset->url : null;

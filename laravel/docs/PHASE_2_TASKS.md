@@ -90,7 +90,7 @@ Implemented (initial baseline):
 
 ### 3.1 Remove quote-led shell defaults
 
-Replace `/request-quote` as the default CTA target in these sources:
+Replace `/consultation` as the default CTA target in these sources:
 
 - [blocks.php](../config/blocks.php) `hero.defaults.cta_primary_url`
 - [blocks.php](../config/blocks.php) `theme_cta_group.defaults.primary_url`
@@ -146,7 +146,7 @@ Minimum corrections:
 
 Implemented:
 
-- Blueprint CTA targets updated from `/request-quote` → `/contact`:
+- Blueprint CTA targets updated from `/consultation` → `/contact`:
   - [HomePageBlueprintService.php](../app/Console/Services/HomePageBlueprintService.php)
   - [ListingPageBlueprintService.php](../app/Console/Services/ListingPageBlueprintService.php)
 
@@ -202,7 +202,7 @@ Add/extend tests to protect Phase 2 governance:
   - save-time denial when block used on wrong page type
   - required-field validation by variant
 - Shell defaults:
-  - verify default CTA is not `/request-quote`
+  - verify default CTA is not `/consultation`
 - Blueprint outputs:
   - generated home/listing/theme layouts use governed blocks and consultation-led CTAs
 - Card templates:

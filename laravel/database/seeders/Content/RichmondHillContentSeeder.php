@@ -32,7 +32,7 @@ class RichmondHillContentSeeder extends Seeder
                     'keywords_json' => ContentBlockHelper::defaultKeywords($service->name, $city->name),
                     'cta_json' => [
                         'text' => 'Book a Consultation in Richmond Hill',
-                        'url' => '/request-quote?service='.urlencode($service->name).'&city=Richmond+Hill',
+                        'url' => '/consultation?service='.urlencode($service->name).'&city=Richmond+Hill',
                     ],
                 ])
             );
