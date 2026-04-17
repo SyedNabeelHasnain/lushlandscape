@@ -2,6 +2,23 @@
 
 This document serves as the formal closure record for Phase B. It outlines the new premium section families added to the Unified Block Registry, the card families strengthened, the media-aware behavior integrated, and the capabilities now available to build the locked homepage natively through the CMS.
 
+## Phase B Corrective Closure
+A corrective pass was executed to address inconsistencies between what was claimed and what was fully integrated into the authoritative unified registry.
+
+**What was originally intended:**
+Phase B intended to introduce new premium blocks (`marquee_strip`, `parallax_media_band`, `authority_grid`, `service_area_enclave`, `split_consultation_panel`) and corresponding controls to the unified builder, while avoiding quote-led language or mocked functionality.
+
+**What was actually missing or incorrect:**
+- Missing default values for some new block controls in `config/blocks.php` (e.g., `show_icon`, `show_divider`, `media_id`), leading to potential ghost fields.
+- The `split_consultation_panel` still contained quote-led language ("No obligation quote", "Request Your Quote") and a hardcoded, mocked HTML form rather than connecting to the real form system.
+- The tests did not verify the existence of the new controls or premium variants.
+
+**What was corrected in this closure pass:**
+- **Registry Alignment:** Ensured all premium block controls (`parallax_intensity`, `separator_style`, `presentation_mode`, `show_icon`, `show_divider`, `show_usp_list`, `card_cta_label`) have proper default values and are fully authorable via the unified builder.
+- **Consultation Panel Realism:** Removed all quote-led and estimate-led wording from `split_consultation_panel`. Replaced the mocked form structure with the system's real reusable form contract (`_form-fields.blade.php`), using a dynamically selected `form_slug` that defaults to `contact-us`.
+- **Enclave Separators:** Replaced temporary text-joining slash characters with governed bullet dots and structured flex gaps for the `service_area_enclave` inline text-led mode.
+- **Test Integrity:** Expanded `BlockBuilderServiceRegistryTest.php` to explicitly verify that the premium controls and variants (`premium-2x2`, `rail`, `premium-stack`, `title-only`, `with-right-cta`, `full-editorial`) exist in the registry and that the consultation panel is consultation-led.
+
 ## 1. Premium Section Families Identified & Added
 Based on the reference design language and Phase A deferrals, the following advanced premium sections were added as first-class unified blocks in `config/blocks.php`:
 
@@ -9,7 +26,7 @@ Based on the reference design language and Phase A deferrals, the following adva
 - **`parallax_media_band`**: A cinematic media section. Supports image or video backgrounds, headline/subheadline overlays, parallax intensity controls (none, subtle, medium, strong), and overlay presets (dark, light, forest).
 - **`authority_grid`**: A composed standards section. Supports an eyebrow, heading, introduction, and a repeater for authority items (icon, title, short description). Includes premium card skins (`premium-bordered`, `elevated`, `minimal`).
 - **`service_area_enclave`**: A premium presentation for service areas/cities. Supports a `text-led` mode for elegant inline lists and a `tabbed-enclave` mode for a split layout with interactive, hover-safe city cards.
-- **`split_consultation_panel`**: A highly specific split layout. Features a left-side editorial panel with trust lines and optional background media (mix-blend overlay), and a right-side consultation form area mimicking floating-label inputs.
+- **`split_consultation_panel`**: A highly specific split layout. Features a left-side editorial panel with trust lines and optional background media (mix-blend overlay), and a right-side consultation form area that delegates to the real `_form-fields.blade.php` contract to ensure actual data handling.
 
 ## 2. Existing Blocks Enhanced with Premium Variants
 - **`section_header`**: Expanded variants to include `title-only`, `with-right-cta`, and `full-editorial`. This removes the need for ad hoc heading setups and provides a standard heading shell for premium sections.
@@ -57,7 +74,7 @@ Added governed fields to `config/blocks.php` to expose these new capabilities wi
 ## 7. What is Now Possible Because of Phase B
 The platform is now fully capable of composing the locked homepage design natively. Editors can sequence a `parallax_media_band`, transition into a `premium-2x2` `services_grid`, display a `rail` of `portfolio_gallery` projects, highlight standards via the `authority_grid`, and close with the `split_consultation_panel`—all without writing a single line of custom HTML or breaking out of the unified block registry. The system is additive, backward-compatible, and entirely CMS-driven.
 
-## 8. Intentionally Deferred to the Next Phase
+## 8. Intentionally Deferred to Phase C
 - **Actual Page Construction:** We have built the *capabilities* and *components*, but we have not yet populated the actual database records or `page_blocks` payloads to stitch the homepage together.
 - **Mass Content Migration:** Moving legacy content into these new premium blocks.
 - **Dynamic FSE Layout Application:** Applying these blocks specifically into the FSE `theme_layouts` (like the default header/footer).

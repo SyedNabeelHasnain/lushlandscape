@@ -39,14 +39,12 @@
             <p class="text-xl lg:text-2xl text-text-secondary font-light leading-relaxed">{{ $supportCopy }}</p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 animate-on-scroll" data-animation="fade-in" data-delay="100">
+        <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 animate-on-scroll" data-animation="fade-in" data-delay="100">
             @foreach($data as $idx => $city)
-                <a href="{{ url('areas/'.$city->slug) }}" class="text-lg lg:text-xl font-heading font-semibold text-text-secondary hover:text-forest transition-colors duration-300">
+                <a href="{{ url('areas/'.$city->slug) }}" class="group flex items-center gap-3 text-lg lg:text-xl font-heading font-semibold text-text-secondary hover:text-forest transition-colors duration-300">
+                    <span class="w-1.5 h-1.5 rounded-full bg-forest/30 group-hover:bg-forest transition-colors duration-300"></span>
                     {{ $city->name }}
                 </a>
-                @if(!$loop->last)
-                    <span class="text-forest/30 select-none">/</span>
-                @endif
             @endforeach
         </div>
     @endif
