@@ -102,10 +102,14 @@ class FaqPageController extends Controller
             $grouped = $this->getGroupedFaqs();
         }
 
+        $blocks = \App\Services\BlockBuilderService::getBlocks('faq_index', 0);
+        $context = app(\App\Services\PageContextService::class)->listing('FAQs', 'faqs', url('/faqs'));
+
         return view('frontend.pages.faqs', compact(
             'faqs', 'categories', 'cities', 'services',
             'activeType', 'activeCity', 'activeService', 'activeCategory',
-            'searchQuery', 'preFilter', 'grouped', 'breadcrumbs', 'schema'
+            'searchQuery', 'preFilter', 'grouped', 'breadcrumbs', 'schema',
+            'blocks', 'context'
         ));
     }
 

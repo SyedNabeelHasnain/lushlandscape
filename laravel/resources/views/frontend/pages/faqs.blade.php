@@ -415,20 +415,10 @@
     </div>
 </section>
 
-{{-- Still have questions CTA --}}
-<section class="section-editorial bg-luxury-green-deep text-white">
-    <div class="max-w-3xl mx-auto px-6 lg:px-12 text-center">
-        <h2 class="text-2xl md:text-3xl font-heading font-bold tracking-tight">Still Have Questions?</h2>
-        <p class="mt-3 text-white/70 text-lg">Our team can help you plan scope, material direction, and the right path from consultation to construction.</p>
-        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/contact" class="btn-luxury btn-luxury-primary inline-flex items-center gap-2">
-                <i data-lucide="clipboard-list" class="w-5 h-5"></i> Book a Consultation
-            </a>
-            <a href="/contact" class="btn-luxury btn-luxury-ghost inline-flex items-center gap-2">
-                <i data-lucide="mail" class="w-5 h-5"></i> Contact Us
-            </a>
-        </div>
-    </div>
-</section>
+@if(isset($blocks) && $blocks->isNotEmpty())
+    @foreach($blocks as $block)
+        <x-frontend.block-renderer :block="$block" :context="$context ?? []" />
+    @endforeach
+@endif
 
 @endsection

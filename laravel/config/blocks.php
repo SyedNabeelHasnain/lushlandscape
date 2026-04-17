@@ -33,6 +33,7 @@ return [
         'portfolio_gallery' => 'portfolio_gallery',
         'testimonials' => 'testimonials',
         'faq_section' => 'faq_section',
+        'faq_directory' => 'faq_directory',
         'trust_badges' => 'trust_badges',
         'cta_section' => 'cta_section',
         'city_grid' => 'city_grid',
@@ -1551,6 +1552,30 @@ return [
                 'empty_description' => 'Try adjusting your filters or browse all projects.',
                 'empty_button_text' => 'View All Projects',
                 'empty_button_url' => '/portfolio',
+            ],
+        ],
+
+        'faq_directory' => [
+            'label' => 'FAQ Directory',
+            'icon' => 'help-circle',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
+                ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
+                [
+                    'key' => 'tone',
+                    'label' => 'Tone',
+                    'type' => 'select',
+                    'options' => ['light' => 'Light', 'cream' => 'Cream', 'dark' => 'Dark'],
+                ],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Help & Support',
+                'heading' => 'Frequently Asked Questions',
+                'subtitle' => 'Browse our FAQ categories below or use the search to find specific information.',
+                'tone' => 'light',
             ],
         ],
 

@@ -67,6 +67,16 @@ class SingletonPageBuilderService
             'success_message' => 'Consultation page updated successfully.',
             'helper' => 'Add optional governed content blocks around the fixed inquiry form.',
         ],
+        'faqs-index' => [
+            'key' => 'faqs-index',
+            'label' => 'FAQ Index',
+            'title' => 'FAQ Page Builder',
+            'page_type' => 'faq_index',
+            'page_id' => 0,
+            'preview_path' => '/faqs',
+            'success_message' => 'FAQ page updated successfully.',
+            'helper' => 'Build the FAQ landing page with content blocks.',
+        ],
     ];
 
     public function all(): array
