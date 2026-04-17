@@ -49,16 +49,16 @@
     <div class="space-y-12">
         <div class="max-w-3xl {{ $layout === 'list' ? '' : 'mx-auto text-center' }} mb-16">
             @if($eyebrow)
-                <p class="text-luxury-label {{ $toneMap['label'] }}">{{ $eyebrow }}</p>
+                <p class="text-luxury-label {{ $toneMap['label'] }} block mb-4">{{ $eyebrow }}</p>
             @endif
             @if($heading)
-                <h2 class="mt-4 text-h2 font-heading font-bold tracking-tight {{ $toneMap['heading'] }} animate-on-scroll" data-animation="fade-up">
-                    {{ $heading }}
+                <h2 class="text-h2 font-heading font-bold tracking-tight text-balance {{ $toneMap['heading'] }} animate-on-scroll" data-animation="fade-up">
+                    {!! $heading !!}
                 </h2>
             @endif
             @if($subtitle)
-                <p class="mt-4 text-body-lg leading-relaxed {{ $toneMap['sub'] }} animate-on-scroll" data-animation="fade-up" data-delay="100">
-                    {{ $subtitle }}
+                <p class="mt-6 text-body-lg leading-relaxed text-balance {{ $toneMap['sub'] }} animate-on-scroll" data-animation="fade-up" data-delay="100">
+                    {!! $subtitle !!}
                 </p>
             @endif
         </div>

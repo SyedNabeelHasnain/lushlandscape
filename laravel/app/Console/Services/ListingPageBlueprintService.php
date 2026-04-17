@@ -7,6 +7,7 @@ use App\Models\PageBlock;
 use App\Models\PortfolioCategory;
 use App\Models\PortfolioProject;
 use App\Models\ServiceCategory;
+use App\Models\Service;
 use App\Services\BlockBuilderService;
 use App\Services\SingletonPageBuilderService;
 use Illuminate\Support\Collection;
@@ -80,6 +81,7 @@ class ListingPageBlueprintService
     {
         return [
             'service_categories' => $this->scaffoldServiceCategories($replace),
+            'services' => $this->scaffoldServices($replace),
             'portfolio_categories' => $this->scaffoldPortfolioCategories($replace),
             'blog_categories' => $this->scaffoldBlogCategories($replace),
         ];
@@ -205,62 +207,90 @@ class ListingPageBlueprintService
     {
         return [
             $this->block(
-                'hero',
+                'parallax_media_band',
                 [
-                    'eyebrow' => 'Service Category',
                     'heading' => $category->name,
-                    'subtitle' => $category->short_description ?: 'A focused collection of premium landscaping services delivered with structural discipline and finish quality.',
-                    'cta_primary_text' => 'Request a Consultation',
-                    'cta_primary_url' => '/contact',
-                    'cta_secondary_text' => 'View Projects',
-                    'cta_secondary_url' => '/portfolio',
-                    'hero_media_id' => $category->hero_media_id,
-                    'overlay_opacity' => '55',
+                    'subheadline' => $category->short_description ?: 'A focused collection of premium landscaping services delivered with structural discipline and finish quality.',
+                    'media_id' => $category->hero_media_id,
+                    'parallax_intensity' => 'subtle',
+                    'overlay_preset' => 'dark',
                 ],
                 $this->styles([
-                    'spacing_preset' => 'hero',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
                     'max_width' => 'full',
-                    'surface_style' => 'forest-gradient',
+                    'surface_preset' => 'transparent',
                 ]),
                 customId: 'service-category-hero'
+            ),
+            $this->block(
+                'editorial_split_feature',
+                [
+                    'eyebrow' => 'Category Overview',
+                    'heading' => 'Engineered ' . $category->name . ' Solutions',
+                    'description' => $category->long_description ?: 'Our ' . $category->name . ' services are executed with precise base preparation and premium material selection to ensure enduring structural integrity.',
+                    'media_id' => null,
+                    'media_side' => 'right',
+                    'media_ratio' => '4:5',
+                    'tone' => 'light',
+                    'ornament_style' => 'oval',
+                    'feature_layout' => 'stacked',
+                    'features' => [],
+                    'cta_text' => 'Request a Consultation',
+                    'cta_url' => '/contact',
+                ],
+                $this->styles([
+                    'max_width' => 'xl',
+                    'spacing_preset' => 'section',
+                ]),
+                customId: 'service-category-overview'
             ),
             $this->block(
                 'services_grid',
                 [
                     'eyebrow' => 'Available Services',
                     'heading' => 'Explore '.$category->name,
-                    'subtitle' => $category->long_description ?: 'Select the exact service that matches your project scope, property conditions, and desired finish level.',
+                    'subtitle' => 'Select the exact service that matches your project scope, property conditions, and desired finish level.',
                     'layout' => 'grid',
                     'columns' => '3',
-                    'variant' => 'architectural',
-                    'tone' => 'light',
+                    'variant' => 'premium-2x2',
+                    'show_icon' => true,
+                    'show_divider' => true,
+                    'show_usp_list' => false,
+                    'card_cta_label' => 'View Service',
+                    'tone' => 'cream',
                     'show_category_nav' => false,
                     'show_view_all' => false,
                 ],
                 $this->styles([
                     'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'cream',
                 ]),
                 customId: 'service-category-grid'
             ),
             $this->block(
-                'cta_section',
+                'split_consultation_panel',
                 [
                     'eyebrow' => 'Project Planning',
-                    'title' => 'Ready to plan your '.$category->name.' project?',
-                    'subtitle' => 'We can help define scope, material direction, and the best path from consultation to construction.',
-                    'variant' => 'split',
-                    'tone' => 'cream',
-                    'button_text' => 'Request a Consultation',
-                    'button_url' => '/contact',
-                    'button_secondary_text' => 'Contact Our Team',
-                    'button_secondary_url' => '/contact',
+                    'heading' => 'Ready to plan your '.$category->name.' project?',
+                    'editorial_copy' => 'We can help define scope, material direction, and the best path from consultation to construction.',
+                    'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
+                    'media_id' => null,
+                    'form_slug' => 'contact-us',
+                    'tone' => 'dark',
                 ],
                 $this->styles([
-                    'max_width' => 'xl',
-                    'spacing_preset' => 'compact',
+                    'max_width' => 'full',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'surface_preset' => 'transparent',
                 ]),
-                customId: 'service-category-cta'
+                customId: 'service-category-contact'
             ),
         ];
     }
@@ -274,22 +304,21 @@ class ListingPageBlueprintService
 
         $blocks = [
             $this->block(
-                'hero',
+                'parallax_media_band',
                 [
                     'heading' => 'Architectural Hardscaping & Outdoor Construction',
-                    'subtitle' => 'Landscape construction for architects, designers, and discerning homeowners across the Greater Toronto Area.',
-                    'eyebrow' => 'Core Disciplines',
-                    'cta_primary_text' => 'Request a Consultation',
-                    'cta_primary_url' => '/contact',
-                    'cta_secondary_text' => 'View Projects',
-                    'cta_secondary_url' => '/portfolio',
-                    'hero_media_id' => $heroMediaId,
-                    'overlay_opacity' => '55',
+                    'subheadline' => 'Landscape construction for architects, designers, and discerning homeowners across the Greater Toronto Area.',
+                    'media_id' => $heroMediaId,
+                    'parallax_intensity' => 'subtle',
+                    'overlay_preset' => 'dark',
                 ],
                 $this->styles([
-                    'spacing_preset' => 'hero',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
                     'max_width' => 'full',
-                    'surface_style' => 'forest-gradient',
+                    'surface_preset' => 'transparent',
                 ]),
                 customId: 'services-hero'
             ),
@@ -306,14 +335,11 @@ class ListingPageBlueprintService
                 ],
                 $this->styles([
                     'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
+                    'spacing_preset' => 'section',
                 ]),
                 customId: 'services-categories'
             ),
-        ];
-
-        $blocks[] = $featureMediaId
-            ? $this->block(
+            $this->block(
                 'editorial_split_feature',
                 [
                     'eyebrow' => 'Build Standards',
@@ -338,65 +364,45 @@ class ListingPageBlueprintService
                     'spacing_preset' => 'feature',
                 ]),
                 customId: 'services-standards'
-            )
-            : $this->block(
-                'trust_badges',
+            ),
+            $this->block(
+                'process_steps',
                 [
-                    'eyebrow' => 'Build Standards',
-                    'heading' => 'Precision in planning, base work, and finish quality',
-                    'subtitle' => 'Professional discipline, premium materials, and accountable sequencing shape every project.',
-                    'variant' => 'cards',
-                    'tone' => 'light',
+                    'eyebrow' => 'Project Rhythm',
+                    'heading' => 'A structured sequence from consultation to completion',
+                    'subtitle' => 'Each engagement follows a disciplined workflow so scope, site preparation, and final execution stay aligned.',
+                    'variant' => 'premium-stack',
+                    'tone' => 'cream',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'cream',
                 ]),
-                customId: 'services-standards'
-            );
-
-        $blocks[] = $this->block(
-            'process_steps',
-            [
-                'eyebrow' => 'Project Rhythm',
-                'heading' => 'A structured sequence from consultation to completion',
-                'subtitle' => 'Each engagement follows a disciplined workflow so scope, site preparation, and final execution stay aligned.',
-                'variant' => 'feature_rows',
-                'tone' => 'cream',
-            ],
-            $this->styles([
-                'max_width' => 'xl',
-                'spacing_preset' => 'section',
-                'surface_style' => 'cream-panel',
-                'section_shell' => 'soft-panel',
-            ]),
-            customId: 'services-process'
-        );
-
-        $blocks[] = $this->block(
-            'form_block',
-            [
-                'form_slug' => 'request-quote',
-                'show_title' => false,
-                'eyebrow' => 'Get Started',
-                'heading' => 'Tell us about your landscape project',
-                'description' => 'Share your goals, priorities, and site details so we can recommend the right construction path.',
-                'variant' => 'split',
-                'tone' => 'light',
-                'panel_style' => 'luxury',
-                'field_style' => 'luxury',
-                'field_columns' => 'auto',
-                'submit_text' => 'Request a Consultation',
-                'show_contact_details' => true,
-                'support_cta_text' => 'Call Instead',
-                'support_cta_url' => '/contact',
-            ],
-            $this->styles([
-                'max_width' => 'xl',
-                'spacing_preset' => 'feature',
-            ]),
-            customId: 'services-contact'
-        );
+                customId: 'services-process'
+            ),
+            $this->block(
+                'split_consultation_panel',
+                [
+                    'eyebrow' => 'Get Started',
+                    'heading' => 'Tell us about your landscape project',
+                    'editorial_copy' => 'Share your goals, priorities, and site details so we can recommend the right construction path.',
+                    'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
+                    'media_id' => null,
+                    'form_slug' => 'contact-us',
+                    'tone' => 'dark',
+                ],
+                $this->styles([
+                    'max_width' => 'full',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'surface_preset' => 'transparent',
+                ]),
+                customId: 'services-contact'
+            )
+        ];
 
         return $blocks;
     }
@@ -681,6 +687,53 @@ class ListingPageBlueprintService
     /**
      * @return array<int, array<string, mixed>>
      */
+    
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function scaffoldServices(bool $replace): array
+    {
+        $results = [];
+
+        foreach ($this->publishedServices() as $service) {
+            $existingBlocks = PageBlock::forPage('service', $service->id)->count();
+
+            if (! $replace && $existingBlocks > 0) {
+                $results[] = [
+                    'id' => $service->id,
+                    'slug' => $service->slug_final,
+                    'applied' => false,
+                    'replaced' => false,
+                    'existing_blocks' => $existingBlocks,
+                    'block_count' => 0,
+                    'reason' => 'existing_content',
+                ];
+
+                continue;
+            }
+
+            $blocks = $this->buildServiceDetail($service);
+
+            if ($replace) {
+                BlockBuilderService::deleteAllBlocksForPage('service', $service->id);
+            }
+
+            BlockBuilderService::saveUnifiedBlocks('service', $service->id, $blocks);
+
+            $results[] = [
+                'id' => $service->id,
+                'slug' => $service->slug_final,
+                'applied' => true,
+                'replaced' => $replace,
+                'existing_blocks' => $existingBlocks,
+                'block_count' => count($blocks),
+                'reason' => 'scaffolded',
+            ];
+        }
+
+        return $results;
+    }
+
     private function scaffoldServiceCategories(bool $replace): array
     {
         $results = [];
@@ -775,21 +828,25 @@ class ListingPageBlueprintService
      */
     private function showcaseMediaPair(): array
     {
-        $ids = PortfolioProject::query()
-            ->where('status', 'published')
-            ->whereNotNull('hero_media_id')
-            ->orderByDesc('is_featured')
-            ->orderByDesc('completion_date')
-            ->orderBy('sort_order')
-            ->limit(4)
-            ->pluck('hero_media_id')
-            ->filter()
-            ->map(fn ($id) => (int) $id)
-            ->unique()
-            ->values()
-            ->all();
+        try {
+            $ids = PortfolioProject::query()
+                ->where('status', 'published')
+                ->whereNotNull('hero_media_id')
+                ->orderByDesc('is_featured')
+                ->orderByDesc('completion_date')
+                ->orderBy('sort_order')
+                ->limit(4)
+                ->pluck('hero_media_id')
+                ->filter()
+                ->map(fn ($id) => (int) $id)
+                ->unique()
+                ->values()
+                ->all();
 
-        return [$ids[0] ?? null, $ids[1] ?? ($ids[0] ?? null)];
+            return [$ids[0] ?? null, $ids[1] ?? ($ids[0] ?? null)];
+        } catch (\Exception $e) {
+            return [null, null];
+        }
     }
 
     private function publishedPortfolioCategories(): Collection
@@ -798,6 +855,18 @@ class ListingPageBlueprintService
             ->where('status', 'published')
             ->orderBy('sort_order')
             ->get();
+    }
+
+    
+    private function publishedServices(): Collection
+    {
+        try {
+            return \App\Models\Service::query()
+                ->where('status', 'published')
+                ->get();
+        } catch (\Exception $e) {
+            return collect();
+        }
     }
 
     private function publishedServiceCategories(): Collection
@@ -853,6 +922,118 @@ class ListingPageBlueprintService
             'desktop' => array_merge($defaults['desktop'] ?? [], $desktopOverrides),
             'tablet' => array_merge($defaults['tablet'] ?? [], $tabletOverrides),
             'mobile' => array_merge($defaults['mobile'] ?? [], $mobileOverrides),
+        ];
+    }
+
+    public function buildServiceDetail(\App\Models\Service $service): array
+    {
+        return [
+            $this->block(
+                'parallax_media_band',
+                [
+                    'heading' => $service->name,
+                    'subheadline' => $service->service_summary ?: 'Precision installation and structural integrity for premium outdoor spaces.',
+                    'media_id' => $service->hero_media_id,
+                    'parallax_intensity' => 'subtle',
+                    'overlay_preset' => 'dark',
+                ],
+                $this->styles([
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'max_width' => 'full',
+                    'surface_preset' => 'transparent',
+                ]),
+                customId: 'service-hero'
+            ),
+            $this->block(
+                'editorial_split_feature',
+                [
+                    'eyebrow' => 'Service Overview',
+                    'heading' => 'Premium ' . $service->name . ' Execution',
+                    'description' => $service->long_description ?: 'We apply rigorous construction standards to ' . strtolower($service->name) . ', ensuring every detail meets architectural and engineering expectations.',
+                    'media_id' => null,
+                    'media_side' => 'right',
+                    'media_ratio' => '4:5',
+                    'tone' => 'light',
+                    'ornament_style' => 'oval',
+                    'feature_layout' => 'stacked',
+                    'features' => [],
+                    'cta_text' => 'Request a Consultation',
+                    'cta_url' => '/contact',
+                ],
+                $this->styles([
+                    'max_width' => 'xl',
+                    'spacing_preset' => 'section',
+                ]),
+                customId: 'service-overview'
+            ),
+            $this->block(
+                'authority_grid',
+                [
+                    'eyebrow' => 'Value & Scope',
+                    'heading' => 'Why Choose Our ' . $service->name . ' Services',
+                    'introduction' => 'We focus on durability, material quality, and precise installation.',
+                    'card_skin' => 'elevated',
+                    'items' => [
+                        ['icon' => 'ruler', 'title' => 'Precision Engineering', 'description' => 'Built to exact specifications and grading requirements.'],
+                        ['icon' => 'gem', 'title' => 'Premium Materials', 'description' => 'Sourced from the finest stone and hardscaping suppliers.'],
+                        ['icon' => 'shield-check', 'title' => 'Long-Term Durability', 'description' => 'Constructed to withstand harsh seasonal freeze-thaw cycles.'],
+                    ],
+                ],
+                $this->styles([
+                    'max_width' => 'xl',
+                    'spacing_preset' => 'feature',
+                    'surface_preset' => 'cream',
+                ]),
+                customId: 'service-authority'
+            ),
+            $this->block(
+                'services_grid',
+                [
+                    'eyebrow' => 'Related Services',
+                    'heading' => 'Explore More Services',
+                    'subtitle' => 'Discover other specialized services that complement your ' . $service->name . ' project.',
+                    'layout' => 'grid',
+                    'columns' => '3',
+                    'variant' => 'premium-2x2',
+                    'show_icon' => true,
+                    'show_divider' => true,
+                    'show_usp_list' => false,
+                    'card_cta_label' => 'View Service',
+                    'tone' => 'light',
+                    'show_category_nav' => false,
+                    'show_view_all' => false,
+                ],
+                $this->styles([
+                    'max_width' => 'xl',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'white',
+                ]),
+                customId: 'service-related'
+            ),
+            $this->block(
+                'split_consultation_panel',
+                [
+                    'eyebrow' => 'Project Inquiry',
+                    'heading' => 'Discuss Your ' . $service->name . ' Project',
+                    'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines.',
+                    'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
+                    'media_id' => null,
+                    'form_slug' => 'contact-us',
+                    'tone' => 'dark',
+                ],
+                $this->styles([
+                    'max_width' => 'full',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'surface_preset' => 'transparent',
+                ]),
+                customId: 'service-contact'
+            ),
         ];
     }
 }
