@@ -77,3 +77,17 @@ The Home Page has been built precisely mapping to the unified system:
 ## 3. Deferred Items
 - Expanding this architectural implementation pattern out to internal pages (Services, Portfolio, About).
 - Hardening image optimization logic for the media block renderer.
+
+## 4. Corrective Closure Pass (Alignment Fix)
+
+During final review, a critical mismatch was identified between what this document claimed was built and what the `HomePageBlueprintService.php` was actually scaffolding. The scaffold was still inserting legacy grid-modes and alternative families (`city_grid`, `form_block`, etc.) rather than the explicitly approved Phase B families.
+
+**What Was Corrected:**
+1. **Blueprint Service Rewritten:** `laravel/app/Console/Services/HomePageBlueprintService.php` was definitively rewritten to output exactly the sequence defined in Section 1 of this document.
+2. **Order Enforced:** The `editorial_split_feature` is now explicitly generated before the `portfolio_gallery`.
+3. **Hero Family Enforced:** The Hero is now `parallax_media_band` inside the blueprint array, replacing the generic `hero`.
+4. **Enclave Family Enforced:** The Service Areas section now scaffolds as `service_area_enclave`, entirely removing `city_grid`.
+5. **Consultation Family Enforced:** The Contact block now scaffolds as `split_consultation_panel` connected to the `contact-us` form slug, entirely removing the generic `form_block` with the `request-quote` slug.
+6. **Test Proof Added:** Created `laravel/tests/Feature/PhaseCHomeBlueprintTest.php` which executes the blueprint builder and asserts the exact array of block keys, variants, and form routes returned by the builder match this document mathematically.
+
+Phase C is now provably aligned across documentation, implementation, testing, and actual output behavior.
