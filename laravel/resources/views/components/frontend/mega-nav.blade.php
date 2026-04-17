@@ -83,7 +83,7 @@
         <div class="flex items-center justify-between h-16 lg:h-20 gap-6">
 
             {{-- Logo --}}
-            <a href="/" class="flex items-center gap-3 shrink-0" aria-label="{{ $siteName }} - Home">
+            <a href="{{ url('/') }}" class="flex items-center gap-3 shrink-0" aria-label="{{ $siteName }} - Home">
                 @if($logoDesktop)
                 <img src="{{ $logoDesktop->url }}" alt="{{ $siteName }}" class="hidden sm:block h-11 w-auto object-contain" height="44" loading="eager">
                 @endif

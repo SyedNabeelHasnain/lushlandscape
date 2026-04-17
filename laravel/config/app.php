@@ -20,4 +20,12 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Legacy Governance Strict Mode
+    |--------------------------------------------------------------------------
+    */
+    'legacy_strict' => env('LEGACY_STRICT', false),
+
 ];

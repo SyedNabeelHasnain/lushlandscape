@@ -8,13 +8,8 @@ class LegacyGovernanceService
 {
     public static function strictEnabled(): bool
     {
-        $value = env('LEGACY_STRICT', false);
-
-        if (is_bool($value)) {
-            return $value;
-        }
-
-        return in_array(strtolower((string) $value), ['1', 'true', 'yes', 'on'], true);
+        $value = config('app.legacy_strict', false);
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
     public static function denyLegacyWrite(string $action, array $context = []): void

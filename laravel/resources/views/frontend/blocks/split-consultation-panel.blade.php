@@ -28,7 +28,7 @@
         {{-- Left Panel: Editorial & Image --}}
         <div class="w-full lg:w-5/12 xl:w-1/2 relative p-12 lg:p-20 flex flex-col justify-between overflow-hidden">
             @if($mediaUrl)
-                <img src="{{ $mediaUrl }}" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay pointer-events-none" loading="lazy">
+                <img src="{{ $mediaUrl }}" alt="Consultation background" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay pointer-events-none" loading="lazy">
             @endif
             
             <div class="relative z-10">
