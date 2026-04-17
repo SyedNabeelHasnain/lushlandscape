@@ -35,6 +35,43 @@ Phase B is now completely aligned across:
 
 Phase B is honestly considered complete.
 
+## Phase B Proof Pack
+
+The following confirms the concrete registry implementations completed in Phase B, removing the "truth-alignment gap".
+
+### 1. Registry Proof (Block Keys)
+The following block keys are fully defined in the authoritative `laravel/config/blocks.php` (`types` array, starting at line 3010) and mapped in the `section_map` array (starting at line 45):
+- `marquee_strip`
+- `parallax_media_band`
+- `authority_grid`
+- `service_area_enclave`
+- `split_consultation_panel`
+
+### 2. Control Proof (Field Keys)
+The following controls are explicitly defined within the `content_fields` schemas of the respective blocks in `laravel/config/blocks.php`:
+- `separator_style` (type: select) -> `marquee_strip`
+- `parallax_intensity` (type: select) -> `parallax_media_band`
+- `presentation_mode` (type: select) -> `service_area_enclave`
+- `show_usp_list` (type: toggle) -> `services_grid`
+- `card_cta_label` (type: text) -> `services_grid`
+
+### 3. Builder Proof
+All Phase B blocks dynamically appear in the Unified Builder selector because they are registered with valid `category` values (`content`, `media`, `data`, `interactive`) and are fully supported by FSE Folds. The editor renders these fields natively based on their `type` definitions (e.g., `select`, `toggle`, `media`) and `save`/`reload` is intrinsically handled by `BlockBuilderService` parsing.
+
+### 4. Renderer Proof
+- **`marquee_strip`** -> Maps to `frontend.blocks.marquee-strip`
+- **`parallax_media_band`** -> Maps to `frontend.blocks.parallax-media-band`
+- **`authority_grid`** -> Maps to `frontend.blocks.authority-grid`
+- **`service_area_enclave`** -> Maps to `frontend.blocks.service-area-enclave`
+- **`split_consultation_panel`** -> Maps to `frontend.blocks.split-consultation-panel`
+
+### 5. Test Proof
+File: `laravel/tests/Feature/BlockBuilderServiceRegistryTest.php`
+- `test_blocks_have_phase_b_premium_families`: Asserts the exact keys (`marquee_strip`, etc.) exist in the registry.
+- `test_phase_b_premium_controls_exist_in_registry`: Iterates over the `content_fields` array of each block to explicitly assert that keys like `parallax_intensity` and `separator_style` exist, and verifies the `contact-us` fallback for the consultation panel.
+
+---
+
 ## 1. Premium Section Families Identified & Added
 Based on the reference design language and Phase A deferrals, the following advanced premium sections were added as first-class unified blocks in `config/blocks.php`:
 
