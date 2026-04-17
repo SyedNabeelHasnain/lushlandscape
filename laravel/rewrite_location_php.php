@@ -1,4 +1,5 @@
 <?php
+
 $file = '/Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/app/Console/Services/ListingPageBlueprintService.php';
 $content = file_get_contents($file);
 
@@ -122,7 +123,7 @@ $scaffoldCityMethods = <<<'PHP'
     }
 PHP;
 
-$content = preg_replace('/    private function scaffoldServiceCategories/s', $scaffoldCityMethods . "\n\n    private function scaffoldServiceCategories", $content);
+$content = preg_replace('/    private function scaffoldServiceCategories/s', $scaffoldCityMethods."\n\n    private function scaffoldServiceCategories", $content);
 
 $buildLocationsHub = <<<'PHP'
     private function buildLocationsHub(): array
@@ -212,7 +213,6 @@ $buildLocationsHub = <<<'PHP'
 PHP;
 
 $content = preg_replace('/    private function buildLocationsHub\(\): array\n    \{.*?\n    \}/s', $buildLocationsHub, $content);
-
 
 $buildCityAndServiceCity = <<<'PHP'
     public function buildCity(\App\Models\City $city): array
@@ -423,7 +423,7 @@ $buildCityAndServiceCity = <<<'PHP'
     }
 PHP;
 
-$content = preg_replace('/}\s*$/s', "\n" . $buildCityAndServiceCity . "\n}\n", $content);
+$content = preg_replace('/}\s*$/s', "\n".$buildCityAndServiceCity."\n}\n", $content);
 
 file_put_contents($file, $content);
 echo "Replaced successfully using PHP script.\n";

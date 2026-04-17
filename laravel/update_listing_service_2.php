@@ -1,4 +1,5 @@
 <?php
+
 $file = '/Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/app/Console/Services/ListingPageBlueprintService.php';
 $content = file_get_contents($file);
 
@@ -50,7 +51,7 @@ $scaffoldServicesMethod = "
     }
 ";
 
-$search = "private function scaffoldServiceCategories(bool \$replace): array";
-$content = str_replace($search, $scaffoldServicesMethod . "\n    " . $search, $content);
+$search = 'private function scaffoldServiceCategories(bool $replace): array';
+$content = str_replace($search, $scaffoldServicesMethod."\n    ".$search, $content);
 file_put_contents($file, $content);
 echo "Added scaffoldServices.\n";

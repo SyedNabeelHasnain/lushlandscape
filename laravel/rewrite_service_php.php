@@ -1,4 +1,5 @@
 <?php
+
 $file = '/Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/app/Console/Services/ListingPageBlueprintService.php';
 $content = file_get_contents($file);
 
@@ -210,9 +211,9 @@ $buildServiceDetail = <<<'PHP'
     }
 PHP;
 
-$content = preg_replace('/    public function buildServiceCategory\(ServiceCategory \$category\): array\n    \{.*?(?=    \/\*\*|\z)/s', $buildServiceCategory . "\n\n", $content);
+$content = preg_replace('/    public function buildServiceCategory\(ServiceCategory \$category\): array\n    \{.*?(?=    \/\*\*|\z)/s', $buildServiceCategory."\n\n", $content);
 
-$content = preg_replace('/}\s*$/s', "\n" . $buildServiceDetail . "\n}\n", $content);
+$content = preg_replace('/}\s*$/s', "\n".$buildServiceDetail."\n}\n", $content);
 
 // And we need to add use App\Models\Service; if it's missing
 if (strpos($content, 'use App\Models\Service;') === false) {

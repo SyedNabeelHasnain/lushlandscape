@@ -113,7 +113,7 @@ $buildMethods = <<<'PHP'
     }
 PHP;
 
-$content = preg_replace('/}\s*$/s', "\n" . $buildMethods . "\n}\n", $content);
+$content = preg_replace('/}\s*$/s', "\n".$buildMethods."\n}\n", $content);
 
 file_put_contents($file, $content);
 echo "Replaced Contact/Consultation/FAQ methods successfully using PHP.\n";

@@ -1,4 +1,5 @@
 <?php
+
 $file = '/Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/app/Console/Services/ListingPageBlueprintService.php';
 $content = file_get_contents($file);
 
@@ -19,7 +20,6 @@ $scaffoldTaxonomies = <<<'PHP'
 PHP;
 
 $content = preg_replace('/    public function scaffoldTaxonomyPages\(bool \$replace = false\): array\n    \{.*?\n    \}/s', $scaffoldTaxonomies, $content);
-
 
 $scaffoldBlogMethods = <<<'PHP'
     private function scaffoldBlogCategories(bool $replace): array
@@ -127,8 +127,7 @@ PHP;
 
 $content = preg_replace('/    private function publishedBlogCategories\(\): Collection\n    \{\n.*?\n    \}\n/s', '', $content);
 $content = preg_replace('/    public function buildBlogCategory\(BlogCategory \$category\): array\n    \{.*?\n    \}/s', '', $content);
-$content = preg_replace('/    private function scaffoldBlogCategories\(bool \$replace\): array\n    \{.*?(?=    private function showcaseMediaPair)/s', $scaffoldBlogMethods . "\n\n", $content);
-
+$content = preg_replace('/    private function scaffoldBlogCategories\(bool \$replace\): array\n    \{.*?(?=    private function showcaseMediaPair)/s', $scaffoldBlogMethods."\n\n", $content);
 
 $buildBlogMethods = <<<'PHP'
     private function buildBlogIndex(): array
@@ -311,7 +310,7 @@ $buildBlogMethods = <<<'PHP'
     }
 PHP;
 
-$content = preg_replace('/    private function buildBlogIndex\(\): array\n    \{.*?(?=    private function getPlaceholderImageId)/s', $buildBlogMethods . "\n\n    private function getPlaceholderImageId", $content);
+$content = preg_replace('/    private function buildBlogIndex\(\): array\n    \{.*?(?=    private function getPlaceholderImageId)/s', $buildBlogMethods."\n\n    private function getPlaceholderImageId", $content);
 
 file_put_contents($file, $content);
 echo "Replaced Blog methods successfully using PHP.\n";

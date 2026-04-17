@@ -1,4 +1,5 @@
 <?php
+
 $file = '/Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/app/Console/Services/ListingPageBlueprintService.php';
 $content = file_get_contents($file);
 
@@ -128,7 +129,7 @@ $content = preg_replace('/    private function publishedPortfolioCategories\(\):
 $content = preg_replace('/    private function scaffoldPortfolioProjects\(bool \$replace\): array\n    \{\n        \$results = \[\];\n\n        foreach \(\$this->publishedPortfolioProjects\(\) as \$project\) \{\n.*?\n        \}\n\n        return \$results;\n    \}\n/s', '', $content);
 $content = preg_replace('/    private function publishedPortfolioCategories\(\): \\\\Illuminate\\\\Support\\\\Collection\n    \{\n.*?\n    \}\n/s', '', $content);
 $content = preg_replace('/    private function publishedPortfolioProjects\(\): \\\\Illuminate\\\\Support\\\\Collection\n    \{\n.*?\n    \}\n/s', '', $content);
-$content = preg_replace('/    private function scaffoldBlogCategories/s', $scaffoldPortfolioMethods . "\n\n    private function scaffoldBlogCategories", $content);
+$content = preg_replace('/    private function scaffoldBlogCategories/s', $scaffoldPortfolioMethods."\n\n    private function scaffoldBlogCategories", $content);
 
 $buildPortfolioIndex = <<<'PHP'
     private function buildPortfolioIndex(): array
@@ -410,7 +411,7 @@ PHP;
 
 $content = preg_replace('/    public function buildPortfolioProject\(\\\\App\\\\Models\\\\PortfolioProject \$project\): array\n    \{.*?\n    \}/s', '', $content);
 $content = preg_replace('/    public function buildPortfolioProject\(PortfolioProject \$project\): array\n    \{.*?\n    \}/s', '', $content);
-$content = preg_replace('/}\s*$/s', "\n" . $buildPortfolioProject . "\n}\n", $content);
+$content = preg_replace('/}\s*$/s', "\n".$buildPortfolioProject."\n}\n", $content);
 
 file_put_contents($file, $content);
 echo "Replaced Portfolio methods successfully.\n";

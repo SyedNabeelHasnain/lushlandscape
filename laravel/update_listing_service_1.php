@@ -1,4 +1,5 @@
 <?php
+
 // Update ListingPageBlueprintService.php
 
 $file = '/Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/app/Console/Services/ListingPageBlueprintService.php';
@@ -10,7 +11,7 @@ $replace = "'service_categories' => \$this->scaffoldServiceCategories(\$replace)
 $content = str_replace($search, $replace, $content);
 
 // 2. Add publishedServices() helper
-$publishedCategoriesMethod = "private function publishedServiceCategories(): Collection";
+$publishedCategoriesMethod = 'private function publishedServiceCategories(): Collection';
 $publishedServicesMethod = "
     private function publishedServices(): Collection
     {
@@ -24,7 +25,7 @@ $publishedServicesMethod = "
     }
 
     ";
-$content = str_replace($publishedCategoriesMethod, $publishedServicesMethod . $publishedCategoriesMethod, $content);
+$content = str_replace($publishedCategoriesMethod, $publishedServicesMethod.$publishedCategoriesMethod, $content);
 
 file_put_contents($file, $content);
 echo "Updated helpers.\n";
