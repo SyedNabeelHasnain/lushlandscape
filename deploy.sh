@@ -118,7 +118,6 @@ command -v composer2 &> /dev/null && COMPOSER_CMD="composer2"
 
 if [ "$FRESH_DB" = true ]; then
     rm -rf vendor
-    rm -f composer.lock
 fi
 
 $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
@@ -204,11 +203,9 @@ if [ "${NODE_MAJOR:-0}" -lt 20 ] || { [ "${NODE_MAJOR:-0}" -eq 20 ] && [ "${NODE
     echo "$NODE_UPGRADED" | grep -q '^20\.19\.' || abort "Node.js upgrade failed. Current: ${NODE_UPGRADED}. nvm install output: ${NVM_INSTALL_OUT}. nvm use output: ${NVM_USE_OUT}"
 fi
 
-log "Installing NPM dependencies (fresh)..."
+log "Installing NPM dependencies..."
 rm -rf node_modules
-if [ "$FRESH_DB" = true ]; then
-    rm -f package-lock.json
-fi
+
 if [ -f package-lock.json ]; then
     npm ci --silent --no-audit --no-fund
 else
