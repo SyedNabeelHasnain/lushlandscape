@@ -87,6 +87,7 @@ class ListingPageBlueprintService
             'portfolio_categories' => $this->scaffoldPortfolioCategories($replace),
             'portfolio_projects' => $this->scaffoldPortfolioProjects($replace),
             'blog_categories' => $this->scaffoldBlogCategories($replace),
+            'blog_posts' => $this->scaffoldBlogPosts($replace),
         ];
     }
 
@@ -178,50 +179,7 @@ class ListingPageBlueprintService
     /**
      * @return array<int, array<string, mixed>>
      */
-    public function buildBlogCategory(BlogCategory $category): array
-    {
-        return [
-            $this->block(
-                'blog_directory',
-                [
-                    'eyebrow' => 'Blog Category',
-                    'heading' => $category->name,
-                    'subtitle' => $category->short_description ?? '',
-                    'tone' => 'light',
-                    'show_featured_hero' => false,
-                    'show_category_tabs' => true,
-                    'empty_title' => 'No articles published yet',
-                    'empty_description' => 'This category is live, but it does not have any published blog posts yet.',
-                    'empty_button_text' => 'Browse All Articles',
-                    'empty_button_url' => '/blog',
-                ],
-                $this->styles([
-                    'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
-                ]),
-                customId: 'blog-directory'
-            ),
-            $this->block(
-                'cta_section',
-                [
-                    'eyebrow' => 'Need Project Advice?',
-                    'title' => 'Talk through your ideas with our team.',
-                    'subtitle' => 'If your question is project-specific, we can help you move from inspiration to a practical build plan.',
-                    'variant' => 'panel',
-                    'tone' => 'cream',
-                    'button_text' => 'Request a Consultation',
-                    'button_url' => '/contact',
-                    'button_secondary_text' => 'Contact Us',
-                    'button_secondary_url' => '/contact',
-                ],
-                $this->styles([
-                    'max_width' => 'xl',
-                    'spacing_preset' => 'compact',
-                ]),
-                customId: 'blog-cta'
-            ),
-        ];
-    }
+
 
     /**
      * @return array<int, array<string, mixed>>
@@ -620,66 +578,175 @@ class ListingPageBlueprintService
 
         return [
             $this->block(
-                'hero',
+                'parallax_media_band',
                 [
-                    'heading' => 'Insights for planning, pricing, and long-term performance',
-                    'subtitle' => 'Expert landscaping guidance, project education, and cost context for Ontario homeowners.',
-                    'eyebrow' => 'Knowledge Library',
-                    'cta_primary_text' => 'Request a Consultation',
-                    'cta_primary_url' => '/contact',
-                    'cta_secondary_text' => 'Explore Services',
-                    'cta_secondary_url' => '/services',
-                    'hero_media_id' => $heroMediaId,
-                    'overlay_opacity' => '55',
+                    'heading' => 'Landscaping Knowledge & Advice',
+                    'subheadline' => 'Expert tips, cost guides, and project inspiration for Ontario homeowners.',
+                    'media_id' => $heroMediaId,
+                    'parallax_intensity' => 'subtle',
+                    'overlay_preset' => 'dark',
                 ],
                 $this->styles([
-                    'spacing_preset' => 'hero',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
                     'max_width' => 'full',
-                    'surface_style' => 'forest-gradient',
+                    'surface_preset' => 'transparent',
                 ]),
                 customId: 'blog-hero'
             ),
             $this->block(
                 'blog_directory',
                 [
-                    'eyebrow' => 'Latest Articles',
-                    'heading' => 'Practical landscaping advice and project insight',
-                    'subtitle' => 'From budgeting and permitting to material selection and maintenance, find guidance that helps you plan with clarity.',
+                    'eyebrow' => 'Editorial & Advice',
+                    'heading' => 'Explore the Lush Landscape Blog',
+                    'subtitle' => 'Browse our latest articles to help you plan, budget, and execute your outdoor space.',
                     'tone' => 'light',
                     'show_featured_hero' => true,
                     'show_category_tabs' => true,
-                    'empty_title' => 'Articles coming soon',
-                    'empty_description' => 'We are preparing expert articles, cost guides, and planning resources for homeowners and design-minded clients.',
-                    'empty_button_text' => 'Explore Services',
-                    'empty_button_url' => '/services',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
-                    'spacing_preset' => 'feature',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'white',
                 ]),
-                customId: 'blog-directory',
-                dataSource: [
-                    'limit' => 12,
-                ]
+                customId: 'blog-directory'
             ),
             $this->block(
-                'cta_section',
+                'split_consultation_panel',
                 [
-                    'eyebrow' => 'Need Specific Advice?',
-                    'title' => 'Talk through your project with our team.',
-                    'subtitle' => 'If you are weighing options, timelines, or materials, we can help you move from research to a practical next step.',
-                    'variant' => 'panel',
+                    'eyebrow' => 'Next Steps',
+                    'heading' => 'Ready to Start Planning?',
+                    'editorial_copy' => 'If our articles have inspired you, connect with our team to discuss how we can bring those ideas to your property.',
+                    'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
+                    'media_id' => null,
+                    'form_slug' => 'contact-us',
+                    'tone' => 'dark',
+                ],
+                $this->styles([
+                    'max_width' => 'full',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'surface_preset' => 'transparent',
+                ]),
+                customId: 'blog-contact'
+            ),
+        ];
+    }
+
+    public function buildBlogCategory(\App\Models\BlogCategory $category): array
+    {
+        return [
+            $this->block(
+                'parallax_media_band',
+                [
+                    'heading' => $category->name . ' Articles',
+                    'subheadline' => $category->short_description ?: 'Explore our expert advice and guidance regarding ' . strtolower($category->name) . '.',
+                    'media_id' => $category->image_id,
+                    'parallax_intensity' => 'subtle',
+                    'overlay_preset' => 'dark',
+                ],
+                $this->styles([
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'max_width' => 'full',
+                    'surface_preset' => 'transparent',
+                ]),
+                customId: 'blog-category-hero'
+            ),
+            $this->block(
+                'blog_directory',
+                [
+                    'eyebrow' => $category->name,
+                    'heading' => 'Articles about ' . $category->name,
+                    'subtitle' => 'Browse our latest insights and project advice for ' . strtolower($category->name) . '.',
                     'tone' => 'cream',
-                    'button_text' => 'Request a Consultation',
-                    'button_url' => '/contact',
-                    'button_secondary_text' => 'Contact Us',
-                    'button_secondary_url' => '/contact',
+                    'show_featured_hero' => false,
+                    'show_category_tabs' => false,
                 ],
                 $this->styles([
                     'max_width' => 'xl',
-                    'spacing_preset' => 'compact',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'cream',
                 ]),
-                customId: 'blog-cta'
+                customId: 'blog-category-directory'
+            ),
+            $this->block(
+                'split_consultation_panel',
+                [
+                    'eyebrow' => 'Next Steps',
+                    'heading' => 'Need advice on ' . strtolower($category->name) . '?',
+                    'editorial_copy' => 'Connect with our team to discuss your specific requirements and receive expert guidance tailored to your property.',
+                    'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
+                    'media_id' => null,
+                    'form_slug' => 'contact-us',
+                    'tone' => 'dark',
+                ],
+                $this->styles([
+                    'max_width' => 'full',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'surface_preset' => 'transparent',
+                ]),
+                customId: 'blog-category-contact'
+            ),
+        ];
+    }
+
+    public function buildBlogPost(\App\Models\BlogPost $post): array
+    {
+        return [
+            $this->block(
+                'services_grid',
+                [
+                    'eyebrow' => 'Related Services',
+                    'heading' => 'Relevant Services',
+                    'subtitle' => 'Explore professional services related to this article.',
+                    'layout' => 'grid',
+                    'columns' => '3',
+                    'variant' => 'premium-2x2',
+                    'show_icon' => true,
+                    'show_divider' => true,
+                    'show_usp_list' => false,
+                    'card_cta_label' => 'View Service',
+                    'tone' => 'cream',
+                    'show_category_nav' => false,
+                    'show_view_all' => false,
+                ],
+                $this->styles([
+                    'max_width' => 'xl',
+                    'spacing_preset' => 'section',
+                    'surface_preset' => 'cream',
+                ]),
+                customId: 'post-services'
+            ),
+            $this->block(
+                'split_consultation_panel',
+                [
+                    'eyebrow' => 'Project Inquiry',
+                    'heading' => 'Apply this to your property',
+                    'editorial_copy' => 'If this article sparked an idea, connect with our team to discuss how we can execute it professionally on your property.',
+                    'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
+                    'media_id' => null,
+                    'form_slug' => 'contact-us',
+                    'tone' => 'dark',
+                ],
+                $this->styles([
+                    'max_width' => 'full',
+                    'spacing_preset' => 'none',
+                    'padding_top' => 'none',
+                    'padding_bottom' => 'none',
+                    'margin_bottom' => 'none',
+                    'surface_preset' => 'transparent',
+                ]),
+                customId: 'post-contact'
             ),
         ];
     }
@@ -1005,7 +1072,7 @@ class ListingPageBlueprintService
         $results = [];
 
         foreach ($this->publishedBlogCategories() as $category) {
-            $existingBlocks = PageBlock::forPage('blog_category', $category->id)->count();
+            $existingBlocks = \App\Models\PageBlock::forPage('blog_category', $category->id)->count();
 
             if (! $replace && $existingBlocks > 0) {
                 $results[] = [
@@ -1017,17 +1084,16 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
-
                 continue;
             }
 
             $blocks = $this->buildBlogCategory($category);
 
             if ($replace) {
-                BlockBuilderService::deleteAllBlocksForPage('blog_category', $category->id);
+                \App\Services\BlockBuilderService::deleteAllBlocksForPage('blog_category', $category->id);
             }
 
-            BlockBuilderService::saveUnifiedBlocks('blog_category', $category->id, $blocks);
+            \App\Services\BlockBuilderService::saveUnifiedBlocks('blog_category', $category->id, $blocks);
 
             $results[] = [
                 'id' => $category->id,
@@ -1043,9 +1109,66 @@ class ListingPageBlueprintService
         return $results;
     }
 
-    /**
-     * @return array{0:?int,1:?int}
-     */
+    private function scaffoldBlogPosts(bool $replace): array
+    {
+        $results = [];
+
+        foreach ($this->publishedBlogPosts() as $post) {
+            $existingBlocks = \App\Models\PageBlock::forPage('blog_post', $post->id)->count();
+
+            if (! $replace && $existingBlocks > 0) {
+                $results[] = [
+                    'id' => $post->id,
+                    'slug' => $post->slug,
+                    'applied' => false,
+                    'replaced' => false,
+                    'existing_blocks' => $existingBlocks,
+                    'block_count' => 0,
+                    'reason' => 'existing_content',
+                ];
+                continue;
+            }
+
+            $blocks = $this->buildBlogPost($post);
+
+            if ($replace) {
+                \App\Services\BlockBuilderService::deleteAllBlocksForPage('blog_post', $post->id);
+            }
+
+            \App\Services\BlockBuilderService::saveUnifiedBlocks('blog_post', $post->id, $blocks);
+
+            $results[] = [
+                'id' => $post->id,
+                'slug' => $post->slug,
+                'applied' => true,
+                'replaced' => $replace,
+                'existing_blocks' => $existingBlocks,
+                'block_count' => count($blocks),
+                'reason' => 'scaffolded',
+            ];
+        }
+
+        return $results;
+    }
+
+    private function publishedBlogCategories(): \Illuminate\Support\Collection
+    {
+        try {
+            return \App\Models\BlogCategory::query()->where('status', 'published')->get();
+        } catch (\Exception $e) {
+            return collect();
+        }
+    }
+
+    private function publishedBlogPosts(): \Illuminate\Support\Collection
+    {
+        try {
+            return \App\Models\BlogPost::query()->where('status', 'published')->get();
+        } catch (\Exception $e) {
+            return collect();
+        }
+    }
+
     private function showcaseMediaPair(): array
     {
         try {
@@ -1090,13 +1213,6 @@ class ListingPageBlueprintService
             ->get();
     }
 
-    private function publishedBlogCategories(): Collection
-    {
-        return BlogCategory::query()
-            ->where('status', 'published')
-            ->orderBy('sort_order')
-            ->get();
-    }
 
     /**
      * @return array<string, mixed>
