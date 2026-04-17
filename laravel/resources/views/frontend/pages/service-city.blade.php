@@ -18,8 +18,8 @@
     $phone = \App\Models\Setting::get('phone', '');
 
     // Divide blocks into layout regions
-    $topKeys = ['hero', 'stats_bar', 'service_hero'];
-    $btmKeys = ['trust_badges', 'cta_section'];
+    $topKeys = ['hero', 'stats_bar', 'service_hero', 'parallax_media_band'];
+    $btmKeys = ['trust_badges', 'cta_section', 'split_consultation_panel', 'services_grid'];
 
     // Legacy rows used section_key; unified rows use block_type
     $getBlockKey = fn($b) => ($b->is_layout_section ?? false) ? ($b->section_key ?? null) : ($b->block_type ?? null);
