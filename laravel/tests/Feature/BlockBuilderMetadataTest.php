@@ -142,6 +142,104 @@ class BlockBuilderMetadataTest extends TestCase
         $this->assertSame('right', $editorBlocks->first()['children'][1]['content']['_layout_slot']);
     }
 
+    public function test_phase_b_blocks_can_save_and_reload_via_unified_builder_contract(): void
+    {
+        $types = collect(BlockBuilderService::allTypes())->pluck('key')->all();
+
+        $this->assertContains('marquee_strip', $types);
+        $this->assertContains('parallax_media_band', $types);
+        $this->assertContains('authority_grid', $types);
+        $this->assertContains('service_area_enclave', $types);
+        $this->assertContains('split_consultation_panel', $types);
+
+        $payload = [
+            [
+                'block_type' => 'marquee_strip',
+                'category' => 'content',
+                'is_enabled' => true,
+                'content' => [
+                    'text_items' => 'A, B, C',
+                    'separator_style' => 'dot',
+                    'speed' => 'slow',
+                    'direction' => 'left',
+                    'tone' => 'dark',
+                ],
+                'styles' => BlockBuilderService::styleDefaults(),
+            ],
+            [
+                'block_type' => 'parallax_media_band',
+                'category' => 'media',
+                'is_enabled' => true,
+                'content' => [
+                    'heading' => 'Headline',
+                    'subheadline' => 'Sub',
+                    'media_id' => null,
+                    'video_url' => '',
+                    'parallax_intensity' => 'subtle',
+                    'overlay_preset' => 'dark',
+                ],
+                'styles' => BlockBuilderService::styleDefaults(),
+            ],
+            [
+                'block_type' => 'authority_grid',
+                'category' => 'content',
+                'is_enabled' => true,
+                'content' => [
+                    'eyebrow' => 'Standards',
+                    'heading' => 'Built to Last',
+                    'introduction' => 'Intro',
+                    'card_skin' => 'premium-bordered',
+                    'items' => [
+                        ['icon' => 'shield-check', 'title' => 'Warranty', 'description' => '10 years'],
+                    ],
+                ],
+                'styles' => BlockBuilderService::styleDefaults(),
+            ],
+            [
+                'block_type' => 'service_area_enclave',
+                'category' => 'data',
+                'is_enabled' => true,
+                'content' => [
+                    'eyebrow' => 'Areas',
+                    'heading' => 'Serving',
+                    'support_copy' => '',
+                    'presentation_mode' => 'text-led',
+                ],
+                'styles' => BlockBuilderService::styleDefaults(),
+            ],
+            [
+                'block_type' => 'split_consultation_panel',
+                'category' => 'interactive',
+                'is_enabled' => true,
+                'content' => [
+                    'eyebrow' => 'Get Started',
+                    'heading' => 'Book a Consultation',
+                    'editorial_copy' => 'Copy',
+                    'trust_lines' => 'A, B',
+                    'media_id' => null,
+                    'form_slug' => 'contact-us',
+                    'tone' => 'dark',
+                ],
+                'styles' => BlockBuilderService::styleDefaults(),
+            ],
+        ];
+
+        BlockBuilderService::saveUnifiedBlocks('static_page', 99, $payload);
+
+        $this->assertSame(5, DB::table('page_blocks')->whereNull('parent_id')->count());
+
+        $editorBlocks = BlockBuilderService::getUnifiedBlocks('static_page', 99);
+        $this->assertCount(5, $editorBlocks);
+        $this->assertSame(
+            ['marquee_strip', 'parallax_media_band', 'authority_grid', 'service_area_enclave', 'split_consultation_panel'],
+            $editorBlocks->pluck('block_type')->all()
+        );
+
+        $split = $editorBlocks->last();
+        $this->assertSame('contact-us', $split['content']['form_slug']);
+        $this->assertSame('Book a Consultation', $split['content']['heading']);
+    }
+
     private function createBlockTables(): void
     {
         Schema::dropIfExists('page_blocks');
