@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (prefersReducedMotion || motionPreset === 'none') {
         document.querySelectorAll('[data-hero-video]').forEach((video) => {
-            if (!(video instanceof HTMLVideoElement)) return;
+            if (!(video instanceof window.HTMLVideoElement)) return;
             video.pause();
             video.removeAttribute('autoplay');
             video.currentTime = 0;

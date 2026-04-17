@@ -121,16 +121,16 @@ class PageBlock extends Model
         $styles = $this->styles ?? [];
 
         // 1. Specific device override
-        if (isset($styles[$device][$key]) && $styles[$device][$key] !== null) {
+        if (isset($styles[$device]) && is_array($styles[$device]) && isset($styles[$device][$key]) && $styles[$device][$key] !== null) {
             return $styles[$device][$key];
         }
 
         // 2. Cascade fallback
-        if ($device === 'mobile' && isset($styles['tablet'][$key]) && $styles['tablet'][$key] !== null) {
+        if ($device === 'mobile' && isset($styles['tablet']) && is_array($styles['tablet']) && isset($styles['tablet'][$key]) && $styles['tablet'][$key] !== null) {
             return $styles['tablet'][$key];
         }
 
-        if (($device === 'mobile' || $device === 'tablet') && isset($styles['desktop'][$key]) && $styles['desktop'][$key] !== null) {
+        if (($device === 'mobile' || $device === 'tablet') && isset($styles['desktop']) && is_array($styles['desktop']) && isset($styles['desktop'][$key]) && $styles['desktop'][$key] !== null) {
             return $styles['desktop'][$key];
         }
 
@@ -139,7 +139,11 @@ class PageBlock extends Model
             ? Config::get('blocks.theme_style_defaults.desktop', [])
             : Config::get('blocks.style_defaults.desktop', []);
 
-        return $styles['desktop'][$key] ?? $configDefaults[$key] ?? $default;
+        if (isset($styles['desktop']) && is_array($styles['desktop']) && isset($styles['desktop'][$key])) {
+            return $styles['desktop'][$key];
+        }
+
+        return $configDefaults[$key] ?? $default;
     }
 
     /**

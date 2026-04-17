@@ -10,14 +10,14 @@
         {{-- Preview --}}
         <div class="w-24 h-24 rounded-xl border border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden shrink-0">
             <img x-show="previewUrl" :src="previewUrl" alt="" class="w-full h-full object-cover" x-cloak>
-            <i x-show="!previewUrl" data-lucide="image" class="w-8 h-8 text-gray-300"></i>
+            <i x-show="!previewUrl" x-cloak data-lucide="image" class="w-8 h-8 text-gray-300"></i>
         </div>
         <div class="flex-1 space-y-2">
             <div class="flex flex-col gap-2 sm:flex-row">
                 <button type="button" x-on:click="openModal()" class="px-3 py-2 bg-forest text-white rounded-lg text-xs hover:bg-forest-light transition sm:w-auto">
                     <span x-text="fieldId ? 'Change Image' : 'Browse Library'"></span>
                 </button>
-                <button type="button" x-show="fieldId" x-on:click="clear()" class="px-3 py-2 border border-gray-200 rounded-lg text-xs text-text-secondary hover:bg-gray-50 transition">Remove</button>
+                <button type="button" x-show="fieldId" x-cloak x-on:click="clear()" class="px-3 py-2 border border-gray-200 rounded-lg text-xs text-text-secondary hover:bg-gray-50 transition">Remove</button>
                 @if($croppable)
                 <button type="button" x-show="fieldId && previewUrl" x-cloak x-on:click="openCrop()" class="px-3 py-2 border border-gray-200 rounded-lg text-xs text-text-secondary hover:bg-gray-50 transition flex items-center gap-1">
                     <i data-lucide="crop" class="w-3.5 h-3.5"></i> Crop
@@ -46,7 +46,7 @@
             </div>
 
             {{-- Library Tab --}}
-            <div x-show="tab === 'library'" class="flex-1 overflow-hidden flex flex-col">
+            <div x-show="tab === ' x-cloaklibrary'" class="flex-1 overflow-hidden flex flex-col">
                 <div class="flex flex-col gap-3 px-4 py-3 border-b border-gray-100 sm:flex-row sm:px-6">
                     <input type="text" x-model="search" x-on:input.debounce.400ms="fetchMedia(1)" placeholder="Search by title…" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-forest/30">
                     <select x-model="mediaType" x-on:change="fetchMedia(1)" class="px-3 py-2 border border-gray-200 rounded-lg text-sm">
@@ -56,22 +56,22 @@
                     </select>
                 </div>
                 <div class="flex-1 overflow-y-auto p-4">
-                    <div x-show="loading" class="flex justify-center py-12"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-forest"></i></div>
-                    <div x-show="!loading && assets.length === 0" class="text-center py-12 text-sm text-text-secondary">No media found.</div>
-                    <div x-show="!loading && assets.length > 0" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+                    <div x-show="loading" x-cloak class="flex justify-center py-12"><i data-lucide="loader-2" class="w-6 h-6 animate-spin text-forest"></i></div>
+                    <div x-show="!loading && assets.length === 0" x-cloak class="text-center py-12 text-sm text-text-secondary">No media found.</div>
+                    <div x-show="!loading && assets.length > 0" x-cloak class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
                         <template x-for="asset in assets" :key="asset.id">
                             <button type="button" x-on:click="select(asset)"
                                 :class="fieldId === asset.id ? 'ring-2 ring-forest' : 'hover:ring-2 hover:ring-forest/40'"
                                 class="relative aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200 transition">
                                 <img :src="asset.url" :alt="asset.default_alt_text" class="w-full h-full object-cover">
-                                <div x-show="fieldId === asset.id" class="absolute inset-0 bg-forest/20 flex items-center justify-center">
+                                <div x-show="fieldId === asset.id" x-cloak class="absolute inset-0 bg-forest/20 flex items-center justify-center">
                                     <i data-lucide="check-circle" class="w-6 h-6 text-forest"></i>
                                 </div>
                             </button>
                         </template>
                     </div>
                 </div>
-                <div x-show="meta.last_page > 1" class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t border-gray-100 sm:px-6">
+                <div x-show="meta.last_page > 1" x-cloak class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t border-gray-100 sm:px-6">
                     <button type="button" x-on:click="fetchMedia(meta.current_page - 1)" :disabled="meta.current_page <= 1" class="px-3 py-1.5 border border-gray-200 rounded-lg text-xs disabled:opacity-40">Prev</button>
                     <span class="text-xs text-text-secondary" x-text="'Page ' + meta.current_page + ' of ' + meta.last_page"></span>
                     <button type="button" x-on:click="fetchMedia(meta.current_page + 1)" :disabled="meta.current_page >= meta.last_page" class="px-3 py-1.5 border border-gray-200 rounded-lg text-xs disabled:opacity-40">Next</button>
@@ -79,7 +79,7 @@
             </div>
 
             {{-- Upload Tab — intentionally a div, NOT a form, to avoid nested-form issues --}}
-            <div x-show="tab === 'upload'" class="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div x-show="tab === ' x-cloakupload'" class="flex-1 overflow-y-auto p-4 sm:p-6">
                 <div x-ref="uploadForm" class="space-y-4">
                     {{-- Styled file picker --}}
                     <div>
@@ -88,7 +88,7 @@
                         <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                             <div class="w-20 h-20 rounded-xl border border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden shrink-0">
                                 <img x-show="uploadPreviewSrc" :src="uploadPreviewSrc" alt="" class="w-full h-full object-cover" x-cloak>
-                                <i x-show="!uploadPreviewSrc" data-lucide="image" class="w-7 h-7 text-gray-300"></i>
+                                <i x-show="!uploadPreviewSrc" x-cloak data-lucide="image" class="w-7 h-7 text-gray-300"></i>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <button type="button" x-on:click="$refs.fileInput.click()"

@@ -99,7 +99,7 @@ class BlockBuilderServiceRegistryTest extends TestCase
     public function test_phase_b_premium_controls_exist_in_registry()
     {
         $blockTypes = config('blocks.types', []);
-        
+
         // Marquee Strip
         $marqueeFields = collect($blockTypes['marquee_strip']['content_fields'])->pluck('key')->toArray();
         $this->assertContains('separator_style', $marqueeFields);
@@ -117,28 +117,28 @@ class BlockBuilderServiceRegistryTest extends TestCase
         $this->assertContains('show_icon', $servicesGridFields);
         $this->assertContains('show_usp_list', $servicesGridFields);
         $this->assertContains('card_cta_label', $servicesGridFields);
-        
+
         $servicesGridVariantField = collect($blockTypes['services_grid']['content_fields'])->firstWhere('key', 'variant');
         $this->assertArrayHasKey('premium-2x2', $servicesGridVariantField['options']);
-        
+
         // Portfolio Gallery
         $portfolioLayoutField = collect($blockTypes['portfolio_gallery']['content_fields'])->firstWhere('key', 'layout');
         $this->assertArrayHasKey('rail', $portfolioLayoutField['options']);
-        
+
         // Process Steps
         $processVariantField = collect($blockTypes['process_steps']['content_fields'])->firstWhere('key', 'variant');
         $this->assertArrayHasKey('premium-stack', $processVariantField['options']);
-        
+
         // Section Header
         $sectionHeaderVariantField = collect($blockTypes['section_header']['content_fields'])->firstWhere('key', 'variant');
         $this->assertArrayHasKey('title-only', $sectionHeaderVariantField['options']);
         $this->assertArrayHasKey('with-right-cta', $sectionHeaderVariantField['options']);
         $this->assertArrayHasKey('full-editorial', $sectionHeaderVariantField['options']);
-        
+
         // Split Consultation Panel
         $splitConsultationFields = collect($blockTypes['split_consultation_panel']['content_fields'])->pluck('key')->toArray();
         $this->assertContains('form_slug', $splitConsultationFields);
-        
+
         $splitDefaults = $blockTypes['split_consultation_panel']['defaults'];
         $this->assertStringNotContainsString('quote', strtolower($splitDefaults['trust_lines']));
         $this->assertNotEquals('request-quote', $splitDefaults['form_slug']);

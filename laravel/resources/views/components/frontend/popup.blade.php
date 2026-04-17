@@ -116,7 +116,7 @@
 
                     <button type="submit" :disabled="loading"
                             class="btn-luxury btn-luxury-primary w-full disabled:opacity-60 flex items-center justify-center gap-2">
-                        <i data-lucide="loader-2" x-show="loading" class="w-4 h-4 animate-spin"></i>
+                        <i data-lucide="loader-2" x-show="loading" x-cloak class="w-4 h-4 animate-spin"></i>
                         <span x-text="loading ? 'Sending...' : '{{ $popup->form->name ?? 'Submit' }}'"></span>
                     </button>
                 </form>

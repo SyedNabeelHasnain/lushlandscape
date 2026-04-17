@@ -19,7 +19,7 @@
                        :class="open === {{ $i }} ? 'rotate-180 text-white' : 'text-forest'"></i>
                 </div>
             </button>
-            <div x-show="open === {{ $i }}" x-collapse class="border-t border-stone">
+            <div x-show="open === {{ $i }}" x-cloak x-collapse class="border-t border-stone">
                 <div class="px-8 py-6 text-sm text-text-secondary leading-relaxed">{{ $item['answer'] ?? '' }}</div>
             </div>
         </div>

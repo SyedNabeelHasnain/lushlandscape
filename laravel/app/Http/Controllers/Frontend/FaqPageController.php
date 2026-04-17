@@ -8,6 +8,8 @@ use App\Models\Faq;
 use App\Models\FaqCategory;
 use App\Models\Service;
 use App\Models\ServiceCityPage;
+use App\Services\BlockBuilderService;
+use App\Services\PageContextService;
 use App\Services\SchemaService;
 
 class FaqPageController extends Controller
@@ -102,8 +104,8 @@ class FaqPageController extends Controller
             $grouped = $this->getGroupedFaqs();
         }
 
-        $blocks = \App\Services\BlockBuilderService::getBlocks('faq_index', 0);
-        $context = app(\App\Services\PageContextService::class)->listing('FAQs', 'faqs', url('/faqs'));
+        $blocks = BlockBuilderService::getBlocks('faq_index', 0);
+        $context = app(PageContextService::class)->listing('FAQs', 'faqs', url('/faqs'));
 
         return view('frontend.pages.faqs', compact(
             'faqs', 'categories', 'cities', 'services',

@@ -3,11 +3,14 @@
 namespace App\Console\Services;
 
 use App\Models\BlogCategory;
+use App\Models\BlogPost;
+use App\Models\City;
 use App\Models\PageBlock;
 use App\Models\PortfolioCategory;
 use App\Models\PortfolioProject;
-use App\Models\ServiceCategory;
 use App\Models\Service;
+use App\Models\ServiceCategory;
+use App\Models\ServiceCityPage;
 use App\Services\BlockBuilderService;
 use App\Services\SingletonPageBuilderService;
 use Illuminate\Support\Collection;
@@ -111,14 +114,14 @@ class ListingPageBlueprintService
     /**
      * @return array<int, array<string, mixed>>
      */
-    public function buildPortfolioCategory(\App\Models\PortfolioCategory $category): array
+    public function buildPortfolioCategory(PortfolioCategory $category): array
     {
         return [
             $this->block(
                 'parallax_media_band',
                 [
-                    'heading' => $category->name . ' Projects',
-                    'subheadline' => $category->short_description ?: 'Explore our completed ' . strtolower($category->name) . ' projects, executed with premium materials and structural precision.',
+                    'heading' => $category->name.' Projects',
+                    'subheadline' => $category->short_description ?: 'Explore our completed '.strtolower($category->name).' projects, executed with premium materials and structural precision.',
                     'media_id' => $category->image_id,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -137,8 +140,8 @@ class ListingPageBlueprintService
                 'portfolio_gallery',
                 [
                     'eyebrow' => $category->name,
-                    'heading' => 'Recent ' . $category->name . ' Builds',
-                    'subtitle' => 'Review our approach to ' . strtolower($category->name) . ' construction across various property types.',
+                    'heading' => 'Recent '.$category->name.' Builds',
+                    'subtitle' => 'Review our approach to '.strtolower($category->name).' construction across various property types.',
                     'layout' => 'grid',
                     'columns' => '3',
                     'variant' => 'editorial',
@@ -157,7 +160,7 @@ class ListingPageBlueprintService
                 'split_consultation_panel',
                 [
                     'eyebrow' => 'Project Inquiry',
-                    'heading' => 'Discuss Your ' . $category->name . ' Project',
+                    'heading' => 'Discuss Your '.$category->name.' Project',
                     'editorial_copy' => 'Connect with our team to discuss your specific requirements, material options, and execution timelines.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
@@ -180,7 +183,6 @@ class ListingPageBlueprintService
     /**
      * @return array<int, array<string, mixed>>
      */
-
 
     /**
      * @return array<int, array<string, mixed>>
@@ -211,8 +213,8 @@ class ListingPageBlueprintService
                 'editorial_split_feature',
                 [
                     'eyebrow' => 'Category Overview',
-                    'heading' => 'Engineered ' . $category->name . ' Solutions',
-                    'description' => $category->long_description ?: 'Our ' . $category->name . ' services are executed with precise base preparation and premium material selection to ensure enduring structural integrity.',
+                    'heading' => 'Engineered '.$category->name.' Solutions',
+                    'description' => $category->long_description ?: 'Our '.$category->name.' services are executed with precise base preparation and premium material selection to ensure enduring structural integrity.',
                     'media_id' => null,
                     'media_side' => 'right',
                     'media_ratio' => '4:5',
@@ -383,7 +385,7 @@ class ListingPageBlueprintService
                     'surface_preset' => 'transparent',
                 ]),
                 customId: 'services-contact'
-            )
+            ),
         ];
 
         return $blocks;
@@ -638,14 +640,14 @@ class ListingPageBlueprintService
         ];
     }
 
-    public function buildBlogCategory(\App\Models\BlogCategory $category): array
+    public function buildBlogCategory(BlogCategory $category): array
     {
         return [
             $this->block(
                 'parallax_media_band',
                 [
-                    'heading' => $category->name . ' Articles',
-                    'subheadline' => $category->short_description ?: 'Explore our expert advice and guidance regarding ' . strtolower($category->name) . '.',
+                    'heading' => $category->name.' Articles',
+                    'subheadline' => $category->short_description ?: 'Explore our expert advice and guidance regarding '.strtolower($category->name).'.',
                     'media_id' => $category->image_id,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -664,8 +666,8 @@ class ListingPageBlueprintService
                 'blog_directory',
                 [
                     'eyebrow' => $category->name,
-                    'heading' => 'Articles about ' . $category->name,
-                    'subtitle' => 'Browse our latest insights and project advice for ' . strtolower($category->name) . '.',
+                    'heading' => 'Articles about '.$category->name,
+                    'subtitle' => 'Browse our latest insights and project advice for '.strtolower($category->name).'.',
                     'tone' => 'cream',
                     'show_featured_hero' => false,
                     'show_category_tabs' => false,
@@ -681,7 +683,7 @@ class ListingPageBlueprintService
                 'split_consultation_panel',
                 [
                     'eyebrow' => 'Next Steps',
-                    'heading' => 'Need advice on ' . strtolower($category->name) . '?',
+                    'heading' => 'Need advice on '.strtolower($category->name).'?',
                     'editorial_copy' => 'Connect with our team to discuss your specific requirements and receive expert guidance tailored to your property.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
@@ -701,7 +703,7 @@ class ListingPageBlueprintService
         ];
     }
 
-    public function buildBlogPost(\App\Models\BlogPost $post): array
+    public function buildBlogPost(BlogPost $post): array
     {
         return [
             $this->block(
@@ -759,7 +761,7 @@ class ListingPageBlueprintService
     /**
      * @return array<int, array<string, mixed>>
      */
-    
+
     /**
      * @return array<int, array<string, mixed>>
      */
@@ -811,7 +813,7 @@ class ListingPageBlueprintService
         $results = [];
 
         foreach ($this->publishedCities() as $city) {
-            $existingBlocks = \App\Models\PageBlock::forPage('city', $city->id)->count();
+            $existingBlocks = PageBlock::forPage('city', $city->id)->count();
 
             if (! $replace && $existingBlocks > 0) {
                 $results[] = [
@@ -823,16 +825,17 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
             $blocks = $this->buildCity($city);
 
             if ($replace) {
-                \App\Services\BlockBuilderService::deleteAllBlocksForPage('city', $city->id);
+                BlockBuilderService::deleteAllBlocksForPage('city', $city->id);
             }
 
-            \App\Services\BlockBuilderService::saveUnifiedBlocks('city', $city->id, $blocks);
+            BlockBuilderService::saveUnifiedBlocks('city', $city->id, $blocks);
 
             $results[] = [
                 'id' => $city->id,
@@ -853,7 +856,7 @@ class ListingPageBlueprintService
         $results = [];
 
         foreach ($this->activeServiceCities() as $page) {
-            $existingBlocks = \App\Models\PageBlock::forPage('service_city_page', $page->id)->count();
+            $existingBlocks = PageBlock::forPage('service_city_page', $page->id)->count();
 
             if (! $replace && $existingBlocks > 0) {
                 $results[] = [
@@ -865,16 +868,17 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
             $blocks = $this->buildServiceCity($page);
 
             if ($replace) {
-                \App\Services\BlockBuilderService::deleteAllBlocksForPage('service_city_page', $page->id);
+                BlockBuilderService::deleteAllBlocksForPage('service_city_page', $page->id);
             }
 
-            \App\Services\BlockBuilderService::saveUnifiedBlocks('service_city_page', $page->id, $blocks);
+            BlockBuilderService::saveUnifiedBlocks('service_city_page', $page->id, $blocks);
 
             $results[] = [
                 'id' => $page->id,
@@ -890,19 +894,19 @@ class ListingPageBlueprintService
         return $results;
     }
 
-    private function publishedCities(): \Illuminate\Support\Collection
+    private function publishedCities(): Collection
     {
         try {
-            return \App\Models\City::query()->where('status', 'published')->get();
+            return City::query()->where('status', 'published')->get();
         } catch (\Exception $e) {
             return collect();
         }
     }
 
-    private function activeServiceCities(): \Illuminate\Support\Collection
+    private function activeServiceCities(): Collection
     {
         try {
-            return \App\Models\ServiceCityPage::query()->where('is_active', true)->with(['city', 'service'])->get();
+            return ServiceCityPage::query()->where('is_active', true)->with(['city', 'service'])->get();
         } catch (\Exception $e) {
             return collect();
         }
@@ -954,24 +958,12 @@ class ListingPageBlueprintService
     /**
      * @return array<int, array<string, mixed>>
      */
-
-
-
-
-
-
-
-
-
-
-
-
     private function scaffoldPortfolioCategories(bool $replace): array
     {
         $results = [];
 
         foreach ($this->publishedPortfolioCategories() as $category) {
-            $existingBlocks = \App\Models\PageBlock::forPage('portfolio_category', $category->id)->count();
+            $existingBlocks = PageBlock::forPage('portfolio_category', $category->id)->count();
 
             if (! $replace && $existingBlocks > 0) {
                 $results[] = [
@@ -983,16 +975,17 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
             $blocks = $this->buildPortfolioCategory($category);
 
             if ($replace) {
-                \App\Services\BlockBuilderService::deleteAllBlocksForPage('portfolio_category', $category->id);
+                BlockBuilderService::deleteAllBlocksForPage('portfolio_category', $category->id);
             }
 
-            \App\Services\BlockBuilderService::saveUnifiedBlocks('portfolio_category', $category->id, $blocks);
+            BlockBuilderService::saveUnifiedBlocks('portfolio_category', $category->id, $blocks);
 
             $results[] = [
                 'id' => $category->id,
@@ -1013,7 +1006,7 @@ class ListingPageBlueprintService
         $results = [];
 
         foreach ($this->publishedPortfolioProjects() as $project) {
-            $existingBlocks = \App\Models\PageBlock::forPage('portfolio_project', $project->id)->count();
+            $existingBlocks = PageBlock::forPage('portfolio_project', $project->id)->count();
 
             if (! $replace && $existingBlocks > 0) {
                 $results[] = [
@@ -1025,16 +1018,17 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
             $blocks = $this->buildPortfolioProject($project);
 
             if ($replace) {
-                \App\Services\BlockBuilderService::deleteAllBlocksForPage('portfolio_project', $project->id);
+                BlockBuilderService::deleteAllBlocksForPage('portfolio_project', $project->id);
             }
 
-            \App\Services\BlockBuilderService::saveUnifiedBlocks('portfolio_project', $project->id, $blocks);
+            BlockBuilderService::saveUnifiedBlocks('portfolio_project', $project->id, $blocks);
 
             $results[] = [
                 'id' => $project->id,
@@ -1050,19 +1044,19 @@ class ListingPageBlueprintService
         return $results;
     }
 
-    private function publishedPortfolioCategories(): \Illuminate\Support\Collection
+    private function publishedPortfolioCategories(): Collection
     {
         try {
-            return \App\Models\PortfolioCategory::query()->where('status', 'published')->get();
+            return PortfolioCategory::query()->where('status', 'published')->get();
         } catch (\Exception $e) {
             return collect();
         }
     }
 
-    private function publishedPortfolioProjects(): \Illuminate\Support\Collection
+    private function publishedPortfolioProjects(): Collection
     {
         try {
-            return \App\Models\PortfolioProject::query()->where('status', 'published')->get();
+            return PortfolioProject::query()->where('status', 'published')->get();
         } catch (\Exception $e) {
             return collect();
         }
@@ -1073,7 +1067,7 @@ class ListingPageBlueprintService
         $results = [];
 
         foreach ($this->publishedBlogCategories() as $category) {
-            $existingBlocks = \App\Models\PageBlock::forPage('blog_category', $category->id)->count();
+            $existingBlocks = PageBlock::forPage('blog_category', $category->id)->count();
 
             if (! $replace && $existingBlocks > 0) {
                 $results[] = [
@@ -1085,16 +1079,17 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
             $blocks = $this->buildBlogCategory($category);
 
             if ($replace) {
-                \App\Services\BlockBuilderService::deleteAllBlocksForPage('blog_category', $category->id);
+                BlockBuilderService::deleteAllBlocksForPage('blog_category', $category->id);
             }
 
-            \App\Services\BlockBuilderService::saveUnifiedBlocks('blog_category', $category->id, $blocks);
+            BlockBuilderService::saveUnifiedBlocks('blog_category', $category->id, $blocks);
 
             $results[] = [
                 'id' => $category->id,
@@ -1115,7 +1110,7 @@ class ListingPageBlueprintService
         $results = [];
 
         foreach ($this->publishedBlogPosts() as $post) {
-            $existingBlocks = \App\Models\PageBlock::forPage('blog_post', $post->id)->count();
+            $existingBlocks = PageBlock::forPage('blog_post', $post->id)->count();
 
             if (! $replace && $existingBlocks > 0) {
                 $results[] = [
@@ -1127,16 +1122,17 @@ class ListingPageBlueprintService
                     'block_count' => 0,
                     'reason' => 'existing_content',
                 ];
+
                 continue;
             }
 
             $blocks = $this->buildBlogPost($post);
 
             if ($replace) {
-                \App\Services\BlockBuilderService::deleteAllBlocksForPage('blog_post', $post->id);
+                BlockBuilderService::deleteAllBlocksForPage('blog_post', $post->id);
             }
 
-            \App\Services\BlockBuilderService::saveUnifiedBlocks('blog_post', $post->id, $blocks);
+            BlockBuilderService::saveUnifiedBlocks('blog_post', $post->id, $blocks);
 
             $results[] = [
                 'id' => $post->id,
@@ -1152,19 +1148,19 @@ class ListingPageBlueprintService
         return $results;
     }
 
-    private function publishedBlogCategories(): \Illuminate\Support\Collection
+    private function publishedBlogCategories(): Collection
     {
         try {
-            return \App\Models\BlogCategory::query()->where('status', 'published')->get();
+            return BlogCategory::query()->where('status', 'published')->get();
         } catch (\Exception $e) {
             return collect();
         }
     }
 
-    private function publishedBlogPosts(): \Illuminate\Support\Collection
+    private function publishedBlogPosts(): Collection
     {
         try {
-            return \App\Models\BlogPost::query()->where('status', 'published')->get();
+            return BlogPost::query()->where('status', 'published')->get();
         } catch (\Exception $e) {
             return collect();
         }
@@ -1193,12 +1189,10 @@ class ListingPageBlueprintService
         }
     }
 
-
-    
     private function publishedServices(): Collection
     {
         try {
-            return \App\Models\Service::query()
+            return Service::query()
                 ->where('status', 'published')
                 ->get();
         } catch (\Exception $e) {
@@ -1213,7 +1207,6 @@ class ListingPageBlueprintService
             ->orderBy('sort_order')
             ->get();
     }
-
 
     /**
      * @return array<string, mixed>
@@ -1255,7 +1248,7 @@ class ListingPageBlueprintService
         ];
     }
 
-    public function buildServiceDetail(\App\Models\Service $service): array
+    public function buildServiceDetail(Service $service): array
     {
         return [
             $this->block(
@@ -1281,8 +1274,8 @@ class ListingPageBlueprintService
                 'editorial_split_feature',
                 [
                     'eyebrow' => 'Service Overview',
-                    'heading' => 'Premium ' . $service->name . ' Execution',
-                    'description' => $service->long_description ?: 'We apply rigorous construction standards to ' . strtolower($service->name) . ', ensuring every detail meets architectural and engineering expectations.',
+                    'heading' => 'Premium '.$service->name.' Execution',
+                    'description' => $service->long_description ?: 'We apply rigorous construction standards to '.strtolower($service->name).', ensuring every detail meets architectural and engineering expectations.',
                     'media_id' => null,
                     'media_side' => 'right',
                     'media_ratio' => '4:5',
@@ -1303,7 +1296,7 @@ class ListingPageBlueprintService
                 'authority_grid',
                 [
                     'eyebrow' => 'Value & Scope',
-                    'heading' => 'Why Choose Our ' . $service->name . ' Services',
+                    'heading' => 'Why Choose Our '.$service->name.' Services',
                     'introduction' => 'We focus on durability, material quality, and precise installation.',
                     'card_skin' => 'elevated',
                     'items' => [
@@ -1324,7 +1317,7 @@ class ListingPageBlueprintService
                 [
                     'eyebrow' => 'Related Services',
                     'heading' => 'Explore More Services',
-                    'subtitle' => 'Discover other specialized services that complement your ' . $service->name . ' project.',
+                    'subtitle' => 'Discover other specialized services that complement your '.$service->name.' project.',
                     'layout' => 'grid',
                     'columns' => '3',
                     'variant' => 'premium-2x2',
@@ -1347,7 +1340,7 @@ class ListingPageBlueprintService
                 'split_consultation_panel',
                 [
                     'eyebrow' => 'Project Inquiry',
-                    'heading' => 'Discuss Your ' . $service->name . ' Project',
+                    'heading' => 'Discuss Your '.$service->name.' Project',
                     'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
@@ -1367,14 +1360,14 @@ class ListingPageBlueprintService
         ];
     }
 
-    public function buildCity(\App\Models\City $city): array
+    public function buildCity(City $city): array
     {
         return [
             $this->block(
                 'parallax_media_band',
                 [
-                    'heading' => 'Landscape Construction in ' . $city->name,
-                    'subheadline' => 'Premium outdoor living, architectural hardscaping, and structural solutions for ' . $city->name . ' properties.',
+                    'heading' => 'Landscape Construction in '.$city->name,
+                    'subheadline' => 'Premium outdoor living, architectural hardscaping, and structural solutions for '.$city->name.' properties.',
                     'media_id' => $city->hero_media_id,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -1392,9 +1385,9 @@ class ListingPageBlueprintService
             $this->block(
                 'editorial_split_feature',
                 [
-                    'eyebrow' => $city->name . ' Overview',
-                    'heading' => 'Engineered Outdoor Spaces in ' . $city->name,
-                    'description' => 'We deliver structured, high-end landscape construction across ' . $city->name . ', respecting local grading constraints and architectural intent.',
+                    'eyebrow' => $city->name.' Overview',
+                    'heading' => 'Engineered Outdoor Spaces in '.$city->name,
+                    'description' => 'We deliver structured, high-end landscape construction across '.$city->name.', respecting local grading constraints and architectural intent.',
                     'media_id' => null,
                     'media_side' => 'right',
                     'media_ratio' => '4:5',
@@ -1415,8 +1408,8 @@ class ListingPageBlueprintService
                 'services_grid',
                 [
                     'eyebrow' => 'Available Services',
-                    'heading' => 'Our ' . $city->name . ' Services',
-                    'subtitle' => 'Select a specific service below to see our approach to delivery in ' . $city->name . '.',
+                    'heading' => 'Our '.$city->name.' Services',
+                    'subtitle' => 'Select a specific service below to see our approach to delivery in '.$city->name.'.',
                     'layout' => 'grid',
                     'columns' => '3',
                     'variant' => 'premium-2x2',
@@ -1439,8 +1432,8 @@ class ListingPageBlueprintService
                 'split_consultation_panel',
                 [
                     'eyebrow' => 'Project Inquiry',
-                    'heading' => 'Discuss Your ' . $city->name . ' Project',
-                    'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines in ' . $city->name . '.',
+                    'heading' => 'Discuss Your '.$city->name.' Project',
+                    'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines in '.$city->name.'.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
                     'form_slug' => 'contact-us',
@@ -1459,17 +1452,17 @@ class ListingPageBlueprintService
         ];
     }
 
-    public function buildServiceCity(\App\Models\ServiceCityPage $page): array
+    public function buildServiceCity(ServiceCityPage $page): array
     {
         $cityName = $page->city ? $page->city->name : 'Your Area';
         $serviceName = $page->service ? $page->service->name : 'Landscaping';
-        
+
         return [
             $this->block(
                 'parallax_media_band',
                 [
-                    'heading' => $page->h1 ?: $serviceName . ' in ' . $cityName,
-                    'subheadline' => $page->local_intro ?: 'Precision installation and structural integrity for premium outdoor spaces in ' . $cityName . '.',
+                    'heading' => $page->h1 ?: $serviceName.' in '.$cityName,
+                    'subheadline' => $page->local_intro ?: 'Precision installation and structural integrity for premium outdoor spaces in '.$cityName.'.',
                     'media_id' => $page->hero_media_id,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -1488,8 +1481,8 @@ class ListingPageBlueprintService
                 'editorial_split_feature',
                 [
                     'eyebrow' => 'Local Service Overview',
-                    'heading' => 'Premium ' . $serviceName . ' in ' . $cityName,
-                    'description' => 'We apply rigorous construction standards to ' . strtolower($serviceName) . ' projects in ' . $cityName . ', ensuring every detail meets architectural expectations.',
+                    'heading' => 'Premium '.$serviceName.' in '.$cityName,
+                    'description' => 'We apply rigorous construction standards to '.strtolower($serviceName).' projects in '.$cityName.', ensuring every detail meets architectural expectations.',
                     'media_id' => null,
                     'media_side' => 'right',
                     'media_ratio' => '4:5',
@@ -1510,7 +1503,7 @@ class ListingPageBlueprintService
                 'authority_grid',
                 [
                     'eyebrow' => 'Value & Scope',
-                    'heading' => 'Why Choose Our ' . $serviceName . ' in ' . $cityName,
+                    'heading' => 'Why Choose Our '.$serviceName.' in '.$cityName,
                     'introduction' => 'We focus on durability, material quality, and precise installation for local properties.',
                     'card_skin' => 'elevated',
                     'items' => [
@@ -1530,8 +1523,8 @@ class ListingPageBlueprintService
                 'services_grid',
                 [
                     'eyebrow' => 'Related Services',
-                    'heading' => 'Other Services in ' . $cityName,
-                    'subtitle' => 'Discover other specialized services that complement your ' . $serviceName . ' project.',
+                    'heading' => 'Other Services in '.$cityName,
+                    'subtitle' => 'Discover other specialized services that complement your '.$serviceName.' project.',
                     'layout' => 'grid',
                     'columns' => '3',
                     'variant' => 'premium-2x2',
@@ -1554,8 +1547,8 @@ class ListingPageBlueprintService
                 'split_consultation_panel',
                 [
                     'eyebrow' => 'Project Inquiry',
-                    'heading' => 'Discuss Your ' . $cityName . ' Project',
-                    'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines in ' . $cityName . '.',
+                    'heading' => 'Discuss Your '.$cityName.' Project',
+                    'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines in '.$cityName.'.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
                     'form_slug' => 'contact-us',
@@ -1574,13 +1567,7 @@ class ListingPageBlueprintService
         ];
     }
 
-
-
-
-
-
-
-    public function buildPortfolioProject(\App\Models\PortfolioProject $project): array
+    public function buildPortfolioProject(PortfolioProject $project): array
     {
         return [
             $this->block(

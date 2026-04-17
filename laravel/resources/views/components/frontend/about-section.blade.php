@@ -35,7 +35,7 @@
                 @endif
 
                 <div class="mt-10">
-                    <a href="/about" class="btn-luxury btn-luxury-white">
+                    <a href="{{ url('/about') }}" class="btn-luxury btn-luxury-white">
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         Learn More About Us
                     </a>

@@ -224,7 +224,7 @@
                             @if($requiresVerification)
                                 <button
                                     type="button"
-                                    x-show="showVerifyBtn"
+                                    x-show="showVerifyBtn" x-cloak
                                     x-on:click="sendOtp()"
                                     class="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-forest px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white"
                                 >

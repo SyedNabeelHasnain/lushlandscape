@@ -12,7 +12,7 @@
 @if(!empty($content['text']))
 <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4">
     <div class="{{ $styles['bg'] }} border p-5 md:p-6 flex gap-4"
-         @if($dismissible) x-data="{ show: true }" x-show="show" x-transition @endif>
+         @if($dismissible) x-data="{ show: true }" x-show="show" x-cloak x-transition @endif>
         <i data-lucide="{{ $styles['icon'] }}" class="w-5 h-5 {{ $styles['iconClr'] }} shrink-0 mt-0.5"></i>
         <div class="flex-1 min-w-0">
             @if(!empty($content['title']))

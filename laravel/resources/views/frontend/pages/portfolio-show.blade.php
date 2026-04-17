@@ -148,7 +148,7 @@
                     <p class="text-sm font-semibold text-text">Interested in {{ $project->service->name }}?</p>
                     <p class="text-xs text-text-secondary mt-1">Learn more about our {{ $project->service->name }} services in {{ $project->city->name }}.</p>
                 </div>
-                <a href="/{{ $scpSlug }}" class="shrink-0 inline-flex items-center gap-2 bg-forest hover:bg-forest-light text-white font-semibold px-5 py-2.5  text-sm transition">
+                <a href="{{ url('/' .  $scpSlug  . '') }}" class="shrink-0 inline-flex items-center gap-2 bg-forest hover:bg-forest-light text-white font-semibold px-5 py-2.5  text-sm transition">
                     View Service <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
@@ -224,7 +224,7 @@
             <div class="bg-forest  p-6 text-white sticky top-24">
                 <h3 class="text-lg font-bold mb-2">Want Similar Results?</h3>
                 <p class="text-white/70 text-sm mb-5">Book your on-site consultation for your {{ $project->service->name ?? 'landscaping' }} project{{ $project->city ? ' in ' . $project->city->name : '' }}.</p>
-                <a href="/contact"
+                <a href="{{ url('/contact') }}"
                    class="block bg-white text-forest font-bold py-3.5  text-center hover:bg-white/90 transition mb-3 text-sm">
                     Book a Consultation
                 </a>
@@ -282,13 +282,13 @@
             <div>
                 <h2 class="text-h2 font-heading font-bold text-ink">Related Projects</h2>
             </div>
-            <a href="/portfolio" class="text-sm font-medium text-forest hover:text-forest-300 transition flex items-center gap-1">
+            <a href="{{ url('/portfolio') }}" class="text-sm font-medium text-forest hover:text-forest-300 transition flex items-center gap-1">
                 View all <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($relatedProjects as $rp)
-            <a href="/portfolio/{{ $rp->slug }}" class="group bg-white border border-stone overflow-hidden hover:border-forest hover:shadow-luxury transition-all duration-500">
+            <a href="{{ url('/portfolio/' .  $rp->slug  . '') }}" class="group bg-white border border-stone overflow-hidden hover:border-forest hover:shadow-luxury transition-all duration-500">
                 <div class="aspect-4/3 overflow-hidden bg-forest/10 relative">
                     @if($rp->heroMedia)
                     <x-frontend.media :asset="$rp->heroMedia" :alt="$rp->title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -319,10 +319,10 @@
         <h2 class="text-2xl md:text-3xl font-bold font-heading">Ready to Start Your Project?</h2>
         <p class="mt-3 text-white/70 text-lg">Book your consultation and receive a clear scope plan with thoughtful material direction.</p>
         <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/contact" class="btn-luxury btn-luxury-primary inline-flex items-center gap-2">
+            <a href="{{ url('/contact') }}" class="btn-luxury btn-luxury-primary inline-flex items-center gap-2">
                 <i data-lucide="clipboard-list" class="w-5 h-5"></i> Book a Consultation
             </a>
-            <a href="/portfolio" class="btn-luxury btn-luxury-ghost inline-flex items-center gap-2">
+            <a href="{{ url('/portfolio') }}" class="btn-luxury btn-luxury-ghost inline-flex items-center gap-2">
                 <i data-lucide="images" class="w-5 h-5"></i> Browse All Projects
             </a>
         </div>

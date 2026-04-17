@@ -67,7 +67,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.services ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.services" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.services" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.service-categories.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.service-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="layers" class="w-3.5 h-3.5 shrink-0"></i>
@@ -106,7 +106,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.blog ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.blog" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.blog" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.blog-categories.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.blog-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
@@ -130,7 +130,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.portfolio ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.portfolio" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.portfolio" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.portfolio-categories.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.portfolio-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
@@ -154,7 +154,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.faqs ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.faqs" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.faqs" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.faq-categories.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.faq-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
@@ -178,7 +178,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.reviews ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.reviews" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.reviews" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.review-categories.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.review-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
@@ -202,7 +202,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.content ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.content" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.content" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.home-page.edit') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.home-page.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="home" class="w-3.5 h-3.5 shrink-0"></i>
@@ -265,7 +265,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.forms ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.forms" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.forms" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.forms.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.forms.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="form-input" class="w-3.5 h-3.5 shrink-0"></i>
@@ -321,7 +321,7 @@
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
                         :class="g.system ? 'rotate-90' : ''"></i>
                 </button>
-                <div x-show="g.system" x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
+                <div x-show="g.system" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
                     <a href="{{ route('admin.redirects.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.redirects.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="arrow-right-left" class="w-3.5 h-3.5 shrink-0"></i>
@@ -453,7 +453,7 @@
     </div>
 
     {{-- Mobile sidebar overlay --}}
-    <div x-show="sidebarOpen" x-on:click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black/50 lg:hidden"
+    <div x-show="sidebarOpen" x-cloak x-on:click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black/50 lg:hidden"
         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"></div>

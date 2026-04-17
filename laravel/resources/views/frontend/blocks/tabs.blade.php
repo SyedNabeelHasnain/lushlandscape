@@ -28,7 +28,7 @@
         @endforeach
     </div>
     @foreach($tabItems as $i => $tab)
-    <div x-show="active === {{ $i }}" x-transition:enter="transition ease-out duration-300"
+    <div x-show="active === {{ $i }}" x-cloak x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
          role="tabpanel" class="prose prose-forest max-w-none">
         {!! $tab['content'] ?? '' !!}

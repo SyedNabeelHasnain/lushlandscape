@@ -9,6 +9,7 @@ class LegacyGovernanceService
     public static function strictEnabled(): bool
     {
         $value = config('app.legacy_strict', false);
+
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 

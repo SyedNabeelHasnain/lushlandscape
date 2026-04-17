@@ -37,7 +37,7 @@
 @endphp
 
 <a
-    href="/"
+    href="{{ url('/') }}"
     class="theme-header-logo inline-flex items-center gap-3"
     aria-label="{{ $siteName }} Home"
     data-header-logo

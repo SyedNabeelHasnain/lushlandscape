@@ -39,7 +39,7 @@
                     id="faq-answer-{{ $i }}"
                     role="region"
                     aria-labelledby="faq-btn-{{ $i }}"
-                    x-show="active === {{ $i }}"
+                    x-show="active === {{ $i }}" x-cloak
                     x-collapse
                 >
                     <div class="pb-8 text-text-secondary leading-relaxed max-w-2xl">

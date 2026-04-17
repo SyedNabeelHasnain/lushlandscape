@@ -50,7 +50,7 @@
             @foreach($images as $i => $img)
             @php $asset = !empty($img['media_id']) ? ($mediaLookup[$img['media_id']] ?? null) : null; @endphp
             @if($asset)
-            <div x-show="lightbox === {{ $i }}" x-transition class="max-w-5xl w-full text-center">
+            <div x-show="lightbox === {{ $i }}" x-cloak x-transition class="max-w-5xl w-full text-center">
                 <x-frontend.media :asset="$asset" :alt="$img['alt'] ?? ''" class="max-h-[80vh] mx-auto object-contain" />
                 @if(!empty($img['caption']))
                 <p class="mt-4 text-sm text-white/50">{{ $img['caption'] }}</p>

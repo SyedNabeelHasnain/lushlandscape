@@ -19,11 +19,11 @@
                 <ul class="space-y-3 text-sm text-white/70">
                     @if(($column['type'] ?? 'custom') === 'auto_services')
                         @foreach($theme->allFooterCategories() as $item)
-                            <li><a href="/services/{{ $item->slug_final }}" class="hover:text-white transition">{{ $item->name }}</a></li>
+                            <li><a href="{{ url('/services/' .  $item->slug_final  . '') }}" class="hover:text-white transition">{{ $item->name }}</a></li>
                         @endforeach
                     @elseif(($column['type'] ?? 'custom') === 'auto_cities')
                         @foreach($theme->allFooterCities() as $item)
-                            <li><a href="/landscaping-{{ $item->slug_final }}" class="hover:text-white transition">{{ $item->name }}</a></li>
+                            <li><a href="{{ url('/landscaping-' .  $item->slug_final  . '') }}" class="hover:text-white transition">{{ $item->name }}</a></li>
                         @endforeach
                     @else
                         @foreach($column['links'] ?? [] as $link)
@@ -39,7 +39,7 @@
                 <h3 class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-5 pb-3 border-b border-white/12">{{ $servicesHeading }}</h3>
                 <ul class="space-y-3 text-sm text-white/70">
                     @foreach($theme->allFooterCategories() as $item)
-                        <li><a href="/services/{{ $item->slug_final }}" class="hover:text-white transition">{{ $item->name }}</a></li>
+                        <li><a href="{{ url('/services/' .  $item->slug_final  . '') }}" class="hover:text-white transition">{{ $item->name }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -50,7 +50,7 @@
                 <h3 class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-5 pb-3 border-b border-white/12">{{ $locationsHeading }}</h3>
                 <ul class="space-y-3 text-sm text-white/70">
                     @foreach($theme->allFooterCities() as $item)
-                        <li><a href="/landscaping-{{ $item->slug_final }}" class="hover:text-white transition">{{ $item->name }}</a></li>
+                        <li><a href="{{ url('/landscaping-' .  $item->slug_final  . '') }}" class="hover:text-white transition">{{ $item->name }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -60,11 +60,11 @@
             <div>
                 <h3 class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-5 pb-3 border-b border-white/12">{{ $companyHeading }}</h3>
                 <ul class="space-y-3 text-sm text-white/70">
-                    <li><a href="/about" class="hover:text-white transition">About</a></li>
-                    <li><a href="/portfolio" class="hover:text-white transition">Portfolio</a></li>
-                    <li><a href="/blog" class="hover:text-white transition">Blog</a></li>
-                    <li><a href="/faqs" class="hover:text-white transition">FAQs</a></li>
-                    <li><a href="/contact" class="hover:text-white transition">Contact</a></li>
+                    <li><a href="{{ url('/about') }}" class="hover:text-white transition">About</a></li>
+                    <li><a href="{{ url('/portfolio') }}" class="hover:text-white transition">Portfolio</a></li>
+                    <li><a href="{{ url('/blog') }}" class="hover:text-white transition">Blog</a></li>
+                    <li><a href="{{ url('/faqs') }}" class="hover:text-white transition">FAQs</a></li>
+                    <li><a href="{{ url('/contact') }}" class="hover:text-white transition">Contact</a></li>
                 </ul>
 
                 @if(($content['show_call_panel'] ?? true) && $phone)

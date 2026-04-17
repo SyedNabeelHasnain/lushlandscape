@@ -97,7 +97,7 @@
                                     @foreach($cat->services->take(3) as $service)
                                         <li class="group/link flex items-center gap-2 text-sm {{ $toneMap['sub'] }}">
                                             <div class="h-1.5 w-1.5 rounded-full bg-forest/30 transition-colors group-hover/link:bg-forest"></div>
-                                            <a href="/services/{{ $cat->slug_final }}/{{ $service->slug_final }}" class="transition {{ $tone === 'dark' ? 'hover:text-white' : 'hover:text-forest' }}">
+                                            <a href="{{ url('/services/' .  $cat->slug_final  . '/' .  $service->slug_final  . '') }}" class="transition {{ $tone === 'dark' ? 'hover:text-white' : 'hover:text-forest' }}">
                                                 {{ $service->name }}
                                             </a>
                                         </li>
@@ -105,7 +105,7 @@
                                 </ul>
                             @endif
 
-                            <a href="/services/{{ $cat->slug_final }}" class="group/btn inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider {{ $toneMap['link'] }}">
+                            <a href="{{ url('/services/' .  $cat->slug_final  . '') }}" class="group/btn inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider {{ $toneMap['link'] }}">
                                 Explore {{ $cat->name }}
                                 <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
                             </a>

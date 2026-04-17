@@ -80,7 +80,7 @@
                 </div>
 
                 {{-- Settings Panel --}}
-                <div x-show="section.expanded" x-collapse class="border-t border-gray-100 bg-gray-50 px-4 py-4">
+                <div x-show="section.expanded" x-cloak x-collapse class="border-t border-gray-100 bg-gray-50 px-4 py-4">
                     <p class="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-3">Section Settings</p>
 
                     {{-- Hero / CTA section: heading, subtitle, cta_text, cta_url, video_url, extra_image_ids --}}

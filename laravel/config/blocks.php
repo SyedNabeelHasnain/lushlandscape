@@ -1450,11 +1450,11 @@ return [
                 ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
                 ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
                 [
-            'key' => 'layout',
-            'label' => 'Layout',
-            'type' => 'select',
-            'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider', 'rail' => 'Horizontal Rail'],
-        ],
+                    'key' => 'layout',
+                    'label' => 'Layout',
+                    'type' => 'select',
+                    'options' => ['grid' => 'Grid', 'masonry' => 'Masonry', 'slider' => 'Slider', 'rail' => 'Horizontal Rail'],
+                ],
                 [
                     'key' => 'columns',
                     'label' => 'Columns',
@@ -1824,11 +1824,11 @@ return [
                 ['key' => 'heading', 'label' => 'Section Heading', 'type' => 'text'],
                 ['key' => 'subtitle', 'label' => 'Section Subtitle', 'type' => 'textarea'],
                 [
-            'key' => 'variant',
-            'label' => 'Variant',
-            'type' => 'select',
-            'options' => ['numbered' => 'Numbered', 'feature_rows' => 'Feature Rows', 'timeline' => 'Timeline', 'premium-stack' => 'Premium Stack'],
-        ],
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => ['numbered' => 'Numbered', 'feature_rows' => 'Feature Rows', 'timeline' => 'Timeline', 'premium-stack' => 'Premium Stack'],
+                ],
                 [
                     'key' => 'tone',
                     'label' => 'Tone',
@@ -2070,18 +2070,18 @@ return [
                 ['key' => 'tag', 'label' => 'Tag/Label', 'type' => 'text'],
                 ['key' => 'show_line', 'label' => 'Show Decorative Line', 'type' => 'toggle'],
                 [
-            'key' => 'variant',
-            'label' => 'Variant',
-            'type' => 'select',
-            'options' => [
-                'editorial' => 'Editorial',
-                'full-editorial' => 'Full Editorial',
-                'split' => 'Split Intro',
-                'compact' => 'Compact',
-                'title-only' => 'Title Only',
-                'with-right-cta' => 'Title + Right CTA',
-            ],
-        ],
+                    'key' => 'variant',
+                    'label' => 'Variant',
+                    'type' => 'select',
+                    'options' => [
+                        'editorial' => 'Editorial',
+                        'full-editorial' => 'Full Editorial',
+                        'split' => 'Split Intro',
+                        'compact' => 'Compact',
+                        'title-only' => 'Title Only',
+                        'with-right-cta' => 'Title + Right CTA',
+                    ],
+                ],
                 [
                     'key' => 'tone',
                     'label' => 'Tone',
@@ -3217,5 +3217,5 @@ return [
             'defaults' => ['html' => ''],
         ],
 
-            ],
+    ],
 ];

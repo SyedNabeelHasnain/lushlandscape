@@ -127,9 +127,9 @@
                     </button>
                 </div>
 
-                <a href="/portfolio" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">Portfolio</a>
-                <a href="/about" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">About</a>
-                <a href="/contact" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">Contact</a>
+                <a href="{{ url('/portfolio') }}" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">Portfolio</a>
+                <a href="{{ url('/about') }}" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">About</a>
+                <a href="{{ url('/contact') }}" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">Contact</a>
             </nav>
 
             {{-- Desktop Right --}}
@@ -161,7 +161,7 @@
                 @endif
                 <button x-on:click="mobileOpen = !mobileOpen"
                         class="w-10 h-10 flex items-center justify-center text-white hover:text-white/80 transition" aria-label="Toggle navigation">
-                    <i data-lucide="menu" class="w-5 h-5" x-show="!mobileOpen"></i>
+                    <i data-lucide="menu" class="w-5 h-5" x-show="!mobileOpen" x-cloak></i>
                     <i data-lucide="x" class="w-5 h-5" x-show="mobileOpen" x-cloak></i>
                 </button>
             </div>
@@ -191,13 +191,13 @@
                        placeholder="{{ $searchPlaceholder }}"
                        aria-label="Search services, cities, and blog posts"
                        class="w-full pl-12 pr-12 py-4 bg-white/5 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-white/25 transition">
-                <button x-show="searchQuery" x-on:click="searchQuery = ''; searchResults = null;"
+                <button x-show="searchQuery" x-cloak x-on:click="searchQuery = ''; searchResults = null;"
                         class="absolute inset-y-0 right-4 flex items-center text-white/40 hover:text-white transition" aria-label="Clear search">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
             <div x-show="searchQuery.length >= {{ $searchMinChars }}" x-cloak aria-live="polite" class="mt-3 bg-white shadow-luxury border border-stone overflow-hidden max-h-[70vh] overflow-y-auto">
-                <div x-show="searchLoading" class="flex items-center justify-center py-10">
+                <div x-show="searchLoading" x-cloak class="flex items-center justify-center py-10">
                     <i data-lucide="loader-2" class="w-5 h-5 animate-spin text-forest"></i>
                 </div>
                 <template x-if="!searchLoading && searchResults">
@@ -322,7 +322,7 @@
                 <div class="flex-1 grid {{ $gridCols }} gap-10">
                     @foreach($megaCats as $nc)
                     <div>
-                        <a href="/services/{{ $nc->slug_final }}" class="flex items-center gap-3 mb-5 group">
+                        <a href="{{ url('/services/' .  $nc->slug_final  . '') }}" class="flex items-center gap-3 mb-5 group">
                             <div class="w-10 h-10 bg-forest/6 group-hover:bg-forest flex items-center justify-center shrink-0 transition-all duration-300 border border-forest/10 group-hover:border-forest">
                                 <i data-lucide="{{ $nc->icon ?? 'layers' }}" class="w-4 h-4 text-forest group-hover:text-white transition-colors duration-300"></i>
                             </div>
@@ -333,7 +333,7 @@
                         <div class="space-y-5">
                             @foreach($nc->children as $sub)
                             <div>
-                                <a href="/services/{{ $sub->slug_final }}"
+                                <a href="{{ url('/services/' .  $sub->slug_final  . '') }}"
                                    class="flex items-center gap-1.5 text-[10px] font-semibold text-text-secondary uppercase tracking-[0.2em] hover:text-forest transition mb-2.5">
                                     <i data-lucide="{{ $sub->icon ?? 'chevron-right' }}" class="w-3 h-3 shrink-0"></i>
                                     {{ $sub->name }}
@@ -341,7 +341,7 @@
                                 <ul class="space-y-0.5 pl-4 border-l border-stone">
                                     @foreach($sub->services as $svc)
                                     <li>
-                                        <a href="/services/{{ $sub->slug_final }}/{{ $svc->slug_final }}"
+                                        <a href="{{ url('/services/' .  $sub->slug_final  . '/' .  $svc->slug_final  . '') }}"
                                            class="flex items-center gap-2 text-sm text-text-secondary hover:text-forest hover:bg-forest/3 px-3 py-2 transition">
                                             <span class="w-1 h-1 bg-stone-dark shrink-0"></span>
                                             <span class="truncate">{{ $svc->name }}</span>
@@ -356,7 +356,7 @@
                         <ul class="space-y-0.5 border-l border-stone pl-4">
                             @foreach($nc->services as $svc)
                             <li>
-                                <a href="/services/{{ $nc->slug_final }}/{{ $svc->slug_final }}"
+                                <a href="{{ url('/services/' .  $nc->slug_final  . '/' .  $svc->slug_final  . '') }}"
                                    class="flex items-center gap-2 text-sm text-text-secondary hover:text-forest hover:bg-forest/3 px-3 py-2 transition">
                                     <span class="w-1 h-1 bg-stone-dark shrink-0"></span>
                                     <span class="truncate">{{ $svc->name }}</span>
@@ -366,7 +366,7 @@
                         </ul>
                         @endif
 
-                        <a href="/services/{{ $nc->slug_final }}" class="inline-flex items-center gap-1 mt-5 text-[11px] font-semibold uppercase tracking-[0.15em] text-forest link-underline">
+                        <a href="{{ url('/services/' .  $nc->slug_final  . '') }}" class="inline-flex items-center gap-1 mt-5 text-[11px] font-semibold uppercase tracking-[0.15em] text-forest link-underline">
                             All {{ $nc->name }} <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     </div>
@@ -378,7 +378,7 @@
                     <div class="bg-luxury-green-deep p-8 h-full flex flex-col">
                         <h3 class="text-white font-heading text-xl font-bold leading-snug mb-3">Begin Your Transformation</h3>
                         <p class="text-white/50 text-sm leading-relaxed mb-6">Complimentary consultation. 10-year warranty. No hidden costs.</p>
-                        <a href="/request-quote" class="btn-luxury btn-luxury-white text-[10px] mt-auto">
+                        <a href="{{ url('/request-quote') }}" class="btn-luxury btn-luxury-white text-[10px] mt-auto">
                             Project Consultation
                         </a>
                         @if($phone)
@@ -392,7 +392,7 @@
 
             <div class="mt-8 pt-6 border-t border-stone flex items-center justify-between">
                 <p class="text-[11px] text-text-secondary tracking-[0.1em] uppercase">Serving Ontario, Canada &mdash; Consultation-led design &amp; build</p>
-                <a href="/services" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-forest link-underline flex items-center gap-1.5">
+                <a href="{{ url('/services') }}" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-forest link-underline flex items-center gap-1.5">
                     Browse All Services <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -416,7 +416,7 @@
                     @if($megaCities->isNotEmpty())
                     <div class="columns-3 lg:columns-4 gap-x-10 gap-y-0">
                         @foreach($megaCities as $mc)
-                        <a href="/landscaping-{{ $mc->slug_final }}"
+                        <a href="{{ url('/landscaping-' .  $mc->slug_final  . '') }}"
                            class="flex items-center gap-2.5 px-3 py-2.5 hover:bg-forest/3 group transition break-inside-avoid">
                             <span class="w-1.5 h-1.5 bg-stone group-hover:bg-forest transition shrink-0"></span>
                             <span class="text-sm text-text-secondary group-hover:text-forest transition truncate">{{ $mc->name }}</span>
@@ -432,7 +432,7 @@
                     <div class="bg-cream p-6 border border-stone h-full flex flex-col">
                         <h3 class="text-ink font-heading text-lg font-bold mb-2">Find Your Area</h3>
                         <p class="text-text-secondary text-sm leading-relaxed mb-5 flex-1">Professional landscaping across Ontario. Find services in your city.</p>
-                        <a href="/locations" class="btn-luxury btn-luxury-primary text-[10px]">
+                        <a href="{{ url('/locations') }}" class="btn-luxury btn-luxury-primary text-[10px]">
                             All Locations
                         </a>
                     </div>
@@ -441,7 +441,7 @@
 
             <div class="mt-8 pt-6 border-t border-stone flex items-center justify-between">
                 <p class="text-[11px] text-text-secondary tracking-[0.1em] uppercase">Local experts, local knowledge &mdash; serving communities across Ontario</p>
-                <a href="/locations" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-forest link-underline flex items-center gap-1.5">
+                <a href="{{ url('/locations') }}" class="text-[11px] font-semibold uppercase tracking-[0.15em] text-forest link-underline flex items-center gap-1.5">
                     View All Service Areas <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -465,7 +465,7 @@
                     </span>
                     <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" :class="mobileExpanded.services ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="mobileExpanded.services" x-collapse class="mt-1 space-y-0.5">
+                <div x-show="mobileExpanded.services" x-cloak x-collapse class="mt-1 space-y-0.5">
                     @foreach($megaCats as $nc)
                     <div class="pl-4">
                         <button type="button" x-on:click="mobileExpanded['cat_{{ $nc->id }}'] = !mobileExpanded['cat_{{ $nc->id }}']"
@@ -475,7 +475,7 @@
                             </span>
                             <i data-lucide="chevron-right" class="w-3 h-3 transition-transform" :class="mobileExpanded['cat_{{ $nc->id }}'] ? 'rotate-90' : ''"></i>
                         </button>
-                        <div x-show="mobileExpanded['cat_{{ $nc->id }}']" x-collapse class="pl-3 space-y-0.5 mt-0.5">
+                        <div x-show="mobileExpanded[' x-cloakcat_{{ $nc->id }}']" x-collapse class="pl-3 space-y-0.5 mt-0.5">
                             @if($nc->children->isNotEmpty())
                                 @foreach($nc->children as $sub)
                                 <div>
@@ -486,15 +486,15 @@
                                         </span>
                                         <i data-lucide="chevron-right" class="w-2.5 h-2.5 transition-transform" :class="mobileExpanded['sub_{{ $sub->id }}'] ? 'rotate-90' : ''"></i>
                                     </button>
-                                    <div x-show="mobileExpanded['sub_{{ $sub->id }}']" x-collapse class="pl-4 space-y-0.5 mt-0.5">
+                                    <div x-show="mobileExpanded[' x-cloaksub_{{ $sub->id }}']" x-collapse class="pl-4 space-y-0.5 mt-0.5">
                                         @foreach($sub->services as $svc)
-                                        <a href="/services/{{ $sub->slug_final }}/{{ $svc->slug_final }}"
+                                        <a href="{{ url('/services/' .  $sub->slug_final  . '/' .  $svc->slug_final  . '') }}"
                                            x-on:click="mobileOpen = false"
                                            class="block px-3 py-2.5 text-xs text-white/40 hover:text-white transition border-l border-white/8">
                                             {{ $svc->name }}
                                         </a>
                                         @endforeach
-                                        <a href="/services/{{ $sub->slug_final }}" x-on:click="mobileOpen = false" class="block px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-forest-300 hover:text-white transition">
+                                        <a href="{{ url('/services/' .  $sub->slug_final  . '') }}" x-on:click="mobileOpen = false" class="block px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-forest-300 hover:text-white transition">
                                             All {{ $sub->name }} &rarr;
                                         </a>
                                     </div>
@@ -502,20 +502,20 @@
                                 @endforeach
                             @else
                                 @foreach($nc->services as $svc)
-                                <a href="/services/{{ $nc->slug_final }}/{{ $svc->slug_final }}"
+                                <a href="{{ url('/services/' .  $nc->slug_final  . '/' .  $svc->slug_final  . '') }}"
                                    x-on:click="mobileOpen = false"
                                    class="block px-3 py-2.5 text-xs text-white/45 hover:text-white transition border-l border-white/8">
                                     {{ $svc->name }}
                                 </a>
                                 @endforeach
                             @endif
-                            <a href="/services/{{ $nc->slug_final }}" x-on:click="mobileOpen = false" class="block px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-forest-300 hover:text-white transition">
+                            <a href="{{ url('/services/' .  $nc->slug_final  . '') }}" x-on:click="mobileOpen = false" class="block px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-forest-300 hover:text-white transition">
                                 All {{ $nc->name }} &rarr;
                             </a>
                         </div>
                     </div>
                     @endforeach
-                    <a href="/services" x-on:click="mobileOpen = false" class="block px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-white/60 hover:text-white transition">
+                    <a href="{{ url('/services') }}" x-on:click="mobileOpen = false" class="block px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-white/60 hover:text-white transition">
                         All Services &rarr;
                     </a>
                 </div>
@@ -529,16 +529,16 @@
                     </span>
                     <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" :class="mobileExpanded.locations ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="mobileExpanded.locations" x-collapse class="mt-1 space-y-0.5 pl-4">
+                <div x-show="mobileExpanded.locations" x-cloak x-collapse class="mt-1 space-y-0.5 pl-4">
                     <div class="grid grid-cols-2 gap-0.5">
                         @foreach($megaCities as $mc)
-                        <a href="/landscaping-{{ $mc->slug_final }}" x-on:click="mobileOpen = false"
+                        <a href="{{ url('/landscaping-' .  $mc->slug_final  . '') }}" x-on:click="mobileOpen = false"
                            class="px-3 py-2.5 text-sm text-white/50 hover:text-white transition">
                             {{ $mc->name }}
                         </a>
                         @endforeach
                     </div>
-                    <a href="/locations" x-on:click="mobileOpen = false" class="block px-3 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-forest-300 hover:text-white transition">
+                    <a href="{{ url('/locations') }}" x-on:click="mobileOpen = false" class="block px-3 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-forest-300 hover:text-white transition">
                         All Locations &rarr;
                     </a>
                 </div>

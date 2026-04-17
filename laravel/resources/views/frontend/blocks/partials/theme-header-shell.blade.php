@@ -128,7 +128,7 @@
                     aria-controls="theme-header-mobile-overlay"
                 >
                     <span class="text-[10px] font-semibold uppercase tracking-[0.2em]">{{ $menuLabel }}</span>
-                    <i data-lucide="menu" class="h-5 w-5" x-show="!mobileOpen"></i>
+                    <i data-lucide="menu" class="h-5 w-5" x-show="!mobileOpen" x-cloak></i>
                     <i data-lucide="x" class="h-5 w-5" x-show="mobileOpen" x-cloak></i>
                 </button>
             @endif

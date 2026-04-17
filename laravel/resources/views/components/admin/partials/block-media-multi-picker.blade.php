@@ -20,7 +20,7 @@
             <button type="button" @click="openModal()" class="rounded-lg bg-forest px-3 py-1.5 text-xs text-white transition hover:bg-forest-light">
                 Browse Library
             </button>
-            <button type="button" x-show="selectedIds.length" @click="clear()" class="rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 transition hover:bg-gray-50">
+            <button type="button" x-show="selectedIds.length" x-cloak @click="clear()" class="rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-500 transition hover:bg-gray-50">
                 Clear
             </button>
         </div>
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div x-show="tab === 'library'" class="flex min-h-[420px] flex-1 flex-col overflow-hidden">
+            <div x-show="tab === ' x-cloaklibrary'" class="flex min-h-[420px] flex-1 flex-col overflow-hidden">
                 <div class="flex flex-col gap-3 border-b border-gray-100 px-4 py-3 sm:flex-row sm:px-6">
                     <input type="text" x-model="search" @input.debounce.400ms="fetchMedia(1)" placeholder="Search by title…" class="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30">
                     <select x-model="filterType" @change="fetchMedia(1)" class="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 sm:w-44">
@@ -87,10 +87,10 @@
 
                 <div class="grid flex-1 gap-0 lg:grid-cols-[minmax(0,1fr)_20rem]">
                     <div class="overflow-y-auto p-4 sm:p-6">
-                        <div x-show="loading" class="flex justify-center py-16">
+                        <div x-show="loading" x-cloak class="flex justify-center py-16">
                             <i data-lucide="loader-2" class="h-6 w-6 animate-spin text-forest"></i>
                         </div>
-                        <div x-show="!loading && assets.length === 0" class="py-16 text-center text-sm text-gray-400">No media found.</div>
+                        <div x-show="!loading && assets.length === 0" x-cloak class="py-16 text-center text-sm text-gray-400">No media found.</div>
                         <div x-show="!loading && assets.length > 0" class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" x-cloak>
                             <template x-for="asset in assets" :key="'library-' + asset.id">
                                 <button type="button" @click="toggle(asset)"
@@ -99,8 +99,8 @@
                                     <div class="relative aspect-square bg-gray-100">
                                         <img :src="asset.url" :alt="asset.default_alt_text || ''" class="h-full w-full object-cover">
                                         <div class="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border border-white/50 bg-black/45 text-white">
-                                            <i x-show="isSelected(asset.id)" data-lucide="check" class="h-3.5 w-3.5"></i>
-                                            <i x-show="!isSelected(asset.id)" data-lucide="plus" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
+                                            <i x-show="isSelected(asset.id)" x-cloak data-lucide="check" class="h-3.5 w-3.5"></i>
+                                            <i x-show="!isSelected(asset.id)" x-cloak data-lucide="plus" class="h-3.5 w-3.5 opacity-0 transition group-hover:opacity-100"></i>
                                         </div>
                                     </div>
                                     <div class="space-y-1 p-2">
@@ -118,7 +118,7 @@
                                 <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">Selection Order</p>
                                 <p class="mt-1 text-[10px] text-gray-400">The frontend slider uses this exact order.</p>
                             </div>
-                            <button type="button" x-show="selectedIds.length" @click="clear()" class="rounded-lg border border-gray-200 px-2.5 py-1 text-[11px] text-gray-500 transition hover:bg-white">
+                            <button type="button" x-show="selectedIds.length" x-cloak @click="clear()" class="rounded-lg border border-gray-200 px-2.5 py-1 text-[11px] text-gray-500 transition hover:bg-white">
                                 Clear
                             </button>
                         </div>
@@ -151,14 +151,14 @@
                     </aside>
                 </div>
 
-                <div x-show="meta.last_page > 1" class="flex flex-col gap-3 border-t border-gray-100 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <div x-show="meta.last_page > 1" x-cloak class="flex flex-col gap-3 border-t border-gray-100 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                     <button type="button" @click="fetchMedia(meta.current_page - 1)" :disabled="meta.current_page <= 1" class="rounded-lg border border-gray-200 px-3 py-1.5 text-xs disabled:opacity-40">Prev</button>
                     <span class="text-xs text-gray-500" x-text="'Page ' + meta.current_page + ' of ' + meta.last_page"></span>
                     <button type="button" @click="fetchMedia(meta.current_page + 1)" :disabled="meta.current_page >= meta.last_page" class="rounded-lg border border-gray-200 px-3 py-1.5 text-xs disabled:opacity-40">Next</button>
                 </div>
             </div>
 
-            <div x-show="tab === 'upload'" class="min-h-[420px] flex-1 overflow-y-auto p-4 sm:p-6">
+            <div x-show="tab === ' x-cloakupload'" class="min-h-[420px] flex-1 overflow-y-auto p-4 sm:p-6">
                 <div x-ref="uploadForm" class="mx-auto max-w-2xl space-y-4">
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-text">File <span class="text-red-500">*</span></label>
@@ -166,7 +166,7 @@
                         <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
                             <div class="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
                                 <img x-show="uploadPreviewSrc" :src="uploadPreviewSrc" alt="" class="h-full w-full object-cover" x-cloak>
-                                <i x-show="!uploadPreviewSrc" data-lucide="image" class="h-7 w-7 text-gray-300"></i>
+                                <i x-show="!uploadPreviewSrc" x-cloak data-lucide="image" class="h-7 w-7 text-gray-300"></i>
                             </div>
                             <div class="min-w-0 flex-1">
                                 <button type="button" @click="$refs.fileInput.click()" class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 px-4 py-2.5 text-sm text-gray-500 transition hover:border-forest hover:bg-forest-50 hover:text-forest">

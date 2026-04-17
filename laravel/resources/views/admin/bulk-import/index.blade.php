@@ -60,7 +60,7 @@
                                    class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
                         </div>
                         <div class="md:col-span-1 flex items-end">
-                            <button type="button" x-on:click="manualEntries.splice(idx, 1)" x-show="manualEntries.length > 1"
+                            <button type="button" x-on:click="manualEntries.splice(idx, 1)" x-show="manualEntries.length > 1" x-cloak
                                 class="p-2 text-red-400 hover:text-red-600 transition" aria-label="Remove entry">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
@@ -103,7 +103,7 @@
                     </div>
                 </template>
 
-                <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4" x-show="validationResult?.valid > 0">
+                <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:gap-4" x-show="validationResult?.valid > 0" x-cloak>
                     <button type="button" x-on:click="startFileImport()" :disabled="importing"
                         class="inline-flex items-center justify-center gap-2 bg-forest hover:bg-forest-light text-white font-medium px-5 py-2.5 rounded-xl transition text-sm disabled:opacity-50">
                         <i data-lucide="download" class="w-4 h-4"></i>

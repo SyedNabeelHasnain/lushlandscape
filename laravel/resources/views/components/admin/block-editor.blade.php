@@ -67,8 +67,8 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                             <div class="flex flex-wrap items-center gap-1.5">
                                 <span class="text-sm font-medium text-gray-700" x-text="type.label"></span>
                                 <span class="rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gray-500" x-text="type.category"></span>
-                                <span x-show="type.supports_children" class="rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700">Nested</span>
-                                <span x-show="type.data_source" class="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-blue-700">Data</span>
+                                <span x-show="type.supports_children" x-cloak class="rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700">Nested</span>
+                                <span x-show="type.data_source" x-cloak class="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-blue-700">Data</span>
                             </div>
                             <p class="mt-0.5 text-[11px] text-gray-400" x-text="(type.content_fields?.length || 0) + ' configurable field' + ((type.content_fields?.length || 0) === 1 ? '' : 's')"></p>
                         </div>
@@ -175,7 +175,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                 </div>
 
                 {{-- Block content fields (collapsible) --}}
-                <div x-show="block._open" x-collapse class="divide-y divide-gray-50">
+                <div x-show="block._open" x-cloak x-collapse class="divide-y divide-gray-50">
                     <div class="p-5 space-y-4">
                         {{-- LAYOUT SECTION SETTINGS --}}
                         <template x-if="block.is_layout_section">
@@ -595,7 +595,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                                 <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 transition-transform"
                                     :class="block._dataSourceOpen ? 'rotate-180' : ''"></i>
                             </button>
-                            <div x-show="block._dataSourceOpen" x-collapse class="space-y-4 px-5 pb-5">
+                            <div x-show="block._dataSourceOpen" x-cloak x-collapse class="space-y-4 px-5 pb-5">
                                 <div class="rounded-xl border border-blue-100 bg-blue-50/60 p-3 text-[11px] leading-relaxed text-blue-700">
                                     These settings control how dynamic blocks query content. Filter values accept literal IDs/values or special values like <code class="rounded bg-white px-1 py-0.5">auto</code>, <code class="rounded bg-white px-1 py-0.5">all</code>, <code class="rounded bg-white px-1 py-0.5">null</code>, <code class="rounded bg-white px-1 py-0.5">true</code>, and <code class="rounded bg-white px-1 py-0.5">false</code>.
                                 </div>
@@ -688,7 +688,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                             <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 transition-transform"
                                 :class="block._advancedOpen ? 'rotate-180' : ''"></i>
                         </button>
-                        <div x-show="block._advancedOpen" x-collapse class="space-y-4 px-5 pb-5">
+                        <div x-show="block._advancedOpen" x-cloak x-collapse class="space-y-4 px-5 pb-5">
                             <div x-data="{}">
                                 <div class="mb-1 flex items-center justify-between gap-2">
                                     <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-400">Visibility Window</label>
@@ -766,7 +766,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                                 <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 transition-transform"
                                     :class="block._styleOpen ? 'rotate-180' : ''"></i>
                             </button>
-                            <div x-show="block._styleOpen" x-collapse class="px-5 pb-5">
+                            <div x-show="block._styleOpen" x-cloak x-collapse class="px-5 pb-5">
                                 <div x-data="{ styleDevice: 'desktop' }">
                                     {{-- Device Tabs --}}
                                     <div class="flex items-center gap-1 mb-4 border-b border-gray-100 pb-2">
@@ -935,7 +935,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                                                         <div class="flex flex-wrap items-center gap-1.5">
                                                             <span class="text-sm font-medium text-gray-700" x-text="type.label"></span>
                                                             <span class="rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gray-500" x-text="type.category"></span>
-                                                            <span x-show="type.data_source" class="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-blue-700">Data</span>
+                                                            <span x-show="type.data_source" x-cloak class="rounded-full bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-blue-700">Data</span>
                                                         </div>
                                                         <p class="mt-0.5 text-[11px] text-gray-400" x-text="(type.content_fields?.length || 0) + ' configurable field' + ((type.content_fields?.length || 0) === 1 ? '' : 's')"></p>
                                                     </div>
@@ -1016,7 +1016,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                                             </div>
                                         </div>
 
-                                        <div x-show="child._open" x-collapse class="divide-y divide-gray-50 bg-white">
+                                        <div x-show="child._open" x-cloak x-collapse class="divide-y divide-gray-50 bg-white">
                                             <div class="space-y-4 p-4">
                                                 <template x-if="getTypeFields(child).length === 0">
                                                     <p class="text-xs italic text-gray-400">No configurable fields for this child block type.</p>
@@ -1201,7 +1201,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                                                         <span class="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700" x-text="dataSourceSummary(child)"></span>
                                                         <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 transition-transform" :class="child._dataSourceOpen ? 'rotate-180' : ''"></i>
                                                     </button>
-                                                    <div x-show="child._dataSourceOpen" x-collapse class="space-y-4 px-4 pb-4">
+                                                    <div x-show="child._dataSourceOpen" x-cloak x-collapse class="space-y-4 px-4 pb-4">
                                                         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
                                                             <div>
                                                                 <label class="mb-1 block text-[10px] font-bold uppercase tracking-wider text-gray-400">Resolved Model</label>
@@ -1284,7 +1284,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                                                     <span class="flex-1 text-xs font-semibold uppercase tracking-wide text-gray-500">Behavior & Metadata</span>
                                                     <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 transition-transform" :class="child._advancedOpen ? 'rotate-180' : ''"></i>
                                                 </button>
-                                                <div x-show="child._advancedOpen" x-collapse class="space-y-4 px-4 pb-4">
+                                                <div x-show="child._advancedOpen" x-cloak x-collapse class="space-y-4 px-4 pb-4">
                                                     <template x-if="childSlotOptions(block).length > 0">
                                                         <div>
                                                             <label class="mb-1 block text-[10px] font-bold uppercase tracking-wider text-gray-400">Container Slot</label>
@@ -1369,7 +1369,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
                                                         <span class="flex-1 text-xs font-semibold uppercase tracking-wide text-gray-500">Child Style</span>
                                                         <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400 transition-transform" :class="child._styleOpen ? 'rotate-180' : ''"></i>
                                                     </button>
-                                                    <div x-show="child._styleOpen" x-collapse class="px-4 pb-4">
+                                                    <div x-show="child._styleOpen" x-cloak x-collapse class="px-4 pb-4">
                                                         <div x-data="{ styleDevice: 'desktop' }">
                                                             <div class="mb-4 flex items-center gap-1 border-b border-gray-100 pb-2">
                                                                 <button type="button" @click="styleDevice = 'desktop'"

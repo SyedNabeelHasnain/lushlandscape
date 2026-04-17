@@ -64,12 +64,12 @@
     <nav class="space-y-10 text-center" aria-label="Mobile navigation">
         <div class="space-y-5">
             @if($showServices)
-                <a href="/services" class="block font-heading text-[clamp(2rem,8vw,3rem)] leading-none {{ $overlayLinkClass }}">
+                <a href="{{ url('/services') }}" class="block font-heading text-[clamp(2rem,8vw,3rem)] leading-none {{ $overlayLinkClass }}">
                     Services
                 </a>
             @endif
             @if($showLocations)
-                <a href="/locations" class="block font-heading text-[clamp(2rem,8vw,3rem)] leading-none {{ $overlayLinkClass }}">
+                <a href="{{ url('/locations') }}" class="block font-heading text-[clamp(2rem,8vw,3rem)] leading-none {{ $overlayLinkClass }}">
                     Locations
                 </a>
             @endif
@@ -85,7 +85,7 @@
                 <p class="text-[10px] font-semibold uppercase tracking-[0.24em] {{ $overlayMetaClass }}">Selected Services</p>
                 <div class="flex flex-wrap justify-center gap-2.5">
                     @foreach($navCats as $cat)
-                        <a href="/services/{{ $cat->slug_final }}"
+                        <a href="{{ url('/services/' .  $cat->slug_final  . '') }}"
                             class="rounded-full px-3.5 py-2 text-[11px] font-medium transition {{ $overlayChipClass }}">
                             {{ $cat->name }}
                         </a>
@@ -99,7 +99,7 @@
                 <p class="text-[10px] font-semibold uppercase tracking-[0.24em] {{ $overlayMetaClass }}">Featured Locations</p>
                 <div class="flex flex-wrap justify-center gap-2.5">
                     @foreach($navCities as $city)
-                        <a href="/landscaping-{{ $city->slug_final }}"
+                        <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}"
                             class="rounded-full px-3.5 py-2 text-[11px] font-medium transition {{ $overlayChipClass }}">
                             {{ $city->name }}
                         </a>
@@ -113,12 +113,12 @@
     @if($layout === 'horizontal')
         @if($showServices)
             <div class="relative group">
-                <a href="/services" class="{{ $trackingClass }} {{ $textClass }} transition flex items-center gap-1.5">
+                <a href="{{ url('/services') }}" class="{{ $trackingClass }} {{ $textClass }} transition flex items-center gap-1.5">
                     Services <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                 </a>
                 <div class="absolute top-full left-0 mt-3 min-w-[18rem] rounded-2xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition z-50 {{ $panelClass }}">
                     @foreach($navCats as $cat)
-                        <a href="/services/{{ $cat->slug_final }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
+                        <a href="{{ url('/services/' .  $cat->slug_final  . '') }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
                             {{ $cat->name }}
                         </a>
                     @endforeach
@@ -128,12 +128,12 @@
 
         @if($showLocations)
             <div class="relative group">
-                <a href="/locations" class="{{ $trackingClass }} {{ $textClass }} transition flex items-center gap-1.5">
+                <a href="{{ url('/locations') }}" class="{{ $trackingClass }} {{ $textClass }} transition flex items-center gap-1.5">
                     Locations <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                 </a>
                 <div class="absolute top-full left-0 mt-3 min-w-[18rem] rounded-2xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition z-50 {{ $panelClass }}">
                     @foreach($navCities as $city)
-                        <a href="/landscaping-{{ $city->slug_final }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
+                        <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
                             {{ $city->name }}
                         </a>
                     @endforeach
@@ -148,12 +148,12 @@
         @endforeach
     @else
         @if($showServices)
-            <a href="/services" class="{{ $layout === 'footer' ? 'text-sm font-medium text-white/70 hover:text-white' : $trackingClass.' '.$textClass }} transition">
+            <a href="{{ url('/services') }}" class="{{ $layout === 'footer' ? 'text-sm font-medium text-white/70 hover:text-white' : $trackingClass.' '.$textClass }} transition">
                 Services
             </a>
         @endif
         @if($showLocations)
-            <a href="/locations" class="{{ $layout === 'footer' ? 'text-sm font-medium text-white/70 hover:text-white' : $trackingClass.' '.$textClass }} transition">
+            <a href="{{ url('/locations') }}" class="{{ $layout === 'footer' ? 'text-sm font-medium text-white/70 hover:text-white' : $trackingClass.' '.$textClass }} transition">
                 Locations
             </a>
         @endif

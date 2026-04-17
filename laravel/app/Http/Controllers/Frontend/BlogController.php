@@ -102,7 +102,7 @@ class BlogController extends Controller
                 $post->published_at?->toIso8601String(),
                 $post->updated_at?->toIso8601String(),
                 $post->author->name ?? null,
-                $post->heroMedia?->url ?? null
+                $post->heroMedia?->url
             );
 
         $relatedPosts = BlogPost::published()

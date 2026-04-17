@@ -41,7 +41,7 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach($portfolioItems as $proj)
-            <a href="/portfolio/{{ $proj->slug }}"
+            <a href="{{ url('/portfolio/' .  $proj->slug  . '') }}"
                class="group block  overflow-hidden border border-stone bg-white hover:shadow-lg transition-all duration-300"
               >
                 <div class="aspect-4/3 overflow-hidden bg-cream relative">

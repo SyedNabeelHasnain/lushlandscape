@@ -59,7 +59,7 @@
                 <div class="bg-luxury-green-deep p-6 text-white sticky top-24">
                     <h3 class="text-lg font-bold mb-2">Book a {{ $service->name }} Consultation</h3>
                     <p class="text-white/70 text-sm mb-5">Licensed &amp; insured. 10-year warranty. Clear scope and material direction.</p>
-                    <a href="/contact"
+                    <a href="{{ url('/contact') }}"
                        class="btn-luxury btn-luxury-white text-sm py-3.5 w-full mb-3">
                         Book a Consultation
                     </a>

@@ -10,7 +10,7 @@
 @endphp
 @if(!empty($content['text']))
 <div class="border-b {{ $styles }}"
-     @if($dismissible) x-data="{ show: true }" x-show="show" x-transition @endif>
+     @if($dismissible) x-data="{ show: true }" x-show="show" x-cloak x-transition @endif>
     <div class="max-w-7xl mx-auto px-6 lg:px-12 py-3 flex items-center justify-center gap-3 text-sm">
         @if(!empty($content['icon']))
         <i data-lucide="{{ $content['icon'] }}" class="w-4 h-4 shrink-0"></i>

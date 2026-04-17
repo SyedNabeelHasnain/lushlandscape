@@ -16,7 +16,7 @@
     $icon = $typeIcons[$type] ?? 'info';
 @endphp
 @if($text)
-<div class="border rounded-lg p-5 {{ $classes }}" {{ $dismissible ? 'x-data="{ show: true }" x-show="show"' : '' }}>
+<div class="border rounded-lg p-5 {{ $classes }}" {{ $dismissible ? 'x-data="{ show: true }" x-show="show" x-cloak' : '' }}>
     <div class="flex items-start gap-3">
         <i data-lucide="{{ $icon }}" class="w-5 h-5 mt-0.5 shrink-0"></i>
         <div class="flex-1">

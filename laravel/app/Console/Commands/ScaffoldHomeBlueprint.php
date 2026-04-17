@@ -2,12 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Console\Services\HomePageBlueprintService;
+use Illuminate\Console\Command;
 
 class ScaffoldHomeBlueprint extends Command
 {
     protected $signature = 'blocks:scaffold-home {--force : Overwrite existing blocks}';
+
     protected $description = 'Scaffolds the Home Page blocks via the Blueprint Service';
 
     public function handle(HomePageBlueprintService $service)
@@ -20,7 +21,7 @@ class ScaffoldHomeBlueprint extends Command
         } else {
             $this->warn('Home Page not scaffolded because blocks already exist. Use --force to overwrite.');
         }
-        
+
         return Command::SUCCESS;
     }
 }

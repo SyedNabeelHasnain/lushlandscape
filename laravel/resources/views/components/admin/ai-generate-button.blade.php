@@ -54,11 +54,11 @@
                         <i data-lucide="refresh-cw" class="w-3 h-3"></i> Regenerate
                     </button>
                 </div>
-                <div x-show="errorMsg" class="text-xs text-red-600" x-text="errorMsg"></div>
+                <div x-show="errorMsg" x-cloak class="text-xs text-red-600" x-text="errorMsg"></div>
             </div>
         </template>
 
-        <div x-show="errorMsg && !result && !loading" class="mt-2 text-xs text-red-600" x-text="errorMsg"></div>
+        <div x-show="errorMsg && !result && !loading" x-cloak class="mt-2 text-xs text-red-600" x-text="errorMsg"></div>
     </div>
 </div>
 @endif

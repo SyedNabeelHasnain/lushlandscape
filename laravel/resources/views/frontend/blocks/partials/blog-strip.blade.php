@@ -51,7 +51,7 @@
     @php
         $cardShell = $variant === 'minimal' ? '' : 'editorial-card rounded-[1.75rem]';
     @endphp
-    <a href="/blog/{{ $post->slug }}" class="group block {{ $cardShell }}">
+    <a href="{{ url('/blog/' .  $post->slug  . '') }}" class="group block {{ $cardShell }}">
         @if($post->heroMedia)
         <div class="relative overflow-hidden rounded-[1.5rem] aspect-[16/9] {{ $variant === 'minimal' ? 'mb-4' : 'mb-6' }}">
             <x-frontend.media :asset="$post->heroMedia" :alt="$post->title" class="img-zoom w-full h-full object-cover" />

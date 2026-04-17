@@ -15,15 +15,15 @@
         <span class="text-eyebrow text-ink">{{ $title }}</span>
         <i data-lucide="chevron-down" class="w-4 h-4 text-text-secondary transition-transform duration-200" :class="{'rotate-180': !open}"></i>
     </button>
-    <nav x-show="open" x-collapse class="mt-4" aria-label="Table of contents">
+    <nav x-show="open" x-cloak x-collapse class="mt-4" aria-label="Table of contents">
         <ul class="space-y-2">
             <template x-for="h in headings" :key="h.id">
                 <li>
                     <a :href="'#' + h.id"
                        class="flex items-center gap-2 text-sm text-text-secondary hover:text-forest transition-colors"
                        :class="{ 'pl-4': h.level === 'H3' }">
-                        <span x-show="h.level === 'H2'" class="w-1 h-1 bg-forest shrink-0"></span>
-                        <span x-show="h.level === 'H3'" class="w-1 h-1 bg-stone shrink-0"></span>
+                        <span x-show="h.level === ' x-cloakH2'" class="w-1 h-1 bg-forest shrink-0"></span>
+                        <span x-show="h.level === ' x-cloakH3'" class="w-1 h-1 bg-stone shrink-0"></span>
                         <span x-text="h.text"></span>
                     </a>
                 </li>

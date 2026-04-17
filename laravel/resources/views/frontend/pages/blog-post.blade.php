@@ -90,7 +90,7 @@
                     <div class="bg-forest p-5 text-white">
                         <h3 class="text-sm font-bold mb-2">Book a Consultation</h3>
                         <p class="text-white/70 text-xs mb-4 leading-relaxed">Plan your landscaping project with a clear scope and thoughtful material direction.</p>
-                        <a href="/contact" class="block bg-white text-forest font-bold py-3  text-center hover:bg-white/90 transition text-sm">Book a Consultation</a>
+                        <a href="{{ url('/contact') }}" class="block bg-white text-forest font-bold py-3  text-center hover:bg-white/90 transition text-sm">Book a Consultation</a>
                     </div>
                     @if(isset($popularPosts) && $popularPosts->count() > 0)
                     <div class="bg-cream border border-stone p-5">

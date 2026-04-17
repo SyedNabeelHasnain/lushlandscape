@@ -52,7 +52,7 @@
             ];
         @endphp
         @foreach($tabs as $key => $label)
-        <a href="/search?q={{ urlencode($q) }}&type={{ $key }}"
+        <a href="{{ url('/search?q=' .  urlencode($q)  . '&type=' .  $key  . '') }}"
            class="px-4 py-2 text-eyebrow font-medium transition {{ $type === $key ? 'bg-forest text-white' : 'text-text-secondary hover:bg-forest/6' }}">
             {{ $label }}
         </a>
@@ -63,7 +63,7 @@
     <div class="text-center py-20">
         <i data-lucide="search-x" class="w-16 h-16 text-stone mx-auto mb-4"></i>
         <h2 class="text-xl font-bold text-text mb-2">No results found</h2>
-        <p class="text-text-secondary">Try different keywords or browse our <a href="/services" class="text-forest hover:underline">services</a> and <a href="/locations" class="text-forest hover:underline">locations</a>.</p>
+        <p class="text-text-secondary">Try different keywords or browse our <a href="{{ url('/services') }}" class="text-forest hover:underline">services</a> and <a href="{{ url('/locations') }}" class="text-forest hover:underline">locations</a>.</p>
     </div>
     @else
 

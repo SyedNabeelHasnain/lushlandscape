@@ -57,7 +57,7 @@
             <div class="bg-forest p-6 text-white sticky top-24">
                 <h3 class="text-lg font-bold mb-2">Book a Consultation</h3>
                 <p class="text-white/70 text-sm mb-5">Professional landscaping in {{ $page->city->name }}. Clear scope and thoughtful material direction.</p>
-                <a href="/contact"
+                <a href="{{ url('/contact') }}"
                    class="block bg-white text-forest font-bold py-3.5 text-center hover:bg-white/90 transition mb-3 text-sm">
                     Book a Consultation
                 </a>

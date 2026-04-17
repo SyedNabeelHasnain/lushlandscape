@@ -58,7 +58,7 @@
                         <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                            :class="open === {{ $idx }} ? 'rotate-180' : ''"></i>
                     </button>
-                    <div x-show="open === {{ $idx }}" x-collapse class="px-6 pb-5">
+                    <div x-show="open === {{ $idx }}" x-cloak x-collapse class="px-6 pb-5">
                         <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                             {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                         </div>
@@ -67,7 +67,7 @@
                 @endforeach
             </div>
             <div class="mt-3 text-right">
-                <a href="/faqs?type=general" class="inline-flex items-center gap-1 text-sm font-medium text-forest hover:text-forest-300 transition">
+                <a href="{{ url('/faqs?type=general') }}" class="inline-flex items-center gap-1 text-sm font-medium text-forest hover:text-forest-300 transition">
                     View all general FAQs <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -92,7 +92,7 @@
                         <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                            :class="open === {{ $idx }} ? 'rotate-180' : ''"></i>
                     </button>
-                    <div x-show="open === {{ $idx }}" x-collapse class="px-6 pb-5">
+                    <div x-show="open === {{ $idx }}" x-cloak x-collapse class="px-6 pb-5">
                         <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                             {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                         </div>
@@ -101,7 +101,7 @@
                 @endforeach
             </div>
             <div class="mt-3 text-right">
-                <a href="/faqs?service={{ urlencode($page->service->name) }}" class="inline-flex items-center gap-1 text-sm font-medium text-forest hover:text-forest-300 transition">
+                <a href="{{ url('/faqs?service=' .  urlencode($page->service->name)  . '') }}" class="inline-flex items-center gap-1 text-sm font-medium text-forest hover:text-forest-300 transition">
                     View all {{ $page->service->name }} FAQs <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -126,7 +126,7 @@
                         <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                            :class="open === {{ $idx }} ? 'rotate-180' : ''"></i>
                     </button>
-                    <div x-show="open === {{ $idx }}" x-collapse class="px-6 pb-5">
+                    <div x-show="open === {{ $idx }}" x-cloak x-collapse class="px-6 pb-5">
                         <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                             {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                         </div>
@@ -135,7 +135,7 @@
                 @endforeach
             </div>
             <div class="mt-3 text-right">
-                <a href="/faqs?city={{ urlencode($page->city->name) }}" class="inline-flex items-center gap-1 text-sm font-medium text-forest hover:text-forest-300 transition">
+                <a href="{{ url('/faqs?city=' .  urlencode($page->city->name)  . '') }}" class="inline-flex items-center gap-1 text-sm font-medium text-forest hover:text-forest-300 transition">
                     View all {{ $page->city->name }} FAQs <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -164,7 +164,7 @@
                     <i data-lucide="chevron-down" class="w-4 h-4 text-forest shrink-0 transition-transform duration-200"
                        :class="open === {{ $i }} ? 'rotate-180' : ''"></i>
                 </button>
-                <div x-show="open === {{ $i }}" x-collapse class="px-6 pb-5">
+                <div x-show="open === {{ $i }}" x-cloak x-collapse class="px-6 pb-5">
                     <div class="text-sm text-text-secondary leading-relaxed border-t border-stone pt-4">
                         {!! nl2br(e($faq->short_answer ?: $faq->answer)) !!}
                     </div>
