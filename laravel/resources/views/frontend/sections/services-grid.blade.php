@@ -21,7 +21,7 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-12">
         <div class="mb-10">
             <h2 class="text-3xl font-bold text-text">{{ $gridHeading }}</h2>
-            <p class="mt-3 text-text-secondary text-lg">Click any service to learn more and get a tailored estimate for your {{ $cityName }} project.</p>
+            <p class="mt-3 text-text-secondary text-lg">Click any service to learn more and get a tailored scope plan for your {{ $cityName }} project.</p>
         </div>
 
         {{-- Category jump links --}}

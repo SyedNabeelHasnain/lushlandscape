@@ -46,11 +46,15 @@ class ListingPageBlueprintServiceTest extends TestCase
         $blocks = app(ListingPageBlueprintService::class)->buildSingletonPage('portfolio-index');
 
         $this->assertSame(
-            ['hero', 'portfolio_directory', 'cta_section'],
+            [
+                'parallax_media_band',
+                'portfolio_gallery',
+                'editorial_split_feature',
+                'split_consultation_panel',
+            ],
             array_column($blocks, 'block_type')
         );
-        $this->assertSame(501, $blocks[0]['content']['hero_media_id']);
-        $this->assertSame(12, $blocks[1]['data_source']['limit']);
+        $this->assertSame(501, $blocks[0]['content']['media_id']);
     }
 
     public function test_scaffold_populates_singleton_and_taxonomy_listing_pages(): void
@@ -108,15 +112,28 @@ class ListingPageBlueprintServiceTest extends TestCase
         $this->assertTrue($result['singleton_pages']['blog-index']['applied']);
         $this->assertCount(5, PageBlock::forPage('services_hub', null)->topLevel()->get());
         $this->assertSame(
-            ['hero', 'services_grid', 'cta_section'],
+            [
+                'parallax_media_band',
+                'editorial_split_feature',
+                'services_grid',
+                'split_consultation_panel',
+            ],
             PageBlock::forPage('service_category', 30)->topLevel()->orderBy('sort_order')->pluck('block_type')->all()
         );
         $this->assertSame(
-            ['portfolio_directory', 'cta_section'],
+            [
+                'parallax_media_band',
+                'portfolio_gallery',
+                'split_consultation_panel',
+            ],
             PageBlock::forPage('portfolio_category', 10)->topLevel()->orderBy('sort_order')->pluck('block_type')->all()
         );
         $this->assertSame(
-            ['blog_directory', 'cta_section'],
+            [
+                'parallax_media_band',
+                'blog_directory',
+                'split_consultation_panel',
+            ],
             PageBlock::forPage('blog_category', 20)->topLevel()->orderBy('sort_order')->pluck('block_type')->all()
         );
     }

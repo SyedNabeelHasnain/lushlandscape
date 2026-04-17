@@ -164,8 +164,8 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Connect with our team to discuss your specific requirements, material options, and execution timelines.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
-                    'tone' => 'dark',
+                'form_slug' => 'consultation',
+                'tone' => 'dark',
                 ],
                 $this->styles([
                     'max_width' => 'full',
@@ -263,7 +263,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'We can help define scope, material direction, and the best path from consultation to construction.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -373,7 +373,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Share your goals, priorities, and site details so we can recommend the right construction path.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -463,7 +463,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'We can help define scope, material direction, and the best path from consultation to construction in your specific area.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -556,7 +556,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Connect with our team to discuss your property, design goals, and execution timelines.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -624,7 +624,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'If our articles have inspired you, connect with our team to discuss how we can bring those ideas to your property.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -687,7 +687,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Connect with our team to discuss your specific requirements and receive expert guidance tailored to your property.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -738,7 +738,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'If this article sparked an idea, connect with our team to discuss how we can execute it professionally on your property.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -1344,7 +1344,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -1436,7 +1436,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines in '.$city->name.'.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -1551,7 +1551,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Schedule a consultation to discuss your specific site requirements, scope, and execution timelines in '.$cityName.'.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -1663,7 +1663,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'Connect with our team to discuss your property, design goals, and execution timelines for your next project.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([
@@ -1771,7 +1771,7 @@ class ListingPageBlueprintService
                     'editorial_copy' => 'If you couldn\'t find the answer you were looking for, or if you\'re ready to start discussing your specific property, reach out to us.',
                     'trust_lines' => 'Clear communication, Expert advice, Timely responses',
                     'media_id' => null,
-                    'form_slug' => 'contact-us',
+                    'form_slug' => 'consultation',
                     'tone' => 'dark',
                 ],
                 $this->styles([

@@ -31,43 +31,32 @@ class SearchController extends Controller
             ]);
         }
 
-        $like = $this->like($q);
-
-        $services = Service::where('status', 'published')
-            ->where(fn ($query) => $query->where('name', 'LIKE', $like)->orWhere('service_summary', 'LIKE', $like))
+        $services = $this->applySearch(Service::where('status', 'published'), $q, ['name', 'service_summary'])
             ->with('category')
             ->orderBy('sort_order')
             ->take(5)
             ->get(['id', 'category_id', 'name', 'slug_final']);
 
-        $categories = ServiceCategory::where('status', 'published')
-            ->where(fn ($query) => $query
-                ->where('name', 'LIKE', $like)
-                ->orWhere('short_description', 'LIKE', $like)
-                ->orWhere('long_description', 'LIKE', $like))
+        $categories = $this->applySearch(ServiceCategory::where('status', 'published'), $q, ['name', 'short_description', 'long_description'])
             ->orderBy('sort_order')
             ->take(3)
             ->get(['id', 'name', 'slug_final', 'short_description']);
 
-        $cities = City::where('status', 'published')
-            ->where(fn ($query) => $query->where('name', 'LIKE', $like)->orWhere('region_name', 'LIKE', $like))
+        $cities = $this->applySearch(City::where('status', 'published'), $q, ['name', 'region_name'])
             ->orderBy('name')
             ->take(6)
             ->get(['id', 'name', 'slug_final']);
 
-        $blog = BlogPost::where('status', 'published')
-            ->where(fn ($query) => $query->where('title', 'LIKE', $like)->orWhere('excerpt', 'LIKE', $like))
+        $blog = $this->applySearch(BlogPost::where('status', 'published'), $q, ['title', 'excerpt'])
             ->orderByDesc('published_at')
             ->take(4)
             ->get(['id', 'title', 'slug']);
 
-        $faqs = Faq::where('status', 'published')
-            ->where(fn ($query) => $query->where('question', 'LIKE', $like)->orWhere('answer', 'LIKE', $like))
+        $faqs = $this->applySearch(Faq::where('status', 'published'), $q, ['question', 'answer'])
             ->take(3)
             ->get(['id', 'question', 'slug']);
 
-        $portfolio = PortfolioProject::where('status', 'published')
-            ->where(fn ($query) => $query->where('title', 'LIKE', $like)->orWhere('description', 'LIKE', $like))
+        $portfolio = $this->applySearch(PortfolioProject::where('status', 'published'), $q, ['title', 'description'])
             ->orderByDesc('completion_date')
             ->take(3)
             ->get(['id', 'title', 'slug']);
@@ -141,39 +130,28 @@ class SearchController extends Controller
             ]);
         }
 
-        $like = $this->like($q);
-
-        $services = Service::where('status', 'published')
-            ->where(fn ($query) => $query->where('name', 'LIKE', $like)->orWhere('service_summary', 'LIKE', $like))
+        $services = $this->applySearch(Service::where('status', 'published'), $q, ['name', 'service_summary'])
             ->with(['category', 'heroMedia'])
             ->orderBy('sort_order')
             ->take(20)->get();
 
-        $categories = ServiceCategory::where('status', 'published')
-            ->where(fn ($query) => $query
-                ->where('name', 'LIKE', $like)
-                ->orWhere('short_description', 'LIKE', $like)
-                ->orWhere('long_description', 'LIKE', $like))
+        $categories = $this->applySearch(ServiceCategory::where('status', 'published'), $q, ['name', 'short_description', 'long_description'])
             ->with('heroMedia')
             ->orderBy('sort_order')
             ->take(20)->get();
 
-        $cities = City::where('status', 'published')
-            ->where(fn ($query) => $query->where('name', 'LIKE', $like)->orWhere('region_name', 'LIKE', $like))
+        $cities = $this->applySearch(City::where('status', 'published'), $q, ['name', 'region_name'])
             ->take(20)->get();
 
-        $blog = BlogPost::where('status', 'published')
-            ->where(fn ($query) => $query->where('title', 'LIKE', $like)->orWhere('excerpt', 'LIKE', $like)->orWhere('body', 'LIKE', $like))
+        $blog = $this->applySearch(BlogPost::where('status', 'published'), $q, ['title', 'excerpt', 'body'])
             ->with('heroMedia')
             ->orderByDesc('published_at')
             ->take(20)->get();
 
-        $faqs = Faq::where('status', 'published')
-            ->where(fn ($query) => $query->where('question', 'LIKE', $like)->orWhere('answer', 'LIKE', $like))
+        $faqs = $this->applySearch(Faq::where('status', 'published'), $q, ['question', 'answer'])
             ->take(20)->get();
 
-        $portfolio = PortfolioProject::where('status', 'published')
-            ->where(fn ($query) => $query->where('title', 'LIKE', $like)->orWhere('description', 'LIKE', $like))
+        $portfolio = $this->applySearch(PortfolioProject::where('status', 'published'), $q, ['title', 'description'])
             ->with('heroMedia')
             ->take(20)->get();
 
@@ -210,5 +188,25 @@ class SearchController extends Controller
     private function like(string $query): string
     {
         return '%'.str_replace(['%', '_'], ['\%', '\_'], $query).'%';
+    }
+
+    private function applySearch($queryBuilder, string $q, array $columns)
+    {
+        $words = array_filter(explode(' ', $q), fn ($w) => mb_strlen($w) > 1);
+
+        if (empty($words)) {
+            $words = [$q];
+        }
+
+        return $queryBuilder->where(function ($query) use ($words, $columns) {
+            foreach ($words as $word) {
+                $query->where(function ($subQuery) use ($word, $columns) {
+                    $like = $this->like($word);
+                    foreach ($columns as $column) {
+                        $subQuery->orWhere($column, 'LIKE', $like);
+                    }
+                });
+            }
+        });
     }
 }

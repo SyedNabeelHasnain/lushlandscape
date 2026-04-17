@@ -56,13 +56,12 @@ class HomePageBlueprintServiceTest extends TestCase
 
         $blocks = app(HomePageBlueprintService::class)->build();
 
-        $this->assertSame('hero', $blocks[0]['block_type']);
-        $this->assertSame(91, $blocks[0]['content']['hero_media_id']);
-        $this->assertSame([92], $blocks[0]['content']['extra_image_ids']);
-        $this->assertSame('portfolio_gallery', $blocks[2]['block_type']);
-        $this->assertSame('editorial_split_feature', $blocks[3]['block_type']);
-        $this->assertSame(92, $blocks[3]['content']['media_id']);
-        $this->assertSame('consultation', $blocks[6]['content']['form_slug']);
+        $this->assertSame('parallax_media_band', $blocks[0]['block_type']);
+        $this->assertSame(91, $blocks[0]['content']['media_id']);
+        $this->assertSame('editorial_split_feature', $blocks[2]['block_type']);
+        $this->assertSame(92, $blocks[2]['content']['media_id']);
+        $this->assertSame('portfolio_gallery', $blocks[3]['block_type']);
+        $this->assertSame('consultation', $blocks[7]['content']['form_slug']);
     }
 
     public function test_scaffold_skips_when_homepage_content_already_exists_and_replace_is_not_requested(): void
@@ -109,9 +108,9 @@ class HomePageBlueprintServiceTest extends TestCase
 
         $this->assertTrue($result['applied']);
         $this->assertTrue($result['replaced']);
-        $this->assertSame(7, $result['block_count']);
+        $this->assertSame(8, $result['block_count']);
         $this->assertSame(
-            ['hero', 'services_grid', 'portfolio_gallery', 'trust_badges', 'process_steps', 'city_grid', 'form_block'],
+            ['parallax_media_band', 'services_grid', 'editorial_split_feature', 'portfolio_gallery', 'authority_grid', 'process_steps', 'service_area_enclave', 'split_consultation_panel'],
             PageBlock::forPage('home', null)->topLevel()->orderBy('sort_order')->pluck('block_type')->all()
         );
         $this->assertSame(

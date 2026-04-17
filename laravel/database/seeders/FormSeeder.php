@@ -31,7 +31,7 @@ class FormSeeder extends Seeder
             ['name' => 'message', 'label' => 'Your Message', 'type' => 'textarea', 'is_required' => true, 'width' => 'full', 'sort_order' => 5],
         ]);
 
-        $quoteForm = Form::updateOrCreate(
+        $consultationForm = Form::updateOrCreate(
             ['slug' => 'consultation'],
             [
                 'name' => 'Project Consultation',
@@ -44,7 +44,7 @@ class FormSeeder extends Seeder
             ]
         );
 
-        $this->syncFields($quoteForm, [
+        $this->syncFields($consultationForm, [
             ['name' => 'full_name', 'label' => 'Full Name', 'type' => 'text', 'is_required' => true, 'width' => 'half', 'sort_order' => 1],
             ['name' => 'email', 'label' => 'Email Address', 'type' => 'email', 'is_required' => true, 'width' => 'half', 'sort_order' => 2],
             ['name' => 'phone', 'label' => 'Phone Number', 'type' => 'tel', 'is_required' => true, 'width' => 'half', 'sort_order' => 3],

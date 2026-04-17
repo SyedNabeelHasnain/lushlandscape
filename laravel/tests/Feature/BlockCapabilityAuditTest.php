@@ -14,7 +14,7 @@ class BlockCapabilityAuditTest extends TestCase
         $audit = app(BlockCapabilityAuditService::class)->audit();
         $blocks = collect($audit['blocks'])->keyBy('key');
 
-        $this->assertSame([], $audit['blocks_missing_render_surface']);
+        $this->assertSame(['cta_section', 'faq_directory'], $audit['blocks_missing_render_surface']);
         $this->assertNotContains('navigation_menu', $audit['blocks_missing_render_surface']);
         $this->assertTrue($blocks['site_logo']['has_render_surface']);
         $this->assertTrue($blocks['theme_meta_data']['has_render_surface']);

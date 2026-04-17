@@ -964,7 +964,7 @@ class PortfolioSeeder extends Seeder
             'The design process was collaborative and the team truly listened to what we wanted. The result is a backyard that feels like a vacation every time we step outside.',
             'What impressed us most was the attention to drainage and base preparation. They explained why each layer matters, and the finished surface is perfectly level after two full winters.',
             'The fire feature has become the gathering point for our family and friends. Even in October, we are still outside enjoying the warmth. It was the perfect addition to our patio.',
-            'We had three quotes and chose Lush because they were the most thorough in their assessment. They identified issues the other companies missed, and the result proved them right.',
+            'We consulted with three companies and chose Lush because they were the most thorough in their assessment. They identified issues the other companies missed, and the result proved them right.',
             'The walkway curve flows so naturally that it looks like it has always been there. They even worked around our favourite garden plants without damaging a single one.',
             'Exceptional from consultation to completion. The crew arrived on time every day, communicated clearly, and the final product is even better than the 3D rendering they showed us.',
             'Our neighbours hired a different company and spent the same amount. The difference in quality is night and day. We are so glad we went with Lush Landscape.',

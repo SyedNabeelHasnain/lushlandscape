@@ -116,7 +116,7 @@ class StaticPageContentSeeder extends Seeder
                         [
                             'icon' => 'eye',
                             'title' => 'Total Transparency',
-                            'description' => 'Your quote covers materials, labour, permits, and site cleanup. We do not add surprise charges mid-project, and we communicate proactively if anything changes. You will always know exactly where your project stands.',
+                            'description' => 'Your scope plan covers materials, labour, permits, and site cleanup. We do not add surprise charges mid-project, and we communicate proactively if anything changes. You will always know exactly where your project stands.',
                         ],
                         [
                             'icon' => 'users',
@@ -1402,7 +1402,7 @@ class StaticPageContentSeeder extends Seeder
                         ],
                         [
                             'question' => 'Can I refer someone who has already contacted Lush Landscape?',
-                            'answer' => 'To qualify as a referral, the person must be a new contact who has not previously inquired with or received a quote from Lush Landscape Service. The referral must be established before the person contacts us for their consultation.',
+                            'answer' => 'To qualify as a referral, the person must be a new contact who has not previously inquired with or completed a consultation with Lush Landscape Service. The referral must be established before the person contacts us for their consultation.',
                         ],
                     ],
                 ],
@@ -1505,7 +1505,7 @@ class StaticPageContentSeeder extends Seeder
                     'html' => '<h2>3. How We Use Your Information</h2>'
                         .'<p>We use the personal information we collect for the following purposes:</p>'
                         .'<ul>'
-                        .'<li><strong>Providing services</strong>: to respond to your inquiries, schedule consultations, prepare quotes, manage projects, and deliver the landscaping services you have requested.</li>'
+                        .'<li><strong>Providing services</strong>: to respond to your inquiries, schedule consultations, prepare scope plans, manage projects, and deliver the landscaping services you have requested.</li>'
                         .'<li><strong>Communication</strong>: to send you project updates, respond to your questions, and provide customer support.</li>'
                         .'<li><strong>Business operations</strong>: to process payments, maintain project records, and manage our contractual relationships.</li>'
                         .'<li><strong>Marketing</strong>: with your consent, to send you information about our services, seasonal promotions, and maintenance tips. You can opt out of marketing communications at any time.</li>'
@@ -1648,10 +1648,10 @@ class StaticPageContentSeeder extends Seeder
                 'content' => [
                     'html' => '<h2>4. Service Agreements</h2>'
                         .'<p>All landscaping services are governed by a written service agreement (contract) that is separate from these website Terms. The service agreement specifies the scope of work, materials, timeline, payment terms, warranty coverage, and other project-specific details. In the event of any conflict between these Terms and a signed service agreement, the service agreement shall prevail.</p>'
-                        .'<h3>Consultations and Estimates</h3>'
-                        .'<p>Estimates provided by Lush Landscape Service are valid for 30 days from the date of issue unless otherwise stated. Estimates are based on the information available at the time of the site assessment and are subject to change if site conditions differ from what was observed. Any changes to the scope of work after contract signing will be documented in a written change order, which requires your approval before additional work proceeds.</p>'
+                        .'<h3>Consultations and Assessments</h3>'
+                        .'<p>Proposals provided by Lush Landscape Service are valid for 30 days from the date of issue unless otherwise stated. Proposals are based on the information available at the time of the site assessment and are subject to change if site conditions differ from what was observed. Any changes to the scope of work after contract signing will be documented in a written change order, which requires your approval before additional work proceeds.</p>'
                         .'<h3>Project Timeline</h3>'
-                        .'<p>Estimated project timelines are provided in good faith based on the anticipated scope of work. Timelines may be affected by weather conditions, permit processing delays, material availability, or unforeseen site conditions. We will communicate any anticipated delays promptly and provide updated timelines.</p>',
+                        .'<p>Projected timelines are provided in good faith based on the anticipated scope of work. Timelines may be affected by weather conditions, permit processing delays, material availability, or unforeseen site conditions. We will communicate any anticipated delays promptly and provide updated timelines.</p>',
                 ],
             ],
             [
@@ -1748,8 +1748,8 @@ class StaticPageContentSeeder extends Seeder
                             'answer' => 'Yes. Changes to the scope of work are handled through a formal change order process. We will provide a written description of the change, its impact on the timeline, and any cost adjustment. The change order must be approved and signed by both parties before the additional work begins.',
                         ],
                         [
-                            'question' => 'How long are your estimates valid?',
-                            'answer' => 'Unless otherwise stated, estimates are valid for 30 days from the date of issue. After 30 days, material prices and availability may have changed, and an updated estimate may be required. We will always confirm pricing before asking you to sign a contract.',
+                            'question' => 'How long are your proposals valid?',
+                            'answer' => 'Unless otherwise stated, proposals are valid for 30 days from the date of issue. After 30 days, material prices and availability may have changed, and an updated proposal may be required. We will always confirm pricing before asking you to sign a contract.',
                         ],
                     ],
                 ],

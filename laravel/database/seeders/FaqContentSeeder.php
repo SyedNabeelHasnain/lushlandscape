@@ -276,8 +276,8 @@ class FaqContentSeeder extends Seeder
             'Interlocking Driveways' => [
                 [
                     'question' => 'How much does an interlocking driveway cost in {city}?',
-                    'short_answer' => 'Interlocking driveway costs in {city} typically range from $22 to $38 per square foot installed, depending on paver selection, pattern complexity, and site conditions. Properties with {soil} may require additional base preparation, which affects the total project cost. We provide detailed, itemized estimates after an on-site assessment of your specific lot.',
-                    'answer' => 'Interlocking driveway costs in {city} typically range from $22 to $38 per square foot installed, depending on paver selection, pattern complexity, and site conditions. Properties with {soil} may require additional base preparation, which affects the total project cost. We provide detailed, itemized estimates after an on-site assessment of your specific lot. Most standard two-car driveways in {city} fall between $12,000 and $25,000 including excavation, base material, pavers, and polymeric sand.',
+                    'short_answer' => 'Interlocking driveway costs in {city} typically range from $22 to $38 per square foot installed, depending on paver selection, pattern complexity, and site conditions. Properties with {soil} may require additional base preparation, which affects the total project cost. We provide detailed, itemized scope plans after an on-site assessment of your specific lot.',
+                    'answer' => 'Interlocking driveway costs in {city} typically range from $22 to $38 per square foot installed, depending on paver selection, pattern complexity, and site conditions. Properties with {soil} may require additional base preparation, which affects the total project cost. We provide detailed, itemized scope plans after an on-site assessment of your specific lot. Most standard two-car driveways in {city} fall between $12,000 and $25,000 including excavation, base material, pavers, and polymeric sand.',
                 ],
                 [
                     'question' => 'Do I need a permit for an interlocking driveway in {city}?',
@@ -319,8 +319,8 @@ class FaqContentSeeder extends Seeder
                 ],
                 [
                     'question' => 'How long does a patio project take in {city}?',
-                    'short_answer' => 'A standard interlocking patio in {city} takes 4 to 7 working days. Multi-level patios with features like fire pits, seating walls, and lighting can take 2 to 3 weeks depending on scope. We provide a detailed timeline during your estimate that accounts for {city}-specific factors including {terrain} and soil conditions.',
-                    'answer' => 'A standard interlocking patio in {city} takes 4 to 7 working days. Multi-level patios with features like fire pits, seating walls, and lighting can take 2 to 3 weeks depending on scope. We provide a detailed timeline during your estimate that accounts for {city}-specific factors including {terrain} and soil conditions.',
+                    'short_answer' => 'A standard interlocking patio in {city} takes 4 to 7 working days. Multi-level patios with features like fire pits, seating walls, and lighting can take 2 to 3 weeks depending on scope. We provide a detailed timeline during your consultation that accounts for {city}-specific factors including {terrain} and soil conditions.',
+                    'answer' => 'A standard interlocking patio in {city} takes 4 to 7 working days. Multi-level patios with features like fire pits, seating walls, and lighting can take 2 to 3 weeks depending on scope. We provide a detailed timeline during your consultation that accounts for {city}-specific factors including {terrain} and soil conditions.',
                 ],
                 [
                     'question' => 'What patio materials work best in {city}?',
@@ -538,8 +538,8 @@ class FaqContentSeeder extends Seeder
                 ],
                 [
                     'question' => 'How much does a retaining wall cost in {city}?',
-                    'short_answer' => 'Retaining wall costs in {city} vary significantly by material and height. Armour stone walls range from $200 to $450 per linear foot. Precast concrete block walls range from $150 to $350 per linear foot. Walls over 1.0 metre that require engineering and geogrid reinforcement cost more due to the design and permitting requirements. We provide detailed estimates after assessing your {city} property.',
-                    'answer' => 'Retaining wall costs in {city} vary significantly by material and height. Armour stone walls range from $200 to $450 per linear foot. Precast concrete block walls range from $150 to $350 per linear foot. Walls over 1.0 metre that require engineering and geogrid reinforcement cost more due to the design and permitting requirements. We provide detailed estimates after assessing your {city} property.',
+                    'short_answer' => 'Retaining wall costs in {city} vary significantly by material and height. Armour stone walls range from $200 to $450 per linear foot. Precast concrete block walls range from $150 to $350 per linear foot. Walls over 1.0 metre that require engineering and geogrid reinforcement cost more due to the design and permitting requirements. We provide detailed scope plans after assessing your {city} property.',
+                    'answer' => 'Retaining wall costs in {city} vary significantly by material and height. Armour stone walls range from $200 to $450 per linear foot. Precast concrete block walls range from $150 to $350 per linear foot. Walls over 1.0 metre that require engineering and geogrid reinforcement cost more due to the design and permitting requirements. We provide detailed scope plans after assessing your {city} property.',
                 ],
                 [
                     'question' => 'What drainage do retaining walls need in {city}?',

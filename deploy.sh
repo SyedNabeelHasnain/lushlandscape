@@ -124,87 +124,15 @@ $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
-NODE_VERSION_TARGET="20.19.0"
-NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
 
 if ! command -v npm &> /dev/null; then
-    BIN_DIRS_RAW="$(ls -d /opt/alt/alt-nodejs*/root/usr/bin /opt/alt/alt-nodejs*/usr/bin 2>/dev/null || true)"
-    if [ -n "${BIN_DIRS_RAW:-}" ]; then
-        SORTED_BIN_DIRS="$(printf "%s\n" ${BIN_DIRS_RAW} | sort -Vr 2>/dev/null || printf "%s\n" ${BIN_DIRS_RAW} | sort -r)"
-        while IFS= read -r BIN_DIR; do
-            if [ -x "${BIN_DIR}/node" ] && [ -x "${BIN_DIR}/npm" ]; then
-                export PATH="${BIN_DIR}:$PATH"
-                log "Using NodeJS from ${BIN_DIR}"
-                break
-            fi
-        done <<< "$SORTED_BIN_DIRS"
-    fi
+    abort "npm is missing. Please ensure Node.js is installed and available in the system PATH."
 fi
 
-if ! command -v npm &> /dev/null; then
-    export NVM_DIR="$HOME/.nvm"
-    if [ -s "$NVM_DIR/nvm.sh" ]; then
-        \. "$NVM_DIR/nvm.sh"
-    fi
-
-    if ! command -v npm &> /dev/null; then
-        if command -v curl &> /dev/null; then
-            curl -fsSL "$NVM_INSTALL_URL" | bash
-        elif command -v wget &> /dev/null; then
-            wget -qO- "$NVM_INSTALL_URL" | bash
-        else
-            abort "npm is missing. Install NodeJS on this server (Hostinger NodeJS selector) or provide curl/wget so nvm can be installed."
-        fi
-
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    fi
-
-    if command -v nvm &> /dev/null; then
-        nvm install "${NODE_VERSION_TARGET}"
-        nvm use "${NODE_VERSION_TARGET}"
-        nvm alias default "${NODE_VERSION_TARGET}" >/dev/null 2>&1 || true
-    fi
-fi
-
-command -v npm &> /dev/null || abort "npm is still not available after attempting to install it."
-chmod +x "$(command -v node)" 2>/dev/null || true
-chmod +x "$(command -v npm)" 2>/dev/null || true
-npm --version >/dev/null 2>&1 || abort "npm is present but not executable. Fix permissions for $(command -v npm) and re-run deploy."
-
-NODE_VERSION_CURRENT="$(node -p 'process.versions.node' 2>/dev/null || echo '')"
-NODE_MAJOR="${NODE_VERSION_CURRENT%%.*}"
-NODE_MINOR_TMP="${NODE_VERSION_CURRENT#*.}"
-NODE_MINOR="${NODE_MINOR_TMP%%.*}"
-if [ -z "${NODE_VERSION_CURRENT:-}" ]; then
-    abort "Unable to determine Node.js version."
-fi
-if [ "${NODE_MAJOR:-0}" -lt 20 ] || { [ "${NODE_MAJOR:-0}" -eq 20 ] && [ "${NODE_MINOR:-0}" -lt 19 ]; }; then
-    log "Node.js ${NODE_VERSION_CURRENT} detected. Upgrading to ${NODE_VERSION_TARGET} for Vite compatibility..."
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    if ! command -v nvm &> /dev/null; then
-        if command -v curl &> /dev/null; then
-            curl -fsSL "$NVM_INSTALL_URL" | bash
-        elif command -v wget &> /dev/null; then
-            wget -qO- "$NVM_INSTALL_URL" | bash
-        else
-            abort "Node.js is too old for Vite, and neither curl nor wget is available to install nvm."
-        fi
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    fi
-    command -v nvm &> /dev/null || abort "nvm is not available to upgrade Node.js."
-    NVM_INSTALL_OUT="$(nvm install "${NODE_VERSION_TARGET}" 2>&1)" || abort "nvm install ${NODE_VERSION_TARGET} failed: ${NVM_INSTALL_OUT}"
-    NVM_USE_OUT="$(nvm use "${NODE_VERSION_TARGET}" 2>&1)" || abort "nvm use ${NODE_VERSION_TARGET} failed: ${NVM_USE_OUT}"
-    nvm alias default "${NODE_VERSION_TARGET}" >/dev/null 2>&1 || true
-    export PATH="${NVM_DIR}/versions/node/v${NODE_VERSION_TARGET}/bin:$PATH"
-    NODE_UPGRADED="$(node -p 'process.versions.node' 2>/dev/null || echo '')"
-    echo "$NODE_UPGRADED" | grep -q '^20\.19\.' || abort "Node.js upgrade failed. Current: ${NODE_UPGRADED}. nvm install output: ${NVM_INSTALL_OUT}. nvm use output: ${NVM_USE_OUT}"
-fi
+NODE_VERSION_CURRENT="$(node -v 2>/dev/null || echo '')"
+log "Using Node.js version: ${NODE_VERSION_CURRENT}"
 
 log "Installing NPM dependencies..."
-rm -rf node_modules
 
 if [ -f package-lock.json ]; then
     npm ci --silent --no-audit --no-fund

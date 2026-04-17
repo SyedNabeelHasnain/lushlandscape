@@ -10,7 +10,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <x-admin.form-input name="name" label="Form Name" :value="$form->name ?? ''" required />
             <x-admin.form-input name="slug" label="Slug" :value="$form->slug ?? ''" required />
-            <x-admin.form-select name="form_type" label="Form Type" :options="['contact'=>'Contact','quote'=>'Quote/Estimate','subscriber'=>'Subscriber','booking'=>'Booking']" :value="$form->form_type ?? ''" required />
+            <x-admin.form-select name="form_type" label="Form Type" :options="['contact'=>'Contact','consultation'=>'Consultation','subscriber'=>'Subscriber','booking'=>'Booking']" :value="$form->form_type ?? ''" required />
             <x-admin.form-select name="status" label="Status" :options="['active'=>'Active','inactive'=>'Inactive']" :value="$form->status ?? 'active'" required />
         </div>
         <div class="mt-5"><x-admin.form-textarea name="description" label="Description" :value="$form->description ?? ''" :rows="2" /></div>

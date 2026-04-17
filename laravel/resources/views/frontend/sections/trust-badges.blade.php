@@ -4,7 +4,7 @@
         ['icon' => 'shield-check',    'label' => '10-Year Warranty',         'sub' => 'All structural work'],
         ['icon' => 'award',           'label' => 'Licensed & Insured',        'sub' => 'Fully certified crew'],
         ['icon' => 'clock',           'label' => '24–48 Hr Response',         'sub' => 'Fast, reliable service'],
-        ['icon' => 'thumbs-up',       'label' => 'No Hidden Costs',           'sub' => 'Fixed-price quotes'],
+        ['icon' => 'thumbs-up',       'label' => 'No Hidden Costs',           'sub' => 'Clear scope plans'],
         ['icon' => 'leaf',            'label' => 'Eco-Friendly Practices',    'sub' => 'Sustainable materials'],
         ['icon' => 'star',            'label' => '500+ Projects Delivered',   'sub' => 'Across Ontario'],
     ];

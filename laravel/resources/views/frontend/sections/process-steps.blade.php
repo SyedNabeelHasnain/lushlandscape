@@ -3,7 +3,7 @@
     $processHeading = !empty($section['settings']['heading']) ? $section['settings']['heading'] : 'Our Landscaping Process';
     $steps = $section['settings']['steps'] ?? [
         ['title' => 'Free Consultation',  'desc' => 'We meet on-site, assess your space, and discuss your vision and goals.'],
-        ['title' => 'Detailed Estimate',  'desc' => 'You receive a written scope of work and fixed-price quote within 48 hours.'],
+        ['title' => 'Detailed Proposal',  'desc' => 'You receive a written scope of work and comprehensive scope plan within 48 hours.'],
         ['title' => 'Expert Installation','desc' => 'Our certified crew handles every detail with precision and care.'],
         ['title' => '10-Year Warranty',   'desc' => 'All structural work is backed by our industry-leading workmanship warranty.'],
     ];

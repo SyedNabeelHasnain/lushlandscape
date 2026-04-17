@@ -33,6 +33,9 @@
 <form id="{{ $formId }}" @submit.prevent="submitForm()" class="space-y-6">
     <label for="{{ $formId }}-website_url_hp" class="sr-only">Leave this field empty</label>
     <input type="text" id="{{ $formId }}-website_url_hp" name="website_url_hp" value="" class="hidden" tabindex="-1" autocomplete="off">
+    @if(isset($hiddenHtml))
+        {!! $hiddenHtml !!}
+    @endif
 
     <div class="{{ $gridClass }}">
         @foreach($form->fields as $field)

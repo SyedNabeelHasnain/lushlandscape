@@ -216,7 +216,7 @@ class HomePageBlueprintService
                 'editorial_copy' => 'Schedule an on-site consultation to discuss your vision, technical requirements, and how we can elevate your property. We respect your time and provide clear, actionable next steps.',
                 'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                 'media_id' => $heroMediaId,
-                'form_slug' => 'contact-us',
+                'form_slug' => 'consultation',
                 'tone' => 'dark',
             ],
             $this->styles([

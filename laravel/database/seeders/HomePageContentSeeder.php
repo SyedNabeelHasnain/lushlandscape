@@ -49,7 +49,7 @@ class HomePageContentSeeder extends Seeder
                         [
                             'icon' => 'calendar-check',
                             'title' => 'On-Time Project Delivery',
-                            'description' => 'We provide a clear project timeline before work begins and stick to it. Most residential projects are completed within the quoted schedule, weather permitting.',
+                            'description' => 'We provide a clear project timeline before work begins and stick to it. Most residential projects are completed within the projected schedule, weather permitting.',
                         ],
                         [
                             'icon' => 'ruler',
