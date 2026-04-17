@@ -140,6 +140,31 @@ if ! command -v npm &> /dev/null; then
 fi
 
 if ! command -v npm &> /dev/null; then
+    export NVM_DIR="$HOME/.nvm"
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
+        \. "$NVM_DIR/nvm.sh"
+    fi
+
+    if ! command -v npm &> /dev/null; then
+        NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
+        if command -v curl &> /dev/null; then
+            curl -fsSL "$NVM_INSTALL_URL" | bash
+        elif command -v wget &> /dev/null; then
+            wget -qO- "$NVM_INSTALL_URL" | bash
+        fi
+
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    fi
+
+    if command -v nvm &> /dev/null; then
+        nvm install 20.19.0
+        nvm use 20.19.0
+        nvm alias default 20.19.0 >/dev/null 2>&1 || true
+    fi
+fi
+
+if ! command -v npm &> /dev/null; then
     abort "npm is missing. Please ensure Node.js is installed and available in the system PATH or via nvm."
 fi
 
@@ -147,12 +172,30 @@ fi
 chmod +x "$(command -v node)" 2>/dev/null || true
 chmod +x "$(command -v npm)" 2>/dev/null || true
 
-NODE_VERSION_CURRENT="$(node -v 2>/dev/null || echo '')"
+# --- NPM Executable Check ---
+npm --version >/dev/null 2>&1 || abort "npm is present but not executable or broken. Try running 'npm install -g npm' or fix permissions."
+
+NODE_VERSION_CURRENT="$(node -p 'process.versions.node' 2>/dev/null || echo '')"
+NODE_MAJOR="${NODE_VERSION_CURRENT%%.*}"
+if [ -z "${NODE_VERSION_CURRENT:-}" ]; then
+    abort "Unable to determine Node.js version."
+fi
+if [ "${NODE_MAJOR:-0}" -lt 20 ]; then
+    log "Node.js ${NODE_VERSION_CURRENT} detected. Upgrading to 20.19.0 for Vite compatibility..."
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    if command -v nvm &> /dev/null; then
+        nvm install 20.19.0
+        nvm use 20.19.0
+        nvm alias default 20.19.0 >/dev/null 2>&1 || true
+        export PATH="${NVM_DIR}/versions/node/v20.19.0/bin:$PATH"
+    fi
+fi
 log "Using Node.js version: ${NODE_VERSION_CURRENT}"
 
+# --- NPM Execution ---
 log "Installing NPM dependencies..."
-
-npm install --silent --no-audit --no-fund
+npm install --silent --no-audit --no-fund || abort "NPM install failed with exit code $?"
 ok "NPM dependencies synced"
 
 log "Removing previous frontend build artifacts..."
@@ -161,7 +204,7 @@ rm -f "$PUBLIC_DIR/hot"
 ok "Previous frontend build artifacts removed"
 
 log "Building frontend assets (Vite)..."
-npm run build
+npm run build || abort "Vite build failed with exit code $?"
 
 [ -f "$PUBLIC_DIR/build/manifest.json" ] || abort "Vite manifest missing at $PUBLIC_DIR/build/manifest.json after build."
 ok "Vite build completed → public_html/build/"
