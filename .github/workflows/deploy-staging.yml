@@ -55,4 +55,4 @@ jobs:
           DIR: ${{ secrets.STAGING_DEPLOY_DIR }}
         run: |
           if [ -z "$PORT" ]; then PORT=65002; fi
-          ssh -p "$PORT" -o BatchMode=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$USER@$HOST" "cd \"$DIR\" && git pull origin main && DEPLOY_TARGET=staging bash deploy.sh"
+          ssh -p "$PORT" -o BatchMode=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$USER@$HOST" "cd \"$DIR\" && git fetch --all && git reset --hard origin/main && DEPLOY_TARGET=staging bash deploy.sh"

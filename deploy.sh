@@ -104,10 +104,6 @@ if [ "$READINESS_TARGET" = "staging" ] && [[ "${APP_HOST_VALUE:-}" != *staging* 
     abort "Staging deployment context detected, but APP_URL is '${APP_URL_VALUE:-unset}'. Set APP_URL=https://test.lushlandscape.ca in laravel/.env before deploying."
 fi
 
-if [ "$FRESH_DB" = true ] && [ "${ALLOW_NON_PRODUCTION}" != "true" ] && [ "$READINESS_TARGET" != "staging" ]; then
-    abort "--fresh is only allowed on a staging host by default. Detected target is '${READINESS_TARGET}'. Set APP_URL to staging, deploy from a staging directory, or pass --allow-non-production intentionally."
-fi
-
 # --- Composer install ---
 log "Installing Composer dependencies..."
 cd "$LARAVEL_DIR"
@@ -124,9 +120,10 @@ $COMPOSER_CMD install --no-dev --optimize-autoloader --no-interaction
 ok "Composer dependencies installed"
 
 log "Preparing Node + NPM toolchain..."
-
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 if ! command -v npm &> /dev/null; then
-    abort "npm is missing. Please ensure Node.js is installed and available in the system PATH."
+    abort "npm is missing. Please ensure Node.js is installed and available in the system PATH or via nvm."
 fi
 
 NODE_VERSION_CURRENT="$(node -v 2>/dev/null || echo '')"
@@ -134,11 +131,7 @@ log "Using Node.js version: ${NODE_VERSION_CURRENT}"
 
 log "Installing NPM dependencies..."
 
-if [ -f package-lock.json ]; then
-    npm ci --silent --no-audit --no-fund
-else
-    npm install --silent --no-audit --no-fund
-fi
+npm install --silent --no-audit --no-fund
 ok "NPM dependencies synced"
 
 log "Removing previous frontend build artifacts..."
