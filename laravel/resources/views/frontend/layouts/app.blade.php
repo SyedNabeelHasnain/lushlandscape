@@ -212,7 +212,7 @@
         $phoneClean = preg_replace('/[^+\d]/', '', $phone);
 
         $navCtaText = $getSetting('nav_cta_text', 'Book a Consultation');
-        $navCtaUrl = $getSetting('nav_cta_url', '/contact');
+        $navCtaUrl = $getSetting('nav_cta_url', url('/contact'));
         $navShowPhone = $getSetting('nav_show_phone', '1') === '1';
         $navShowRating = $getSetting('nav_show_google_rating', '1') === '1';
 
@@ -341,7 +341,7 @@
                                 class="flex-1 px-6 py-4 bg-white/6 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:border-white/25 transition">
                             <button type="submit" :disabled="formSubmitting"
                                 class="shrink-0 bg-white hover:bg-white/90 disabled:opacity-60 text-forest font-semibold px-8 py-4 text-[11px] tracking-[0.1em] uppercase transition flex items-center gap-2">
-                                <i data-lucide="loader-2" x-show="formSubmitting" class="w-4 h-4 animate-spin"></i>
+                                <i data-lucide="loader-2" x-show="formSubmitting" x-cloak class="w-4 h-4 animate-spin"></i>
                                 <span x-text="formSubmitting ? '...' : 'Subscribe'">Subscribe</span>
                             </button>
                         </form>
@@ -378,7 +378,7 @@
 
                     {{-- Brand column --}}
                     <div class="lg:col-span-4">
-                        <a href="/" class="inline-block mb-6">
+                        <a href="{{ url('/') }}" class="inline-block mb-6">
                             @if($footerLogo)
                                 <img src="{{ $footerLogo->url }}" alt="{{ $siteName }}" class="h-12 w-auto object-contain"
                                     height="48" loading="lazy" decoding="async">
@@ -433,10 +433,10 @@
                                 Services</h3>
                             <ul class="space-y-3 text-sm">
                                 @foreach($footerCats as $fc)
-                                    <li><a href="/services/{{ $fc->slug_final }}"
+                                    <li><a href="{{ url('/services/' . $fc->slug_final) }}"
                                             class="hover:text-white transition">{{ $fc->name }}</a></li>
                                 @endforeach
-                                <li class="pt-1"><a href="/services"
+                                <li class="pt-1"><a href="{{ url('/services') }}"
                                         class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">View
                                         All &rarr;</a></li>
                             </ul>
@@ -448,10 +448,10 @@
                                 Locations</h3>
                             <ul class="space-y-3 text-sm">
                                 @foreach($footerCities as $fc)
-                                    <li><a href="/landscaping-{{ $fc->slug_final }}"
+                                    <li><a href="{{ url('/landscaping-' . $fc->slug_final) }}"
                                             class="hover:text-white transition">{{ $fc->name }}</a></li>
                                 @endforeach
-                                <li class="pt-1"><a href="/locations"
+                                <li class="pt-1"><a href="{{ url('/locations') }}"
                                         class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">All
                                         Areas &rarr;</a></li>
                             </ul>
@@ -462,11 +462,11 @@
                                 class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-6 pb-3 border-b border-white/15">
                                 Company</h3>
                             <ul class="space-y-3 text-sm">
-                                <li><a href="/about" class="hover:text-white transition">About Us</a></li>
-                                <li><a href="/portfolio" class="hover:text-white transition">Portfolio</a></li>
-                                <li><a href="/blog" class="hover:text-white transition">Blog</a></li>
-                                <li><a href="/faqs" class="hover:text-white transition">FAQs</a></li>
-                                <li><a href="/contact" class="hover:text-white transition">Contact Us</a></li>
+                                <li><a href="{{ url('/about') }}" class="hover:text-white transition">About Us</a></li>
+                                <li><a href="{{ url('/portfolio') }}" class="hover:text-white transition">Portfolio</a></li>
+                                <li><a href="{{ url('/blog') }}" class="hover:text-white transition">Blog</a></li>
+                                <li><a href="{{ url('/faqs') }}" class="hover:text-white transition">FAQs</a></li>
+                                <li><a href="{{ url('/contact') }}" class="hover:text-white transition">Contact Us</a></li>
                                 <li><a href="{{ $navCtaUrl }}" class="hover:text-white transition">{{ $navCtaText }}</a></li>
                             </ul>
                             <div class="mt-8 p-5 bg-white/8 border border-white/15">
@@ -490,18 +490,18 @@
                                 <ul class="space-y-3 text-sm">
                                     @if(($col['type'] ?? 'custom') === 'auto_services')
                                         @foreach($globalServiceCategories as $fc)
-                                            <li><a href="/services/{{ $fc->slug_final }}"
+                                            <li><a href="{{ url('/services/' . $fc->slug_final) }}"
                                                     class="hover:text-white transition">{{ $fc->name }}</a></li>
                                         @endforeach
-                                        <li class="pt-1"><a href="/services"
+                                        <li class="pt-1"><a href="{{ url('/services') }}"
                                                 class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">View
                                                 All &rarr;</a></li>
                                     @elseif(($col['type'] ?? 'custom') === 'auto_cities')
                                         @foreach($globalCities as $fc)
-                                            <li><a href="/landscaping-{{ $fc->slug_final }}"
+                                            <li><a href="{{ url('/landscaping-' . $fc->slug_final) }}"
                                                     class="hover:text-white transition">{{ $fc->name }}</a></li>
                                         @endforeach
-                                        <li class="pt-1"><a href="/locations"
+                                        <li class="pt-1"><a href="{{ url('/locations') }}"
                                                 class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">All
                                                 Areas &rarr;</a></li>
                                     @else
@@ -544,9 +544,9 @@
                         </div>
                     @else
                         <div class="flex gap-6 text-[11px] text-white/60 tracking-wide">
-                            <a href="/privacy-policy" class="hover:text-white/70 transition">Privacy Policy</a>
-                            <a href="/terms" class="hover:text-white/70 transition">Terms &amp; Conditions</a>
-                            <a href="/sitemap.xml" class="hover:text-white/70 transition">Sitemap</a>
+                            <a href="{{ url('/privacy-policy') }}" class="hover:text-white/70 transition">Privacy Policy</a>
+                            <a href="{{ url('/terms') }}" class="hover:text-white/70 transition">Terms &amp; Conditions</a>
+                            <a href="{{ url('/sitemap.xml') }}" class="hover:text-white/70 transition">Sitemap</a>
                         </div>
                     @endif
                 </div>
@@ -564,7 +564,7 @@
                     <i data-lucide="phone" class="w-4 h-4"></i>Call Now
                 </a>
             @else
-                <a href="/contact"
+                <a href="{{ url('/contact') }}"
                     class="flex items-center justify-center gap-2 bg-white/10 border border-white/15 text-white font-medium py-3.5 text-[11px] tracking-[0.1em] uppercase transition">
                     <i data-lucide="mail" class="w-4 h-4"></i>Contact
                 </a>

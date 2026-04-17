@@ -23,7 +23,7 @@
                 Search
             @endif
         </h1>
-        <form action="/search" method="GET" role="search" class="flex gap-2">
+        <form action="{{ url('/search') }}" method="GET" role="search" class="flex gap-2">
             <label for="search-page-query" class="sr-only">Search query</label>
             <input type="search" id="search-page-query" name="q" value="{{ $q }}" placeholder="Search services, cities, blog posts…"
                    class="flex-1 px-5 py-3 border border-white/20 text-text focus:outline-none focus:ring-2 focus:ring-white/50 text-base shadow-luxury"

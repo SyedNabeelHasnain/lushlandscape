@@ -62,7 +62,7 @@
                 </div>
                 
                 @if($form)
-                    <div x-data="lushForm('{{ $formId }}', '{{ $form->slug }}')" class="relative">
+                    <div x-data="contactForm('{{ $formId }}', '{{ $form->slug }}')" class="relative">
                             @include('frontend.blocks.partials._form-fields', [
                                 'form' => $form,
                                 'formId' => $formId,

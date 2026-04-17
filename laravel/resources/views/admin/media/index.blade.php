@@ -95,7 +95,7 @@
     <div x-show="completed" x-cloak class="p-4 bg-green-50 border border-green-200 rounded-xl">
         <p class="text-sm text-green-700 font-medium">
             Operation complete. <span x-text="successCount"></span> succeeded, <span x-text="skippedCount"></span> skipped, <span x-text="failedCount"></span> failed.
-            <a href="" class="underline ml-2">Refresh page</a>
+            <button type="button" onclick="window.location.reload()" class="underline ml-2">Refresh page</button>
         </p>
     </div>
 </div>
