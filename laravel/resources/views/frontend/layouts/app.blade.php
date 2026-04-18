@@ -308,7 +308,7 @@
         </header>
     @else
         <x-frontend.mega-nav :logoDesktop="$logoDesktop" :logoMobile="$logoMobile" :siteName="$siteName"
-            :navCtaText="$navCtaText" :navCtaUrl="$navCtaUrl" :phone="$phone" :phoneClean="$phoneClean" />
+            :navCtaText="$navCtaText" :navCtaUrl="$navCtaUrl" :phone="$phone" :phoneClean="$phoneClean" :services="$globalServiceCategories" />
     @endif
 
     <main id="main-content" tabindex="-1">

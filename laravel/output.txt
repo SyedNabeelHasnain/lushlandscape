@@ -1,3 +1,9 @@
-Line 18: *   - data_source: dynamic data configuration (for data blocks)
-Line 1110: 'data_source' => 'form_slug',
-Line 1136: 'data_source' => 'form_slug',
+FaqPageController.php: faq_index
+HomeController.php: home
+PortfolioController.php: portfolio_index, portfolio_category, portfolio_project
+StaticPageController.php: static_page
+ContactController.php: contact, consultation
+BlogController.php: blog_index, blog_category, blog_post
+LocationPageController.php: locations_hub, city
+SlugResolverController.php: static_page, service_city_page
+ServicePageController.php: services_hub, service_category, service
