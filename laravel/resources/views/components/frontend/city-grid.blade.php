@@ -1,6 +1,6 @@
 @props([
     'cities'   => collect(),
-    'heading'  => 'Serving Communities Across Southern Ontario',
+    'heading'  => 'Serving Communities Across Our Region',
     'subtitle' => 'From the shores of Burlington to the growing neighbourhoods of Brampton, our crews deliver the same quality craftsmanship to every community we serve.',
 ])
 
@@ -34,10 +34,10 @@
             'lng'      => (float) $c->longitude,
             'type'     => 'city',
             'slug'     => $c->slug_final,
-            'heading'  => 'Landscaping Services in ' . $c->name,
+            'heading'  => 'Professional Services in ' . $c->name,
             'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->name . '. Serving ' . $hoodNames . '.',
             'cta_text' => $popupCta,
-            'cta_url'  => '/landscaping-' . $c->slug_final,
+            'cta_url'  => '/professional-' . $c->slug_final,
             'services' => '',
             'hoods'    => $c->relationLoaded('neighborhoods')
                 ? $c->neighborhoods->map(fn($n) => ['name' => $n->name, 'lat' => (float) $n->latitude, 'lng' => (float) $n->longitude, 'slug' => $n->slug])->toArray()
@@ -53,11 +53,11 @@
     $globeCities = $cities->map(fn($c) => [
         'name'  => $c->name,
         'slug'  => $c->slug_final,
-        'url'   => '/landscaping-' . $c->slug_final,
+        'url'   => '/professional-' . $c->slug_final,
         'lat'   => (float) $c->latitude,
         'lng'   => (float) $c->longitude,
         'hoods' => $c->relationLoaded('neighborhoods') ? $c->neighborhoods->take(4)->pluck('name')->implode(', ') : '',
-        'desc'  => $c->city_summary ?? ('Professional landscaping services in ' . $c->name),
+        'desc'  => $c->city_summary ?? ('Professional professional services in ' . $c->name),
     ])->values()->toArray();
 @endphp
 
@@ -93,14 +93,14 @@
 
             {{-- LEFT: 3D Rotating Globe --}}
             <div class="reveal-left relative" x-data="lushGlobe()" x-init="init()" x-intersect.once="start()">
-                <canvas x-ref="globeCanvas" class="w-full max-w-lg mx-auto" style="aspect-ratio: 1/1;" aria-label="Interactive 3D globe showing service areas across Southern Ontario"></canvas>
+                <canvas x-ref="globeCanvas" class="w-full max-w-lg mx-auto" style="aspect-ratio: 1/1;" aria-label="Interactive 3D globe showing service areas across Our Region"></canvas>
 
                 {{-- City detail card (appears on hover/click) --}}
                 <div x-show="showCard && cardCity" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak
                      class="absolute top-4 right-4 lg:-right-4 w-72 bg-white border border-stone shadow-luxury p-6 z-10">
                     <p class="text-eyebrow text-forest mb-2">Service Area</p>
                     <h3 class="text-2xl font-heading font-bold text-ink" x-text="cardCity?.name"></h3>
-                    <p class="text-eyebrow text-accent mt-1">Southern Ontario</p>
+                    <p class="text-eyebrow text-accent mt-1">Our Region</p>
                     <p class="text-sm text-text-secondary mt-3 leading-relaxed line-clamp-3" x-text="cardCity?.desc"></p>
                     <a :href="cardCity?.url" class="mt-4 inline-flex items-center gap-2 text-forest text-[11px] font-semibold tracking-[0.15em] uppercase link-underline">
                         View Services <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -112,7 +112,7 @@
             <div class="reveal-right">
                 <div class="space-y-1">
                     @foreach($cities as $city)
-                    <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}"
+                    <a href="{{ url('/professional-' .  $city->slug_final  . '') }}"
                        class="group flex items-center justify-between gap-4 px-5 py-4 bg-white border border-transparent hover:border-forest/15 hover:shadow-luxury transition-all duration-500"
                        x-on:mouseenter="setActive('{{ $city->slug_final }}')"
                        x-on:mouseleave="clearActive()"
@@ -184,7 +184,7 @@
         {{-- City link grid --}}
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-px bg-stone reveal-stagger">
             @foreach($cities as $city)
-            <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}"
+            <a href="{{ url('/professional-' .  $city->slug_final  . '') }}"
                class="group bg-white p-8 flex flex-col items-center text-center hover:bg-forest transition-all duration-500">
                 <i data-lucide="map-pin" class="w-5 h-5 text-forest group-hover:text-white transition-colors duration-500 mb-4"></i>
                 <span class="text-sm font-semibold text-ink group-hover:text-white transition-colors duration-300">{{ $city->name }}</span>
@@ -199,7 +199,7 @@
         <noscript>
             <div class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 @foreach($cities as $city)
-                <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}" class="flex items-center gap-2 bg-white border border-stone px-4 py-3 hover:border-forest transition">
+                <a href="{{ url('/professional-' .  $city->slug_final  . '') }}" class="flex items-center gap-2 bg-white border border-stone px-4 py-3 hover:border-forest transition">
                     <svg class="w-4 h-4 text-forest shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <span class="text-sm font-medium text-text">{{ $city->name }}</span>
                 </a>
@@ -212,7 +212,7 @@
         <script type="application/ld+json">{!! json_encode([
             '@context' => 'https://schema.org',
             '@type' => 'LocalBusiness',
-            'name' => 'Lush Landscape Service - ' . $m['name'],
+            'name' => 'Super WMS Service - ' . $m['name'],
             'description' => $m['desc'],
             'url' => url($m['cta_url']),
             'geo' => ['@type' => 'GeoCoordinates', 'latitude' => $m['lat'], 'longitude' => $m['lng']],

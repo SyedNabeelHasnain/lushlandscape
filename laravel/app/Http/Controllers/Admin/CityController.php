@@ -56,7 +56,7 @@ class CityController extends Controller
             'sort_order' => 'nullable|integer',
         ]);
 
-        $validated['province_name'] = $validated['province_name'] ?? 'Ontario';
+        $validated['province_name'] = $validated['province_name'] ?? 'Our Region';
 
         // Parse city_body JSON fields from form
         $validated['city_body'] = $this->parseCityBody($request);

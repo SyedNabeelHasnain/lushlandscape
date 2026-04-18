@@ -1,7 +1,7 @@
 {{-- Block: service_area_enclave --}}
 @php
     $eyebrow = $content['eyebrow'] ?? 'Areas We Serve';
-    $heading = $content['heading'] ?? 'Proudly Serving the GTA';
+    $heading = $content['heading'] ?? 'Proudly Serving the Region';
     $supportCopy = $content['support_copy'] ?? '';
     $presentationMode = $content['presentation_mode'] ?? 'text-led';
     

@@ -7,8 +7,8 @@ $cityPages = $context['cityPages'] ?? collect();
 @endphp
 {{-- Section: hero (service_city_page context) --}}
 @php
-    $pageHeading = $page ? $page->h1 : 'Local Landscaping Services';
-    $pageIntro = $page ? \Illuminate\Support\Str::limit(strip_tags($page->local_intro ?? ''), 200) : 'Premium landscaping services in your area.';
+    $pageHeading = $page ? $page->h1 : 'Local Professional Services';
+    $pageIntro = $page ? \Illuminate\Support\Str::limit(strip_tags($page->local_intro ?? ''), 200) : 'Premium professional services in your area.';
     $pageCtaText = $page ? ($page->cta_json['text'] ?? 'Book a Consultation') : 'Book a Consultation';
     
     $heroHeading  = !empty($section['settings']['heading'])  ? $section['settings']['heading']  : $pageHeading;
@@ -16,7 +16,7 @@ $cityPages = $context['cityPages'] ?? collect();
     $heroCtaText  = !empty($section['settings']['cta_text']) ? $section['settings']['cta_text'] : $pageCtaText;
     $heroCtaUrl   = !empty($section['settings']['cta_url'])  ? $section['settings']['cta_url']  : '/contact';
     
-    $eyebrowText = !empty($section['settings']['eyebrow']) ? $section['settings']['eyebrow'] : ($page ? "{$page->service->name} in {$page->city->name}, Ontario" : 'Ontario Services');
+    $eyebrowText = !empty($section['settings']['eyebrow']) ? $section['settings']['eyebrow'] : ($page ? "{$page->service->name} in {$page->city->name}, Our Region" : 'Our Region Services');
 
     $configuredImageIds = $section['settings']['extra_image_ids'] ?? [];
     if (!is_array($configuredImageIds)) {

@@ -2,7 +2,7 @@
     use App\Models\Setting;
     use App\Models\MediaAsset;
 
-    $siteName   = $siteName ?? Setting::get('site_name', 'Lush Landscape Service');
+    $siteName   = $siteName ?? Setting::get('site_name', 'Super WMS');
     $tagline    = $tagline ?? Setting::get('site_tagline', '');
     $phone      = $phone ?? Setting::get('phone', '');
     $email      = $contactEmail ?? Setting::get('email', '');
@@ -159,7 +159,7 @@
                                 <tr>
                                     <td align="center" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#b5b0ab;line-height:1.5;">
                                         &copy; {{ $year }} {{ $siteName }}. All rights reserved.<br />
-                                        Licensed &amp; Insured. Serving Ontario, Canada.
+                                        Licensed &amp; Insured. Serving Our Region, Canada.
                                     </td>
                                 </tr>
                                 <tr>

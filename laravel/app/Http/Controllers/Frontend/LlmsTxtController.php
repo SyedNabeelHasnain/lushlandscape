@@ -16,14 +16,14 @@ class LlmsTxtController extends Controller
 {
     public function show()
     {
-        $siteName = Setting::get('site_name', 'Lush Landscape Service');
+        $siteName = Setting::get('site_name', 'Super WMS');
         $phone = Setting::get('phone', '');
-        $email = Setting::get('email', 'info@lushlandscape.ca');
+        $email = Setting::get('email', 'hello@example.com');
 
         $lines = [];
         $lines[] = "# {$siteName}";
         $lines[] = '';
-        $lines[] = "> {$siteName} is a landscaping construction contractor serving Ontario, Canada.";
+        $lines[] = "> {$siteName} is a professional construction contractor serving Our Region, Canada.";
         $lines[] = '> We specialize in interlocking, concrete, natural stone, and softscaping services.';
         $lines[] = '> 10-year workmanship warranty on every project.';
         $lines[] = '';
@@ -51,7 +51,7 @@ class LlmsTxtController extends Controller
         $lines[] = '## Service Areas';
         $cities = City::where('status', 'published')->orderBy('sort_order')->get();
         foreach ($cities as $city) {
-            $lines[] = "- [{$city->name}, Ontario](".url('/landscaping-'.$city->slug_final).')';
+            $lines[] = "- [{$city->name}, Our Region](".url('/professional-'.$city->slug_final).')';
         }
         $lines[] = '';
 
@@ -66,16 +66,16 @@ class LlmsTxtController extends Controller
 
     public function full()
     {
-        $siteName = Setting::get('site_name', 'Lush Landscape Service');
+        $siteName = Setting::get('site_name', 'Super WMS');
         $phone = Setting::get('phone', '');
-        $email = Setting::get('email', 'info@lushlandscape.ca');
+        $email = Setting::get('email', 'hello@example.com');
         $address = Setting::get('address', '');
         $tagline = Setting::get('tagline', '');
 
         $lines = [];
         $lines[] = "# {$siteName}";
         $lines[] = '';
-        $lines[] = "> {$siteName} is a landscaping construction contractor serving Ontario, Canada.";
+        $lines[] = "> {$siteName} is a professional construction contractor serving Our Region, Canada.";
         $lines[] = '> We specialize in interlocking, concrete, natural stone, and softscaping services.';
         $lines[] = '> 10-year workmanship warranty on every project.';
         if ($tagline) {
@@ -122,7 +122,7 @@ class LlmsTxtController extends Controller
         $lines[] = '## Service Areas';
         $cities = City::where('status', 'published')->orderBy('sort_order')->get();
         foreach ($cities as $city) {
-            $lines[] = "- [{$city->name}, {$city->region_name}](".url('/landscaping-'.$city->slug_final).')';
+            $lines[] = "- [{$city->name}, {$city->region_name}](".url('/professional-'.$city->slug_final).')';
         }
         $lines[] = '';
 

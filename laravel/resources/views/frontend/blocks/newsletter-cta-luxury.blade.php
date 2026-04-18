@@ -4,7 +4,7 @@
             <div>
                 <p class="text-[11px] font-semibold uppercase tracking-[0.25em] text-white/60 mb-4">{{ $content['eyebrow'] ?? 'Stay Updated' }}</p>
                 <h3 class="text-white font-heading text-3xl lg:text-4xl font-bold leading-tight">{{ $content['heading'] ?? 'Landscape Insights & Project Planning' }}</h3>
-                <p class="text-sm text-white/60 mt-4 leading-relaxed max-w-md">{{ $content['subtext'] ?? 'Join 2,000+ Ontario homeowners getting our free monthly newsletter.' }}</p>
+                <p class="text-sm text-white/60 mt-4 leading-relaxed max-w-md">{{ $content['subtext'] ?? 'Join 2,000+ Our Region homeowners getting our free monthly newsletter.' }}</p>
             </div>
             <div x-data="contactForm('newsletter-form', 'subscribe')" x-cloak>
                 <form id="newsletter-form" x-on:submit.prevent="submitForm()" class="flex flex-col sm:flex-row gap-0">

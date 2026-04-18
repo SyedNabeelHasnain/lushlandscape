@@ -18,7 +18,7 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@type' => 'Organization',
             '@id' => config('app.url').'/#organization',
-            'name' => Setting::get('site_name', 'Lush Landscape Service'),
+            'name' => Setting::get('site_name', 'Super WMS'),
             'url' => config('app.url'),
             'logo' => [
                 '@type' => 'ImageObject',
@@ -30,7 +30,7 @@ class SchemaService
                 '@type' => 'ContactPoint',
                 'telephone' => Setting::get('phone', ''),
                 'contactType' => 'customer service',
-                'areaServed' => 'CA-ON',
+                'areaServed' => 'US-NY',
                 'availableLanguage' => 'English',
             ],
         ];
@@ -60,17 +60,17 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@type' => ['HomeAndConstructionBusiness', 'LocalBusiness'],
             '@id' => config('app.url').'/#localbusiness',
-            'name' => Setting::get('site_name', 'Lush Landscape Service'),
-            'description' => Setting::get('site_tagline', 'Landscaping Construction Contractors in Ontario'),
+            'name' => Setting::get('site_name', 'Super WMS'),
+            'description' => Setting::get('site_tagline', 'Landscaping Construction Contractors in Our Region'),
             'url' => config('app.url'),
             'telephone' => $phone,
-            'email' => Setting::get('email', 'info@lushlandscape.ca'),
+            'email' => Setting::get('email', 'hello@example.com'),
             'priceRange' => '$$',
             'address' => [
                 '@type' => 'PostalAddress',
                 'streetAddress' => $address,
                 'addressLocality' => Setting::get('primary_city', 'Hamilton'),
-                'addressRegion' => 'Ontario',
+                'addressRegion' => 'Our Region',
                 'postalCode' => Setting::get('postal_code', ''),
                 'addressCountry' => 'CA',
             ],
@@ -119,7 +119,7 @@ class SchemaService
                 'name' => $c,
                 'containedInPlace' => [
                     '@type' => 'State',
-                    'name' => 'Ontario',
+                    'name' => 'Our Region',
                     'containedInPlace' => ['@type' => 'Country', 'name' => 'Canada'],
                 ],
             ], $citiesServed);
@@ -129,7 +129,7 @@ class SchemaService
                 'name' => $city,
                 'containedInPlace' => [
                     '@type' => 'State',
-                    'name' => 'Ontario',
+                    'name' => 'Our Region',
                     'containedInPlace' => ['@type' => 'Country', 'name' => 'Canada'],
                 ],
             ];
@@ -161,12 +161,12 @@ class SchemaService
             'provider' => [
                 '@type' => 'HomeAndConstructionBusiness',
                 '@id' => config('app.url').'/#localbusiness',
-                'name' => Setting::get('site_name', 'Lush Landscape Service'),
+                'name' => Setting::get('site_name', 'Super WMS'),
                 'url' => config('app.url'),
             ],
             'areaServed' => [
                 '@type' => 'State',
-                'name' => 'Ontario',
+                'name' => 'Our Region',
                 'containedInPlace' => ['@type' => 'Country', 'name' => 'Canada'],
             ],
         ];
@@ -175,7 +175,7 @@ class SchemaService
             $data['areaServed'] = [
                 '@type' => 'City',
                 'name' => $city,
-                'containedInPlace' => ['@type' => 'State', 'name' => 'Ontario'],
+                'containedInPlace' => ['@type' => 'State', 'name' => 'Our Region'],
             ];
         }
         if ($url) {
@@ -268,7 +268,7 @@ class SchemaService
             'publisher' => [
                 '@type' => 'Organization',
                 '@id' => config('app.url').'/#organization',
-                'name' => Setting::get('site_name', 'Lush Landscape Service'),
+                'name' => Setting::get('site_name', 'Super WMS'),
                 'url' => config('app.url'),
             ],
         ];
@@ -295,7 +295,7 @@ class SchemaService
             '@context' => 'https://schema.org',
             '@type' => 'WebSite',
             '@id' => config('app.url').'/#website',
-            'name' => Setting::get('site_name', 'Lush Landscape Service'),
+            'name' => Setting::get('site_name', 'Super WMS'),
             'url' => config('app.url'),
             'potentialAction' => [
                 '@type' => 'SearchAction',

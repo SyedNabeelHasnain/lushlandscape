@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    title="Service Areas Ontario | Landscaping Contractors Near You | Lush Landscape Service"
-    description="We serve homeowners and businesses throughout Ontario including Hamilton, Burlington, Oakville, Mississauga, Milton, Toronto, Vaughan, Richmond Hill, Georgetown, and Brampton."
+    title="Service Areas Our Region | Landscaping Contractors Near You | Super WMS Service"
+    description="We serve homeowners and businesses throughout Our Region including Hamilton, Burlington, Oakville, Mississauga, Milton, Toronto, Vaughan, Richmond Hill, Georgetown, and Brampton."
     :canonical="url('/locations')"
     :schema="$schema"
 />

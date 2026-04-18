@@ -1,14 +1,14 @@
 @props([
-    'title'    => 'Why Choose Lush Landscape?',
+    'title'    => 'Why Choose Super WMS?',
     'subtitle' => 'We combine craftsmanship, accountability, and local expertise to deliver results that last.',
     'benefits' => [],
 ])
 @php
     $defaultBenefits = [
-        ['icon'=>'shield-check',  'title'=>'10-Year Workmanship Warranty',    'text'=>'We back every project with a full decade of coverage, a guarantee almost no competitor matches in Ontario.'],
+        ['icon'=>'shield-check',  'title'=>'10-Year Workmanship Warranty',    'text'=>'We back every project with a full decade of coverage, a guarantee almost no competitor matches in Our Region.'],
         ['icon'=>'badge-check',   'title'=>'Licensed & Fully Insured',         'text'=>'WSIB coverage, $5M liability insurance, and all required municipal permits pulled and documented.'],
-        ['icon'=>'map-pin',       'title'=>'Local Ontario Experts',            'text'=>'We know Ontario soil, frost lines, permit processes, and HOA requirements across every city we serve.'],
-        ['icon'=>'star',          'title'=>'Top-Rated on Google & HomeStars',  'text'=>'Hundreds of 5-star reviews from homeowners across the GTA. Our reputation is built one project at a time.'],
+        ['icon'=>'map-pin',       'title'=>'Local Our Region Experts',            'text'=>'We know Our Region soil, frost lines, permit processes, and HOA requirements across every city we serve.'],
+        ['icon'=>'star',          'title'=>'Top-Rated on Google & HomeStars',  'text'=>'Hundreds of 5-star reviews from homeowners across the Region. Our reputation is built one project at a time.'],
     ];
     $items = !empty($benefits) ? $benefits : $defaultBenefits;
 @endphp

@@ -32,10 +32,10 @@
                     'lng'      => (float) $c->longitude,
                     'type'     => 'city',
                     'slug'     => $c->slug_final,
-                    'heading'  => 'Landscaping Services in ' . $c->name,
+                    'heading'  => 'Professional Services in ' . $c->name,
                     'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->name . '. Serving ' . $hoodNames . '.',
                     'cta_text' => $popupCta,
-                    'cta_url'  => '/landscaping-' . $c->slug_final,
+                    'cta_url'  => '/professional-' . $c->slug_final,
                     'services' => '',
                     'hoods'    => $c->neighborhoods->map(fn($n) => ['name' => $n->name, 'lat' => (float) $n->latitude, 'lng' => (float) $n->longitude, 'slug' => $n->slug])->toArray(),
                 ];
@@ -59,7 +59,7 @@
                         'heading'  => $n->name . ', ' . $city->name,
                         'desc'     => $n->summary,
                         'cta_text' => $popupCta,
-                        'cta_url'  => '/landscaping-' . $city->slug_final,
+                        'cta_url'  => '/professional-' . $city->slug_final,
                         'services' => '',
                         'hoods'    => [],
                     ];
@@ -182,7 +182,7 @@
             @elseif($allCities->isNotEmpty())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                 @foreach($allCities as $c)
-                <a href="{{ url('/landscaping-' .  $c->slug_final  . '') }}"
+                <a href="{{ url('/professional-' .  $c->slug_final  . '') }}"
                    class="flex items-center gap-3 bg-white border border-stone px-5 py-4 hover:border-forest hover:shadow-luxury transition-all duration-500 group">
                     <i data-lucide="map-pin" class="w-4 h-4 text-forest shrink-0"></i>
                     <span class="text-sm font-medium text-ink group-hover:text-forest transition-colors">{{ $c->name }}</span>
@@ -211,7 +211,7 @@
         <script type="application/ld+json">{!! json_encode([
             '@context' => 'https://schema.org',
             '@type' => $schemaType === 'LocalBusiness' ? 'LocalBusiness' : 'Place',
-            'name' => 'Lush Landscape Service - ' . $m['name'],
+            'name' => 'Super WMS Service - ' . $m['name'],
             'description' => $m['desc'],
             'url' => url($m['cta_url']),
             'geo' => ['@type' => 'GeoCoordinates', 'latitude' => $m['lat'], 'longitude' => $m['lng']],

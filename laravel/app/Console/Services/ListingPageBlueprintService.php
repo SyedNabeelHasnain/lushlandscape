@@ -194,7 +194,7 @@ class ListingPageBlueprintService
                 'parallax_media_band',
                 [
                     'heading' => $category->name,
-                    'subheadline' => $category->short_description ?: 'A focused collection of premium landscaping services delivered with structural discipline and finish quality.',
+                    'subheadline' => $category->short_description ?: 'A focused collection of premium professional services delivered with structural discipline and finish quality.',
                     'media_id' => $category->hero_media_id,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -290,7 +290,7 @@ class ListingPageBlueprintService
             $this->block(
                 'parallax_media_band',
                 [
-                    'heading' => 'Architectural Hardscaping & Outdoor Construction',
+                    'heading' => 'Architectural Engineering & Outdoor Construction',
                     'subheadline' => 'Landscape construction for architects, designers, and discerning homeowners across the Greater Toronto Area.',
                     'media_id' => $heroMediaId,
                     'parallax_intensity' => 'subtle',
@@ -403,7 +403,7 @@ class ListingPageBlueprintService
                 'parallax_media_band',
                 [
                     'heading' => 'Serving Greater Toronto’s Premier Enclaves',
-                    'subheadline' => 'Explore our service areas to see local landscaping coverage, project references, and city-specific construction pages.',
+                    'subheadline' => 'Explore our service areas to see local professional coverage, project references, and city-specific construction pages.',
                     'media_id' => $heroMediaId,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -459,7 +459,7 @@ class ListingPageBlueprintService
                 'split_consultation_panel',
                 [
                     'eyebrow' => 'Project Planning',
-                    'heading' => 'Start your project in the GTA',
+                    'heading' => 'Start your project in the Region',
                     'editorial_copy' => 'We can help define scope, material direction, and the best path from consultation to construction in your specific area.',
                     'trust_lines' => 'Comprehensive property assessment, Expert design and material advice, Clear execution timelines',
                     'media_id' => null,
@@ -583,8 +583,8 @@ class ListingPageBlueprintService
             $this->block(
                 'parallax_media_band',
                 [
-                    'heading' => 'Landscaping Knowledge & Advice',
-                    'subheadline' => 'Expert tips, cost guides, and project inspiration for Ontario homeowners.',
+                    'heading' => 'Professional Knowledge & Advice',
+                    'subheadline' => 'Expert tips, cost guides, and project inspiration for Our Region homeowners.',
                     'media_id' => $heroMediaId,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -1455,7 +1455,7 @@ class ListingPageBlueprintService
     public function buildServiceCity(ServiceCityPage $page): array
     {
         $cityName = $page->city ? $page->city->name : 'Your Area';
-        $serviceName = $page->service ? $page->service->name : 'Landscaping';
+        $serviceName = $page->service ? $page->service->name : 'Professional';
 
         return [
             $this->block(
@@ -1574,7 +1574,7 @@ class ListingPageBlueprintService
                 'parallax_media_band',
                 [
                     'heading' => $project->title,
-                    'subheadline' => $project->description ?: 'A premium landscaping build showcasing structural precision and high-end finish quality.',
+                    'subheadline' => $project->description ?: 'A premium professional build showcasing structural precision and high-end finish quality.',
                     'media_id' => $project->hero_media_id,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',
@@ -1636,7 +1636,7 @@ class ListingPageBlueprintService
                 [
                     'eyebrow' => 'Related Services',
                     'heading' => 'Services Used in This Build',
-                    'subtitle' => 'Explore the specific landscaping and construction services utilized to deliver this project.',
+                    'subtitle' => 'Explore the specific professional and construction services utilized to deliver this project.',
                     'layout' => 'grid',
                     'columns' => '3',
                     'variant' => 'premium-2x2',
@@ -1733,7 +1733,7 @@ class ListingPageBlueprintService
                 'parallax_media_band',
                 [
                     'heading' => 'Frequently Asked Questions',
-                    'subheadline' => 'Clear answers regarding our services, processes, and what to expect when working with Lush Landscaping.',
+                    'subheadline' => 'Clear answers regarding our services, processes, and what to expect when working with Lush Professional.',
                     'media_id' => $heroMediaId,
                     'parallax_intensity' => 'subtle',
                     'overlay_preset' => 'dark',

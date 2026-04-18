@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-8">
     <h1 class="text-2xl font-bold text-text">Dashboard</h1>
-    <p class="text-text-secondary mt-1">Overview of your Lush Landscape website</p>
+    <p class="text-text-secondary mt-1">Overview of your Super WMS website</p>
 </div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">

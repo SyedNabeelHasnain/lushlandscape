@@ -49,7 +49,7 @@ class GenerateSitemap extends Command
         });
 
         City::where('status', 'published')->with('heroMedia')->cursor()->each(function ($city) use (&$urls, $baseUrl) {
-            $entry = ['loc' => $baseUrl.'/landscaping-'.$city->slug_final, 'changefreq' => 'weekly', 'priority' => '0.8'];
+            $entry = ['loc' => $baseUrl.'/professional-'.$city->slug_final, 'changefreq' => 'weekly', 'priority' => '0.8'];
             if ($city->heroMedia) {
                 $entry['images'][] = ['url' => $city->heroMedia->url, 'title' => $city->name];
             }

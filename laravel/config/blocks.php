@@ -564,7 +564,7 @@ return [
                 'eyebrow' => 'The Architectural Standard',
                 'heading' => 'Built for Properties Where',
                 'heading_highlight' => 'Detail Matters',
-                'paragraph' => 'Lush Landscape creates private residential outdoor environments where structure, craftsmanship, and visual restraint matter equally. From driveways, patios, and retaining walls to grading and planting, every project is approached with clarity, proportion, and long-term performance in mind.',
+                'paragraph' => 'Super WMS creates private residential outdoor environments where structure, craftsmanship, and visual restraint matter equally. From driveways, patios, and retaining walls to grading and planting, every project is approached with clarity, proportion, and long-term performance in mind.',
             ],
         ],
 
@@ -610,7 +610,7 @@ return [
                 
                 'card_1_icon' => 'fa-solid fa-vector-square',
                 'card_1_title' => 'Paving & Arrival',
-                'card_1_desc' => 'Interlocking driveways, natural stone, and porcelain surfaces engineered for entry sequences.',
+                'card_1_desc' => 'Professional driveways, natural stone, and porcelain surfaces engineered for entry sequences.',
                 'card_1_list' => '8,000 PSI Pavers, Open-Graded Bases',
                 
                 'card_2_icon' => 'fa-solid fa-fire-burner',
@@ -805,8 +805,8 @@ return [
                 'eyebrow' => 'Our Philosophy',
                 'heading' => 'Built for Properties Where',
                 'heading_highlight' => 'Detail Matters',
-                'paragraph_1' => 'Lush Landscape creates private residential outdoor environments where structure, craftsmanship, and visual restraint matter equally.',
-                'paragraph_2' => 'We reject the transactional nature of the landscaping industry. Instead, we operate as a design-build firm committed to long-term architectural integrity, executing complex master plans with absolute precision.',
+                'paragraph_1' => 'Super WMS creates private residential outdoor environments where structure, craftsmanship, and visual restraint matter equally.',
+                'paragraph_2' => 'We reject the transactional nature of the professional industry. Instead, we operate as a design-build firm committed to long-term architectural integrity, executing complex master plans with absolute precision.',
                 'signature_name' => '',
                 'signature_title' => '',
                 'image' => 'https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
@@ -857,7 +857,7 @@ return [
                 
                 'cred_4_icon' => 'hard-hat',
                 'cred_4_title' => 'In-House Execution',
-                'cred_4_desc' => 'We do not broker out our core trades. Our master stonemasons and structural teams are dedicated Lush Landscape personnel.',
+                'cred_4_desc' => 'We do not broker out our core trades. Our master stonemasons and structural teams are dedicated Super WMS personnel.',
             ],
         ],
 
@@ -888,7 +888,7 @@ return [
                 
                 'year_1' => '2018',
                 'title_1' => 'The Foundation',
-                'desc_1' => 'Lush Landscape Service was established with a singular focus on elevating residential stonework and structural hardscaping in the Greater Toronto Area.',
+                'desc_1' => 'Super WMS was established with a singular focus on elevating residential stonework and structural hardscaping in the Greater Toronto Area.',
                 
                 'year_2' => '2021',
                 'title_2' => 'Scale & Maturation',
@@ -896,7 +896,7 @@ return [
                 
                 'year_3' => '2024',
                 'title_3' => 'The Architectural Standard',
-                'desc_3' => 'Solidified our position as the design-build firm of choice for the top 1% of the GTA, partnering exclusively with prestige properties and heritage estates.',
+                'desc_3' => 'Solidified our position as the design-build firm of choice for the top 1% of the Region, partnering exclusively with prestige properties and heritage estates.',
             ],
         ],
 
@@ -1060,7 +1060,7 @@ return [
             'defaults' => [
                 'eyebrow' => 'Stay Updated',
                 'heading' => 'Landscape Insights & Project Planning',
-                'subtext' => 'Join 2,000+ Ontario homeowners getting our free monthly newsletter.',
+                'subtext' => 'Join 2,000+ Our Region homeowners getting our free monthly newsletter.',
             ],
         ],
 
@@ -1090,7 +1090,7 @@ return [
             ],
             'data_source' => null,
             'defaults' => [
-                'eyebrow' => 'The Top 1% of the GTA',
+                'eyebrow' => 'The Top 1% of the Region',
                 'heading' => 'Executive Enclaves',
                 'description' => 'Providing landscape execution exclusively for the Greater Toronto Area\'s most established residential communities.',
                 
@@ -1710,7 +1710,7 @@ return [
                 ],
             ],
             'defaults' => [
-                'text_items' => 'Premium Landscape Design, Expert Installation, 10-Year Warranty, Interlocking & Stonework',
+                'text_items' => 'Premium Landscape Design, Expert Installation, 10-Year Warranty, Professional & Stonework',
                 'separator_style' => 'star',
                 'speed' => 'normal',
                 'direction' => 'left',
@@ -1815,7 +1815,7 @@ return [
             ],
             'defaults' => [
                 'eyebrow' => 'Areas We Serve',
-                'heading' => 'Proudly Serving the GTA',
+                'heading' => 'Proudly Serving the Region',
                 'support_copy' => '',
                 'presentation_mode' => 'text-led',
             ],
@@ -2224,7 +2224,7 @@ return [
             'defaults' => [
                 'eyebrow' => '',
                 'heading' => 'Our Project Portfolio',
-                'subtitle' => 'Real projects, real results. Browse our completed landscaping work across Ontario.',
+                'subtitle' => 'Real projects, real results. Browse our completed professional work across Our Region.',
                 'tone' => 'light',
                 'show_filters' => true,
                 'show_featured_hero' => true,
@@ -2385,13 +2385,13 @@ return [
             ],
             'defaults' => [
                 'eyebrow' => '',
-                'heading' => 'Landscaping Blog',
-                'subtitle' => 'Expert tips, cost guides, and project inspiration for Ontario homeowners.',
+                'heading' => 'Professional Blog',
+                'subtitle' => 'Expert tips, cost guides, and project inspiration for Our Region homeowners.',
                 'tone' => 'light',
                 'show_featured_hero' => true,
                 'show_category_tabs' => true,
                 'empty_title' => 'No articles published yet',
-                'empty_description' => 'We are preparing expert guidance, project insights, and planning articles for Ontario homeowners.',
+                'empty_description' => 'We are preparing expert guidance, project insights, and planning articles for Our Region homeowners.',
                 'empty_button_text' => 'Back to Home',
                 'empty_button_url' => '/',
             ],

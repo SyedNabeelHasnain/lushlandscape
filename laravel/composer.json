@@ -3,7 +3,7 @@
     "type": "project",
     "description": "Lush Landscape Service CMS",
     "require": {
-        "php": "^8.4",
+        "php": "^8.5",
         "intervention/image-laravel": "^4.0",
         "laravel/framework": "^13.0",
         "spatie/laravel-honeypot": "^4.0",

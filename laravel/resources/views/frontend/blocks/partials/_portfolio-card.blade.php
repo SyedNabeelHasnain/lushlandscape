@@ -16,7 +16,7 @@
         <h3 class="{{ $titleClass }} font-heading font-bold leading-tight {{ $toneMap['heading'] }} {{ $tone === 'dark' ? 'group-hover:text-white' : 'group-hover:text-forest' }} transition line-clamp-1">{{ $project->title }}</h3>
         @if($project->city || $project->service)
             <p class="mt-2 {{ $metaCase }} {{ $toneMap['meta'] }} line-clamp-1">
-                {{ $project->city?->name ?? 'Ontario' }}
+                {{ $project->city?->name ?? 'Our Region' }}
                 @if($project->service)
                     <span class="mx-2 opacity-40">/</span>{{ $project->service->name }}
                 @endif

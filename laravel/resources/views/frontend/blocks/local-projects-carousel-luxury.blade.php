@@ -1,7 +1,7 @@
 @php
     $page = $context['page'] ?? null;
     $city = $page ? $page->city : null;
-    $cityName = $city ? $city->name : 'GTA';
+    $cityName = $city ? $city->name : 'Region';
     
     // Get projects tagged to this specific city
     // In a real app, this might come pre-loaded in the context

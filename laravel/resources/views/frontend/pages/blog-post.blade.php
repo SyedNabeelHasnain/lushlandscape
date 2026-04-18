@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($post->meta_title ?? $post->title) . ' | Lush Landscape Blog'"
+    :title="($post->meta_title ?? $post->title) . ' | Super WMS Blog'"
     :description="$post->meta_description ?? $post->excerpt ?? ''"
     :canonical="url('/blog/' . $post->slug)"
     :ogTitle="$post->og_title ?? null"
@@ -89,7 +89,7 @@
                 <div class="sticky top-24 space-y-5">
                     <div class="bg-forest p-5 text-white">
                         <h3 class="text-sm font-bold mb-2">Book a Consultation</h3>
-                        <p class="text-white/70 text-xs mb-4 leading-relaxed">Plan your landscaping project with a clear scope and thoughtful material direction.</p>
+                        <p class="text-white/70 text-xs mb-4 leading-relaxed">Plan your professional project with a clear scope and thoughtful material direction.</p>
                         <a href="{{ url('/contact') }}" class="block bg-white text-forest font-bold py-3  text-center hover:bg-white/90 transition text-sm">Book a Consultation</a>
                     </div>
                     @if(isset($popularPosts) && $popularPosts->count() > 0)

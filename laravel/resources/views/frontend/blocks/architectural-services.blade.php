@@ -39,10 +39,10 @@
                 </div>
                 
                 <div class="absolute top-1/2 left-4 -translate-y-1/2 z-20">
-                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none" aria-label="Previous image"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2" aria-label="Previous image"><i class="fa-solid fa-chevron-left text-xs" aria-hidden="true"></i></button>
                 </div>
                 <div class="absolute top-1/2 right-4 -translate-y-1/2 z-20">
-                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none" aria-label="Next image"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2" aria-label="Next image"><i class="fa-solid fa-chevron-right text-xs" aria-hidden="true"></i></button>
                 </div>
 
                 <div class="absolute inset-0 z-10 p-8 lg:p-10 flex flex-col justify-end pointer-events-none">

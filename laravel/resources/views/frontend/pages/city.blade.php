@@ -1,12 +1,12 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($city->default_meta_title ?? 'Landscaping Services in ' . $city->name . ', Ontario') . ' | Lush Landscape Service'"
-    :description="$city->default_meta_description ?? 'Professional landscaping construction services in ' . $city->name . ', Ontario. Interlocking, concrete, hardscaping, and more. Consultation-led design and build.'"
-    :canonical="url('/landscaping-' . $city->slug_final)"
+    :title="($city->default_meta_title ?? 'Professional Services in ' . $city->name . ', Our Region') . ' | Super WMS Service'"
+    :description="$city->default_meta_description ?? 'Professional professional construction services in ' . $city->name . ', Our Region. Professional, concrete, hardscaping, and more. Consultation-led design and build.'"
+    :canonical="url('/professional-' . $city->slug_final)"
     :ogImage="$city->heroMedia?->url ?? null"
     :schema="$schema"
-    :geo="['region' => 'CA-ON', 'placename' => $city->name . ', Ontario, Canada', 'position' => ($city->latitude ?? '43.6532') . ';' . ($city->longitude ?? '-79.3832')]"
+    :geo="['region' => 'US-NY', 'placename' => $city->name . ', Our Region, Canada', 'position' => ($city->latitude ?? '40.7128') . ';' . ($city->longitude ?? '-74.0060')]"
 />
 @endsection
 @section('content')

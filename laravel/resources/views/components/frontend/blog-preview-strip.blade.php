@@ -1,7 +1,7 @@
 @props([
     'posts'    => collect(),
     'title'    => 'Landscaping Insights',
-    'subtitle' => 'Expert tips, cost guides, and project inspiration for Ontario homeowners.',
+    'subtitle' => 'Expert tips, cost guides, and project inspiration for Our Region homeowners.',
     'viewAllUrl' => '/blog',
 ])
 

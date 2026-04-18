@@ -17,7 +17,7 @@
         @if($cities->isNotEmpty())
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             @foreach($cities as $city)
-            <a href="{{ url('/landscaping-' . $city->slug_final) }}" class="group relative block aspect-[4/3] overflow-hidden bg-forest/5 border border-black/5 gs-reveal break-inside-avoid">
+            <a href="{{ url('/professional-' . $city->slug_final) }}" class="group relative block aspect-[4/3] overflow-hidden bg-forest/5 border border-black/5 gs-reveal break-inside-avoid">
                 @if($city->heroMedia)
                     <img src="{{ $city->heroMedia->url }}" alt="{{ $city->name }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.05]" loading="lazy" decoding="async">
                 @else

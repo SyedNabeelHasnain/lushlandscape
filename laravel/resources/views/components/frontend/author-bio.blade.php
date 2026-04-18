@@ -1,6 +1,6 @@
 @props(['author' => null, 'publishedAt' => null, 'updatedAt' => null])
 @php
-    $name    = is_object($author) ? ($author->name ?? 'Lush Landscape Team') : ($author ?? 'Lush Landscape Team');
+    $name    = is_object($author) ? ($author->name ?? 'Super WMS Team') : ($author ?? 'Super WMS Team');
     $initial = strtoupper(substr($name, 0, 1));
     $bio     = is_object($author) ? ($author->bio ?? null) : null;
     $avatar  = is_object($author) ? ($author->avatar_url ?? null) : null;

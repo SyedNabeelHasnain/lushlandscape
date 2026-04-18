@@ -46,7 +46,7 @@
 @if($layout === 'strip')
     <div class="flex flex-wrap justify-center gap-x-10 gap-y-4">
         @foreach($data as $city)
-            <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}" class="text-xl font-semibold transition {{ $toneMap['heading'] }} {{ $tone === 'dark' ? 'hover:text-white/80' : 'hover:text-forest' }}">
+            <a href="{{ url('/professional-' .  $city->slug_final  . '') }}" class="text-xl font-semibold transition {{ $toneMap['heading'] }} {{ $tone === 'dark' ? 'hover:text-white/80' : 'hover:text-forest' }}">
                 {{ $city->name }}
             </a>
         @endforeach
@@ -54,7 +54,7 @@
 @elseif($layout === 'list')
     <div class="divide-y {{ $tone === 'dark' ? 'divide-white/10' : 'divide-stone-light' }} border-t {{ $tone === 'dark' ? 'border-white/10' : 'border-stone-light' }}">
         @foreach($data as $city)
-            <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}" class="group flex flex-col gap-2 py-5 transition {{ $toneMap['card'] }} border-0 bg-transparent hover:bg-transparent">
+            <a href="{{ url('/professional-' .  $city->slug_final  . '') }}" class="group flex flex-col gap-2 py-5 transition {{ $toneMap['card'] }} border-0 bg-transparent hover:bg-transparent">
                 <div class="flex items-center justify-between gap-6">
                     <div class="flex items-center gap-3">
                         <div class="flex h-10 w-10 items-center justify-center rounded-lg shrink-0 transition-colors {{ $toneMap['icon'] }} {{ $tone === 'dark' ? 'group-hover:bg-white group-hover:text-forest' : 'group-hover:bg-forest group-hover:text-white' }}">
@@ -78,7 +78,7 @@
 @else
     <div class="grid {{ $layout === 'compact' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4' }} gap-4">
         @foreach($data as $city)
-        <a href="{{ url('/landscaping-' .  $city->slug_final  . '') }}" class="group border p-5 transition-all duration-300 {{ $toneMap['card'] }} {{ $layout === 'compact' ? 'rounded-[1.5rem]' : 'rounded-[1.25rem]' }}">
+        <a href="{{ url('/professional-' .  $city->slug_final  . '') }}" class="group border p-5 transition-all duration-300 {{ $toneMap['card'] }} {{ $layout === 'compact' ? 'rounded-[1.5rem]' : 'rounded-[1.25rem]' }}">
             <div class="flex items-center gap-3">
                 <div class="flex h-10 w-10 items-center justify-center rounded-lg shrink-0 transition-colors {{ $toneMap['icon'] }} {{ $tone === 'dark' ? 'group-hover:bg-white group-hover:text-forest' : 'group-hover:bg-forest group-hover:text-white' }}">
                     <i data-lucide="map-pin" class="w-4 h-4 transition-colors"></i>

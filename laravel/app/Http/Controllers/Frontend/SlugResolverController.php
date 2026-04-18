@@ -61,7 +61,7 @@ class SlugResolverController extends Controller
     {
         $breadcrumbs = [
             ['label' => 'Locations', 'url' => url('/locations')],
-            ['label' => $page->city->name, 'url' => url('/landscaping-'.$page->city->slug_final)],
+            ['label' => $page->city->name, 'url' => url('/professional-'.$page->city->slug_final)],
             ['label' => $page->service->name],
         ];
 

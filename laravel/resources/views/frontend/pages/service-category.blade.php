@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($category->meta_title ?? $category->name . ' Services Ontario') . ' | Lush Landscape Service'"
+    :title="($category->meta_title ?? $category->name . ' Services Our Region') . ' | Super WMS Service'"
     :description="$category->meta_description ?? $category->short_description ?? ''"
     :canonical="url('/services/' . $category->slug_final)"
     :ogTitle="$category->og_title ?? null"

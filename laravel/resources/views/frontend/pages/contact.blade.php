@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    title="Contact Us | Lush Landscape Service"
-    description="Contact Lush Landscape Service. Reach our team by phone, email, or our contact form. We respond within 24 hours. Serving Ontario, Canada."
+    title="Contact Us | Super WMS Service"
+    description="Contact Super WMS Service. Reach our team by phone, email, or our contact form. We respond within 24 hours. Serving Our Region, Canada."
     :canonical="url('/contact')"
     :schema="$schema"
 />

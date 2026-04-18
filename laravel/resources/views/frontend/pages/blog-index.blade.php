@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    title="Landscaping Blog | Tips, Costs & Guides | Lush Landscape Service"
-    description="Expert landscaping tips, cost guides, project inspiration, and how-to articles for Ontario homeowners. Trusted advice from local professionals."
+    title="Professional Blog | Tips, Costs & Guides | Super WMS Service"
+    description="Expert professional tips, cost guides, project inspiration, and how-to articles for Our Region homeowners. Trusted advice from local professionals."
     :canonical="url('/blog')"
     :schema="$schema"
     :paginator="$posts"

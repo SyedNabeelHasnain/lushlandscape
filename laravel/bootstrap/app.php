@@ -17,10 +17,13 @@ $app = Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web(append: [
+        $middleware->append([
             SecurityHeaders::class,
-            HandleRedirects::class,
             SecurityFilter::class,
+        ]);
+
+        $middleware->web(append: [
+            HandleRedirects::class,
         ]);
 
         $middleware->alias([

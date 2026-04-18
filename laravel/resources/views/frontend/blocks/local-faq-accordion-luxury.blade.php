@@ -13,7 +13,7 @@
             @foreach($faqs as $faq)
             <div class="border border-stone/60 bg-[#F9FAF9] hover:border-accent transition-colors duration-300 gs-reveal">
                 <button @click="activeAccordion = activeAccordion === {{ $faq->id }} ? null : {{ $faq->id }}" 
-                        class="w-full text-left px-6 lg:px-8 py-5 lg:py-6 flex items-center justify-between focus:outline-none">
+                        class="w-full text-left px-6 lg:px-8 py-5 lg:py-6 flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-inset">
                     <span class="text-lg lg:text-xl font-serif text-forest" :class="activeAccordion === {{ $faq->id }} ? 'text-forest-light' : ''">
                         {{ $faq->question }}
                     </span>

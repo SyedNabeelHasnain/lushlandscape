@@ -7,15 +7,15 @@ $cityPages = $context['cityPages'] ?? collect();
 @endphp
 {{-- Section: hero --}}
 @php
-    $cityName = $city ? $city->name : 'Ontario';
-    $provinceName = $city ? ($city->province_name ?? 'Ontario') : 'Ontario';
-    $citySummary = $city->city_summary ?? 'Premium landscaping construction: interlocking, concrete, patios, retaining walls, and more.';
+    $cityName = $city ? $city->name : 'Our Region';
+    $provinceName = $city ? ($city->province_name ?? 'Our Region') : 'Our Region';
+    $citySummary = $city->city_summary ?? 'Premium professional construction: interlocking, concrete, patios, retaining walls, and more.';
     
-    $heroHeading  = !empty($section['settings']['heading'])  ? $section['settings']['heading']  : 'Landscaping Services in ' . $cityName;
+    $heroHeading  = !empty($section['settings']['heading'])  ? $section['settings']['heading']  : 'Professional Services in ' . $cityName;
     $heroSubtitle = !empty($section['settings']['subtitle']) ? $section['settings']['subtitle'] : $citySummary;
     $heroCtaText  = !empty($section['settings']['cta_text']) ? $section['settings']['cta_text'] : 'Book a Consultation';
     $heroCtaUrl   = !empty($section['settings']['cta_url'])  ? $section['settings']['cta_url']  : '/contact';
-    $heroEyebrow  = !empty($section['settings']['eyebrow'])  ? $section['settings']['eyebrow']  : ($city ? "{$cityName}, {$provinceName}" : 'Lush Landscape');
+    $heroEyebrow  = !empty($section['settings']['eyebrow'])  ? $section['settings']['eyebrow']  : ($city ? "{$cityName}, {$provinceName}" : 'Super WMS');
 
     $configuredImageIds = $section['settings']['extra_image_ids'] ?? [];
     if (!is_array($configuredImageIds)) {

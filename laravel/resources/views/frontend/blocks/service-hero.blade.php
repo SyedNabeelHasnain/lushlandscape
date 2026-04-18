@@ -8,7 +8,7 @@ $cityPages = $context['cityPages'] ?? collect();
 {{-- Section: service_hero --}}
 @php
     $serviceName = $service ? $service->name : 'Our Services';
-    $serviceSummary = $service->service_summary ?? 'Premium landscaping construction and maintenance services.';
+    $serviceSummary = $service->service_summary ?? 'Premium professional construction and maintenance services.';
     
     $heroHeading  = !empty($section['settings']['heading'])  ? $section['settings']['heading']  : $serviceName;
     $heroSubtitle = !empty($section['settings']['subtitle']) ? $section['settings']['subtitle'] : $serviceSummary;

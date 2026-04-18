@@ -58,10 +58,10 @@
         'recaptcha_site_key'     => 'Google reCAPTCHA v3 site key used in public-facing forms for bot protection.',
         'recaptcha_secret_key'   => 'Google reCAPTCHA v3 secret key used server-side to verify form submissions.',
         // SEO
-        'seo_default_title_suffix' => 'Suffix appended to every page title in search results, e.g. | Lush Landscape Service. Keep it short.',
+        'seo_default_title_suffix' => 'Suffix appended to every page title in search results, e.g. | Super WMS Service. Keep it short.',
         'seo_default_og_image_id'  => 'Default Open Graph image used when a page has no specific OG image set. Should be at least 1200×630px.',
         'seo_robots_txt'           => 'Custom robots.txt content. Controls which pages search engines can crawl. Use with caution.',
-        'seo_canonical_domain'     => 'The canonical domain for all URLs (e.g. https://lushlandscape.ca). Used in canonical link tags.',
+        'seo_canonical_domain'     => 'The canonical domain for all URLs (e.g. https://example.com). Used in canonical link tags.',
         // AI Content
         'openai_api_key'           => 'Your OpenAI API key. Required to enable AI content generation. Keep this confidential.',
         'openai_model'             => 'OpenAI model to use for content generation, e.g. gpt-4o, gpt-4o-mini. Higher-tier models produce better content.',
@@ -808,7 +808,7 @@
                     <p class="text-xs text-text-secondary">Describe your website structure, brand voice, services, cities, and keyword strategy. This document is included as context in every AI content generation request to ensure consistent, on-brand output.</p>
                     @if($aiSettings->has('ai_context_markdown'))
                     <textarea name="ai_context_markdown" rows="20"
-                              placeholder="# Lush Landscape Service&#10;&#10;## Brand Voice&#10;Professional, conversational, customer-facing...&#10;&#10;## Services&#10;- Interlocking Driveways&#10;- Concrete Patios...&#10;&#10;## Cities Served&#10;- Mississauga, Hamilton, Oakville..."
+                              placeholder="# Super WMS Service&#10;&#10;## Brand Voice&#10;Professional, conversational, customer-facing...&#10;&#10;## Services&#10;- Professional Driveways&#10;- Concrete Patios...&#10;&#10;## Cities Served&#10;- Mississauga, Hamilton, Oakville..."
                               class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest transition">{{ $aiSettings['ai_context_markdown']->value ?? '' }}</textarea>
                     @endif
                 </div>

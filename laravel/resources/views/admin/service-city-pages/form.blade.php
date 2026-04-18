@@ -37,18 +37,18 @@
             <x-admin.card title="Page Content">
                 <div class="space-y-5">
                     <div class="flex flex-wrap items-center justify-end gap-2">
-                        <x-admin.ai-generate-button field="page_title" context="SEO page title for a landscaping service-city page. Max 60 characters. Include service name and city name." :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
+                        <x-admin.ai-generate-button field="page_title" context="SEO page title for a professional service-city page. Max 60 characters. Include service name and city name." :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
                     </div>
                     <x-admin.form-input name="page_title" label="Page Title (Title Tag)" :value="$page->page_title ?? ''" required tooltip="The HTML title tag for this city service page. Auto-generated as 'Service Name in City Name' but can be customized. Keep under 60 characters." />
                     <div class="flex flex-wrap items-center justify-end gap-2">
-                        <x-admin.ai-generate-button field="h1" context="H1 heading for a landscaping service-city page. Should be unique and include service name and city name." :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
+                        <x-admin.ai-generate-button field="h1" context="H1 heading for a professional service-city page. Should be unique and include service name and city name." :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
                     </div>
                     <x-admin.form-input name="h1" label="H1 Header" :value="$page->h1 ?? ''" required tooltip="The main heading displayed on the city service page. Usually 'Service Name in City Name'. Only one H1 per page." />
                     @if(isset($page))
                     <x-admin.form-input name="custom_slug" label="Custom Slug" :value="$page->custom_slug ?? ''" help="System slug: {{ $page->system_slug }}" tooltip="Override the auto-generated URL for this page. Affects SEO. Only change if necessary, as it breaks any existing inbound links." />
                     @endif
                     <div class="flex flex-wrap items-center justify-end gap-2">
-                        <x-admin.ai-generate-button field="local_intro" context="Opening paragraph for a landscaping service-city page. 100-150 words. Direct answer to page intent. Customer-facing, using you/your language. Mention the city name." :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
+                        <x-admin.ai-generate-button field="local_intro" context="Opening paragraph for a professional service-city page. 100-150 words. Direct answer to page intent. Customer-facing, using you/your language. Mention the city name." :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
                     </div>
                     <x-admin.form-textarea name="local_intro" label="Opening Answer Paragraph" :value="$page->local_intro ?? ''" :rows="6" help="First 150 words. Direct answer to page intent. Critical for AI extraction." tooltip="The opening paragraph that directly answers the page intent. First 150 words are critical for AI search extraction and featured snippets. Be direct and specific." />
                 </div>
@@ -74,7 +74,7 @@
             <x-admin.card title="SEO & Social">
                 <div class="space-y-5">
                     <div class="flex flex-wrap items-center justify-end gap-2">
-                        <x-admin.ai-generate-button field="meta_title" context="SEO meta title. Max 60 characters. Include service name, city name, and brand. Format: Service in City | Lush Landscape" :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
+                        <x-admin.ai-generate-button field="meta_title" context="SEO meta title. Max 60 characters. Include service name, city name, and brand. Format: Service in City | Super WMS" :pageContext="isset($page) ? ($page->service->name ?? '') . ' in ' . ($page->city->name ?? '') : ''" />
                     </div>
                     <x-admin.form-input name="meta_title" label="Meta Title" :value="$page->meta_title ?? ''" tooltip="SEO title for this city-service page shown in search results. Keep under 60 characters. Include both the service and city name." />
                     <div class="flex flex-wrap items-center justify-end gap-2">

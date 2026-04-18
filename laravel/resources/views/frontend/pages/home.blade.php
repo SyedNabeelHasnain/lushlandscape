@@ -1,10 +1,10 @@
 @extends('frontend.layouts.app')
 @section('seo')
 @php
-    $siteName = \App\Models\Setting::get('site_name', 'Lush Landscape Service');
-    $tagline = \App\Models\Setting::get('site_tagline', 'Landscaping Construction Contractors in Ontario');
+    $siteName = \App\Models\Setting::get('site_name', 'Super WMS');
+    $tagline = \App\Models\Setting::get('site_tagline', 'Landscaping Construction Contractors in Our Region');
     $defaultTitle = $siteName . ' | ' . $tagline;
-    $defaultDesc = 'Premium interlocking, concrete, and landscape construction across Ontario. 10-year warranty. Consultation-led design and build.';
+    $defaultDesc = 'Premium interlocking, concrete, and landscape construction across Our Region. 10-year warranty. Consultation-led design and build.';
 
     // Social variables
     $ogImageId = \App\Models\Setting::get('seo_home_og_image_id');

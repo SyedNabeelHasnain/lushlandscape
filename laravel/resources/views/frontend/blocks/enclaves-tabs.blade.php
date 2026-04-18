@@ -4,7 +4,7 @@
 <section class="bg-airy-gradient py-20 lg:py-32 px-5 lg:px-12 overflow-hidden section-fade-to-white" x-data="{ activeTab: '{{ $activeTabDefault }}' }">
     <div class="max-w-7xl mx-auto gs-reveal">
         <div class="text-center mb-10 lg:mb-16">
-            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent mb-3 lg:mb-4">{{ $content['eyebrow'] ?? 'The Top 1% of the GTA' }}</p>
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent mb-3 lg:mb-4">{{ $content['eyebrow'] ?? 'The Top 1% of the Region' }}</p>
             <h2 class="fluid-heading text-forest mb-4 lg:mb-6 word-wrap-safe">{{ $content['heading'] ?? 'Executive Enclaves' }}</h2>
             @if(!empty($content['description']))
             <p class="text-ink/70 text-base lg:text-lg font-light max-w-2xl mx-auto">{{ $content['description'] }}</p>

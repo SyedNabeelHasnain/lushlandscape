@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($category->meta_title ?? $category->name . ' Portfolio Projects') . ' | Lush Landscape Portfolio'"
+    :title="($category->meta_title ?? $category->name . ' Portfolio Projects') . ' | Super WMS Portfolio'"
     :description="$category->meta_description ?? $category->short_description ?? ''"
     :canonical="route('portfolio.category', $category->slug)"
     :ogTitle="$category->og_title ?? null"

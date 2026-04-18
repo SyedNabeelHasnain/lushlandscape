@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') - Admin | Lush Landscape</title>
+    <title>@yield('title', 'Dashboard') - Admin | Super WMS</title>
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
 </head>
 
@@ -37,7 +37,7 @@
                     <span class="text-white font-bold text-sm">L</span>
                 </div>
                 <div>
-                    <span class="text-white font-semibold text-sm block leading-tight">Lush Landscape</span>
+                    <span class="text-white font-semibold text-sm block leading-tight">Super WMS</span>
                     <span class="text-white/40 text-xs">Content Management</span>
                 </div>
             </div>

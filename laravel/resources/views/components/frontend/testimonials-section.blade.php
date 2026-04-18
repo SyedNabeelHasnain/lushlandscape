@@ -1,6 +1,6 @@
 @props([
     'reviews'  => collect(),
-    'title'    => 'What Ontario Homeowners Say',
+    'title'    => 'What Our Region Homeowners Say',
     'subtitle' => '',
 ])
 @php

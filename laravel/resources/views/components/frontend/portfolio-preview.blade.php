@@ -1,7 +1,7 @@
 @props([
     'projects'   => collect(),
     'title'      => 'Recent Projects',
-    'subtitle'   => 'A sample of our completed landscaping work across Ontario.',
+    'subtitle'   => 'A sample of our completed professional work across Our Region.',
     'viewAllUrl' => '/portfolio',
 ])
 

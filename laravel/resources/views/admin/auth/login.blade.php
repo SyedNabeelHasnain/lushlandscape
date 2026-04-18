@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Lush Landscape Service</title>
+    <title>Admin Login - Super WMS</title>
     @vite(['resources/css/admin.css'])
 </head>
 <body class="bg-cream min-h-screen flex items-center justify-center p-4">
@@ -12,7 +12,7 @@
             <div class="inline-flex items-center justify-center w-16 h-16 bg-forest rounded-2xl mb-4">
                 <span class="text-white text-2xl font-bold">L</span>
             </div>
-            <h1 class="text-2xl font-bold text-forest-dark">Lush Landscape Service</h1>
+            <h1 class="text-2xl font-bold text-forest-dark">Super WMS</h1>
             <p class="text-text-secondary mt-1">Admin Panel</p>
         </div>
         <div class="bg-white rounded-2xl shadow-lg p-8">

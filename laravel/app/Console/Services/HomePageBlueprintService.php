@@ -47,7 +47,7 @@ class HomePageBlueprintService
                 'services_grid',
                 [
                     'eyebrow' => 'Core Disciplines',
-                    'heading' => 'Architectural Hardscaping & Structural Solutions',
+                    'heading' => 'Architectural Engineering & Structural Solutions',
                     'subtitle' => 'From urban ravine lots to expansive executive estates, we engineer outdoor environments that endure.',
                     'layout' => 'grid',
                     'columns' => '3',
@@ -97,7 +97,7 @@ class HomePageBlueprintService
                 [
                     'eyebrow' => 'Selected Works',
                     'heading' => 'Engineered Environments',
-                    'subtitle' => 'A curated selection of our completed landscape construction and hardscaping projects across the GTA.',
+                    'subtitle' => 'A curated selection of our completed landscape construction and hardscaping projects across the Region.',
                     'layout' => 'rail',
                     'columns' => '3',
                     'variant' => 'editorial',
@@ -278,9 +278,9 @@ class HomePageBlueprintService
     public function seoDefaults(): array
     {
         return [
-            'seo_home_title' => 'Lush Landscapes | Luxury Landscape Construction & Hardscape Design GTA',
+            'seo_home_title' => 'Super WMSs | Luxury Landscape Construction & Hardscape Design Region',
             'seo_home_description' => 'Premium landscape construction for architects, designers, and discerning homeowners in Toronto, Oakville, Mississauga, and Milton. Specializing in interlocking, retaining walls, and outdoor living.',
-            'seo_home_og_title' => 'Lush Landscapes | Luxury Landscape Construction',
+            'seo_home_og_title' => 'Super WMSs | Luxury Landscape Construction',
             'seo_home_og_description' => 'Architectural precision in outdoor living across the Greater Toronto Area. 10-Year Workmanship Warranty.',
         ];
     }

@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($page->meta_title ?? $page->page_title) . ' | Lush Landscape Service'"
+    :title="($page->meta_title ?? $page->page_title) . ' | Super WMS Service'"
     :description="$page->meta_description ?? \Illuminate\Support\Str::limit(strip_tags($page->local_intro ?? ''), 155)"
     :canonical="url('/' . $page->slug_final)"
     :ogTitle="$page->og_title ?? null"
@@ -9,7 +9,7 @@
     :ogImage="$page->heroMedia?->url ?? null"
     :schema="$schema"
     :noindex="!$page->is_indexable"
-    :geo="['region' => 'CA-ON', 'placename' => $page->city->name . ', Ontario', 'position' => ($page->city->latitude ?? '43.6532') . ';' . ($page->city->longitude ?? '-79.3832')]"
+    :geo="['region' => 'US-NY', 'placename' => $page->city->name . ', Our Region', 'position' => ($page->city->latitude ?? '40.7128') . ';' . ($page->city->longitude ?? '-74.0060')]"
 />
 @endsection
 @section('content')

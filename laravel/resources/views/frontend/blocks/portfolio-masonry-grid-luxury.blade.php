@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="px-2">
-                    <p class="text-[9px] uppercase tracking-[0.2em] font-semibold text-accent mb-1">{{ $project->city ? $project->city->name : 'GTA' }} / {{ $project->category ? $project->category->name : 'Project' }}</p>
+                    <p class="text-[9px] uppercase tracking-[0.2em] font-semibold text-accent mb-1">{{ $project->city ? $project->city->name : 'Region' }} / {{ $project->category ? $project->category->name : 'Project' }}</p>
                     <h3 class="text-xl lg:text-2xl font-serif text-forest group-hover:text-forest-light transition-colors">{{ $project->title }}</h3>
                 </div>
             </a>

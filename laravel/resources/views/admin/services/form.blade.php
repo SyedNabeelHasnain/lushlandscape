@@ -22,7 +22,7 @@
                 @endif
                 <div class="mt-5">
                     <div class="flex flex-wrap items-center justify-end gap-2">
-                        <x-admin.ai-generate-button field="service_summary" context="Service summary. 1-2 sentences describing this landscaping service. Customer-facing." />
+                        <x-admin.ai-generate-button field="service_summary" context="Service summary. 1-2 sentences describing this professional service. Customer-facing." />
                     </div>
                     <x-admin.form-textarea name="service_summary" label="Service Summary" :value="$service->service_summary ?? ''" :rows="4" tooltip="Brief summary shown in service cards and search results. Keep under 160 characters for best display." />
                 </div>
@@ -111,7 +111,7 @@
                     <div class="flex flex-wrap items-center justify-end gap-2">
                         <x-admin.ai-generate-button field="default_meta_title" context="Service SEO meta title. Max 60 characters." />
                     </div>
-                    <x-admin.form-input name="default_meta_title" label="Meta Title" :value="$service->default_meta_title ?? ''" help="Max 60 characters" tooltip="Page title for search engines. Keep under 60 characters. Include the service name and 'Ontario' for local SEO impact." />
+                    <x-admin.form-input name="default_meta_title" label="Meta Title" :value="$service->default_meta_title ?? ''" help="Max 60 characters" tooltip="Page title for search engines. Keep under 60 characters. Include the service name and 'Our Region' for local SEO impact." />
                     <div class="flex flex-wrap items-center justify-end gap-2">
                         <x-admin.ai-generate-button field="default_meta_description" context="Service SEO meta description. Max 155 characters." />
                     </div>

@@ -1,6 +1,6 @@
 @props([
-    'title'          => 'Lush Landscape Service',
-    'description'    => 'Premium landscaping construction contractors serving Ontario, Canada. Interlocking, concrete, and landscape services with 10-year warranty.',
+    'title'          => 'Super WMS',
+    'description'    => 'Premium professional construction contractors serving Our Region, Canada. Professional, concrete, and landscape services with 10-year warranty.',
     'canonical'      => null,
     'ogTitle'        => null,
     'ogDescription'  => null,
@@ -18,11 +18,11 @@
 ])
 @php
     $twitterHandle = \App\Models\Setting::get('twitter_handle', '');
-    $siteName      = \App\Models\Setting::get('site_name', 'Lush Landscape Service');
+    $siteName      = \App\Models\Setting::get('site_name', 'Super WMS');
     $defaultOgImg  = \App\Models\Setting::get('default_og_image', '');
     $resolvedImg   = $ogImage ?? ($defaultOgImg ? asset($defaultOgImg) : null);
-    // Default GEO for Ontario
-    $geoData = $geo ?? ['region' => 'CA-ON', 'placename' => 'Ontario', 'position' => '43.6532;-79.3832'];
+    // Default GEO for Our Region
+    $geoData = $geo ?? ['region' => 'US-NY', 'placename' => 'Our Region', 'position' => '40.7128;-74.0060'];
 
     // Pagination-aware canonical + rel links
     $paginatorObj = $paginator;
@@ -60,7 +60,7 @@
 @if($articlePublished)<meta property="article:published_time" content="{{ $articlePublished }}">@endif
 @if($articleModified)<meta property="article:modified_time" content="{{ $articleModified }}">@endif
 @if($articleAuthor)<meta property="article:author" content="{{ $articleAuthor }}">@endif
-<meta property="article:section" content="Landscaping">
+<meta property="article:section" content="Professional">
 @endif
 
 {{-- Twitter / X Card --}}
@@ -81,3 +81,9 @@
 
 {{-- JSON-LD Schema --}}
 @if($schema){!! $schema !!}@endif
+
+<script>
+    window.WMS_CONFIG = {
+        maps_url: "{{ config('services.maps.js_url', 'https://maps.googleapis.com/maps/api/js') }}"
+    };
+</script>

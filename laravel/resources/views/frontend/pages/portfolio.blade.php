@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    title="Project Portfolio | Completed Landscaping Work | Lush Landscape Service"
-    description="Browse our completed landscaping projects across Ontario. Interlocking driveways, patios, retaining walls, concrete, and more. Real results from real clients."
+    title="Project Portfolio | Completed Professional Work | Super WMS Service"
+    description="Browse our completed professional projects across Our Region. Professional driveways, patios, retaining walls, concrete, and more. Real results from real clients."
     :canonical="url('/portfolio')"
     :schema="$schema"
     :paginator="$projects"

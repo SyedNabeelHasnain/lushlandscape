@@ -12,12 +12,12 @@ class ThemePresentationService
 {
     public function siteName(): string
     {
-        return (string) Setting::get('site_name', 'Lush Landscape Service');
+        return (string) Setting::get('site_name', 'Super WMS');
     }
 
     public function tagline(): string
     {
-        return (string) Setting::get('site_tagline', 'Premium landscaping construction contractors serving Ontario, Canada.');
+        return (string) Setting::get('site_tagline', 'Premium professional construction contractors serving Our Region, Canada.');
     }
 
     public function phone(): string
@@ -97,7 +97,7 @@ class ThemePresentationService
     {
         $subtext = (string) Setting::get('footer_newsletter_subtext', 'Curated design inspiration and project planning strategies for your estate.');
 
-        if (preg_match('/Join 2,000\+ Ontario homeowners/i', $subtext)) {
+        if (preg_match('/Join 2,000\+ Our Region homeowners/i', $subtext)) {
             return 'Curated design inspiration and project planning strategies for your estate.';
         }
 

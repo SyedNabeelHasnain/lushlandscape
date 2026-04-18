@@ -127,4 +127,10 @@ Route::get('/search/live', [SearchController::class, 'live'])->middleware('throt
 Route::get('/search', [SearchController::class, 'results'])->middleware('throttle:30,1')->name('search.results');
 Route::get('/faqs', [FaqPageController::class, 'index'])->name('faqs.index');
 
+// Catch-All Dynamic Route Resolver (Legacy & New Engine)
+// The new WMS Universal RouteAlias lookup takes precedence.
+Route::get('/wms/{slug}', [\App\Http\Controllers\Frontend\EntityController::class, 'resolve'])
+    ->where('slug', '.*')
+    ->name('wms.resolve');
+
 Route::get('/{slug}', [SlugResolverController::class, 'resolve'])->where('slug', '[a-z0-9\-]+')->name('slug.resolve');

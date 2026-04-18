@@ -31,7 +31,7 @@
                          @click.self="showModal = false"
                          @keydown.escape.window="showModal = false">
                         
-                        <button @click="showModal = false" class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors focus:outline-none z-[210]">
+                        <button @click="showModal = false" class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 rounded-full z-[210]" aria-label="Close modal">
                             <i data-lucide="x" class="w-8 h-8"></i>
                         </button>
                         

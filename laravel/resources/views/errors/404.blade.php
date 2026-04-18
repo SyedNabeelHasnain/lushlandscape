@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('seo')
-<x-frontend.seo-head title="Page Not Found | Lush Landscape Service" description="The page you are looking for could not be found." :noindex="true" />
+<x-frontend.seo-head title="Page Not Found | Super WMS" description="The page you are looking for could not be found." :noindex="true" />
 @endsection
 @section('content')
 <section class="py-20 md:py-32 bg-cream">

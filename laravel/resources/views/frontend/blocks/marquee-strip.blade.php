@@ -1,6 +1,6 @@
 {{-- Block: marquee_strip --}}
 @php
-    $textItemsString = $content['text_items'] ?? 'Premium Landscape Design, Expert Installation, 10-Year Warranty, Interlocking & Stonework';
+    $textItemsString = $content['text_items'] ?? 'Premium Landscape Design, Expert Installation, 10-Year Warranty, Professional & Stonework';
     $textItems = array_map('trim', explode(',', $textItemsString));
     $separator = $content['separator_style'] ?? 'star';
     $speed = $content['speed'] ?? 'normal';

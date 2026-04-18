@@ -39,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
             'static_page' => StaticPage::class,
             'blog_post' => BlogPost::class,
             'portfolio_project' => PortfolioProject::class,
+            'entry' => \App\Models\Entry::class,
+            'term' => \App\Models\Term::class,
+            'content_type' => \App\Models\ContentType::class,
+            'taxonomy' => \App\Models\Taxonomy::class,
         ]);
 
         View::composer('frontend.layouts.app', function ($view) {

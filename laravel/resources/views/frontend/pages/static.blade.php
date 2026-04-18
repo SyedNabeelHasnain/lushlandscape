@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($page->meta_title ?? $page->title) . ' | Lush Landscape Service'"
+    :title="($page->meta_title ?? $page->title) . ' | Super WMS Service'"
     :description="$page->meta_description ?? $page->excerpt ?? ''"
     :canonical="url('/' . $page->slug)"
     :ogTitle="$page->og_title ?? null"

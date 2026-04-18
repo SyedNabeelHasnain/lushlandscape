@@ -13,7 +13,7 @@ $cityPages = $context['cityPages'] ?? collect();
         ['icon' => 'clock',           'label' => '24–48 Hr Response',         'sub' => 'Fast, reliable service'],
         ['icon' => 'thumbs-up',       'label' => 'No Hidden Costs',           'sub' => 'Clear scope plans'],
         ['icon' => 'leaf',            'label' => 'Eco-Friendly Practices',    'sub' => 'Sustainable materials'],
-        ['icon' => 'star',            'label' => '500+ Projects Delivered',   'sub' => 'Across Ontario'],
+        ['icon' => 'star',            'label' => '500+ Projects Delivered',   'sub' => 'Across Our Region'],
     ];
 @endphp
 <section class="py-16 bg-cream border-y border-stone">

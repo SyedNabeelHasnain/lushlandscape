@@ -39,10 +39,10 @@
                 'lng'      => (float) $c->longitude,
                 'type'     => 'city',
                 'slug'     => $c->slug_final,
-                'heading'  => 'Landscaping Services in ' . $c->name,
+                'heading'  => 'Professional Services in ' . $c->name,
                 'desc'     => 'Professional landscape construction, interlocking, concrete, and hardscaping services for ' . $c->name . ' homeowners. Serving neighbourhoods including ' . $hoodNames . '.',
                 'cta_text' => $popupCta,
-                'cta_url'  => '/landscaping-' . $c->slug_final,
+                'cta_url'  => '/professional-' . $c->slug_final,
                 'services' => '',
                 'hoods'    => $c->neighborhoods->map(fn($n) => [
                     'name' => $n->name,
@@ -73,7 +73,7 @@
                     'heading'  => $n->name . ', ' . $city->name,
                     'desc'     => $n->summary,
                     'cta_text' => $popupCta,
-                    'cta_url'  => '/landscaping-' . $city->slug_final,
+                    'cta_url'  => '/professional-' . $city->slug_final,
                     'services' => '',
                     'hoods'    => [],
                 ];
@@ -149,7 +149,7 @@
         <div id="{{ $mapId }}"
              class="w-full  border border-stone overflow-hidden z-0"
              style="height: {{ $height }}px;"
-             aria-label="Interactive service area map showing Lush Landscape Service locations across Ontario">
+             aria-label="Interactive service area map showing Super WMS Service locations across Our Region">
         </div>
 
         {{-- Active location detail strip --}}
@@ -184,7 +184,7 @@
     <script type="application/ld+json">{!! json_encode([
         '@context' => 'https://schema.org',
         '@type' => $schemaType === 'LocalBusiness' ? 'LocalBusiness' : 'Place',
-        'name' => 'Lush Landscape Service - ' . $m['name'],
+        'name' => 'Super WMS Service - ' . $m['name'],
         'description' => $m['desc'],
         'url' => url($m['cta_url']),
         'geo' => [

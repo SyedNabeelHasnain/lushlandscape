@@ -2,7 +2,7 @@
 
 @section('seo')
 <x-frontend.seo-head
-    :title="($project->meta_title ?: $project->title) . ' | Lush Landscape Service'"
+    :title="($project->meta_title ?: $project->title) . ' | Super WMS Service'"
     :description="$project->meta_description ?: Illuminate\Support\Str::limit($project->description ?? '', 155)"
     :canonical="url('/portfolio/' . $project->slug)"
     :ogTitle="$project->title"

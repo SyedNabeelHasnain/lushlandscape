@@ -42,7 +42,7 @@ $cityPages = $context['cityPages'] ?? collect();
             @if($cityName)
             <p class="mt-3 text-text-secondary text-lg">Trusted by homeowners across {{ $cityName }} and the surrounding area.</p>
             @else
-            <p class="mt-3 text-text-secondary text-lg">Trusted by homeowners across Ontario.</p>
+            <p class="mt-3 text-text-secondary text-lg">Trusted by homeowners across Our Region.</p>
             @endif
         </div>
         <div class="grid grid-cols-1 md:grid-cols-{{ min($reviews->count(), 3) }} gap-6">

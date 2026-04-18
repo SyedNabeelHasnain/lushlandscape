@@ -2,8 +2,8 @@
 
 @section('seo')
 <x-frontend.seo-head
-    title="Project Consultation | Lush Landscape Service"
-    description="Begin your project inquiry and request an on-site consultation with Lush Landscape Service. Share a few details and our team will follow up with next steps."
+    title="Project Consultation | Super WMS Service"
+    description="Begin your project inquiry and request an on-site consultation with Super WMS Service. Share a few details and our team will follow up with next steps."
     :canonical="url('/consultation')"
     :schema="$schema"
 />

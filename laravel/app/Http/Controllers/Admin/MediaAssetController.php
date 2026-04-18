@@ -100,7 +100,7 @@ class MediaAssetController extends Controller
             'description' => $request->description,
             'default_alt_text' => $request->default_alt_text,
             'default_caption' => $request->default_caption,
-            'credit' => $request->credit ?? 'Lush Landscape Service',
+            'credit' => $request->credit ?? 'Super WMS',
             'image_purpose' => $request->image_purpose ?? 'informative',
             'location_city' => $request->location_city,
             'social_preview_eligible' => $request->boolean('social_preview_eligible'),
@@ -605,7 +605,7 @@ class MediaAssetController extends Controller
             'sealing' => 'paver sealing finish',
             'repair' => 'paver repair maintenance',
             'lift' => 'paver lift relay repair',
-            'retaining wall' => 'retaining wall landscaping',
+            'retaining wall' => 'retaining wall professional',
             'sod' => 'sod installation lawn',
             'grading' => 'lawn grading topsoil',
             'artificial turf' => 'artificial turf synthetic grass',
@@ -635,9 +635,9 @@ class MediaAssetController extends Controller
 
         // Add location context
         if ($asset->location_city) {
-            $parts[] = $asset->location_city.' Ontario';
+            $parts[] = $asset->location_city.' Our Region';
         } else {
-            $parts[] = 'residential landscaping';
+            $parts[] = 'residential professional';
         }
 
         // Use tags for additional context

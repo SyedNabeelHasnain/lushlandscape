@@ -205,8 +205,8 @@
         $googleBizUrl = $getSetting('google_business_url', '');
         $houzzUrl = $getSetting('houzz_url', '');
         $homestarsUrl = $getSetting('homestars_url', '');
-        $siteName = $getSetting('site_name', 'Lush Landscape Service');
-        $tagline = $getSetting('site_tagline', 'Premium landscaping construction contractors serving Ontario, Canada.');
+        $siteName = $getSetting('site_name', 'Super WMS Service');
+        $tagline = $getSetting('site_tagline', 'Premium professional construction contractors serving Our Region, Canada.');
         $googleRating = $getSetting('google_rating', '');
         $reviewCount = $getSetting('google_review_count', '');
         $phoneClean = preg_replace('/[^+\d]/', '', $phone);
@@ -263,11 +263,11 @@
         $footerLogoId = $getSetting('footer_logo_media_id', '');
         $footerLogo = $footerLogoId ? \App\Models\MediaAsset::find((int) $footerLogoId) : null;
         $footerTagline = $getSetting('footer_tagline', $tagline);
-        $footerCopyright = $getSetting('footer_copyright_text', '© {year} ' . $siteName . '. All rights reserved. Licensed & Insured. Serving Ontario, Canada.');
+        $footerCopyright = $getSetting('footer_copyright_text', '© {year} ' . $siteName . '. All rights reserved. Licensed & Insured. Serving Our Region, Canada.');
         $footerCopyright = str_replace('{year}', date('Y'), $footerCopyright);
         $nlEnabled = $getSetting('footer_newsletter_enabled', '1') === '1';
         $nlHeading = $getSetting('footer_newsletter_heading', 'Landscape Insights & Project Planning');
-        $nlSubtext = $getSetting('footer_newsletter_subtext', 'Join 2,000+ Ontario homeowners getting our free monthly newsletter.');
+        $nlSubtext = $getSetting('footer_newsletter_subtext', 'Join 2,000+ Our Region homeowners getting our free monthly newsletter.');
         $customFooter = $globalThemeFooter ?? null;
         $footerBlocks = $globalThemeFooterBlocks ?? collect();
 
@@ -333,7 +333,7 @@
                     @else
                         <span class="text-white font-heading text-2xl font-bold tracking-tight block mb-6 lg:mb-8">{{ $siteName }}</span>
                     @endif
-                    <p class="max-w-md leading-[1.8] font-light text-white/90">The GTA's technical authority for luxury outdoor construction. We specialize in high-ticket hardscaping, structural masonry, and complete outdoor living environments, backed by a 10-year workmanship warranty.</p>
+                    <p class="max-w-md leading-[1.8] font-light text-white/90">The Region's technical authority for luxury outdoor construction. We specialize in high-ticket hardscaping, structural masonry, and complete outdoor living environments, backed by a 10-year workmanship warranty.</p>
                 </div>
                 <div>
                     <h3 class="text-white text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] mb-4 lg:mb-6">Signature Disciplines</h3>

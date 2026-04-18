@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($q ? 'Search results for &quot;' . e($q) . '&quot;' : 'Search') . ' | Lush Landscape Service'"
-    description="Search our landscaping services, service categories, locations, portfolio, blog posts, and FAQs."
+    :title="($q ? 'Search results for &quot;' . e($q) . '&quot;' : 'Search') . ' | Super WMS Service'"
+    description="Search our professional services, service categories, locations, portfolio, blog posts, and FAQs."
     :canonical="url('/search') . ($q ? '?q=' . urlencode($q) : '')"
 />
 @endsection

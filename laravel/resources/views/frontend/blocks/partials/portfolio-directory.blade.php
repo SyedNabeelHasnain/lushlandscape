@@ -19,7 +19,7 @@
     $heading = $content['heading'] ?? ($isCategoryPage ? $currentCategory->name : 'Our Project Portfolio');
     $subtitle = $content['subtitle'] ?? ($isCategoryPage
         ? ($currentCategory->short_description ?? '')
-        : 'Real projects, real results. Browse our completed landscaping work across Ontario.');
+        : 'Real projects, real results. Browse our completed professional work across Our Region.');
     $eyebrow = $content['eyebrow'] ?? ($isCategoryPage ? 'Portfolio Category' : '');
     $tone = $content['tone'] ?? 'light';
     $emptyTitle = $content['empty_title'] ?? 'No projects found';

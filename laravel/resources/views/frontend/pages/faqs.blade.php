@@ -1,8 +1,8 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    title="Frequently Asked Questions | Landscaping Services Ontario | Lush Landscape Service"
-    description="Find answers to common questions about landscaping services, costs, permits, timelines, and materials across Ontario. Interlocking, concrete, hardscaping, and softscaping FAQs."
+    title="Frequently Asked Questions | Professional Services Our Region | Super WMS Service"
+    description="Find answers to common questions about professional services, costs, permits, timelines, and materials across Our Region. Professional, concrete, hardscaping, and softscaping FAQs."
     :canonical="url('/faqs')"
     :schema="$schema"
     :paginator="$faqs"
@@ -20,7 +20,7 @@
 <section class="section-editorial bg-white">
     <div class="max-w-4xl mx-auto px-6 lg:px-12 text-center">
         <h1 class="text-h2 font-heading font-bold text-ink">Frequently Asked Questions</h1>
-        <p class="mt-3 text-text-secondary text-lg max-w-2xl mx-auto">Get answers about our landscaping services, pricing, permits, timelines, and more across Ontario.</p>
+        <p class="mt-3 text-text-secondary text-lg max-w-2xl mx-auto">Get answers about our professional services, pricing, permits, timelines, and more across Our Region.</p>
 
         <form method="GET" action="{{ url('/faqs') }}" class="mt-8 max-w-xl mx-auto">
             <div class="relative">
@@ -163,7 +163,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-text">General Questions</h2>
-                        <p class="text-xs text-text-secondary">Common questions about our landscaping services</p>
+                        <p class="text-xs text-text-secondary">Common questions about our professional services</p>
                     </div>
                 </div>
                 <div class="space-y-3">
@@ -196,7 +196,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-text">Permits and Regulations</h2>
-                        <p class="text-xs text-text-secondary">Ontario building codes, municipal permits, and conservation authority requirements</p>
+                        <p class="text-xs text-text-secondary">Our Region building codes, municipal permits, and conservation authority requirements</p>
                     </div>
                 </div>
                 <div class="space-y-3">
@@ -295,7 +295,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-text">Service-Specific Questions</h2>
-                        <p class="text-xs text-text-secondary">Detailed answers about specific landscaping services</p>
+                        <p class="text-xs text-text-secondary">Detailed answers about specific professional services</p>
                     </div>
                 </div>
                 <div class="space-y-3">
@@ -333,7 +333,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-text">City-Specific Questions</h2>
-                        <p class="text-xs text-text-secondary">Local landscaping information for cities across Ontario</p>
+                        <p class="text-xs text-text-secondary">Local professional information for cities across Our Region</p>
                     </div>
                 </div>
                 @php $localGrouped = $grouped['local']->groupBy('city_relevance'); @endphp

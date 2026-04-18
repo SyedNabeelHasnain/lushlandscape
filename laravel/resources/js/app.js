@@ -295,7 +295,8 @@ Alpine.data('interactiveMap', ({ mapId, markers: _markers, filters: _filters, ce
         };
 
         const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=${cbName}&loading=async`;
+        const mapsUrl = window.WMS_CONFIG?.maps_url || 'https://maps.googleapis.com/maps/api/js';
+        script.src = `${mapsUrl}?key=${apiKey}&callback=${cbName}&loading=async`;
         script.async = true;
         script.defer = true;
         document.head.appendChild(script);
@@ -396,7 +397,7 @@ Alpine.data('interactiveMap', ({ mapId, markers: _markers, filters: _filters, ce
                     type: 'neighborhood',
                     slug: h.slug,
                     heading: h.name + ', ' + data.name,
-                    desc: 'Professional landscaping services available in ' + h.name + '. Contact us to begin your project inquiry.',
+                    desc: 'Professional professional services available in ' + h.name + '. Contact us to begin your project inquiry.',
                     cta_text: data.cta_text,
                     cta_url: data.cta_url,
                     services: data.services,

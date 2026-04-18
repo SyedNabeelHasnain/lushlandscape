@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
-    :title="($service->default_meta_title ?? $service->name . ' in Ontario') . ' | Lush Landscape Service'"
+    :title="($service->default_meta_title ?? $service->name . ' in Our Region') . ' | Super WMS Service'"
     :description="$service->default_meta_description ?? $service->service_summary ?? ''"
     :ogTitle="$service->default_og_title ?? null"
     :ogDescription="$service->default_og_description ?? null"

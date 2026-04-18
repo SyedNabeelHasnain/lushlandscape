@@ -90,7 +90,7 @@ class FormSubmitController extends Controller
             ],
         ]);
 
-        $siteName = Setting::get('site_name', 'Lush Landscape Service');
+        $siteName = Setting::get('site_name', 'Super WMS');
         $appUrl = rtrim(config('app.url'), '/');
 
         // Admin notification email

@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'name' => env('APP_NAME', 'Lush Landscape Service'),
+    'name' => env('APP_NAME', 'Super WMS'),
     'env' => env('APP_ENV', 'production'),
     'debug' => (bool) env('APP_DEBUG', false),
-    'url' => env('APP_URL', 'https://lushlandscape.ca'),
+    'url' => env('APP_URL', 'http://localhost'),
     'timezone' => 'America/Toronto',
     'locale' => 'en',
     'fallback_locale' => 'en',

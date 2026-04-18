@@ -2,7 +2,7 @@
 @section('title', isset($city) ? 'Edit City' : 'Create City')
 @section('content')
 <x-admin.flash-message />
-<x-admin.page-header :title="isset($city) ? 'Edit: ' . $city->name : 'Create City'" :viewUrl="isset($city) ? url('/landscaping-' . $city->slug_final) : null" />
+<x-admin.page-header :title="isset($city) ? 'Edit: ' . $city->name : 'Create City'" :viewUrl="isset($city) ? url('/professional-' . $city->slug_final) : null" />
 <form method="POST" action="{{ isset($city) ? route('admin.cities.update', $city) : route('admin.cities.store') }}" data-ajax-form="true" data-success-message="{{ isset($city) ? 'City updated successfully.' : 'City created.' }}">
     @csrf
     @if(isset($city)) @method('PUT') @endif
@@ -12,8 +12,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <x-admin.form-input name="name" label="City Name" :value="$city->name ?? ''" required tooltip="The full city name displayed on the page and in the navigation, e.g. Oakville" />
                     <x-admin.form-input name="navigation_label" label="Nav Label" :value="$city->navigation_label ?? ''" tooltip="Shortened label for navigation menus. Defaults to the city name if left blank." />
-                    <x-admin.form-input name="province_name" label="Province" :value="$city->province_name ?? 'Ontario'" tooltip="The province this city is in. Defaults to Ontario. Used for structured data and SEO." />
-                    <x-admin.form-input name="region_name" label="Region" :value="$city->region_name ?? ''" tooltip="The region or area grouping (e.g. GTA, Hamilton Area). Used to group cities in the Locations mega menu." />
+                    <x-admin.form-input name="province_name" label="Province" :value="$city->province_name ?? 'Our Region'" tooltip="The province this city is in. Defaults to Our Region. Used for structured data and SEO." />
+                    <x-admin.form-input name="region_name" label="Region" :value="$city->region_name ?? ''" tooltip="The region or area grouping (e.g. Region, Hamilton Area). Used to group cities in the Locations mega menu." />
                     <x-admin.form-input name="latitude" label="Latitude" type="number" :value="$city->latitude ?? ''" tooltip="GPS latitude for this city. Used for geo-targeting, structured data, and the GEO meta tags." />
                     <x-admin.form-input name="longitude" label="Longitude" type="number" :value="$city->longitude ?? ''" tooltip="GPS longitude for this city. Used for geo-targeting, structured data, and the GEO meta tags." />
                 </div>
@@ -22,7 +22,7 @@
                 @endif
                 <div class="mt-5">
                     <div class="flex flex-wrap items-center justify-end gap-2">
-                        <x-admin.ai-generate-button field="city_summary" context="City landing page summary. 1-2 sentences about landscaping services in this city." />
+                        <x-admin.ai-generate-button field="city_summary" context="City landing page summary. 1-2 sentences about professional services in this city." />
                     </div>
                     <x-admin.form-textarea name="city_summary" label="City Summary" :value="$city->city_summary ?? ''" :rows="4" help="Short intro shown at the top of the city page." tooltip="Short introductory paragraph shown at the top of the city landing page. Keep under 300 characters for best results." />
                 </div>

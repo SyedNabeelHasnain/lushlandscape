@@ -70,7 +70,7 @@
         <td style="border-top:1px solid #f0ede6;padding-top:20px;">
             <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#3d3d3d;line-height:1.6;">
                 Warm regards,<br />
-                <strong style="color:#27452B;">{{ $siteName ?? 'Lush Landscape Service' }}</strong>
+                <strong style="color:#27452B;">{{ $siteName ?? 'Super WMS' }}</strong>
             </p>
         </td>
     </tr>

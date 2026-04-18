@@ -1,10 +1,10 @@
 @props([
-    'heading' => 'Your Trusted Partner for Outdoor Living in Ontario',
+    'heading' => 'Your Trusted Partner for Outdoor Living in Our Region',
     'body'    => [],
 ])
 @php
     $defaults = [
-        'At Lush Landscape Service, we believe your outdoor space should be an extension of the life you love. Whether you are dreaming of a welcoming interlocking driveway, a backyard retreat with natural stone, or a complete landscape transformation, our team brings the craftsmanship and local expertise to make it happen.',
+        'At Super WMS Service, we believe your outdoor space should be an extension of the life you love. Whether you are dreaming of a welcoming interlocking driveway, a backyard retreat with natural stone, or a complete landscape transformation, our team brings the craftsmanship and local expertise to make it happen.',
         'Serving homeowners across the Greater Toronto and Hamilton Area since 2018, we combine premium materials with meticulous installation practices to deliver results that look stunning on day one and hold up for decades. Every project begins with an on-site consultation where we listen to your goals, assess your property, and present a clear scope plan with thoughtful material direction.',
         'From concept through completion, you work directly with our experienced project leads. No subcontractor surprises, no hidden fees, and a workmanship warranty that gives you lasting peace of mind.',
     ];
@@ -17,7 +17,7 @@
 
             {{-- Left column: Editorial content --}}
             <div class="lg:col-span-7 reveal-left">
-                <p class="text-eyebrow text-white/50 mb-6">About Lush Landscape</p>
+                <p class="text-eyebrow text-white/50 mb-6">About Super WMS</p>
                 <h2 class="text-h2 font-heading font-bold text-white">{{ $heading }}</h2>
 
                 @if(!empty($paragraphs[0]))
@@ -60,7 +60,7 @@
                                       aria-label="Since 2018">2000</span>
                                 <span class="text-eyebrow text-accent">Since</span>
                             </div>
-                            <p class="text-sm text-text-secondary leading-relaxed">Serving Ontario homeowners</p>
+                            <p class="text-sm text-text-secondary leading-relaxed">Serving Our Region homeowners</p>
                         </div>
                     </div>
                 </div>

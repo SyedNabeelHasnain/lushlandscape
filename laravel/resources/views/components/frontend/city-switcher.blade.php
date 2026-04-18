@@ -38,7 +38,7 @@
                 if ($mode === 'service-city' && $serviceSlug) {
                     $href = '/' . $serviceSlug . '-' . $city->slug_final;
                 } else {
-                    $href = '/landscaping-' . $city->slug_final;
+                    $href = '/professional-' . $city->slug_final;
                 }
             @endphp
             <a href="{{ $href }}"

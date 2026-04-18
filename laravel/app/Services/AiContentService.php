@@ -38,8 +38,8 @@ class AiContentService
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer '.$apiKey,
                 'Content-Type' => 'application/json',
-            ])->timeout(60)->post('https://api.openai.com/v1/chat/completions', [
-                'model' => $model,
+            ])->timeout(60)->post(config('services.openai.base_url', 'https://api.openai.com/v1/chat/completions'), [
+                'model' => config('services.openai.model', $model),
                 'temperature' => $temperature,
                 'max_tokens' => 2000,
                 'messages' => [
@@ -69,7 +69,7 @@ class AiContentService
     {
         $contextDoc = Setting::get('ai_context_markdown', '');
         $brandRules = implode("\n", [
-            'You are a content writer for Lush Landscape Service, a premium landscaping construction company in Ontario, Canada.',
+            'You are a content writer for Super WMS, a premium professional construction company in Our Region, Canada.',
             'Write in a professional yet conversational tone, speaking directly to the customer using "you" and "your".',
             'Never use em dashes. Never use emojis.',
             'Content must be factually accurate and hyper-localized when city context is provided.',

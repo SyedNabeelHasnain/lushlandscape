@@ -57,7 +57,7 @@ class OtpService
         }
 
         try {
-            $siteName = Setting::get('site_name', 'Lush Landscape Service');
+            $siteName = Setting::get('site_name', 'Super WMS');
 
             Mail::to($email)->send(new CustomerEmail(
                 subject: "Your Verification Code - {$siteName}",

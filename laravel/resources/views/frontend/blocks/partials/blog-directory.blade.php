@@ -11,12 +11,12 @@
     $heading = $content['heading'] ?? ($isCategoryPage ? $currentCategory->name : 'Landscaping Blog');
     $subtitle = $content['subtitle'] ?? ($isCategoryPage
         ? ($currentCategory->short_description ?? '')
-        : 'Expert tips, cost guides, and project inspiration for Ontario homeowners.');
+        : 'Expert tips, cost guides, and project inspiration for Our Region homeowners.');
     $tone = $content['tone'] ?? 'light';
     $showFeaturedHero = (bool) ($content['show_featured_hero'] ?? true);
     $showCategoryTabs = (bool) ($content['show_category_tabs'] ?? true);
     $emptyTitle = $content['empty_title'] ?? 'No articles published yet';
-    $emptyDescription = $content['empty_description'] ?? 'We are preparing expert guidance, project insights, and planning articles for Ontario homeowners.';
+    $emptyDescription = $content['empty_description'] ?? 'We are preparing expert guidance, project insights, and planning articles for Our Region homeowners.';
     $emptyButtonText = $content['empty_button_text'] ?? 'Back to Home';
     $emptyButtonUrl = $content['empty_button_url'] ?? '/';
     $currentPage = method_exists($postsSource, 'currentPage') ? (int) $postsSource->currentPage() : 1;

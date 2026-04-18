@@ -134,8 +134,8 @@ class FaqPageController extends Controller
         $path = parse_url($referrer, PHP_URL_PATH) ?? '';
         $path = trim($path, '/');
 
-        // Match city pages: /landscaping-{slug}
-        if (preg_match('/^landscaping-([a-z0-9\-]+)$/', $path, $m)) {
+        // Match city pages: /professional-{slug}
+        if (preg_match('/^professional-([a-z0-9\-]+)$/', $path, $m)) {
             $city = City::where('slug_final', $m[1])->first();
             if ($city) {
                 $context['city'] = $city->name;

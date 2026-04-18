@@ -71,7 +71,7 @@
                         <x-admin.form-input name="focal_y" label="Focal Point Y (0–1)" :value="$focalY" help="Vertical focus point for crops and object-position. Example: 0.35 = slightly above center." />
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <x-admin.form-input name="credit" label="Credit / Rights" :value="$asset->credit ?? 'Lush Landscape Service'" />
+                        <x-admin.form-input name="credit" label="Credit / Rights" :value="$asset->credit ?? 'Super WMS Service'" />
                         <x-admin.form-select name="image_purpose" label="Image Purpose" :options="['informative' => 'Informative', 'decorative' => 'Decorative', 'functional' => 'Functional', 'product' => 'Product', 'logo' => 'Logo']" :value="$asset->image_purpose ?? 'informative'" />
                     </div>
                     <x-admin.form-input name="location_city" label="City Relevance" :value="$asset->location_city ?? ''" help="Only if this media is genuinely local" />
