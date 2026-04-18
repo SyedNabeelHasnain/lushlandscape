@@ -932,19 +932,11 @@ Alpine.data('themeHeaderShell', ({ compactOnScroll = true, breakpoint = 1024 } =
 Alpine.start();
 
 // ─── Lucide Icons ─────────────────────────────────────────────────────────────
-function renderIcons() {
+window.renderIcons = function() {
     createIcons({ icons, attrs: { 'stroke-width': 1.5 } });
 }
 
-document.addEventListener('DOMContentLoaded', renderIcons);
-
-const observer = new MutationObserver(() => {
-    clearTimeout(observer._timer);
-    observer._timer = setTimeout(renderIcons, 100);
-});
-document.addEventListener('alpine:initialized', () => {
-    observer.observe(document.body, { childList: true, subtree: true });
-});
+document.addEventListener('DOMContentLoaded', window.renderIcons);
 
 // ─── GSAP: Luxury Reveal Animations ──────────────────────────────────────────
 if (!prefersReducedMotion && motionPreset !== 'none') {

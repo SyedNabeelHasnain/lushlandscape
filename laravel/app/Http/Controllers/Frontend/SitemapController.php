@@ -18,6 +18,8 @@ class SitemapController extends Controller
 </urlset>', 200)->header('Content-Type', 'application/xml');
         }
 
-        return response(file_get_contents($sitemapPath), 200)->header('Content-Type', 'application/xml');
+        return response()->file($sitemapPath, [
+            'Content-Type' => 'application/xml'
+        ]);
     }
 }

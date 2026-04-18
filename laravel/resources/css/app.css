@@ -391,8 +391,9 @@
 }
 
 /* ─── GSAP Reveal Targets ─────────────────────────────────────────────── */
-.reveal, .reveal-left, .reveal-right {
+.reveal, .reveal-left, .reveal-right, [data-animate] {
     opacity: 0;
+    will-change: transform, opacity;
 }
 .reveal { transform: translateY(40px); }
 .reveal-left { transform: translateX(-40px); }
@@ -440,6 +441,9 @@
     border-radius: 0;
     margin: 0 4px;
     cursor: pointer;
+    /* Increase touch target size for WCAG compliance */
+    padding-block: 15px;
+    background-clip: content-box;
 }
 .hero-pagination .swiper-pagination-bullet-active {
     background: rgba(255, 255, 255, 0.9);
@@ -455,6 +459,10 @@
     height: 2px;
     transition: all 0.4s ease;
     border-radius: 0;
+    /* Increase touch target size for WCAG compliance */
+    padding-block: 15px;
+    background-clip: content-box;
+    cursor: pointer;
 }
 .testimonials-pagination .swiper-pagination-bullet-active {
     background: var(--color-forest);

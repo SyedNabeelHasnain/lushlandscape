@@ -71,6 +71,7 @@
                     headers: { 'X-Requested-With': 'XMLHttpRequest' }
                 });
                 this.searchResults = await res.json();
+                this.$nextTick(() => { if(window.renderIcons) window.renderIcons(); });
             } catch { this.searchResults = null; } finally { this.searchLoading = false; }
         },
         totalResults() {
@@ -105,7 +106,9 @@
             <nav class="hidden lg:flex items-center gap-1 flex-1 justify-center" aria-label="Primary navigation">
                 <div class="relative"
                      x-on:mouseenter="openMenu('services')"
-                     x-on:mouseleave="scheduleClose()">
+                     x-on:mouseleave="scheduleClose()"
+                     x-on:focusin="openMenu('services')"
+                     x-on:focusout="scheduleClose()">
                     <button x-on:click="activeMenu === 'services' ? closeAll() : openMenu('services')"
                             class="flex items-center gap-1.5 text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300"
                             :class="activeMenu === 'services' ? 'text-white' : ''"
@@ -117,7 +120,9 @@
 
                 <div class="relative"
                      x-on:mouseenter="openMenu('locations')"
-                     x-on:mouseleave="scheduleClose()">
+                     x-on:mouseleave="scheduleClose()"
+                     x-on:focusin="openMenu('locations')"
+                     x-on:focusout="scheduleClose()">
                     <button x-on:click="activeMenu === 'locations' ? closeAll() : openMenu('locations')"
                             class="flex items-center gap-1.5 text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300"
                             :class="activeMenu === 'locations' ? 'text-white' : ''"

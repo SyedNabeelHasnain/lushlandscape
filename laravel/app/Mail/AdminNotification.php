@@ -3,11 +3,10 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AdminNotification extends Mailable implements ShouldQueue
+class AdminNotification extends Mailable
 {
     use Queueable, SerializesModels;
 

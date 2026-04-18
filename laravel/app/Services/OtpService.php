@@ -59,7 +59,7 @@ class OtpService
         try {
             $siteName = Setting::get('site_name', 'Lush Landscape Service');
 
-            Mail::to($email)->queue(new CustomerEmail(
+            Mail::to($email)->send(new CustomerEmail(
                 subject: "Your Verification Code - {$siteName}",
                 greeting: 'Hello,',
                 lines: ['You requested a verification code to confirm your email address. Please use the code below to complete your verification.'],

@@ -16,6 +16,7 @@ document.addEventListener('alpine:init', () => {
         async checkEmail(email) {
             this.emailValue = email;
             if (!email || !email.includes('@')) return;
+            this.otpMessage = '';
 
             try {
                 const res = await fetch('/api/v1/otp/check', {
@@ -39,6 +40,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         async sendOtp() {
+            this.otpMessage = '';
             this.showVerifyBtn = false;
             this.showOtpField = true;
             this.otpMessage = 'Sending code...';
@@ -60,6 +62,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         async verifyOtp() {
+            this.otpMessage = '';
             if (this.otpCode.length !== 6) {
                 this.otpMessage = 'Please enter the 6-digit code.';
                 return;

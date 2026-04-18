@@ -32,16 +32,18 @@ class FormSubmitController extends Controller
 
             $fieldRules = $field->is_required ? ['required'] : ['nullable'];
 
-            match ($field->type) {
-                'email' => array_push($fieldRules, 'email', 'max:255'),
-                'tel' => array_push($fieldRules, 'string', 'max:30'),
-                'url' => array_push($fieldRules, 'url', 'max:500'),
-                'number' => array_push($fieldRules, 'numeric'),
-                'textarea' => array_push($fieldRules, 'string', 'max:5000'),
-                'select', 'radio' => array_push($fieldRules, 'string', 'max:255'),
-                'checkbox' => array_push($fieldRules, 'accepted'),
-                default => array_push($fieldRules, 'string', 'max:500'),
+            $typeRules = match ($field->type) {
+                'email' => ['email', 'max:255'],
+                'tel' => ['string', 'max:30'],
+                'url' => ['url', 'max:500'],
+                'number' => ['numeric'],
+                'textarea' => ['string', 'max:5000'],
+                'select', 'radio' => ['string', 'max:255'],
+                'checkbox' => ['accepted'],
+                default => ['string', 'max:500'],
             };
+
+            $fieldRules = array_merge($fieldRules, $typeRules);
 
             $rules[$field->name] = $fieldRules;
         }
@@ -114,14 +116,18 @@ class FormSubmitController extends Controller
                     preheader: "New {$form->name} submission received",
                 );
 
-                $mailer = Mail::to($form->email_to);
+                $emailTo = array_filter(array_map('trim', explode(',', $form->email_to)));
+                $mailer = Mail::to($emailTo);
+                
                 if ($form->email_cc) {
-                    $mailer->cc($form->email_cc);
+                    $emailCc = array_filter(array_map('trim', explode(',', $form->email_cc)));
+                    if (!empty($emailCc)) $mailer->cc($emailCc);
                 }
                 if ($form->email_bcc) {
-                    $mailer->bcc($form->email_bcc);
+                    $emailBcc = array_filter(array_map('trim', explode(',', $form->email_bcc)));
+                    if (!empty($emailBcc)) $mailer->bcc($emailBcc);
                 }
-                $mailer->queue($adminMail);
+                $mailer->send($adminMail);
             } catch (\Throwable $e) {
                 Log::error('Form email delivery failed', [
                     'form_id' => $form->id,
@@ -150,7 +156,7 @@ class FormSubmitController extends Controller
 
                 $greeting = $userName ? "Hi {$userName}," : 'Hello,';
 
-                Mail::to($userEmail)->queue(new CustomerEmail(
+                Mail::to($userEmail)->send(new CustomerEmail(
                     subject: $subject,
                     greeting: $greeting,
                     lines: $lines,
