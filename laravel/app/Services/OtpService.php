@@ -71,7 +71,7 @@ class OtpService
             ));
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::error('OTP Mail Error: ' . $e->getMessage() . ' Trace: ' . $e->getTraceAsString());
-            return ['success' => false, 'message' => 'Mail Error: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Failed to send verification email.'];
         }
 
         return ['success' => true, 'message' => 'Verification code sent to your email.'];

@@ -135,7 +135,7 @@ class FormSubmitController extends Controller
                     'error' => $e->getMessage(),
                 ]);
 
-                return response()->json(['success' => false, 'message' => 'Mail Error: ' . $e->getMessage()], 500);
+                return response()->json(['success' => false, 'message' => 'Failed to send email notification.'], 500);
             }
         }
 

@@ -112,19 +112,6 @@ Route::get('/llms.txt', [LlmsTxtController::class, 'show'])->name('llms.txt');
 Route::get('/llms-full.txt', [LlmsTxtController::class, 'full'])->name('llms-full.txt');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-Route::get('/debug-blocks', function () {
-    $blocks = \App\Models\PageBlock::all();
-    $homeBlocks = \App\Models\PageBlock::where('page_type', 'home')->get();
-    
-    $out = "Total blocks: " . $blocks->count() . "\n";
-    $out .= "Home blocks count: " . $homeBlocks->count() . "\n";
-    foreach ($homeBlocks as $b) {
-        $out .= "ID: {$b->id}, Type: {$b->block_type}, Page ID: " . var_export($b->page_id, true) . ", Enabled: {$b->is_enabled}\n";
-    }
-
-    return response($out)->header('Content-Type', 'text/plain');
-});
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [ServicePageController::class, 'hub'])->name('services.hub');
 Route::get('/services/{slug}', [ServicePageController::class, 'category'])->name('services.category');
