@@ -881,7 +881,8 @@
         color: var(--color-forest-light);
     }
     .field-ui:focus ~ .field-label,
-    .field-ui:not(:placeholder-shown) ~ .field-label {
+    .field-ui:not(:placeholder-shown) ~ .field-label,
+    .field-ui.has-value ~ .field-label {
         top: -20px;
         font-size: 10px;
     }
