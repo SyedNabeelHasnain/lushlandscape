@@ -39,6 +39,8 @@ return [
         'credentials_grid_luxury' => 'credentials_grid_luxury',
         'timeline_history_luxury' => 'timeline_history_luxury',
         'architectural_process' => 'architectural_process',
+        'service_category_cards_luxury' => 'service_category_cards_luxury',
+        'service_list_masonry_luxury' => 'service_list_masonry_luxury',
         'enclaves_tabs' => 'enclaves_tabs',
         'consultation_form_split' => 'consultation_form_split',
         'consultation_wizard_luxury' => 'consultation_wizard_luxury',
@@ -952,6 +954,40 @@ return [
                 'step_5_phase' => 'Phase 05',
                 'step_5_title' => 'Completion & Aftercare',
                 'step_5_desc' => 'The environment is reviewed, refined, and transitioned to you with practical guidance for long-term architectural confidence.',
+            ],
+        ],
+
+        'service_category_cards_luxury' => [
+            'label' => 'Service Category Cards (Luxury)',
+            'icon' => 'layers',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Our Capabilities',
+                'heading' => 'Architectural<br>Disciplines',
+                'description' => 'Explore our core construction categories, engineered for longevity and absolute visual restraint.',
+            ],
+        ],
+
+        'service_list_masonry_luxury' => [
+            'label' => 'Service List Masonry (Luxury)',
+            'icon' => 'layout-grid',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Specialized Services',
+                'heading' => 'Targeted<br>Execution',
+                'description' => 'Explore the specific installations and capabilities within this architectural discipline.',
             ],
         ],
 

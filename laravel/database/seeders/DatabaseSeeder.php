@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             ConsultationPageSeeder::class,
             PortfolioPageSeeder::class,
             AboutPageSeeder::class,
+            ServicesHubSeeder::class,
 
             // Interactive map blocks for city + service-city pages
             MapContentSeeder::class,
