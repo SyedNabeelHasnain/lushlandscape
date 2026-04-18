@@ -93,9 +93,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::post('blocks/{pageType}/{pageId?}', [BlockEditorController::class, 'update'])->name('blocks.update');
     Route::post('clear-cache', [CacheController::class, 'clear'])->name('clear-cache');
     Route::post('ai/generate', [AiContentController::class, 'generate'])->name('ai.generate');
-    Route::get('content-blocks/{type}/{id}/export', [ContentBlockExportController::class, 'export'])->name('content-blocks.export');
-    Route::post('content-blocks/{type}/{id}/preview', [ContentBlockExportController::class, 'preview'])->name('content-blocks.preview');
-    Route::post('content-blocks/{type}/{id}/import', [ContentBlockExportController::class, 'import'])->name('content-blocks.import');
     Route::get('import-export', [ImportExportController::class, 'index'])->name('import-export.index');
     Route::post('import-export/export', [ImportExportController::class, 'export'])->name('import-export.export');
     Route::post('import-export/upload', [ImportExportController::class, 'upload'])->name('import-export.upload');

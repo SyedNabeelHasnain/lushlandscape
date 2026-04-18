@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\ContentBlock;
-use App\Models\PageBlock;
-use App\Models\PageSection;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -35,14 +35,14 @@ return new class extends Migration
             'blog_strip' => 'blog_strip',
         ];
 
-        PageSection::chunk(100, function ($sections) use ($sectionToBlockMap) {
+        DB::table('page_sections')->orderBy('id')->chunk(100, function ($sections) use ($sectionToBlockMap) {
             foreach ($sections as $section) {
                 $blockType = $sectionToBlockMap[$section->section_key] ?? 'rich_text';
                 $category = in_array($blockType, ['hero', 'services_grid', 'testimonials', 'portfolio_gallery', 'faq_section', 'city_grid', 'blog_strip', 'stats_bar', 'process_steps', 'trust_badges', 'cta_section', 'local_about', 'city_availability'])
                     ? 'data'
                     : 'content';
 
-                PageBlock::create([
+                DB::table('page_blocks')->insert([
                     'page_type' => $section->page_type,
                     'page_id' => $section->page_id,
                     'block_type' => $blockType,
@@ -54,16 +54,16 @@ return new class extends Migration
                     'show_on_tablet' => $section->show_on_mobile, // tablet inherits from mobile
                     'show_on_mobile' => $section->show_on_mobile,
                     'content' => $section->settings,
-                    'data_source' => $this->getDataSourceForBlock($blockType, $section->page_type),
+                    'data_source' => json_encode($this->getDataSourceForBlock($blockType, $section->page_type)),
                     'styles' => null,
                 ]);
             }
         });
 
         // Migrate page_content_blocks → page_blocks (as content blocks)
-        ContentBlock::chunk(100, function ($blocks) {
+        DB::table('page_content_blocks')->orderBy('id')->chunk(100, function ($blocks) {
             foreach ($blocks as $block) {
-                PageBlock::create([
+                DB::table('page_blocks')->insert([
                     'page_type' => $block->page_type,
                     'page_id' => $block->page_id,
                     'block_type' => $block->block_type,
@@ -91,7 +91,7 @@ return new class extends Migration
             throw new RuntimeException('This migration cannot be rolled back in production. It would delete all page blocks.');
         }
 
-        PageBlock::whereNotNull('id')->delete();
+        DB::table('page_blocks')->delete();
     }
 
     /**

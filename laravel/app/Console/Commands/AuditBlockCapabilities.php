@@ -35,11 +35,9 @@ class AuditBlockCapabilities extends Command
         $this->line(' - Unsupported content fields: '.$audit['summary']['unsupported_content_fields']);
         $this->line(' - Declared style fields: '.$audit['summary']['declared_style_fields']);
         $this->line(' - Style fields not rendered by shared renderer: '.$audit['summary']['style_fields_not_rendered']);
-        $this->line(' - Legacy renderer views: '.$audit['summary']['legacy_renderer_views']);
 
         $this->renderList('Blocks missing render surfaces', $audit['blocks_missing_render_surface']);
         $this->renderList('Style keys saved but not rendered by the shared renderer', $audit['style_keys_not_rendered']);
-        $this->renderList('Views still using the legacy content-block renderer', $audit['legacy_renderer_views']);
 
         return self::SUCCESS;
     }

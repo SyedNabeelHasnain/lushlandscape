@@ -48,7 +48,6 @@
                     :blockTypes="$blockTypes ?? []"
                 />
             </x-admin.card>
-            <x-admin.content-block-export type="theme_layout" :id="$layout->id" />
             @else
             <div class="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl text-sm mt-6 flex items-start gap-3">
                 <i data-lucide="info" class="w-5 h-5 mt-0.5 shrink-0 text-amber-500"></i>

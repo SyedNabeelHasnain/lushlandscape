@@ -22,7 +22,7 @@
     $btmKeys = ['trust_badges', 'cta_section', 'split_consultation_panel', 'services_grid'];
 
     // Legacy rows used section_key; unified rows use block_type
-    $getBlockKey = fn($b) => ($b->is_layout_section ?? false) ? ($b->section_key ?? null) : ($b->block_type ?? null);
+    $getBlockKey = fn($b) => $b->block_type ?? null;
 
     $topBlocks  = $blocks->filter(fn($b) => in_array($getBlockKey($b), $topKeys));
     $btmBlocks  = $blocks->filter(fn($b) => in_array($getBlockKey($b), $btmKeys));

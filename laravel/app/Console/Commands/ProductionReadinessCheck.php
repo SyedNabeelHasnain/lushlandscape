@@ -118,14 +118,6 @@ class ProductionReadinessCheck extends Command
             $notes[] = 'LEGACY_STRICT is enabled.';
         }
 
-        $missingLegacyPages = BlockBuilderService::legacyPageInventory()
-            ->filter(fn (array $page) => BlockBuilderService::missingLegacyBlockCount($page['page_type'], $page['page_id']) > 0)
-            ->count();
-
-        if ($missingLegacyPages > 0) {
-            $issues[] = "Unified page_blocks are still missing for {$missingLegacyPages} legacy pages.";
-        } else {
-            $notes[] = 'Unified page_blocks parity is complete for all legacy pages.';
         }
 
         $this->renderSection('Passes', $notes, 'info');

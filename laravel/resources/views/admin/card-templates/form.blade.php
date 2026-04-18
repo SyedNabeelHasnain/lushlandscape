@@ -39,7 +39,6 @@
                         <x-admin.block-editor pageType="template_card" :pageId="$template->id" :blocks="$blocks ?? collect()"
                             :blockTypes="$blockTypes ?? []" />
                     </x-admin.card>
-                    <x-admin.content-block-export type="template_card" :id="$template->id" />
                 @endif
             </div>
             <div class="space-y-6">

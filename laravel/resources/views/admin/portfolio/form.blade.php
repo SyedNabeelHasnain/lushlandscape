@@ -74,7 +74,6 @@
             :blockTypes="$blockTypes ?? []"
         />
     </x-admin.card>
-    <x-admin.content-block-export type="portfolio_project" :id="$project->id" />
     @endif
 
     <div class="mt-6 flex flex-col gap-3 sm:flex-row">

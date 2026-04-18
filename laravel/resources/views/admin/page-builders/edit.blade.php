@@ -27,7 +27,6 @@
                 />
             </x-admin.card>
 
-            <x-admin.content-block-export :type="$pageType" :id="$pageId" />
         </div>
 
         <div class="space-y-4">

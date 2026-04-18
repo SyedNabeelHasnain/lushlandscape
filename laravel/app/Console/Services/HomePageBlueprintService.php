@@ -241,16 +241,13 @@ class HomePageBlueprintService
     public function scaffold(bool $replace = false): array
     {
         $existingUnifiedBlocks = PageBlock::forPage('home', null)->count();
-        $legacyCounts = BlockBuilderService::legacyRowCounts('home', null);
-        $legacyTotal = array_sum($legacyCounts);
 
-        if (! $replace && ($existingUnifiedBlocks > 0 || $legacyTotal > 0)) {
+        if (! $replace && ($existingUnifiedBlocks > 0)) {
             return [
                 'applied' => false,
                 'replaced' => false,
                 'block_count' => 0,
                 'existing_unified_blocks' => $existingUnifiedBlocks,
-                'legacy_counts' => $legacyCounts,
                 'reason' => 'existing_content',
             ];
         }
@@ -271,7 +268,6 @@ class HomePageBlueprintService
             'replaced' => $replace,
             'block_count' => count($blocks),
             'existing_unified_blocks' => $existingUnifiedBlocks,
-            'legacy_counts' => $legacyCounts,
             'reason' => 'scaffolded',
         ];
     }

@@ -57,7 +57,6 @@
                     :blockTypes="$blockTypes ?? []"
                 />
             </x-admin.card>
-            <x-admin.content-block-export type="service" :id="$service->id" />
             @endif
             @if(isset($service) && $service->cityPages->isNotEmpty())
             <x-admin.card title="City Pages">

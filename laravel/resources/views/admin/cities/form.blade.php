@@ -53,7 +53,6 @@
                     :blockTypes="$blockTypes ?? []"
                 />
             </x-admin.card>
-            <x-admin.content-block-export type="city" :id="$city->id" />
             @endif
 
             <x-admin.card title="Target Keywords">

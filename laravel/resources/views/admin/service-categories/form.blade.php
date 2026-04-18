@@ -38,7 +38,6 @@
                     :blockTypes="$blockTypes ?? []"
                 />
             </x-admin.card>
-            <x-admin.content-block-export type="service_category" :id="$category->id" />
             @endif
             <x-admin.card title="SEO & Social">
                 <div class="space-y-5">

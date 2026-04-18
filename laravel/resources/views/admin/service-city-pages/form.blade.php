@@ -69,7 +69,6 @@
                 @endif
             </x-admin.card>
             @if(isset($page))
-            <x-admin.content-block-export type="service_city_page" :id="$page->id" />
             @endif
 
             <x-admin.card title="SEO & Social">

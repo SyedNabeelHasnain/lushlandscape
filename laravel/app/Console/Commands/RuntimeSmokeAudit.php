@@ -201,7 +201,6 @@ class RuntimeSmokeAudit extends Command
             $this->check('admin', '/admin/card-templates/create', true),
             $this->check('admin', '/admin/media/create', true),
             $this->check('admin', '/admin/blocks/home/0', true),
-            $this->check('admin', '/admin/content-blocks/home/0/export', true),
         ]);
 
         $checks = $checks
@@ -408,7 +407,6 @@ class RuntimeSmokeAudit extends Command
         }
 
         return collect([
-            $this->check('admin', sprintf('/admin/content-blocks/%s/%d/export', $type, $model->id), true),
         ]);
     }
 

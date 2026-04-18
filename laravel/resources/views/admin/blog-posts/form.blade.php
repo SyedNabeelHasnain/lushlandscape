@@ -39,7 +39,6 @@
                     :blockTypes="$blockTypes ?? []"
                 />
             </x-admin.card>
-            <x-admin.content-block-export type="blog_post" :id="$post->id" />
             @endif
 
             <x-admin.card title="SEO">

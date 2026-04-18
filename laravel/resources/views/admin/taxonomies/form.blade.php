@@ -89,7 +89,6 @@
                     :blockTypes="$blockTypes ?? []"
                 />
             </x-admin.card>
-            <x-admin.content-block-export :type="$pageType" :id="$item->id" />
             @elseif(isset($item))
             <x-admin.card title="Frontend Availability">
                 <p class="text-sm text-text-secondary">This taxonomy is currently used for CMS organization only. It does not have a dedicated public-facing landing page, so block-builder content is intentionally disabled here.</p>

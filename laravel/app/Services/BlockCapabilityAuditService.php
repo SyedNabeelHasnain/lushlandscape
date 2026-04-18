@@ -87,7 +87,6 @@ class BlockCapabilityAuditService
             ->values()
             ->all();
 
-        $legacyRendererViews = $this->bladeViewsContaining('<x-frontend.content-blocks');
 
         return [
             'summary' => [
@@ -96,7 +95,6 @@ class BlockCapabilityAuditService
                 'unsupported_content_fields' => count($unsupportedContentFields),
                 'declared_style_fields' => count($styleFieldMatrix),
                 'style_fields_not_rendered' => count(array_filter($styleFieldMatrix, fn (array $field) => ! $field['frontend_supported'])),
-                'legacy_renderer_views' => count($legacyRendererViews),
             ],
             'supported_content_field_types' => self::SUPPORTED_CONTENT_FIELD_TYPES,
             'supported_style_field_types' => self::SUPPORTED_STYLE_FIELD_TYPES,
@@ -110,7 +108,6 @@ class BlockCapabilityAuditService
             'blocks' => $blockMatrix,
             'blocks_missing_render_surface' => $blocksMissingRenderSurface,
             'unsupported_content_fields' => $unsupportedContentFields,
-            'legacy_renderer_views' => $legacyRendererViews,
         ];
     }
 
@@ -137,7 +134,6 @@ class BlockCapabilityAuditService
             '- Unsupported content fields: '.$audit['summary']['unsupported_content_fields'],
             '- Declared style fields: '.$audit['summary']['declared_style_fields'],
             '- Style fields not rendered by shared renderer: '.$audit['summary']['style_fields_not_rendered'],
-            '- Legacy renderer views: '.$audit['summary']['legacy_renderer_views'],
             '',
             '## Style Parity',
             '',
@@ -171,10 +167,8 @@ class BlockCapabilityAuditService
         $lines[] = '## Legacy Renderer Views';
         $lines[] = '';
 
-        if ($audit['legacy_renderer_views'] === []) {
             $lines[] = '- None';
         } else {
-            foreach ($audit['legacy_renderer_views'] as $path) {
                 $lines[] = '- `'.$path.'`';
             }
         }

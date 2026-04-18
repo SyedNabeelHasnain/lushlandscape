@@ -7,50 +7,36 @@
 @props(['block', 'context' => []])
 
 @php
-    $sectionMapping = \App\Services\BlockBuilderService::layoutSectionViewMap();
     $blockType = $block->block_type;
-    $hasLegacySectionProperty = isset($block->section_key) && filled($block->section_key);
-    $hasLegacySectionMarker = !empty(data_get($block->content ?? [], '_legacy_page_section_id'));
-    $isExplicitLayoutSection = (bool) ($block->is_layout_section ?? false);
-    $isLayout = $hasLegacySectionProperty || $hasLegacySectionMarker || $isExplicitLayoutSection;
-    $mapped = $isLayout ? ($sectionMapping[$blockType] ?? null) : null;
     
-    // Content data might be stored in settings (legacy DB) or content (new unified block DB)
-    $content = $isLayout ? ($block->content ?? $block->settings ?? []) : ($block->content ?? []);
+    $content = $block->content ?? [];
     $content = \App\Services\BlockBuilderService::parseDynamicContent($content, $context);
 
-    
-    // For layout sections, we use defaults for category and data resolution
-    $category = $isLayout ? 'layout' : $block->category;
-    $dataSource = !$isLayout ? $block->getFinalDataSource() : [];
-    
-    // Resolve data for data blocks (Only if not a layout section, as they handle their own data)
+    // Resolve data for data blocks
+    $category = $block->category;
+    $dataSource = $block->getFinalDataSource();
     $data = new \Illuminate\Support\Collection();
-    if (!$isLayout && $block->isDataBlock()) {
+    if ($block->isDataBlock()) {
         $data = \App\Services\BlockBuilderService::resolveBlockData($block, $context);
     }
     
     // Build CSS classes from styles
     $allCssClasses = [];
  
-    if (!$isLayout) {
-        $contentWidth = $block->getStyle('content_width', 'desktop', 'default');
-        $legacyMaxWidth = $block->getStyle('max_width', 'desktop', 'full');
-        $activeWidth = $contentWidth !== 'default' ? $contentWidth : $legacyMaxWidth;
-        
-        $widthMap = [
-            'full' => '', 
-            '7xl' => 'max-w-7xl', 
-            '5xl' => 'max-w-5xl', 
-            '3xl' => 'max-w-3xl', 
-            'xl' => 'max-w-xl',
-            'sm' => 'max-w-sm',
-            'premium-narrow' => 'max-w-[880px]'
-        ];
-        $containerClass = $widthMap[$activeWidth] ?? '';
-    } else {
-        $containerClass = ''; // Layout sections handle their own containers
-    }
+    $contentWidth = $block->getStyle('content_width', 'desktop', 'default');
+    $maxWidth = $block->getStyle('max_width', 'desktop', 'full');
+    $activeWidth = $contentWidth !== 'default' ? $contentWidth : $maxWidth;
+    
+    $widthMap = [
+        'full' => '', 
+        '7xl' => 'max-w-7xl', 
+        '5xl' => 'max-w-5xl', 
+        '3xl' => 'max-w-3xl', 
+        'xl' => 'max-w-xl',
+        'sm' => 'max-w-sm',
+        'premium-narrow' => 'max-w-[880px]'
+    ];
+    $containerClass = $widthMap[$activeWidth] ?? '';
     
     // Custom class
     $customClass = $block->getStyle('custom_class', 'desktop', '');
@@ -407,75 +393,42 @@
     $inlineStyleCss = implode('', $styleRules);
 @endphp
 
-@if($isLayout)
-    {{-- Render Legacy Layout Section --}}
-    @if($mapped && $block->is_enabled)
-        <section {{ $htmlId }} {!! $customAttrs !!} {!! $animAttr !!} data-block-style-id="{{ $styleScopeId }}" class="{{ $allClassesString }}">
-            @if($inlineStyleCss !== '')
-            <style>{!! $inlineStyleCss !!}</style>
-            @endif
-            @if($hasOverlay)
-            <div data-block-style-overlay="{{ $styleScopeId }}" class="pointer-events-none absolute inset-0 z-0"></div>
-            @endif
-            <div @class([$contentLayerClass => $contentLayerClass !== ''])>
-            @if($mapped['type'] === 'view')
-                @include($mapped['name'], [
-                    'section' => ['settings' => $content, 'id' => $block->id, 'key' => $blockType],
-                    'service' => $context['service'] ?? null,
-                    'city' => $context['city'] ?? null,
-                    'page' => $context['page'] ?? null,
-                    'servicePages' => $context['servicePages'] ?? collect(),
-                    'cityPages' => $context['cityPages'] ?? collect(),
-                    'context' => $context
-                ])
-            @else
-                <x-dynamic-component 
-                    :component="$mapped['name']" 
-                    :settings="$content" 
-                    :context="$context" 
-                />
-            @endif
-            </div>
-        </section>
+{{-- Render Standard Content Block --}}
+@if($block->is_enabled)
+<section {{ $htmlId }} {!! $customAttrs !!} {!! $animAttr !!} data-block-style-id="{{ $styleScopeId }}" class="{{ $allClassesString }}">
+    @if($inlineStyleCss !== '')
+    <style>{!! $inlineStyleCss !!}</style>
     @endif
-@else
-    {{-- Render Standard Content Block --}}
-    @if($block->is_enabled)
-    <section {{ $htmlId }} {!! $customAttrs !!} {!! $animAttr !!} data-block-style-id="{{ $styleScopeId }}" class="{{ $allClassesString }}">
-        @if($inlineStyleCss !== '')
-        <style>{!! $inlineStyleCss !!}</style>
-        @endif
-        @if($hasOverlay)
-        <div data-block-style-overlay="{{ $styleScopeId }}" class="pointer-events-none absolute inset-0 z-0"></div>
-        @endif
-        @if($containerClass)
-        <div class="{{ trim($containerClass.' '.$contentLayerClass) }} mx-auto px-6 lg:px-12">
-        @endif
+    @if($hasOverlay)
+    <div data-block-style-overlay="{{ $styleScopeId }}" class="pointer-events-none absolute inset-0 z-0"></div>
+    @endif
+    @if($containerClass)
+    <div class="{{ trim($containerClass.' '.$contentLayerClass) }} mx-auto px-6 lg:px-12">
+    @endif
 
-        <div @class([$contentLayerClass => !$containerClass && $contentLayerClass !== ''])>
-            @if(view()->exists($blockView))
-                @include($blockView, [
-                    'block' => $block,
-                    'content' => $content,
-                    'data' => $data,
-                    'context' => $context,
-                    'mediaLookup' => $mediaLookup,
-                    'section' => ['settings' => $content],
-                ])
-            @else
-                @includeFirst([$partialBlockView, 'frontend.blocks.partials.rich-text'], [
-                    'block' => $block,
-                    'content' => $content,
-                    'data' => $data,
-                    'context' => $context,
-                    'section' => ['settings' => $content],
-                ])
-            @endif
-        </div>
-        
-        @if($containerClass)
-        </div>
+    <div @class([$contentLayerClass => !$containerClass && $contentLayerClass !== ''])>
+        @if(view()->exists($blockView))
+            @include($blockView, [
+                'block' => $block,
+                'content' => $content,
+                'data' => $data,
+                'context' => $context,
+                'mediaLookup' => $mediaLookup,
+                'section' => ['settings' => $content],
+            ])
+        @else
+            @includeFirst([$partialBlockView, 'frontend.blocks.partials.rich-text'], [
+                'block' => $block,
+                'content' => $content,
+                'data' => $data,
+                'context' => $context,
+                'section' => ['settings' => $content],
+            ])
         @endif
-    </section>
+    </div>
+    
+    @if($containerClass)
+    </div>
     @endif
+</section>
 @endif

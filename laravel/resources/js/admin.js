@@ -895,7 +895,6 @@ Alpine.data('blockEditor', (pageType, initialBlocks, blockTypes, styleFields = [
             _advancedOpen: false,
             _dataSourceOpen: false,
             _uid: ++_uid,
-            is_layout_section: b.is_layout_section ?? typeMap[b.block_type]?.is_layout_section ?? false,
             category: b.category ?? typeMap[b.block_type]?.category ?? 'content',
             show_on_desktop: b.show_on_desktop ?? true,
             show_on_tablet: b.show_on_tablet ?? true,
@@ -1002,7 +1001,6 @@ Alpine.data('blockEditor', (pageType, initialBlocks, blockTypes, styleFields = [
             return {
                 id: includeId ? (block.id ?? null) : null,
                 block_type: block.block_type,
-                is_layout_section: block.is_layout_section,
                 category: block.category ?? null,
                 is_enabled: block.is_enabled,
                 show_on_desktop: block.show_on_desktop,
@@ -1029,7 +1027,6 @@ Alpine.data('blockEditor', (pageType, initialBlocks, blockTypes, styleFields = [
             return prep({
                 block_type: type,
                 is_enabled: true,
-                is_layout_section: typeObj.is_layout_section ?? false,
                 category: typeObj.category || 'content',
                 content: deepClone(typeObj.defaults || {}),
                 data_source: deepClone(typeObj.data_source || null),
@@ -1169,7 +1166,7 @@ Alpine.data('blockEditor', (pageType, initialBlocks, blockTypes, styleFields = [
             const term = String(search || '').trim().toLowerCase();
 
             return this.blockTypes.filter(type => {
-                if (type.is_layout_section || type.supports_children) {
+                if (type.supports_children) {
                     return false;
                 }
 
@@ -1439,10 +1436,6 @@ Alpine.data('blockEditor', (pageType, initialBlocks, blockTypes, styleFields = [
         },
 
         blockPreview(block) {
-            if (block.is_layout_section) {
-                return block.content?.heading || '';
-            }
-
             const fields = this.getTypeFields(block);
             if (fields && fields.length > 0) {
                 const textKey = fields.find(f => f.type === 'text' || f.type === 'textarea')?.key;

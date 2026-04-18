@@ -29,7 +29,6 @@
                     :blockTypes="$blockTypes ?? []"
                 />
             </x-admin.card>
-            <x-admin.content-block-export type="home" :id="0" />
 
             <x-admin.card title="Home Page SEO & Social">
                 <div class="space-y-5">

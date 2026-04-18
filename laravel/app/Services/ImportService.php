@@ -34,8 +34,6 @@ class ImportService
         'redirects' => ['id'],
         'security_rules' => ['id'],
         'page_blocks' => ['id'],
-        'page_content_blocks' => ['id'],
-        'page_sections' => ['id'],
     ];
 
     // Columns that should not be imported (auto-managed)
@@ -46,8 +44,6 @@ class ImportService
      */
     public static function dryRun(string $table, UploadedFile $file): array
     {
-        if (in_array($table, ['page_content_blocks', 'page_sections'], true)) {
-            LegacyGovernanceService::legacyRead('legacy_import_dry_run', 'table_import', $table);
         }
 
         $rows = self::parseCsv($file);
@@ -112,8 +108,6 @@ class ImportService
      */
     public static function import(string $table, UploadedFile $file): array
     {
-        if (in_array($table, ['page_content_blocks', 'page_sections'], true)) {
-            LegacyGovernanceService::legacyRead('legacy_import', 'table_import', $table);
         }
 
         $rows = self::parseCsv($file);

@@ -33,8 +33,6 @@ class ExportService
         'redirects' => 'Redirects',
         'security_rules' => 'Security Rules',
         'page_blocks' => 'Page Builder Blocks',
-        'page_content_blocks' => 'Content Blocks (Legacy, transitional)',
-        'page_sections' => 'Page Sections (Legacy, transitional)',
     ];
 
     // Columns to exclude from export (sensitive data)
@@ -54,8 +52,6 @@ class ExportService
             abort(422, 'Table not exportable.');
         }
 
-        if (in_array($table, ['page_content_blocks', 'page_sections'], true)) {
-            LegacyGovernanceService::legacyRead('legacy_export', 'table_export', $table);
         }
 
         $filename = $table.'_'.date('Y-m-d_His').'.csv';
