@@ -41,6 +41,7 @@ return [
         'architectural_process' => 'architectural_process',
         'service_category_cards_luxury' => 'service_category_cards_luxury',
         'service_list_masonry_luxury' => 'service_list_masonry_luxury',
+        'locations_grid_luxury' => 'locations_grid_luxury',
         'enclaves_tabs' => 'enclaves_tabs',
         'consultation_form_split' => 'consultation_form_split',
         'consultation_wizard_luxury' => 'consultation_wizard_luxury',
@@ -988,6 +989,23 @@ return [
                 'eyebrow' => 'Specialized Services',
                 'heading' => 'Targeted<br>Execution',
                 'description' => 'Explore the specific installations and capabilities within this architectural discipline.',
+            ],
+        ],
+
+        'locations_grid_luxury' => [
+            'label' => 'Locations Grid (Luxury)',
+            'icon' => 'map',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Service Footprint',
+                'heading' => 'Geographical<br>Execution',
+                'description' => 'Providing landscape execution exclusively for the Greater Toronto Area\'s most established residential communities.',
             ],
         ],
 
