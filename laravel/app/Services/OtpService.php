@@ -70,7 +70,8 @@ class OtpService
                 preheader: "Your verification code is {$otp}",
             ));
         } catch (\Throwable $e) {
-            return ['success' => false, 'message' => 'Unable to send verification email. Please try again.'];
+            \Illuminate\Support\Facades\Log::error('OTP Mail Error: ' . $e->getMessage() . ' Trace: ' . $e->getTraceAsString());
+            return ['success' => false, 'message' => 'Mail Error: ' . $e->getMessage()];
         }
 
         return ['success' => true, 'message' => 'Verification code sent to your email.'];

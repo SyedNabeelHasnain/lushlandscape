@@ -51,11 +51,11 @@ document.addEventListener('alpine:init', () => {
                     headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content ?? ''},
                     body: JSON.stringify({email: this.emailValue})
                 });
-                if (!res.ok) throw new Error(res.status);
                 const data = await res.json();
+                if (!res.ok) throw new Error(data.message || res.statusText);
                 this.otpMessage = data.message;
-            } catch {
-                this.otpMessage = 'Failed to send code. Please try again.';
+            } catch (err) {
+                this.otpMessage = err.message || 'Failed to send code. Please try again.';
                 this.showVerifyBtn = true;
                 this.showOtpField = false;
             }
@@ -74,8 +74,9 @@ document.addEventListener('alpine:init', () => {
                     headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content ?? ''},
                     body: JSON.stringify({email: this.emailValue, otp: this.otpCode})
                 });
-                if (!res.ok) throw new Error(res.status);
                 const data = await res.json();
+                if (!res.ok) throw new Error(data.message || res.statusText);
+                
                 if (data.success) {
                     this.emailVerified = true;
                     this.showOtpField = false;
@@ -83,8 +84,8 @@ document.addEventListener('alpine:init', () => {
                 } else {
                     this.otpMessage = data.message;
                 }
-            } catch {
-                this.otpMessage = 'Verification failed. Please try again.';
+            } catch (err) {
+                this.otpMessage = err.message || 'Verification failed. Please try again.';
             }
         },
 
@@ -111,14 +112,15 @@ document.addEventListener('alpine:init', () => {
                     headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content ?? ''},
                     body: JSON.stringify(data)
                 });
-                if (!res.ok) throw new Error(res.status);
                 const result = await res.json();
+                if (!res.ok) throw new Error(result.message || res.statusText);
+                
                 this.formSuccess = result.success;
                 this.formMessage = result.message || 'Your submission has been received.';
                 if (result.success) form.reset();
-            } catch {
+            } catch (err) {
                 this.formSuccess = false;
-                this.formMessage = 'Something went wrong. Please try again or call us directly.';
+                this.formMessage = err.message || 'Something went wrong. Please try again or call us directly.';
             } finally {
                 this.formSubmitting = false;
             }
