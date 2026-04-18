@@ -35,6 +35,9 @@ return [
         'before_after_slider_luxury' => 'before_after_slider_luxury',
         'portfolio_gallery_masonry_luxury' => 'portfolio_gallery_masonry_luxury',
         'marquee_brand' => 'marquee_brand',
+        'editorial_split_text_luxury' => 'editorial_split_text_luxury',
+        'credentials_grid_luxury' => 'credentials_grid_luxury',
+        'timeline_history_luxury' => 'timeline_history_luxury',
         'architectural_process' => 'architectural_process',
         'enclaves_tabs' => 'enclaves_tabs',
         'consultation_form_split' => 'consultation_form_split',
@@ -777,6 +780,121 @@ return [
             'data_source' => null,
             'defaults' => [
                 'text' => 'ARCHITECTURAL PRECISION &nbsp;&nbsp;&bull;&nbsp;&nbsp; UNYIELDING QUALITY &nbsp;&nbsp;&bull;&nbsp;&nbsp; PREMIUM STONE SELECTION &nbsp;&nbsp;&bull;&nbsp;&nbsp; EXPERT CRAFTSMANSHIP &nbsp;&nbsp;&bull;&nbsp;&nbsp;',
+            ],
+        ],
+
+        'editorial_split_text_luxury' => [
+            'label' => 'Editorial Split Text (Luxury)',
+            'icon' => 'columns',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'heading_highlight', 'label' => 'Heading Highlight (Italic)', 'type' => 'text'],
+                ['key' => 'paragraph_1', 'label' => 'Paragraph 1', 'type' => 'textarea'],
+                ['key' => 'paragraph_2', 'label' => 'Paragraph 2', 'type' => 'textarea'],
+                ['key' => 'signature_name', 'label' => 'Signature Name (Optional)', 'type' => 'text'],
+                ['key' => 'signature_title', 'label' => 'Signature Title (Optional)', 'type' => 'text'],
+                ['key' => 'image', 'label' => 'Image URL', 'type' => 'text'],
+                ['key' => 'image_position', 'label' => 'Image Position (left or right)', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Our Philosophy',
+                'heading' => 'Built for Properties Where',
+                'heading_highlight' => 'Detail Matters',
+                'paragraph_1' => 'Lush Landscape creates private residential outdoor environments where structure, craftsmanship, and visual restraint matter equally.',
+                'paragraph_2' => 'We reject the transactional nature of the landscaping industry. Instead, we operate as a design-build firm committed to long-term architectural integrity, executing complex master plans with absolute precision.',
+                'signature_name' => '',
+                'signature_title' => '',
+                'image' => 'https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
+                'image_position' => 'left',
+            ],
+        ],
+
+        'credentials_grid_luxury' => [
+            'label' => 'Credentials Grid (Luxury)',
+            'icon' => 'shield-check',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                
+                ['key' => 'cred_1_icon', 'label' => 'Credential 1 Icon (Lucide)', 'type' => 'text'],
+                ['key' => 'cred_1_title', 'label' => 'Credential 1 Title', 'type' => 'text'],
+                ['key' => 'cred_1_desc', 'label' => 'Credential 1 Description', 'type' => 'textarea'],
+                
+                ['key' => 'cred_2_icon', 'label' => 'Credential 2 Icon', 'type' => 'text'],
+                ['key' => 'cred_2_title', 'label' => 'Credential 2 Title', 'type' => 'text'],
+                ['key' => 'cred_2_desc', 'label' => 'Credential 2 Description', 'type' => 'textarea'],
+                
+                ['key' => 'cred_3_icon', 'label' => 'Credential 3 Icon', 'type' => 'text'],
+                ['key' => 'cred_3_title', 'label' => 'Credential 3 Title', 'type' => 'text'],
+                ['key' => 'cred_3_desc', 'label' => 'Credential 3 Description', 'type' => 'textarea'],
+                
+                ['key' => 'cred_4_icon', 'label' => 'Credential 4 Icon', 'type' => 'text'],
+                ['key' => 'cred_4_title', 'label' => 'Credential 4 Title', 'type' => 'text'],
+                ['key' => 'cred_4_desc', 'label' => 'Credential 4 Description', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'The Firm',
+                'heading' => 'Institutional Grade Security',
+                
+                'cred_1_icon' => 'shield-check',
+                'cred_1_title' => '10-Year Workmanship Warranty',
+                'cred_1_desc' => 'Every structural installation is backed by a rigorous, written decade-long warranty, ensuring complete peace of mind.',
+                
+                'cred_2_icon' => 'file-check-2',
+                'cred_2_title' => '$5M Liability Insurance',
+                'cred_2_desc' => 'We carry comprehensive coverage specifically designed for complex residential and estate-level construction.',
+                
+                'cred_3_icon' => 'award',
+                'cred_3_title' => 'WSIB Cleared & Compliant',
+                'cred_3_desc' => 'Full Workers\' Safety and Insurance Board clearance guarantees our in-house teams are protected and professional.',
+                
+                'cred_4_icon' => 'hard-hat',
+                'cred_4_title' => 'In-House Execution',
+                'cred_4_desc' => 'We do not broker out our core trades. Our master stonemasons and structural teams are dedicated Lush Landscape personnel.',
+            ],
+        ],
+
+        'timeline_history_luxury' => [
+            'label' => 'Timeline History (Luxury)',
+            'icon' => 'clock',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                
+                ['key' => 'year_1', 'label' => 'Year 1', 'type' => 'text'],
+                ['key' => 'title_1', 'label' => 'Title 1', 'type' => 'text'],
+                ['key' => 'desc_1', 'label' => 'Description 1', 'type' => 'textarea'],
+                
+                ['key' => 'year_2', 'label' => 'Year 2', 'type' => 'text'],
+                ['key' => 'title_2', 'label' => 'Title 2', 'type' => 'text'],
+                ['key' => 'desc_2', 'label' => 'Description 2', 'type' => 'textarea'],
+                
+                ['key' => 'year_3', 'label' => 'Year 3', 'type' => 'text'],
+                ['key' => 'title_3', 'label' => 'Title 3', 'type' => 'text'],
+                ['key' => 'desc_3', 'label' => 'Description 3', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Our Evolution',
+                'heading' => 'A Heritage of Craftsmanship',
+                
+                'year_1' => '2018',
+                'title_1' => 'The Foundation',
+                'desc_1' => 'Lush Landscape Service was established with a singular focus on elevating residential stonework and structural hardscaping in the Greater Toronto Area.',
+                
+                'year_2' => '2021',
+                'title_2' => 'Scale & Maturation',
+                'desc_2' => 'Expanded our core operations to handle full estate transformations, integrating luxury outdoor living spaces and high-end pool construction into our repertoire.',
+                
+                'year_3' => '2024',
+                'title_3' => 'The Architectural Standard',
+                'desc_3' => 'Solidified our position as the design-build firm of choice for the top 1% of the GTA, partnering exclusively with prestige properties and heritage estates.',
             ],
         ],
 

@@ -13,18 +13,27 @@
 @endsection
 @section('content')
 
+@if(!isset($blocks) || $blocks->isEmpty())
 <div class="bg-white border-b border-stone">
     <div class="max-w-4xl mx-auto px-6 lg:px-12 py-3">
         <x-frontend.breadcrumbs :items="$breadcrumbs" />
     </div>
 </div>
+@endif
 
+@if(!isset($blocks) || $blocks->isEmpty())
 @if($page->heroMedia)
 <div class="w-full aspect-21/9 overflow-hidden bg-forest/10">
     <x-frontend.media :asset="$page->heroMedia" :alt="$page->title" class="w-full h-full object-cover" fetchpriority="high" loading="eager" />
 </div>
 @endif
+@endif
 
+@if(isset($blocks) && $blocks->isNotEmpty())
+@foreach($blocks as $block)
+    <x-frontend.block-renderer :block="$block" :context="$context" />
+@endforeach
+@else
 <section class="section-editorial bg-white">
     <div class="max-w-4xl mx-auto px-6 lg:px-12">
         <h1 class="text-h2 font-heading font-bold text-ink">{{ $page->title }}</h1>
@@ -43,10 +52,5 @@
         @endif
     </div>
 </section>
-
-@if(isset($blocks) && $blocks->isNotEmpty())
-@foreach($blocks as $block)
-    <x-frontend.block-renderer :block="$block" :context="$context" />
-@endforeach
 @endif
 @endsection
