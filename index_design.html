@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" style="scroll-padding-top: 100px;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Lush Landscapes | Luxury Landscape Construction GTA</title>
+    <meta name="description" content="Premium landscape construction for architects, designers, and discerning homeowners in Toronto, Oakville, Mississauga, and Milton.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandGreen: '#2A462A',
+                        deepGreen: '#153823',
+                        brandBrown: '#A47148',
+                        ink: '#111111',
+                        stone: '#DADDD8'
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --brand-green: #2A462A;
+            --deep-green: #153823;
+            --brand-brown: #A47148;
+            --airy-green-gradient: linear-gradient(180deg, #E4ECE4 0%, #F6F9F6 100%);
+        }
+        
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #111111; background: #ffffff; overscroll-behavior-y: none; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; font-weight: 400; }
+        
+        .bg-airy-gradient { background: var(--airy-green-gradient); }
+        
+        /* Header Mechanics */
+        .header-shell { transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease; }
+        .header-inner { transition: padding 0.4s ease; }
+        .brand-logo { height: 2.5rem; width: auto; transition: height 0.4s ease; }
+        @media (min-width: 1024px) { .brand-logo { height: 3.5rem; } }
+        
+        .header-shell.is-scrolled { background: rgba(255,255,255,0.98); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(21,56,35,0.05); box-shadow: 0 4px 30px rgba(0,0,0,0.03); }
+        .header-shell.is-scrolled .header-inner { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .header-shell.is-scrolled .brand-logo { height: 2.2rem; }
+        @media (min-width: 1024px) { .header-shell.is-scrolled .brand-logo { height: 2.8rem; } }
+        
+        .nav-link { position: relative; color: var(--deep-green); }
+        .nav-link::after { content: ''; position: absolute; width: 100%; height: 1px; bottom: -4px; left: 0; background-color: var(--brand-brown); transform: scaleX(0); transform-origin: right; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+        /* Hero Viewport */
+        .hero-viewport { min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+
+        /* Running Metallic Border */
+        .running-border { position: relative; background: #fff; z-index: 1; overflow: hidden; border-radius: 2px; }
+        .running-border::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent 70%, rgba(164, 113, 72, 0.6) 100%);
+            animation: spin 3.5s linear infinite; z-index: -2; opacity: 0; transition: opacity 0.5s ease;
+        }
+        @media (hover: none) { .running-border::before { opacity: 0.4; } }
+        @media (hover: hover) { .running-border:hover::before { opacity: 1; } }
+        .running-border::after { content: ''; position: absolute; inset: 1px; background: #ffffff; z-index: -1; border-radius: 1px; box-shadow: inset 0 0 20px rgba(0,0,0,0.01); }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Horizontal Portfolio Slider Utilities */
+        .mobile-swipe { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+        .mobile-swipe-item { scroll-snap-align: center; }
+        @media (min-width: 1024px) {
+            .mobile-swipe { overflow-x: visible; scroll-snap-type: none; padding-bottom: 0; touch-action: auto; }
+            .mobile-swipe-item { scroll-snap-align: none; }
+        }
+
+        /* Marquee */
+        .marquee-container { overflow: hidden; white-space: nowrap; display: flex; width: 100%; position: relative; touch-action: pan-y; }
+        .marquee-container::before, .marquee-container::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 10; pointer-events: none; }
+        .marquee-container::before { left: 0; background: linear-gradient(90deg, #153823 0%, transparent 100%); }
+        .marquee-container::after { right: 0; background: linear-gradient(-90deg, #153823 0%, transparent 100%); }
+        @media (min-width: 1024px) {
+            .marquee-container::before, .marquee-container::after { width: 150px; }
+        }
+        .marquee-content { display: flex; animation: marquee 35s linear infinite; font-family: 'Playfair Display', serif; letter-spacing: 0.15em; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Process Sticky Cards */
+        .process-step { opacity: 0.25; transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s ease; transform: translateX(15px); }
+        .process-step.is-active { opacity: 1; transform: translateX(0); }
+        .process-dot { transition: background-color 0.6s ease, border-color 0.6s ease, transform 0.6s ease; }
+        .process-step.is-active .process-dot { background-color: var(--brand-brown); border-color: var(--brand-brown); transform: scale(1.3); }
+
+        /* Form Safety - Floating Labels */
+        .field-wrapper { position: relative; margin-bottom: 1.5rem; }
+        .field-ui { width: 100%; background: transparent; border-bottom: 1px solid rgba(42, 70, 42, 0.15); font-size: 16px; padding: 12px 0; transition: border-color 0.3s ease; border-radius: 0; -webkit-appearance: none; }
+        .field-ui:focus { outline: none; border-bottom-color: var(--brand-green); }
+        .field-label {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: rgba(17, 17, 17, 0.5);
+            font-size: 16px;
+            font-weight: 400;
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--brand-green);
+        }
+        .field-ui:focus ~ .field-label,
+        .field-ui:not(:placeholder-shown) ~ .field-label {
+            top: -20px;
+            font-size: 10px;
+        }
+        select.field-ui { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232A462A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right center; background-size: 1rem; }
+        
+        .btn-solid { background-color: var(--brand-green); color: white; transition: all 0.3s ease; font-weight: 600; cursor: pointer; }
+        .btn-solid:hover { background-color: var(--deep-green); transform: translateY(-2px); box-shadow: 0 10px 20px -10px rgba(0,0,0,0.2); }
+        .btn-solid:focus { outline: 2px solid var(--brand-brown); outline-offset: 2px; }
+        
+        .btn-outline { color: var(--deep-green); border-bottom: 1px solid var(--deep-green); transition: all 0.3s ease; font-weight: 600; cursor: pointer; }
+        .btn-outline:hover { color: var(--brand-brown); border-bottom-color: var(--brand-brown); }
+        .btn-outline:focus { outline: 2px solid var(--brand-brown); outline-offset: 2px; }
+        
+        .fluid-title { font-size: clamp(2.5rem, 8vw, 6.5rem); line-height: 1.05; }
+        .fluid-heading { font-size: clamp(2.25rem, 5vw, 4.5rem); line-height: 1.05; }
+        .word-wrap-safe { overflow-wrap: break-word; word-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
+        
+        /* GSAP Reveal */
+        .gs-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
+        .gs-reveal.is-revealed { opacity: 1; transform: translateY(0); }
+
+        /* Portfolio Navigation Buttons */
+        .portfolio-nav-btn {
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.2s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+        .portfolio-nav-btn:hover { opacity: 1; transform: scale(1.05); }
+        .portfolio-nav-btn:focus { outline: 2px solid var(--brand-brown); outline-offset: 2px; }
+
+        [x-cloak] { display: none !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 🎨 SECTION GRADIENT TRANSITIONS */
+        .section-fade-to-white { position: relative; }
+        .section-fade-to-white::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to bottom, transparent, #ffffff); pointer-events: none; z-index: 5;
+        }
+        .section-fade-from-white { position: relative; }
+        .section-fade-from-white::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to bottom, #ffffff, transparent); pointer-events: none; z-index: 5;
+        }
+        .section-fade-to-airy { position: relative; }
+        .section-fade-to-airy::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to bottom, transparent, #E4ECE4); pointer-events: none; z-index: 5;
+        }
+        .section-fade-from-airy { position: relative; }
+        .section-fade-from-airy::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to bottom, #E4ECE4, transparent); pointer-events: none; z-index: 5;
+        }
+
+        /* Process Step Numbers */
+        .process-number {
+            position: absolute; top: 2rem; left: -1.5rem;
+            width: 2rem; height: 2rem; border-radius: 50%;
+            background: var(--brand-brown); color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        @media (max-width: 1023px) { .process-number { left: 1rem; top: 1.5rem; } }
+
+        /* Tab Active State - Mobile */
+        @media (max-width: 1023px) {
+            .tab-btn[aria-selected="true"] {
+                border-bottom: 2px solid var(--brand-brown);
+                color: var(--deep-green);
+                font-weight: 600;
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .gs-reveal { opacity: 1 !important; transform: none !important; }
+            .parallax-img { transform: none !important; }
+        }
+
+        /* Form Success State */
+        .form-success { display: none; text-align: center; padding: 2rem; }
+        .form-success.is-active { display: block; }
+        .form-success i { font-size: 3rem; color: var(--brand-green); margin-bottom: 1rem; }
+        .form-success p { color: var(--deep-green); font-size: 1.125rem; font-weight: 500; }
+
+        /* Focus Visible for Keyboard Navigation */
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+            outline: 2px solid var(--brand-brown);
+            outline-offset: 2px;
+        }
+        
+        /* Lenis Smooth Scroll Base Styles */
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brandBrown selection:text-white" x-data="{ mobileMenu: false }">
+    
+    <header id="siteHeader" class="header-shell fixed top-0 inset-x-0 z-[100]">
+        <div class="header-inner max-w-7xl mx-auto px-5 lg:px-12 py-5 lg:py-6 flex items-center justify-between">
+            <a href="/" class="flex items-center z-[110]" aria-label="Lush Landscape Home">
+                <img src="https://lushlandscape.ca/lushLandscape-Logo.png" alt="Lush Landscapes Logo" class="brand-logo relative" width="200" height="56" loading="eager">
+            </a>
+            <nav class="hidden lg:flex items-center gap-12" aria-label="Main Navigation">
+                <a href="#services" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase">Services</a>
+                <a href="#portfolio" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase">Portfolio</a>
+                <a href="#process" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase">Process</a>
+                <a href="#contact" class="border border-deepGreen text-deepGreen hover:bg-deepGreen hover:text-white transition-colors px-8 h-10 inline-flex items-center justify-center text-[10px] font-bold tracking-[0.15em] uppercase rounded-sm">Request Quote</a>
+            </nav>
+            <button class="lg:hidden text-deepGreen z-[110] relative p-2 -mr-2 focus:outline-none" @click="mobileMenu = !mobileMenu" :aria-expanded="mobileMenu" aria-label="Toggle navigation menu">
+                <i class="fa-solid text-2xl transition-all" :class="mobileMenu ? 'fa-xmark' : 'fa-bars-staggered'" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <div class="fixed inset-0 bg-white/98 backdrop-blur-md z-[105] flex flex-col items-center justify-center gap-8 px-6" x-show="mobileMenu" x-transition.opacity.duration.300ms x-cloak>
+            <a href="#services" class="text-deepGreen text-3xl font-serif" @click="mobileMenu = false">Services</a>
+            <a href="#portfolio" class="text-deepGreen text-3xl font-serif" @click="mobileMenu = false">Portfolio</a>
+            <a href="#process" class="text-deepGreen text-3xl font-serif" @click="mobileMenu = false">Process</a>
+            <a href="#contact" class="border border-deepGreen text-deepGreen px-10 h-14 w-full max-w-[280px] inline-flex items-center justify-center text-sm tracking-[0.2em] uppercase mt-4 hover:bg-deepGreen hover:text-white transition-colors" @click="mobileMenu = false">Request Quote</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-airy-gradient hero-viewport w-full relative">
+            <div class="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+            
+            <div class="flex-1 flex flex-col justify-center items-center w-full max-w-6xl mx-auto px-5 lg:px-12 text-center pt-24 lg:pt-28 pb-10 relative z-10">
+                <div class="gs-hero w-full">
+                    <span class="inline-flex items-center px-3 py-1.5 border border-deepGreen/20 text-deepGreen uppercase tracking-[0.2em] text-[9px] lg:text-[10px] font-semibold mb-6 lg:mb-8 bg-white/30 backdrop-blur-sm rounded-sm">Design-Build Firm</span>
+                    <h1 class="fluid-title text-deepGreen mb-6 text-balance word-wrap-safe">Luxury Outdoor Living<br>Built with <span class="italic text-brandGreen">Precision</span></h1>
+                    <p class="text-ink/70 text-base lg:text-xl font-light leading-relaxed max-w-2xl mx-auto mb-10 px-4 lg:px-0">Landscape construction for architects, designers, and discerning homeowners across the Greater Toronto Area.</p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-6 lg:gap-8">
+                        <a href="#contact" class="btn-solid h-12 px-8 text-xs tracking-[0.15em] uppercase font-semibold rounded-sm w-full sm:w-auto">Request Consultation</a>
+                        <a href="#portfolio" class="btn-outline text-[10px] lg:text-[11px] font-bold tracking-[0.15em] uppercase pb-1 w-full sm:w-auto">View Projects →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full border-t border-black/10 bg-white/50 backdrop-blur-md py-6 lg:py-8 z-10 relative">
+                <div class="max-w-7xl mx-auto px-4 lg:px-12">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-6 lg:gap-0 divide-x-0 lg:divide-x divide-black/10">
+                        <div class="gs-hero flex flex-col items-center justify-center px-2 text-center">
+                            <span class="text-[8px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-ink/50 mb-1">Protected</span>
+                            <span class="text-deepGreen text-sm sm:text-base lg:text-lg font-serif leading-tight">10-Year Warranty</span>
+                        </div>
+                        <div class="gs-hero flex flex-col items-center justify-center px-2 text-center border-l border-black/10 lg:border-l-0">
+                            <span class="text-[8px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-ink/50 mb-1">Insured</span>
+                            <span class="text-deepGreen text-sm sm:text-base lg:text-lg font-serif leading-tight">$5M Liability</span>
+                        </div>
+                        <div class="gs-hero flex flex-col items-center justify-center px-2 text-center lg:border-l border-black/10">
+                            <span class="text-[8px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-ink/50 mb-1">Certified</span>
+                            <span class="text-deepGreen text-sm sm:text-base lg:text-lg font-serif leading-tight">WSIB Compliant</span>
+                        </div>
+                        <div class="gs-hero flex flex-col items-center justify-center px-2 text-center border-l border-black/10 lg:border-l-0">
+                            <span class="text-[8px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-ink/50 mb-1">Trusted</span>
+                            <span class="text-deepGreen text-sm sm:text-base lg:text-lg font-serif leading-tight">Architect Alliance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architectural Standard -->
+        <section class="bg-white py-20 lg:py-32 px-5 lg:px-6 overflow-hidden section-fade-to-airy">
+            <div class="max-w-4xl mx-auto text-center gs-reveal">
+                <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-4 lg:mb-6">The Architectural Standard</p>
+                <h2 class="fluid-heading text-deepGreen mb-8 lg:mb-10 word-wrap-safe">Built for Properties Where<br><span class="italic text-brandGreen">Detail Matters</span></h2>
+                <p class="text-ink/70 text-base sm:text-lg lg:text-xl font-light leading-relaxed">
+                    Lush Landscape creates private residential outdoor environments where structure, craftsmanship, and visual restraint matter equally. From driveways, patios, and retaining walls to grading and planting, every project is approached with clarity, proportion, and long-term performance in mind.
+                </p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="bg-airy-gradient py-20 lg:py-32 px-5 lg:px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 lg:mb-16 gs-reveal gap-4 lg:gap-6">
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-3 lg:mb-4">Core Disciplines</p>
+                        <h2 class="fluid-heading text-deepGreen word-wrap-safe">Architectural<br>Solutions</h2>
+                    </div>
+                    <p class="text-ink/70 text-base lg:text-lg font-light max-w-sm lg:text-right pb-2">The complete realization of complex master plans, categorized into four signature disciplines.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+                    <div class="bg-white p-8 lg:p-10 border border-black/5 hover:border-brandBrown transition-colors duration-500 gs-reveal shadow-sm">
+                        <i class="fa-solid fa-vector-square text-2xl text-brandGreen mb-5 lg:mb-6" aria-hidden="true"></i>
+                        <h3 class="text-2xl font-serif text-deepGreen mb-3 lg:mb-4">Paving & Arrival</h3>
+                        <p class="text-ink/60 text-sm leading-[1.7] mb-5 lg:mb-6 font-light">Interlocking driveways, natural stone, and porcelain surfaces engineered for entry sequences.</p>
+                        <ul class="text-[10px] uppercase tracking-[0.15em] font-semibold text-brandBrown space-y-2">
+                            <li>8,000 PSI Pavers</li><li>Open-Graded Bases</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 lg:p-10 border border-black/5 hover:border-brandBrown transition-colors duration-500 gs-reveal shadow-sm">
+                        <i class="fa-solid fa-fire-burner text-2xl text-brandGreen mb-5 lg:mb-6" aria-hidden="true"></i>
+                        <h3 class="text-2xl font-serif text-deepGreen mb-3 lg:mb-4">Outdoor Living</h3>
+                        <p class="text-ink/60 text-sm leading-[1.7] mb-5 lg:mb-6 font-light">Patios, culinary masonry, and atmospheric lighting crafted for seamless hospitality.</p>
+                        <ul class="text-[10px] uppercase tracking-[0.15em] font-semibold text-brandBrown space-y-2">
+                            <li>Custom Masonry</li><li>Gas-Line Integration</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 lg:p-10 border border-black/5 hover:border-brandBrown transition-colors duration-500 gs-reveal shadow-sm">
+                        <i class="fa-solid fa-mountain-sun text-2xl text-brandGreen mb-5 lg:mb-6" aria-hidden="true"></i>
+                        <h3 class="text-2xl font-serif text-deepGreen mb-3 lg:mb-4">Structural Corrective</h3>
+                        <p class="text-ink/60 text-sm leading-[1.7] mb-5 lg:mb-6 font-light">Retaining walls, complex grading, and frost-mitigation ensuring absolute surface stability.</p>
+                        <ul class="text-[10px] uppercase tracking-[0.15em] font-semibold text-brandBrown space-y-2">
+                            <li>Ravine Stabilization</li><li>Engineered Drainage</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-8 lg:p-10 border border-black/5 hover:border-brandBrown transition-colors duration-500 gs-reveal shadow-sm">
+                        <i class="fa-solid fa-compass-drafting text-2xl text-brandGreen mb-5 lg:mb-6" aria-hidden="true"></i>
+                        <h3 class="text-2xl font-serif text-deepGreen mb-3 lg:mb-4">Estate Construction</h3>
+                        <p class="text-ink/60 text-sm leading-[1.7] mb-5 lg:mb-6 font-light">The complete realization of complex master plans through rigorous project management.</p>
+                        <ul class="text-[10px] uppercase tracking-[0.15em] font-semibold text-brandBrown space-y-2">
+                            <li>Turnkey Logistics</li><li>In-House Execution</li>
+                        </ul>
+                    </div>
+
+                    <div class="md:col-span-1 lg:col-span-2 relative overflow-hidden bg-deepGreen border border-black/5 gs-reveal shadow-sm min-h-[280px] lg:min-h-[300px]" 
+                         x-data="{ active: 1, timer: null }" 
+                         x-init="timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)">
+                        <div class="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp" 
+                                 srcset="https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80&fm=webp 400w,
+                                         https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w,
+                                         https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+                                 sizes="(max-width: 768px) 100vw, 66vw"
+                                 class="w-full h-full object-cover absolute inset-0 transition-opacity duration-700 ease-out" 
+                                 :class="active === 1 ? 'opacity-50' : 'opacity-0'" alt="Masonry Detail" loading="lazy" decoding="async">
+                            <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp" 
+                                 srcset="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80&fm=webp 400w,
+                                         https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w,
+                                         https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+                                 sizes="(max-width: 768px) 100vw, 66vw"
+                                 class="w-full h-full object-cover absolute inset-0 transition-opacity duration-700 ease-out" 
+                                 :class="active === 2 ? 'opacity-50' : 'opacity-0'" alt="Pool Detail" loading="lazy" decoding="async">
+                        </div>
+                        
+                        <div class="absolute top-1/2 left-4 -translate-y-1/2 z-20">
+                            <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none" aria-label="Previous image"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+                        </div>
+                        <div class="absolute top-1/2 right-4 -translate-y-1/2 z-20">
+                            <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none" aria-label="Next image"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+                        </div>
+
+                        <div class="absolute inset-0 z-10 p-8 lg:p-10 flex flex-col justify-end pointer-events-none">
+                            <div class="flex flex-col md:flex-row justify-between md:items-end w-full gap-4">
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50 mb-2">Material Integrity</p>
+                                    <h3 class="text-2xl lg:text-3xl font-serif text-white max-w-sm leading-tight drop-shadow-md">Crafted with architectural precision & premium stone selection.</h3>
+                                </div>
+                                <div class="flex gap-2 lg:gap-3 mt-2 md:mt-0">
+                                    <div class="w-6 lg:w-8 h-[2px] transition-colors duration-500" :class="active === 1 ? 'bg-white' : 'bg-white/30'"></div>
+                                    <div class="w-6 lg:w-8 h-[2px] transition-colors duration-500" :class="active === 2 ? 'bg-white' : 'bg-white/30'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parallax Section -->
+        <section class="relative h-[50vh] lg:h-[80vh] overflow-hidden flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=2500&q=80&fm=webp" 
+                 srcset="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w,
+                         https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80&fm=webp 1600w,
+                         https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=2500&q=80&fm=webp 2500w"
+                 sizes="100vw"
+                 alt="Architectural Estate Design" class="absolute inset-0 w-full h-[130%] object-cover parallax-img" data-speed="0.15" loading="lazy" decoding="async">
+            <div class="absolute inset-0 bg-deepGreen/60 mix-blend-multiply"></div>
+            
+            <div class="relative z-10 text-center px-6 gs-reveal max-w-5xl mx-auto">
+                <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/70 mb-4 lg:mb-6">The Intersection</p>
+                <h2 class="text-3xl sm:text-5xl lg:text-[5rem] leading-[1.05] text-white font-serif text-balance drop-shadow-lg">Designing the Space Between <br><span class="italic text-white/80">Nature & Architecture.</span></h2>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="bg-white relative overflow-hidden section-fade-to-airy">
+            <div class="portfolio-pin-wrapper w-full lg:h-screen flex flex-col justify-center py-20 lg:py-0">
+                
+                <div class="max-w-7xl w-full mx-auto px-6 lg:px-12 mb-8 lg:mb-16">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 lg:gap-6 gs-reveal">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-ink/40 mb-3 lg:mb-4">Completed Works</p>
+                            <h2 class="fluid-heading text-deepGreen word-wrap-safe">Selected Portfolio</h2>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <a href="#" class="text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.15em] text-brandGreen border-b border-brandGreen pb-1 hover:text-brandBrown hover:border-brandBrown transition-colors">Explore All Cases</a>
+                            <div class="flex items-center gap-2 ml-4">
+                                <button id="portfolio-prev" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-brandBrown/25 flex items-center justify-center text-brandBrown hover:bg-brandBrown hover:text-white transition-all" aria-label="Previous"><i class="fa-solid fa-arrow-left text-xs lg:text-sm"></i></button>
+                                <button id="portfolio-next" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-brandBrown/25 flex items-center justify-center text-brandBrown hover:bg-brandBrown hover:text-white transition-all" aria-label="Next"><i class="fa-solid fa-arrow-right text-xs lg:text-sm"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="portfolio-track" class="mobile-swipe flex gap-5 lg:gap-10 px-6 lg:px-12 w-full lg:w-max no-scrollbar">
+                    
+                    <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer gs-reveal">
+                        <div class="overflow-hidden mb-4 lg:mb-6 border border-black/5 bg-[#F4F9F4] aspect-[4/5] lg:aspect-[3/4]">
+                            <img src="https://images.unsplash.com/photo-1600607688969-a5bfcd64bd28?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp" 
+                                 srcset="https://images.unsplash.com/photo-1600607688969-a5bfcd64bd28?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80&fm=webp 400w,
+                                         https://images.unsplash.com/photo-1600607688969-a5bfcd64bd28?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w,
+                                         https://images.unsplash.com/photo-1600607688969-a5bfcd64bd28?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+                                 sizes="(max-width: 768px) 85vw, (min-width: 1024px) 35vw, 50vw"
+                                 alt="Oakville Estate" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-[0.2em] font-semibold text-brandBrown mb-1 lg:mb-2">01 / Old Oakville</p>
+                                <h3 class="text-xl lg:text-3xl font-serif text-deepGreen">Contemporary Stone</h3>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brandGreen -rotate-45 group-hover:rotate-0 transition-transform duration-500 mt-2"></i>
+                        </div>
+                    </div>
+
+                    <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer gs-reveal">
+                        <div class="overflow-hidden mb-4 lg:mb-6 border border-black/5 bg-[#F4F9F4] aspect-[4/5] lg:aspect-[3/4]">
+                            <img src="https://images.unsplash.com/photo-1598228723654-419b48f68e4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp" 
+                                 srcset="https://images.unsplash.com/photo-1598228723654-419b48f68e4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80&fm=webp 400w,
+                                         https://images.unsplash.com/photo-1598228723654-419b48f68e4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w,
+                                         https://images.unsplash.com/photo-1598228723654-419b48f68e4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+                                 sizes="(max-width: 768px) 85vw, (min-width: 1024px) 35vw, 50vw"
+                                 alt="Lorne Park" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-[0.2em] font-semibold text-brandBrown mb-1 lg:mb-2">02 / Lorne Park</p>
+                                <h3 class="text-xl lg:text-3xl font-serif text-deepGreen">Estate Backyard</h3>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brandGreen -rotate-45 group-hover:rotate-0 transition-transform duration-500 mt-2"></i>
+                        </div>
+                    </div>
+
+                    <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer gs-reveal">
+                        <div class="overflow-hidden mb-4 lg:mb-6 border border-black/5 bg-[#F4F9F4] aspect-[4/5] lg:aspect-[3/4]">
+                            <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp" 
+                                 srcset="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80&fm=webp 400w,
+                                         https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w,
+                                         https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+                                 sizes="(max-width: 768px) 85vw, (min-width: 1024px) 35vw, 50vw"
+                                 alt="Shoreacres" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-[0.2em] font-semibold text-brandBrown mb-1 lg:mb-2">03 / Shoreacres</p>
+                                <h3 class="text-xl lg:text-3xl font-serif text-deepGreen">Lakeside Luxury</h3>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brandGreen -rotate-45 group-hover:rotate-0 transition-transform duration-500 mt-2"></i>
+                        </div>
+                    </div>
+
+                    <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer lg:pr-12 gs-reveal">
+                        <div class="overflow-hidden mb-4 lg:mb-6 border border-black/5 bg-[#F4F9F4] aspect-[4/5] lg:aspect-[3/4]">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp" 
+                                 srcset="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80&fm=webp 400w,
+                                         https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80&fm=webp 800w,
+                                         https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+                                 sizes="(max-width: 768px) 85vw, (min-width: 1024px) 35vw, 50vw"
+                                 alt="Bridle Path" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] uppercase tracking-[0.2em] font-semibold text-brandBrown mb-1 lg:mb-2">04 / Bridle Path</p>
+                                <h3 class="text-xl lg:text-3xl font-serif text-deepGreen">Arrival Sequence</h3>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brandGreen -rotate-45 group-hover:rotate-0 transition-transform duration-500 mt-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Section -->
+        <section class="bg-deepGreen py-5 lg:py-6 border-y border-white/10 relative z-10 overflow-hidden" aria-label="Brand attributes">
+            <div class="marquee-container">
+                <div class="marquee-content text-white/90 font-serif text-xl lg:text-3xl uppercase tracking-widest px-4">
+                    <span>ARCHITECTURAL PRECISION &nbsp;&nbsp;&bull;&nbsp;&nbsp; UNYIELDING QUALITY &nbsp;&nbsp;&bull;&nbsp;&nbsp; PREMIUM STONE SELECTION &nbsp;&nbsp;&bull;&nbsp;&nbsp; EXPERT CRAFTSMANSHIP &nbsp;&nbsp;&bull;&nbsp;&nbsp; </span>
+                    <span>ARCHITECTURAL PRECISION &nbsp;&nbsp;&bull;&nbsp;&nbsp; UNYIELDING QUALITY &nbsp;&nbsp;&bull;&nbsp;&nbsp; PREMIUM STONE SELECTION &nbsp;&nbsp;&bull;&nbsp;&nbsp; EXPERT CRAFTSMANSHIP &nbsp;&nbsp;&bull;&nbsp;&nbsp; </span>
+                </div>
+                <div class="marquee-content text-white/90 font-serif text-xl lg:text-3xl uppercase tracking-widest px-4" aria-hidden="true">
+                    <span>ARCHITECTURAL PRECISION &nbsp;&nbsp;&bull;&nbsp;&nbsp; UNYIELDING QUALITY &nbsp;&nbsp;&bull;&nbsp;&nbsp; PREMIUM STONE SELECTION &nbsp;&nbsp;&bull;&nbsp;&nbsp; EXPERT CRAFTSMANSHIP &nbsp;&nbsp;&bull;&nbsp;&nbsp; </span>
+                    <span>ARCHITECTURAL PRECISION &nbsp;&nbsp;&bull;&nbsp;&nbsp; UNYIELDING QUALITY &nbsp;&nbsp;&bull;&nbsp;&nbsp; PREMIUM STONE SELECTION &nbsp;&nbsp;&bull;&nbsp;&nbsp; EXPERT CRAFTSMANSHIP &nbsp;&nbsp;&bull;&nbsp;&nbsp; </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Standards Section -->
+        <section class="bg-airy-gradient py-20 lg:py-32 px-5 lg:px-12 overflow-hidden section-fade-to-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 lg:mb-20 gs-reveal">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-3 lg:mb-4">The Standard</p>
+                    <h2 class="fluid-heading text-deepGreen mb-4 lg:mb-6 word-wrap-safe">Built Without Compromise</h2>
+                    <p class="text-ink/70 text-base lg:text-lg max-w-2xl mx-auto font-light">Engineered on consistency, discipline, and absolute material integrity.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div class="running-border p-8 lg:p-10 gs-reveal shadow-sm">
+                        <div class="text-[1.5rem] text-brandGreen mb-5 lg:mb-6"><i class="fa-solid fa-compass-drafting" aria-hidden="true"></i></div>
+                        <h4 class="text-lg lg:text-xl font-serif text-deepGreen mb-3 lg:mb-4 relative z-10">Architectural Discipline</h4>
+                        <p class="text-ink/70 font-light text-sm leading-[1.7] relative z-10">Proportion, alignment, and visual restraint guide every decision to integrate seamlessly with the residence.</p>
+                    </div>
+                    <div class="running-border p-8 lg:p-10 gs-reveal shadow-sm">
+                        <div class="text-[1.5rem] text-brandGreen mb-5 lg:mb-6"><i class="fa-solid fa-microchip" aria-hidden="true"></i></div>
+                        <h4 class="text-lg lg:text-xl font-serif text-deepGreen mb-3 lg:mb-4 relative z-10">Precision Construction</h4>
+                        <p class="text-ink/70 font-light text-sm leading-[1.7] relative z-10">Laser-level grading and structural foundation protocols ensure absolute durability against freeze-thaw cycles.</p>
+                    </div>
+                    <div class="running-border p-8 lg:p-10 gs-reveal shadow-sm">
+                        <div class="text-[1.5rem] text-brandGreen mb-5 lg:mb-6"><i class="fa-solid fa-gem" aria-hidden="true"></i></div>
+                        <h4 class="text-lg lg:text-xl font-serif text-deepGreen mb-3 lg:mb-4 relative z-10">Premium Materials</h4>
+                        <p class="text-ink/70 font-light text-sm leading-[1.7] relative z-10">Sourcing architectural porcelain, high-density pavers, and premium natural stone. No commodity products.</p>
+                    </div>
+                    <div class="running-border p-8 lg:p-10 gs-reveal shadow-sm">
+                        <div class="text-[1.5rem] text-brandGreen mb-5 lg:mb-6"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i></div>
+                        <h4 class="text-lg lg:text-xl font-serif text-deepGreen mb-3 lg:mb-4 relative z-10">Owner-Led Oversight</h4>
+                        <p class="text-ink/70 font-light text-sm leading-[1.7] relative z-10">A high standard of personal quality control combined with the capacity to execute massive residential scopes.</p>
+                    </div>
+                    <div class="running-border p-8 lg:p-10 gs-reveal shadow-sm">
+                        <div class="text-[1.5rem] text-brandGreen mb-5 lg:mb-6"><i class="fa-solid fa-handshake" aria-hidden="true"></i></div>
+                        <h4 class="text-lg lg:text-xl font-serif text-deepGreen mb-3 lg:mb-4 relative z-10">Selective Experience</h4>
+                        <p class="text-ink/70 font-light text-sm leading-[1.7] relative z-10">The process remains composed and well-managed from the first consultation. Communication is transparent.</p>
+                    </div>
+                    <div class="running-border p-8 lg:p-10 gs-reveal shadow-sm">
+                        <div class="text-[1.5rem] text-brandGreen mb-5 lg:mb-6"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></div>
+                        <h4 class="text-lg lg:text-xl font-serif text-deepGreen mb-3 lg:mb-4 relative z-10">Prestige Expertise</h4>
+                        <p class="text-ink/70 font-light text-sm leading-[1.7] relative z-10">Our footprint is shaped around the GTA's most established residential communities, where expectations are higher.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" class="bg-white py-20 lg:py-32 px-5 lg:px-12 section-fade-to-airy">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start gap-12 lg:gap-24 relative">
+                
+                <div class="w-full lg:w-5/12 lg:sticky lg:top-40 gs-reveal z-10">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-3 lg:mb-4">Methodology</p>
+                    <h2 class="fluid-heading text-deepGreen mb-4 lg:mb-6 word-wrap-safe">A Refined<br>Process</h2>
+                    <p class="text-ink/70 text-base lg:text-lg font-light max-w-sm">Designed to keep decision-making calm, informed, and rigorously managed from initiation to final aftercare.</p>
+                </div>
+                
+                <div class="w-full lg:w-7/12 relative space-y-6 lg:space-y-8 z-10">
+                    
+                    <div class="bg-[#F9FAF9] p-8 lg:p-10 rounded-xl border border-black/5 shadow-sm gs-reveal relative">
+                        <span class="process-number">01</span>
+                        <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-2">Phase 01</p>
+                        <h4 class="text-2xl lg:text-3xl font-serif text-deepGreen mb-4">Initial Consultation</h4>
+                        <p class="text-ink/70 text-sm lg:text-base font-light leading-[1.7]">A focused discussion around the property, the scope being considered, and the architectural atmosphere you wish the environment to carry.</p>
+                    </div>
+
+                    <div class="bg-[#F6F7F6] p-8 lg:p-10 rounded-xl border border-black/5 shadow-sm gs-reveal relative">
+                        <span class="process-number">02</span>
+                        <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-2">Phase 02</p>
+                        <h4 class="text-2xl lg:text-3xl font-serif text-deepGreen mb-4">Site Review & Design</h4>
+                        <p class="text-ink/70 text-sm lg:text-base font-light leading-[1.7]">We assess circulation, structural grade, material intent, visual hierarchy, and practical site conditions to establish clear direction.</p>
+                    </div>
+
+                    <div class="bg-[#F2F4F2] p-8 lg:p-10 rounded-xl border border-black/5 shadow-sm gs-reveal relative">
+                        <span class="process-number">03</span>
+                        <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-2">Phase 03</p>
+                        <h4 class="text-2xl lg:text-3xl font-serif text-deepGreen mb-4">Scope Development</h4>
+                        <p class="text-ink/70 text-sm lg:text-base font-light leading-[1.7]">The principal construction elements, project sequencing, and financial path are defined with absolute clarity, so expectations remain aligned.</p>
+                    </div>
+
+                    <div class="bg-[#EFF1EF] p-8 lg:p-10 rounded-xl border border-black/5 shadow-sm gs-reveal relative">
+                        <span class="process-number">04</span>
+                        <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-2">Phase 04</p>
+                        <h4 class="text-2xl lg:text-3xl font-serif text-deepGreen mb-4">Precision Execution</h4>
+                        <p class="text-ink/70 text-sm lg:text-base font-light leading-[1.7]">Construction is managed by our in-house teams with severe discipline, site control, and unyielding attention to detail.</p>
+                    </div>
+
+                    <div class="bg-white p-8 lg:p-10 rounded-xl border border-black/5 shadow-lg gs-reveal relative">
+                        <span class="process-number">05</span>
+                        <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-2">Phase 05</p>
+                        <h4 class="text-2xl lg:text-3xl font-serif text-deepGreen mb-4">Completion & Aftercare</h4>
+                        <p class="text-ink/70 text-sm lg:text-base font-light leading-[1.7]">The environment is reviewed, refined, and transitioned to you with practical guidance for long-term architectural confidence.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Enclaves Section -->
+        <section class="bg-airy-gradient py-20 lg:py-32 px-5 lg:px-12 overflow-hidden section-fade-to-white" x-data="{ activeTab: 'Oakville' }">
+            <div class="max-w-7xl mx-auto gs-reveal">
+                <div class="text-center mb-10 lg:mb-16">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-3 lg:mb-4">The Top 1% of the GTA</p>
+                    <h2 class="fluid-heading text-deepGreen mb-4 lg:mb-6 word-wrap-safe">Executive Enclaves</h2>
+                    <p class="text-ink/70 text-base lg:text-lg font-light max-w-2xl mx-auto">Providing landscape execution exclusively for the Greater Toronto Area's most established residential communities.</p>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8 lg:gap-10 bg-white p-6 lg:p-16 border border-black/5 shadow-sm max-w-5xl mx-auto">
+                    <div class="w-full lg:w-1/3 flex lg:flex-col overflow-x-auto lg:overflow-x-visible space-x-6 lg:space-x-0 lg:space-y-2 border-b lg:border-b-0 lg:border-r border-stone pb-4 lg:pb-0 lg:pr-8 no-scrollbar">
+                        <template x-for="city in ['Oakville', 'Mississauga', 'Toronto', 'Burlington', 'Vaughan']">
+                            <button @click="activeTab = city" 
+                                    :aria-selected="activeTab === city"
+                                    :class="activeTab === city ? 'text-brandGreen font-medium lg:border-brandBrown border-b-2 lg:border-b-0 lg:border-l-2' : 'text-ink/50 font-light border-transparent hover:text-ink/80'" 
+                                    class="tab-btn text-left text-base sm:text-lg whitespace-nowrap lg:py-3 py-2 lg:pl-6 transition-all font-serif" 
+                                    x-text="city">
+                            </button>
+                        </template>
+                    </div>
+                    <div class="w-full lg:w-2/3 lg:pl-10 flex flex-col justify-center min-h-[140px] lg:min-h-[180px]">
+                        <p class="text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-brandBrown mb-4 lg:mb-6">Service Footprint</p>
+                        
+                        <ul x-show="activeTab === 'Oakville'" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 sm:gap-y-6 text-deepGreen font-light text-lg sm:text-xl font-serif" x-cloak>
+                            <li>Morrison</li><li>South West Oakville</li><li>Old Oakville</li><li>Ford</li>
+                        </ul>
+                        <ul x-show="activeTab === 'Mississauga'" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 sm:gap-y-6 text-deepGreen font-light text-lg sm:text-xl font-serif" x-cloak>
+                            <li>Lorne Park</li><li>Mineola West</li><li>Gordon Woods</li><li>Credit Mills</li>
+                        </ul>
+                        <ul x-show="activeTab === 'Toronto'" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 sm:gap-y-6 text-deepGreen font-light text-lg sm:text-xl font-serif" x-cloak>
+                            <li>The Bridle Path</li><li>Forest Hill</li><li>Lawrence Park</li><li>Yorkville</li>
+                        </ul>
+                        <ul x-show="activeTab === 'Burlington'" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 sm:gap-y-6 text-deepGreen font-light text-lg sm:text-xl font-serif" x-cloak>
+                            <li>Shoreacres</li><li>Roseland</li><li>Tyandaga</li><li>Downtown</li>
+                        </ul>
+                        <ul x-show="activeTab === 'Vaughan'" class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 sm:gap-y-6 text-deepGreen font-light text-lg sm:text-xl font-serif" x-cloak>
+                            <li>Kleinburg</li><li>Islington Woods</li><li>Patterson</li><li>Vellore Village</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="bg-white py-20 lg:py-32 px-5 lg:px-12 overflow-hidden">
+            <div class="max-w-6xl mx-auto contact-panel grid grid-cols-1 lg:grid-cols-2 rounded-sm border border-black/5 gs-reveal shadow-sm">
+                
+                <div class="contact-side p-8 lg:p-16 text-deepGreen relative border-b lg:border-b-0 lg:border-r border-black/5 flex flex-col justify-between">
+                    <div class="mb-10 lg:mb-0">
+                        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-brandGreen/60 mb-4 lg:mb-5">Initiate Project</p>
+                        <h2 class="text-3xl lg:text-[3.5rem] leading-[1.05] mb-4 lg:mb-6 font-serif">Request a<br>Consultation</h2>
+                        <p class="text-ink/70 text-base lg:text-lg leading-[1.7] max-w-md font-light">Share your architectural vision. Our project concierge will review your requirements and respond within 24 hours.</p>
+                    </div>
+                    <div class="space-y-4 lg:space-y-6 text-deepGreen">
+                        <div class="flex items-center gap-4 lg:gap-5">
+                            <div class="w-8 h-8 lg:w-10 lg:h-10 border border-deepGreen/20 rounded-full flex items-center justify-center"><i class="fa-solid fa-phone text-xs lg:text-sm" aria-hidden="true"></i></div>
+                            <span class="text-base lg:text-lg font-medium tracking-wide">647.250.1434</span>
+                        </div>
+                        <div class="flex items-center gap-4 lg:gap-5">
+                            <div class="w-8 h-8 lg:w-10 lg:h-10 border border-deepGreen/20 rounded-full flex items-center justify-center"><i class="fa-solid fa-envelope text-xs lg:text-sm" aria-hidden="true"></i></div>
+                            <span class="text-base lg:text-lg font-medium tracking-wide break-all">hello@lushlandscape.ca</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 sm:p-8 lg:p-16">
+                    <!-- Form View -->
+                    <form id="contactForm" class="space-y-6 lg:space-y-8" x-data="{ submitted: false }" @submit.prevent="submitted = true; setTimeout(() => { document.getElementById('contactForm').reset(); submitted = false; }, 5000)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+                            <div class="field-wrapper">
+                                <input type="text" id="f-name" placeholder=" " class="field-ui py-2" required>
+                                <label for="f-name" class="field-label">Name</label>
+                            </div>
+                            <div class="field-wrapper">
+                                <input type="email" id="f-email" placeholder=" " class="field-ui py-2" required>
+                                <label for="f-email" class="field-label">Email</label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+                            <div class="field-wrapper">
+                                <input type="tel" id="f-tel" placeholder=" " class="field-ui py-2" required>
+                                <label for="f-tel" class="field-label">Telephone</label>
+                            </div>
+                            <div class="field-wrapper">
+                                <input type="text" id="f-city" placeholder=" " class="field-ui py-2" required>
+                                <label for="f-city" class="field-label">City</label>
+                            </div>
+                        </div>
+                        <div class="field-wrapper">
+                            <select id="f-scope" class="field-ui py-2 pr-8 text-ink/70" required>
+                                <option value="" disabled selected></option>
+                                <option value="Front">Front Entrance & Driveway</option>
+                                <option value="Rear">Rear Yard & Outdoor Living</option>
+                                <option value="Structural">Structural Hardscape & Retaining</option>
+                                <option value="Full">Full Property Transformation</option>
+                            </select>
+                            <label for="f-scope" class="field-label">Project Scope</label>
+                        </div>
+                        <div class="pt-6 lg:pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 lg:gap-6 border-t border-stone/30 mt-2 lg:mt-4">
+                            <p class="text-[9px] lg:text-[10px] text-ink/50 uppercase tracking-[0.1em] max-w-[200px] leading-relaxed">By submitting, you agree to our Privacy Policy.</p>
+                            <button type="submit" class="btn-solid h-12 lg:h-14 w-full sm:w-auto px-8 lg:px-10 text-xs tracking-[0.15em] uppercase font-semibold rounded-sm">Request Assessment</button>
+                        </div>
+                    </form>
+                    
+                    <!-- Success View -->
+                    <div class="form-success" id="formSuccess">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <p>Thank you! Our project concierge will contact you within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-brandGreen pt-16 lg:pt-24 pb-8 lg:pb-10 px-5 lg:px-12 text-white border-t border-white/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 text-white/90 text-sm border-b border-white/14 pb-12 lg:pb-16 mb-8 lg:mb-10">
+            <div class="sm:col-span-2 lg:pr-8">
+                <img src="https://lushlandscape.ca/lushLandscape-Logo.png" alt="Lush Landscapes" class="h-8 mb-6 lg:mb-8 w-auto brightness-0 invert opacity-90" loading="lazy" width="200" height="32">
+                <p class="max-w-md leading-[1.8] font-light text-white/90">The GTA's technical authority for luxury outdoor construction. We specialize in high-ticket hardscaping, structural masonry, and complete outdoor living environments, backed by a 10-year workmanship warranty.</p>
+            </div>
+            <div>
+                <h3 class="text-white text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] mb-4 lg:mb-6">Signature Disciplines</h3>
+                <ul class="space-y-3 lg:space-y-4 font-light text-white/90">
+                    <li><a href="#" class="hover:text-white transition-colors">Paving & Arrival</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Outdoor Living</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Structural Corrective</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Estate Construction</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] mb-4 lg:mb-6">Primary Enclaves</h3>
+                <ul class="space-y-3 lg:space-y-4 font-light text-white/90">
+                    <li>Lorne Park & Mineola</li>
+                    <li>Joshua Creek & Morrison</li>
+                    <li>Shoreacres & Roseland</li>
+                    <li>The Bridle Path & Forest Hill</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[9px] lg:text-[10px] uppercase tracking-[0.2em] text-white/70 gap-4 lg:gap-6">
+            <p class="text-center md:text-left">&copy; 2026 Lush Landscapes. All Rights Reserved.</p>
+            <div class="flex items-center gap-4 lg:gap-8 flex-wrap justify-center">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <span class="hidden sm:inline">|</span>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+                <div class="flex gap-4 lg:gap-5 text-white/90 text-sm md:border-l border-white/20 md:pl-8 mt-2 md:mt-0">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram hover:text-white transition-all cursor-pointer"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin hover:text-white transition-all cursor-pointer"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function checkGSAP() {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                initAnimations();
+            } else {
+                setTimeout(checkGSAP, 50);
+            }
+        })();
+
+        function initAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Check for reduced motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Lenis instance reference
+            let lenis = null;
+            let lenisActive = false;
+
+            // Initialize Lenis with proper GSAP integration
+            function initLenis() {
+                if (prefersReducedMotion || lenisActive) return;
+                
+                lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    direction: 'vertical',
+                    gestureDirection: 'vertical',
+                    smooth: true,
+                    touchMultiplier: 2,
+                    infinite: false,
+                    wheelMultiplier: 1,
+                    lerp: 0.1,
+                    syncTouch: false,
+                    sync: false,
+                    touchInertiaMultiplier: 35,
+                    normalizeWheel: true,
+                    prevent: null,
+                    autoRaf: false, // We'll manage RAF manually for GSAP sync
+                });
+
+                // Critical: Sync Lenis with ScrollTrigger
+                lenis.on('scroll', ScrollTrigger.update);
+                
+                // Sync Lenis with GSAP ticker (convert seconds to ms)
+                gsap.ticker.add((time) => {
+                    lenis.raf(time * 1000);
+                });
+                
+                // Disable GSAP lag smoothing to prevent drift
+                gsap.ticker.lagSmoothing(0);
+                
+                lenisActive = true;
+                document.documentElement.classList.add('lenis', 'lenis-smooth');
+            }
+
+            // Destroy Lenis properly
+            function destroyLenis() {
+                if (!lenisActive || !lenis) return;
+                
+                gsap.ticker.remove(lenis.raf);
+                lenis.destroy();
+                lenis = null;
+                lenisActive = false;
+                document.documentElement.classList.remove('lenis', 'lenis-smooth');
+            }
+
+            // Initialize based on viewport
+            function handleViewportChange() {
+                if (window.innerWidth > 1024 && !prefersReducedMotion) {
+                    if (!lenisActive) initLenis();
+                } else {
+                    if (lenisActive) destroyLenis();
+                }
+            }
+
+            // Initial setup
+            handleViewportChange();
+
+            // Debounced resize handler
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    handleViewportChange();
+                    // Refresh ScrollTrigger after viewport change
+                    ScrollTrigger.refresh();
+                }, 250);
+            }, { passive: true });
+
+            // Anchor link handling with Lenis + header offset
+            function handleAnchorLinks() {
+                const headerOffset = 100; // Match scroll-padding-top
+                
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        if (href === '#') return;
+                        
+                        const target = document.querySelector(href);
+                        if (!target) return;
+                        
+                        e.preventDefault();
+                        
+                        // Close mobile menu if open
+                        const mobileMenuBtn = document.querySelector('[aria-label="Toggle navigation menu"]');
+                        if (mobileMenuBtn && mobileMenuBtn.getAttribute('aria-expanded') === 'true') {
+                            mobileMenuBtn.click();
+                        }
+                        
+                        // Calculate target position with header offset
+                        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+                        
+                        if (lenisActive && lenis) {
+                            // Use Lenis for smooth scroll
+                            lenis.scrollTo(targetPosition, {
+                                offset: 0, // We already calculated offset
+                                duration: 1.2,
+                                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                            });
+                        } else {
+                            // Fallback to native smooth scroll
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+            }
+            handleAnchorLinks();
+
+            // Header scroll detection using Lenis scroll event (more reliable than window.scrollY)
+            const header = document.getElementById('siteHeader');
+            function syncHeader() {
+                const scrollY = lenisActive && lenis ? lenis.scroll : window.scrollY;
+                header.classList.toggle('is-scrolled', scrollY > 50);
+            }
+            
+            if (lenisActive) {
+                lenis.on('scroll', syncHeader);
+            } else {
+                window.addEventListener('scroll', syncHeader, { passive: true });
+            }
+            syncHeader(); // Initial check
+
+            // Portfolio horizontal scroll - FIXED calculation
+            let mm = gsap.matchMedia();
+            mm.add("(min-width: 1024px)", () => {
+                const portfolioWrapper = document.querySelector('.portfolio-pin-wrapper');
+                const portfolioTrack = document.getElementById('portfolio-track');
+                
+                if (!portfolioWrapper || !portfolioTrack || prefersReducedMotion) return;
+                
+                // Calculate exact scroll distance
+                const getScrollAmount = () => {
+                    const track = document.getElementById('portfolio-track');
+                    if (!track) return 0;
+                    
+                    // Get computed styles for accurate padding
+                    const wrapperStyle = window.getComputedStyle(portfolioWrapper);
+                    const trackStyle = window.getComputedStyle(track);
+                    
+                    const wrapperPaddingX = parseFloat(wrapperStyle.paddingLeft) + parseFloat(wrapperStyle.paddingRight);
+                    const trackGap = parseFloat(trackStyle.gap) || 40; // lg:gap-10 = 40px
+                    const cardCount = track.querySelectorAll('.mobile-swipe-item').length;
+                    
+                    // Total width = sum of card widths + gaps + container padding
+                    const totalCardWidth = Array.from(track.querySelectorAll('.mobile-swipe-item'))
+                        .reduce((sum, card) => sum + card.offsetWidth, 0);
+                    const totalGaps = trackGap * (cardCount - 1);
+                    const totalWidth = totalCardWidth + totalGaps + wrapperPaddingX;
+                    
+                    // Scroll distance = viewport width - total content width
+                    return -(totalWidth - window.innerWidth);
+                };
+                
+                const portfolioScroll = gsap.to(portfolioTrack, {
+                    x: getScrollAmount,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: portfolioWrapper,
+                        pin: true,
+                        scrub: 1,
+                        start: "top top",
+                        end: () => {
+                            // Calculate exact end point
+                            const track = document.getElementById('portfolio-track');
+                            if (!track) return "+=1000";
+                            
+                            const wrapperPaddingX = 96; // lg:px-12 * 2
+                            const trackWidth = track.scrollWidth;
+                            const viewportWidth = window.innerWidth;
+                            
+                            return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
+                        },
+                        invalidateOnRefresh: true,
+                        anticipatePin: 1
+                    }
+                });
+                
+                // Refresh on resize
+                ScrollTrigger.addEventListener('refresh', () => {
+                    portfolioScroll.scrollTrigger.end = () => {
+                        const track = document.getElementById('portfolio-track');
+                        if (!track) return "+=1000";
+                        const wrapperPaddingX = 96;
+                        const trackWidth = track.scrollWidth;
+                        const viewportWidth = window.innerWidth;
+                        return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
+                    };
+                });
+                
+                return () => portfolioScroll.scrollTrigger.kill(); // Cleanup
+            });
+
+            // Portfolio navigation buttons (mobile + desktop fallback)
+            const track = document.getElementById('portfolio-track');
+            const prevBtn = document.getElementById('portfolio-prev');
+            const nextBtn = document.getElementById('portfolio-next');
+            
+            if (track && prevBtn && nextBtn) {
+                const getCardWidth = () => {
+                    const card = track.querySelector('.mobile-swipe-item');
+                    if (!card) return 300;
+                    const cardWidth = card.offsetWidth;
+                    const trackStyle = window.getComputedStyle(track);
+                    const gap = parseFloat(trackStyle.gap) || 20;
+                    return cardWidth + gap;
+                };
+                
+                prevBtn.addEventListener('click', () => {
+                    track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+                });
+            }
+
+            // Parallax with proper float parsing + reduced motion check
+            gsap.utils.toArray('.parallax-img').forEach((img) => {
+                if (prefersReducedMotion) {
+                    img.style.transform = 'none';
+                    return;
+                }
+                const speed = parseFloat(img.dataset.speed) || 0.15;
+                gsap.to(img, {
+                    yPercent: speed * 100,
+                    ease: "none",
+                    scrollTrigger: { 
+                        trigger: img.parentElement, 
+                        start: "top bottom", 
+                        end: "bottom top", 
+                        scrub: true 
+                    }
+                });
+            });
+
+            // Hero animations with reduced motion support
+            if (!prefersReducedMotion) {
+                setTimeout(() => {
+                    gsap.from('.gs-hero', { 
+                        duration: 1, 
+                        y: 20, 
+                        opacity: 0, 
+                        stagger: 0.1, 
+                        ease: 'power3.out' 
+                    });
+                }, 100);
+            } else {
+                document.querySelectorAll('.gs-hero').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                });
+            }
+
+            // GSAP Reveal animations with reduced motion support
+            document.querySelectorAll('.gs-reveal').forEach(el => {
+                if (prefersReducedMotion) {
+                    el.classList.add('is-revealed');
+                    return;
+                }
+                ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 90%',
+                    onEnter: () => el.classList.add('is-revealed'),
+                    once: true
+                });
+            });
+
+            // Form success state handling
+            const contactForm = document.getElementById('contactForm');
+            const formSuccess = document.getElementById('formSuccess');
+            
+            if (contactForm && formSuccess) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Simple validation
+                    const requiredFields = contactForm.querySelectorAll('[required]');
+                    let isValid = true;
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.classList.add('border-red-500');
+                            setTimeout(() => field.classList.remove('border-red-500'), 2000);
+                        }
+                    });
+                    
+                    if (!isValid) return;
+                    
+                    // Show success state
+                    contactForm.style.display = 'none';
+                    formSuccess.classList.add('is-active');
+                    
+                    // Reset after 5 seconds
+                    setTimeout(() => {
+                        formSuccess.classList.remove('is-active');
+                        contactForm.style.display = 'block';
+                        contactForm.reset();
+                    }, 5000);
+                });
+            }
+
+            // Update header sync if Lenis state changes
+            if (lenisActive) {
+                lenis.on('scroll', syncHeader);
+            }
+        }
+    </script>
+</body>
+</html>

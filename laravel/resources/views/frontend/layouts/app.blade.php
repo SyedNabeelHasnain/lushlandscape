@@ -191,7 +191,7 @@
     </style>
 </head>
 
-<body class="bg-white text-ink font-sans antialiased">
+<body class="bg-bg-primary text-text font-sans antialiased selection:bg-forest selection:text-white">
     <a href="#main-content"
         class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[999] focus:bg-forest focus:text-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold">Skip
         to main content</a>

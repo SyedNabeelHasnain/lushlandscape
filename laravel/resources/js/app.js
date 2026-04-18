@@ -1085,3 +1085,179 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// ─── Phase 1: Designer JS Integration ──────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Portfolio horizontal scroll - FIXED calculation
+    let mm = gsap.matchMedia();
+    mm.add("(min-width: 1024px)", () => {
+        const portfolioWrapper = document.querySelector('.portfolio-pin-wrapper');
+        const portfolioTrack = document.getElementById('portfolio-track');
+        
+        if (!portfolioWrapper || !portfolioTrack || prefersReducedMotion) return;
+        
+        // Calculate exact scroll distance
+        const getScrollAmount = () => {
+            const track = document.getElementById('portfolio-track');
+            if (!track) return 0;
+            
+            const wrapperStyle = window.getComputedStyle(portfolioWrapper);
+            const trackStyle = window.getComputedStyle(track);
+            
+            const wrapperPaddingX = parseFloat(wrapperStyle.paddingLeft) + parseFloat(wrapperStyle.paddingRight);
+            const trackGap = parseFloat(trackStyle.gap) || 40; // lg:gap-10 = 40px
+            const cardCount = track.querySelectorAll('.mobile-swipe-item').length;
+            
+            const totalCardWidth = Array.from(track.querySelectorAll('.mobile-swipe-item'))
+                .reduce((sum, card) => sum + card.offsetWidth, 0);
+            const totalGaps = trackGap * (cardCount - 1);
+            const totalWidth = totalCardWidth + totalGaps + wrapperPaddingX;
+            
+            return -(totalWidth - window.innerWidth);
+        };
+        
+        const portfolioScroll = gsap.to(portfolioTrack, {
+            x: getScrollAmount,
+            ease: "none",
+            scrollTrigger: {
+                trigger: portfolioWrapper,
+                pin: true,
+                scrub: 1,
+                start: "top top",
+                end: () => {
+                    const track = document.getElementById('portfolio-track');
+                    if (!track) return "+=1000";
+                    
+                    const wrapperPaddingX = 96; // lg:px-12 * 2
+                    const trackWidth = track.scrollWidth;
+                    const viewportWidth = window.innerWidth;
+                    
+                    return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
+                },
+                invalidateOnRefresh: true,
+                anticipatePin: 1
+            }
+        });
+        
+        ScrollTrigger.addEventListener('refresh', () => {
+            portfolioScroll.scrollTrigger.end = () => {
+                const track = document.getElementById('portfolio-track');
+                if (!track) return "+=1000";
+                const wrapperPaddingX = 96;
+                const trackWidth = track.scrollWidth;
+                const viewportWidth = window.innerWidth;
+                return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
+            };
+        });
+        
+        return () => portfolioScroll.scrollTrigger.kill(); // Cleanup
+    });
+
+    // Portfolio navigation buttons (mobile + desktop fallback)
+    const track = document.getElementById('portfolio-track');
+    const prevBtn = document.getElementById('portfolio-prev');
+    const nextBtn = document.getElementById('portfolio-next');
+    
+    if (track && prevBtn && nextBtn) {
+        const getCardWidth = () => {
+            const card = track.querySelector('.mobile-swipe-item');
+            if (!card) return 300;
+            const cardWidth = card.offsetWidth;
+            const trackStyle = window.getComputedStyle(track);
+            const gap = parseFloat(trackStyle.gap) || 20;
+            return cardWidth + gap;
+        };
+        
+        prevBtn.addEventListener('click', () => {
+            track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+        });
+        nextBtn.addEventListener('click', () => {
+            track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+        });
+    }
+
+    // Parallax
+    gsap.utils.toArray('.parallax-img').forEach((img) => {
+        if (prefersReducedMotion) {
+            img.style.transform = 'none';
+            return;
+        }
+        const speed = parseFloat(img.dataset.speed) || 0.15;
+        gsap.to(img, {
+            yPercent: speed * 100,
+            ease: "none",
+            scrollTrigger: { 
+                trigger: img.parentElement, 
+                start: "top bottom", 
+                end: "bottom top", 
+                scrub: true 
+            }
+        });
+    });
+
+    // Header scroll detection using Lenis scroll event
+    const header = document.getElementById('siteHeader');
+    if (header) {
+        function syncHeader() {
+            const scrollY = window.lenis ? window.lenis.scroll : window.scrollY;
+            header.classList.toggle('is-scrolled', scrollY > 50);
+        }
+        
+        if (window.lenis) {
+            window.lenis.on('scroll', syncHeader);
+        } else {
+            window.addEventListener('scroll', syncHeader, { passive: true });
+        }
+        syncHeader();
+    }
+
+    // Anchor link handling with Lenis + header offset
+    const headerOffset = 100;
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '') return;
+            
+            const target = document.querySelector(href);
+            if (!target) return;
+            
+            e.preventDefault();
+            
+            // Close mobile menu if open (assuming it's managed via Alpine or similar)
+            const mobileMenuBtn = document.querySelector('[aria-label="Toggle navigation menu"]');
+            if (mobileMenuBtn && mobileMenuBtn.getAttribute('aria-expanded') === 'true') {
+                mobileMenuBtn.click();
+            }
+            
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+            
+            if (window.lenis) {
+                window.lenis.scrollTo(targetPosition, {
+                    offset: 0,
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                });
+            } else {
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Explicitly handle .gs-reveal for elements that aren't picked up by the global initScrollAnimations
+    document.querySelectorAll('.gs-reveal:not(.is-revealed)').forEach(el => {
+        if (prefersReducedMotion) {
+            el.classList.add('is-revealed');
+            return;
+        }
+        ScrollTrigger.create({
+            trigger: el,
+            start: 'top 90%',
+            onEnter: () => el.classList.add('is-revealed'),
+            once: true
+        });
+    });
+});

@@ -42,7 +42,7 @@
     $showSearch        = $searchEnabled && $searchInHeader;
 @endphp
 
-<header class="sticky top-0 z-50 nav-glass transition-all duration-500 relative"
+<header id="siteHeader" class="header-shell fixed top-0 inset-x-0 z-[100]"
     x-data="{
         activeMenu: null,
         mobileOpen: false,
@@ -80,96 +80,93 @@
     }"
     x-on:keydown.escape.window="closeAll()">
 
-    <div class="max-w-7xl mx-auto px-6 lg:px-12">
-        <div class="flex items-center justify-between h-16 lg:h-20 gap-6">
+    <div class="header-inner max-w-7xl mx-auto px-5 lg:px-12 py-5 lg:py-6 flex items-center justify-between">
 
-            {{-- Logo --}}
-            <a href="{{ url('/') }}" class="flex items-center gap-3 shrink-0" aria-label="{{ $siteName }} - Home">
-                @if($logoDesktop)
-                <img src="{{ $logoDesktop->url }}" alt="{{ $siteName }}" class="hidden sm:block h-11 w-auto object-contain" height="44" loading="eager">
-                @endif
-                @if($logoMobile)
-                <img src="{{ $logoMobile->url }}" alt="{{ $siteName }}" class="block sm:hidden h-10 w-auto object-contain" height="40" loading="eager">
-                @elseif($logoDesktop)
-                <img src="{{ $logoDesktop->url }}" alt="{{ $siteName }}" class="block sm:hidden h-10 w-auto object-contain" height="40" loading="eager">
-                @endif
-                @if(!$logoDesktop && !$logoMobile)
-                <div class="hidden sm:block">
-                    <span class="text-white font-heading text-2xl font-bold leading-none tracking-tight block">{{ $siteName }}</span>
-                    <span class="text-white/40 text-[10px] tracking-[0.25em] uppercase mt-1 block">Luxury Landscaping</span>
-                </div>
-                <span class="sm:hidden text-white font-heading text-xl font-bold tracking-tight">{{ $siteName }}</span>
-                @endif
+        {{-- Logo --}}
+        <a href="{{ url('/') }}" class="flex items-center z-[110]" aria-label="{{ $siteName }} - Home">
+            @if($logoDesktop)
+            <img src="{{ $logoDesktop->url }}" alt="{{ $siteName }}" class="brand-logo hidden sm:block relative" width="200" height="56" loading="eager">
+            @endif
+            @if($logoMobile)
+            <img src="{{ $logoMobile->url }}" alt="{{ $siteName }}" class="brand-logo block sm:hidden relative" width="150" height="40" loading="eager">
+            @elseif($logoDesktop)
+            <img src="{{ $logoDesktop->url }}" alt="{{ $siteName }}" class="brand-logo block sm:hidden relative" width="150" height="40" loading="eager">
+            @endif
+            @if(!$logoDesktop && !$logoMobile)
+            <div class="hidden sm:block">
+                <span class="text-forest font-heading text-2xl font-bold leading-none tracking-tight block">{{ $siteName }}</span>
+                <span class="text-forest/40 text-[10px] tracking-[0.25em] uppercase mt-1 block">Luxury Landscaping</span>
+            </div>
+            <span class="sm:hidden text-forest font-heading text-xl font-bold tracking-tight">{{ $siteName }}</span>
+            @endif
+        </a>
+
+        {{-- Desktop Navigation --}}
+        <nav class="hidden lg:flex items-center gap-12" aria-label="Main Navigation">
+            <div class="relative"
+                 x-on:mouseenter="openMenu('services')"
+                 x-on:mouseleave="scheduleClose()"
+                 x-on:focusin="openMenu('services')"
+                 x-on:focusout="scheduleClose()">
+                <button x-on:click="activeMenu === 'services' ? closeAll() : openMenu('services')"
+                        class="nav-link flex items-center gap-1.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300"
+                        :class="activeMenu === 'services' ? 'text-forest' : ''"
+                        aria-haspopup="true" :aria-expanded="activeMenu === 'services'">
+                    Services
+                    <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300" :class="activeMenu === 'services' ? 'rotate-180' : ''"></i>
+                </button>
+            </div>
+
+            <div class="relative"
+                 x-on:mouseenter="openMenu('locations')"
+                 x-on:mouseleave="scheduleClose()"
+                 x-on:focusin="openMenu('locations')"
+                 x-on:focusout="scheduleClose()">
+                <button x-on:click="activeMenu === 'locations' ? closeAll() : openMenu('locations')"
+                        class="nav-link flex items-center gap-1.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300"
+                        :class="activeMenu === 'locations' ? 'text-forest' : ''"
+                        aria-haspopup="true" :aria-expanded="activeMenu === 'locations'">
+                    Locations
+                    <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300" :class="activeMenu === 'locations' ? 'rotate-180' : ''"></i>
+                </button>
+            </div>
+
+            <a href="{{ url('/portfolio') }}" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300">Portfolio</a>
+            <a href="{{ url('/about') }}" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300">About</a>
+        </nav>
+
+        {{-- Desktop Right --}}
+        <div class="hidden lg:flex items-center gap-4 shrink-0">
+            @if($showSearch)
+            <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.desktopSearch.focus())"
+                    class="w-10 h-10 flex items-center justify-center text-forest/50 hover:text-forest transition-all duration-300"
+                    aria-label="Search">
+                <i data-lucide="search" class="w-4 h-4"></i>
+            </button>
+            @endif
+            @if($phone)
+            <a href="tel:{{ $phoneClean }}" class="hidden xl:flex items-center gap-2 text-forest/50 hover:text-forest text-[11px] tracking-[0.15em] transition-all duration-300">
+                <i data-lucide="phone" class="w-3.5 h-3.5"></i>{{ $phone }}
             </a>
+            @endif
+            <a href="{{ $navCtaUrl }}" class="border border-forest text-forest hover:bg-forest hover:text-white transition-colors px-8 h-10 inline-flex items-center justify-center text-[10px] font-bold tracking-[0.15em] uppercase rounded-sm">
+                {{ $navCtaText }}
+            </a>
+        </div>
 
-            {{-- Desktop Navigation --}}
-            <nav class="hidden lg:flex items-center gap-1 flex-1 justify-center" aria-label="Primary navigation">
-                <div class="relative"
-                     x-on:mouseenter="openMenu('services')"
-                     x-on:mouseleave="scheduleClose()"
-                     x-on:focusin="openMenu('services')"
-                     x-on:focusout="scheduleClose()">
-                    <button x-on:click="activeMenu === 'services' ? closeAll() : openMenu('services')"
-                            class="flex items-center gap-1.5 text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300"
-                            :class="activeMenu === 'services' ? 'text-white' : ''"
-                            aria-haspopup="true" :aria-expanded="activeMenu === 'services'">
-                        Services
-                        <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300" :class="activeMenu === 'services' ? 'rotate-180' : ''"></i>
-                    </button>
-                </div>
-
-                <div class="relative"
-                     x-on:mouseenter="openMenu('locations')"
-                     x-on:mouseleave="scheduleClose()"
-                     x-on:focusin="openMenu('locations')"
-                     x-on:focusout="scheduleClose()">
-                    <button x-on:click="activeMenu === 'locations' ? closeAll() : openMenu('locations')"
-                            class="flex items-center gap-1.5 text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300"
-                            :class="activeMenu === 'locations' ? 'text-white' : ''"
-                            aria-haspopup="true" :aria-expanded="activeMenu === 'locations'">
-                        Locations
-                        <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300" :class="activeMenu === 'locations' ? 'rotate-180' : ''"></i>
-                    </button>
-                </div>
-
-                <a href="{{ url('/portfolio') }}" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">Portfolio</a>
-                <a href="{{ url('/about') }}" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">About</a>
-                <a href="{{ url('/contact') }}" class="text-white/70 hover:text-white text-[11px] font-semibold uppercase tracking-[0.2em] px-5 py-3 transition-all duration-300">Contact</a>
-            </nav>
-
-            {{-- Desktop Right --}}
-            <div class="hidden lg:flex items-center gap-4 shrink-0">
-                @if($showSearch)
-                <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.desktopSearch.focus())"
-                        class="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-all duration-300"
-                        aria-label="Search">
-                    <i data-lucide="search" class="w-4 h-4"></i>
-                </button>
-                @endif
-                @if($phone)
-                <a href="tel:{{ $phoneClean }}" class="hidden xl:flex items-center gap-2 text-white/50 hover:text-white text-[11px] tracking-[0.15em] transition-all duration-300">
-                    <i data-lucide="phone" class="w-3.5 h-3.5"></i>{{ $phone }}
-                </a>
-                @endif
-                <a href="{{ $navCtaUrl }}" class="btn-luxury btn-luxury-ghost text-[10px] px-7 py-3">
-                    {{ $navCtaText }}
-                </a>
-            </div>
-
-            {{-- Mobile --}}
-            <div class="lg:hidden flex items-center gap-3">
-                @if($showSearch)
-                <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.mobileSearch.focus())"
-                        class="w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition" aria-label="Search">
-                    <i data-lucide="search" class="w-5 h-5"></i>
-                </button>
-                @endif
-                <button x-on:click="mobileOpen = !mobileOpen"
-                        class="w-10 h-10 flex items-center justify-center text-white hover:text-white/80 transition" aria-label="Toggle navigation">
-                    <i data-lucide="menu" class="w-5 h-5" x-show="!mobileOpen" x-cloak></i>
-                    <i data-lucide="x" class="w-5 h-5" x-show="mobileOpen" x-cloak></i>
-                </button>
-            </div>
+        {{-- Mobile --}}
+        <div class="lg:hidden flex items-center gap-3 z-[110]">
+            @if($showSearch)
+            <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.mobileSearch.focus())"
+                    class="w-10 h-10 flex items-center justify-center text-forest hover:text-forest/80 transition" aria-label="Search">
+                <i data-lucide="search" class="w-5 h-5"></i>
+            </button>
+            @endif
+            <button x-on:click="mobileOpen = !mobileOpen"
+                    class="w-10 h-10 flex items-center justify-center text-forest hover:text-forest/80 transition" aria-label="Toggle navigation">
+                <i data-lucide="menu" class="w-5 h-5" x-show="!mobileOpen" x-cloak></i>
+                <i data-lucide="x" class="w-5 h-5" x-show="mobileOpen" x-cloak></i>
+            </button>
         </div>
     </div>
 
