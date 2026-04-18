@@ -223,7 +223,7 @@ class ListingPageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [],
                     'cta_text' => 'Request a Consultation',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
@@ -341,7 +341,7 @@ class ListingPageBlueprintService
                         ['icon' => 'gem', 'title' => 'Premium Material Direction', 'description' => 'Surfaces and finishes selected for both durability and architectural character.'],
                     ],
                     'cta_text' => 'Talk Through Your Project',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
@@ -447,7 +447,7 @@ class ListingPageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [],
                     'cta_text' => 'Request a Consultation',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
@@ -540,7 +540,7 @@ class ListingPageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [],
                     'cta_text' => 'Discuss Your Project',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
@@ -1284,7 +1284,7 @@ class ListingPageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [],
                     'cta_text' => 'Request a Consultation',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
@@ -1396,7 +1396,7 @@ class ListingPageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [],
                     'cta_text' => 'Request a Consultation',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
@@ -1491,7 +1491,7 @@ class ListingPageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [],
                     'cta_text' => 'Request a Consultation',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',
@@ -1603,7 +1603,7 @@ class ListingPageBlueprintService
                     'feature_layout' => 'stacked',
                     'features' => [],
                     'cta_text' => 'Request a Consultation',
-                    'cta_url' => '/contact',
+                    'cta_url' => '/consultation',
                 ],
                 $this->styles([
                     'max_width' => 'xl',

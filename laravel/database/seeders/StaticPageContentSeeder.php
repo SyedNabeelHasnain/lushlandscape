@@ -261,7 +261,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Ready to Start Your Outdoor Project?',
                     'subheading' => 'Book an on-site consultation and see why hundreds of Ontario homeowners trust Lush Landscape Service with their outdoor living spaces.',
                     'button_text' => 'Book a Consultation',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'forest',
                 ],
             ],
@@ -420,7 +420,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Ready to Get Started?',
                     'subheading' => 'Book your consultation and take the first step toward the outdoor space you have been dreaming about.',
                     'button_text' => 'Book a Consultation',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'forest',
                 ],
             ],
@@ -603,7 +603,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Questions About Your Warranty?',
                     'subheading' => 'Contact our team for warranty inquiries, maintenance advice, or to schedule a seasonal inspection of your landscape.',
                     'button_text' => 'Contact Us',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'cream',
                 ],
             ],
@@ -782,7 +782,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Let Us Build a Plan That Works for You',
                     'subheading' => 'Contact us to schedule a consultation. We will discuss your project vision and create a payment plan that fits your budget.',
                     'button_text' => 'Book a Consultation',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'forest',
                 ],
             ],
@@ -959,7 +959,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Not Sure If Your Project Needs a Permit?',
                     'subheading' => 'Contact us for a free consultation. We will assess your project requirements and handle all necessary permits and approvals.',
                     'button_text' => 'Book Free Consultation',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'forest',
                 ],
             ],
@@ -1106,7 +1106,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Work with a Team You Can Trust',
                     'subheading' => 'Book a consultation and see why Ontario homeowners choose a certified, insured, and Landscape Ontario-member company for their projects.',
                     'button_text' => 'Book a Consultation',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'forest',
                 ],
             ],
@@ -1194,7 +1194,7 @@ class StaticPageContentSeeder extends Seeder
                             'media_id' => null,
                             'title' => 'Landscape Crew Members',
                             'description' => 'Entry-level to experienced installers who work on hardscape and softscape projects. Physical fitness, reliability, and a willingness to learn are essential. Experience with interlocking pavers, retaining walls, or garden installation is an asset.',
-                            'link_url' => '/contact',
+                            'link_url' => '/consultation',
                             'link_text' => 'Apply Now',
                         ],
                         [
@@ -1202,7 +1202,7 @@ class StaticPageContentSeeder extends Seeder
                             'media_id' => null,
                             'title' => 'Project Leads',
                             'description' => 'Experienced landscapers who can manage a crew, communicate with clients, and oversee projects from start to finish. Strong organizational skills, leadership ability, and a minimum of 3 years of landscaping experience are required.',
-                            'link_url' => '/contact',
+                            'link_url' => '/consultation',
                             'link_text' => 'Apply Now',
                         ],
                         [
@@ -1210,7 +1210,7 @@ class StaticPageContentSeeder extends Seeder
                             'media_id' => null,
                             'title' => 'Design Consultants',
                             'description' => 'Client-facing professionals who conduct site consultations, develop project plans, and guide homeowners through the design process. A background in landscape design, horticulture, or a related field is preferred.',
-                            'link_url' => '/contact',
+                            'link_url' => '/consultation',
                             'link_text' => 'Apply Now',
                         ],
                     ],
@@ -1281,7 +1281,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Ready to Join a Team That Values Your Skills?',
                     'subheading' => 'Send your resume to info@lushlandscape.ca or use the contact form below to get in touch. We look forward to hearing from you.',
                     'button_text' => 'Apply Now',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'forest',
                 ],
             ],
@@ -1428,7 +1428,7 @@ class StaticPageContentSeeder extends Seeder
                     'heading' => 'Know Someone Who Would Love a New Outdoor Space?',
                     'subheading' => 'Share our name and we will take care of the rest. Contact us to submit your referral or to learn more about the current rewards.',
                     'button_text' => 'Submit a Referral',
-                    'button_url' => '/contact',
+                    'button_url' => '/consultation',
                     'style' => 'forest',
                 ],
             ],
@@ -1576,7 +1576,7 @@ class StaticPageContentSeeder extends Seeder
                         .'<p>If you have questions about this Privacy Policy, wish to exercise your privacy rights, or have a concern about how we handle your personal information, please contact our Privacy Officer:</p>'
                         .'<p><strong>Lush Landscape Service</strong><br>'
                         .'Email: <a href="mailto:info@lushlandscape.ca">info@lushlandscape.ca</a><br>'
-                        .'Website: <a href="/contact">lushlandscape.ca/contact</a></p>'
+                        .'Website: <a href="/consultation">lushlandscape.ca/consultation</a></p>'
                         .'<p>If you are not satisfied with our response, you may contact the <strong>Office of the Privacy Commissioner of Canada</strong> at <a href="https://www.priv.gc.ca" target="_blank" rel="noopener noreferrer">www.priv.gc.ca</a> or by calling 1-800-282-1376.</p>',
                 ],
             ],
@@ -1725,7 +1725,7 @@ class StaticPageContentSeeder extends Seeder
                         .'<p>If you have questions about these Terms and Conditions, please contact us:</p>'
                         .'<p><strong>Lush Landscape Service</strong><br>'
                         .'Email: <a href="mailto:info@lushlandscape.ca">info@lushlandscape.ca</a><br>'
-                        .'Website: <a href="/contact">lushlandscape.ca/contact</a></p>',
+                        .'Website: <a href="/consultation">lushlandscape.ca/consultation</a></p>',
                 ],
             ],
             [

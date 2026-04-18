@@ -81,7 +81,7 @@ class ContentBlockHelper
                 'variant' => 'split',
                 'tone' => 'cream',
                 'button_text' => 'Book a Consultation',
-                'button_url' => '/contact',
+                'button_url' => '/consultation',
                 'button_secondary_text' => '',
                 'button_secondary_url' => '',
             ],

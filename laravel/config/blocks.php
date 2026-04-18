@@ -1,6 +1,4 @@
-
-
-        <?php
+<?php
 
 /**
  * Unified Block Registry — single source of truth for all page blocks.

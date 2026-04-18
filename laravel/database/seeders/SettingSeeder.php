@@ -102,7 +102,7 @@ class SettingSeeder extends Seeder
         $settings = array_merge($settings, [
             ['group' => 'navigation', 'key' => 'nav_items_json',         'value' => '[]', 'type' => 'json', 'label' => 'Navigation Items (JSON: leave [] to use auto-generated from service categories)'],
             ['group' => 'navigation', 'key' => 'nav_cta_text',           'value' => 'Book a Consultation', 'type' => 'text', 'label' => 'Nav CTA Button Text'],
-            ['group' => 'navigation', 'key' => 'nav_cta_url',            'value' => '/contact', 'type' => 'text', 'label' => 'Nav CTA Button URL'],
+            ['group' => 'navigation', 'key' => 'nav_cta_url',            'value' => '/consultation', 'type' => 'text', 'label' => 'Nav CTA Button URL'],
             ['group' => 'navigation', 'key' => 'nav_show_phone',         'value' => '1', 'type' => 'boolean', 'label' => 'Show Phone Number in Top Bar'],
             ['group' => 'navigation', 'key' => 'nav_show_google_rating', 'value' => '1', 'type' => 'boolean', 'label' => 'Show Google Rating in Top Bar'],
             ['group' => 'navigation', 'key' => 'nav_max_services',       'value' => '5', 'type' => 'number', 'label' => 'Max Services Per Category in Mega Menu'],

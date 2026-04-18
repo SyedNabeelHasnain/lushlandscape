@@ -86,7 +86,7 @@ class ThemeLayoutBlueprintService
     {
         $ctaDefaults = (array) (config('blocks.types.theme_cta_group.defaults') ?? []);
         $primaryText = (string) ($ctaDefaults['primary_text'] ?? 'Book a Consultation');
-        $primaryUrl = (string) ($ctaDefaults['primary_url'] ?? '/contact');
+        $primaryUrl = (string) ($ctaDefaults['primary_url'] ?? '/consultation');
 
         return [
             $this->themeBlock(

@@ -219,9 +219,6 @@
         if (preg_match('/\\b(quote|estimate)\\b/i', $navCtaText)) {
             $navCtaText = 'Book a Consultation';
         }
-        if (preg_match('/consultation/i', $navCtaUrl)) {
-            $navCtaUrl = '/contact';
-        }
 
         $footerBottomLinksRaw = $getSetting('footer_bottom_links_json', '');
         $footerBottomLinks = $footerBottomLinksRaw ? (json_decode($footerBottomLinksRaw, true) ?? []) : [];
@@ -237,9 +234,6 @@
             $url = (string) ($link['url'] ?? '');
 
             if ($label !== '' && preg_match('/\\b(quote|estimate)\\b/i', $label)) {
-                return false;
-            }
-            if ($url !== '' && preg_match('/consultation/i', $url)) {
                 return false;
             }
 

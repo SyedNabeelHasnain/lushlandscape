@@ -229,7 +229,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-bold text-text">Pricing and Payment</h2>
-                        <p class="text-xs text-text-secondary">Cost estimates, payment options, and financing</p>
+                        <p class="text-xs text-text-secondary">Project proposals, payment options, and financing</p>
                     </div>
                 </div>
                 <div class="space-y-3">
