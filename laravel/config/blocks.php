@@ -1125,7 +1125,9 @@ return [
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
                 ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
             ],
-            'data_source' => 'form_slug',
+            'data_source' => [
+                'model' => 'App\\Models\\Form'
+            ],
             'defaults' => [
                 'eyebrow' => 'Initiate Project',
                 'heading' => 'Request a<br>Consultation',
@@ -1151,7 +1153,9 @@ return [
                 ['key' => 'badge_4_icon', 'label' => 'Badge 4 Icon', 'type' => 'text'],
                 ['key' => 'badge_4_text', 'label' => 'Badge 4 Text', 'type' => 'text'],
             ],
-            'data_source' => 'form_slug',
+            'data_source' => [
+                'model' => 'App\\Models\\Form'
+            ],
             'defaults' => [
                 'eyebrow' => 'Project Intake',
                 'heading' => 'Request a<br>Design Consultation',

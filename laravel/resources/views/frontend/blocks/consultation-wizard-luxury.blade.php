@@ -1,5 +1,5 @@
 @php
-    $form = $block['data'] ?? null;
+    $form = isset($block['data']) && $block['data'] instanceof \Illuminate\Support\Collection ? $block['data']->first() : ($block['data'] ?? null);
     $phone = \App\Models\Setting::get('phone', '');
     $phoneClean = preg_replace('/[^+\d]/', '', $phone);
     $emailAddress = \App\Models\Setting::get('email', '');

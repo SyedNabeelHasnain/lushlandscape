@@ -145,6 +145,11 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
+    
+    .fse-transparent-bg > section,
+    .fse-transparent-bg > div {
+        background: transparent !important;
+    }
 }
 
 /* Alpine cloak */

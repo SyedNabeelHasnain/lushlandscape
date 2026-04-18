@@ -398,6 +398,12 @@
     }
 
     $contentLayerClass = $hasOverlay ? 'relative z-10' : '';
+    
+    $hasFseBackground = $hasBackgroundImage || ($block->getStyle('bg_color', 'desktop', 'none') !== 'none') || ($block->getStyle('surface_preset', 'desktop', 'none') !== 'none');
+    if ($hasFseBackground) {
+        $contentLayerClass .= ' fse-transparent-bg';
+    }
+
     $inlineStyleCss = implode('', $styleRules);
 @endphp
 

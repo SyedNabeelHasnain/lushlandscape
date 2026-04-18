@@ -1072,90 +1072,88 @@ document.addEventListener('DOMContentLoaded', () => {
     // Portfolio horizontal scroll - FIXED calculation
     let mm = gsap.matchMedia();
     mm.add("(min-width: 1024px)", () => {
-        const portfolioWrapper = document.querySelector('.portfolio-pin-wrapper');
-        const portfolioTrack = document.getElementById('portfolio-track');
+        const portfolioWrappers = document.querySelectorAll('.portfolio-pin-wrapper');
         
-        if (!portfolioWrapper || !portfolioTrack || prefersReducedMotion) return;
-        
-        // Calculate exact scroll distance
-        const getScrollAmount = () => {
-            const track = document.getElementById('portfolio-track');
-            if (!track) return 0;
+        portfolioWrappers.forEach(wrapper => {
+            const track = wrapper.querySelector('.mobile-swipe');
+            if (!track || prefersReducedMotion) return;
             
-            const wrapperStyle = window.getComputedStyle(portfolioWrapper);
-            const trackStyle = window.getComputedStyle(track);
+            const getScrollAmount = () => {
+                const wrapperStyle = window.getComputedStyle(wrapper);
+                const trackStyle = window.getComputedStyle(track);
+                
+                const wrapperPaddingX = parseFloat(wrapperStyle.paddingLeft) + parseFloat(wrapperStyle.paddingRight);
+                const trackGap = parseFloat(trackStyle.gap) || 40; // lg:gap-10 = 40px
+                const cardCount = track.querySelectorAll('.mobile-swipe-item').length;
+                
+                const totalCardWidth = Array.from(track.querySelectorAll('.mobile-swipe-item'))
+                    .reduce((sum, card) => sum + card.offsetWidth, 0);
+                const totalGaps = trackGap * (cardCount - 1);
+                const totalWidth = totalCardWidth + totalGaps + wrapperPaddingX;
+                
+                return -(totalWidth - window.innerWidth);
+            };
             
-            const wrapperPaddingX = parseFloat(wrapperStyle.paddingLeft) + parseFloat(wrapperStyle.paddingRight);
-            const trackGap = parseFloat(trackStyle.gap) || 40; // lg:gap-10 = 40px
-            const cardCount = track.querySelectorAll('.mobile-swipe-item').length;
+            const portfolioScroll = gsap.to(track, {
+                x: getScrollAmount,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: wrapper,
+                    pin: true,
+                    scrub: 1,
+                    start: "top top",
+                    end: () => {
+                        const wrapperPaddingX = 96; // lg:px-12 * 2
+                        const trackWidth = track.scrollWidth;
+                        const viewportWidth = window.innerWidth;
+                        
+                        return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
+                    },
+                    invalidateOnRefresh: true,
+                    anticipatePin: 1
+                }
+            });
             
-            const totalCardWidth = Array.from(track.querySelectorAll('.mobile-swipe-item'))
-                .reduce((sum, card) => sum + card.offsetWidth, 0);
-            const totalGaps = trackGap * (cardCount - 1);
-            const totalWidth = totalCardWidth + totalGaps + wrapperPaddingX;
-            
-            return -(totalWidth - window.innerWidth);
-        };
-        
-        const portfolioScroll = gsap.to(portfolioTrack, {
-            x: getScrollAmount,
-            ease: "none",
-            scrollTrigger: {
-                trigger: portfolioWrapper,
-                pin: true,
-                scrub: 1,
-                start: "top top",
-                end: () => {
-                    const track = document.getElementById('portfolio-track');
-                    if (!track) return "+=1000";
-                    
-                    const wrapperPaddingX = 96; // lg:px-12 * 2
+            ScrollTrigger.addEventListener('refresh', () => {
+                portfolioScroll.scrollTrigger.end = () => {
+                    const wrapperPaddingX = 96;
                     const trackWidth = track.scrollWidth;
                     const viewportWidth = window.innerWidth;
-                    
                     return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
-                },
-                invalidateOnRefresh: true,
-                anticipatePin: 1
-            }
+                };
+            });
         });
         
-        ScrollTrigger.addEventListener('refresh', () => {
-            portfolioScroll.scrollTrigger.end = () => {
-                const track = document.getElementById('portfolio-track');
-                if (!track) return "+=1000";
-                const wrapperPaddingX = 96;
-                const trackWidth = track.scrollWidth;
-                const viewportWidth = window.innerWidth;
-                return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
-            };
-        });
-        
-        return () => portfolioScroll.scrollTrigger.kill(); // Cleanup
+        return () => ScrollTrigger.getAll().forEach(t => t.kill()); // Cleanup
     });
 
     // Portfolio navigation buttons (mobile + desktop fallback)
-    const track = document.getElementById('portfolio-track');
-    const prevBtn = document.getElementById('portfolio-prev');
-    const nextBtn = document.getElementById('portfolio-next');
-    
-    if (track && prevBtn && nextBtn) {
-        const getCardWidth = () => {
-            const card = track.querySelector('.mobile-swipe-item');
-            if (!card) return 300;
-            const cardWidth = card.offsetWidth;
-            const trackStyle = window.getComputedStyle(track);
-            const gap = parseFloat(trackStyle.gap) || 20;
-            return cardWidth + gap;
-        };
-        
-        prevBtn.addEventListener('click', () => {
-            track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+    const initPortfolioSliders = () => {
+        document.querySelectorAll('.portfolio-pin-wrapper').forEach(wrapper => {
+            const track = wrapper.querySelector('.mobile-swipe');
+            const prevBtn = wrapper.querySelector('[aria-label="Previous"], #portfolio-prev');
+            const nextBtn = wrapper.querySelector('[aria-label="Next"], #portfolio-next');
+            
+            if (track && prevBtn && nextBtn) {
+                const getCardWidth = () => {
+                    const card = track.querySelector('.mobile-swipe-item');
+                    if (!card) return 300;
+                    const cardWidth = card.offsetWidth;
+                    const trackStyle = window.getComputedStyle(track);
+                    const gap = parseFloat(trackStyle.gap) || 20;
+                    return cardWidth + gap;
+                };
+                
+                prevBtn.addEventListener('click', () => {
+                    track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+                });
+            }
         });
-        nextBtn.addEventListener('click', () => {
-            track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
-        });
-    }
+    };
+    initPortfolioSliders();
 
     // Parallax
     gsap.utils.toArray('.parallax-img').forEach((img) => {

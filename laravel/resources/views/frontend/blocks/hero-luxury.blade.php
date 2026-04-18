@@ -1,7 +1,7 @@
 @php
     $bgPattern = $content['bg_pattern'] ?? 'https://www.transparenttextures.com/patterns/cubes.png';
 @endphp
-<section class="bg-airy-gradient hero-viewport w-full relative">
+<div class="hero-viewport w-full relative {{ !isset($block) || empty($block->getStyle('bg_color')) || $block->getStyle('bg_color') === 'none' && empty($block->getStyle('surface_preset')) || $block->getStyle('surface_preset') === 'none' && empty($block->getStyle('bg_image_id')) ? 'bg-airy-gradient' : '' }}">
     @if($bgPattern)
     <div class="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none" style="background-image: url('{{ $bgPattern }}');"></div>
     @endif
@@ -57,4 +57,4 @@
             </div>
         </div>
     </div>
-</section>
+</div>

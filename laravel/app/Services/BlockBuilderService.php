@@ -752,6 +752,16 @@ class BlockBuilderService
     private static function persistUnifiedBlocks(string $pageType, mixed $pageId, array $blocksData, ?int $parentId, array &$incomingIds): void
     {
         foreach ($blocksData as $index => $item) {
+            // Handle legacy data_source_id for forms used in seeders
+            if (isset($item['data_source_id']) && !isset($item['data_source'])) {
+                if (in_array($item['block_type'] ?? '', ['consultation_form_split', 'consultation_wizard_luxury', 'contact_form_luxury'])) {
+                    $item['data_source'] = [
+                        'model' => 'App\Models\Form',
+                        'filters' => ['slug' => $item['data_source_id']]
+                    ];
+                }
+            }
+
             $attrs = [
                 'page_type' => $pageType,
                 'page_id' => $pageId,

@@ -1,5 +1,5 @@
 @php
-    $form = $block['data'] ?? null;
+    $form = isset($block['data']) && $block['data'] instanceof \Illuminate\Support\Collection ? $block['data']->first() : ($block['data'] ?? null);
 @endphp
 <section id="contact" class="bg-white py-20 lg:py-32 px-5 lg:px-12 overflow-hidden">
     <div class="max-w-6xl mx-auto contact-panel grid grid-cols-1 lg:grid-cols-2 rounded-sm border border-black/5 gs-reveal shadow-sm">

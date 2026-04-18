@@ -37,9 +37,9 @@
             </div>
         </div>
 
-        <div id="portfolio-track" class="mobile-swipe flex gap-5 lg:gap-10 px-6 lg:px-12 w-full lg:w-max no-scrollbar">
-            @foreach($projects as $i => $project)
-            <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer gs-reveal {{ $loop->last ? 'lg:pr-12' : '' }}">
+        <div class="mobile-swipe flex gap-5 lg:gap-10 px-6 lg:px-12 w-full lg:w-max no-scrollbar overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none">
+            @foreach($projects as $index => $project)
+            <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer snap-center gs-reveal {{ $loop->last ? 'lg:pr-12' : '' }}">
                 <div class="overflow-hidden mb-4 lg:mb-6 border border-black/5 bg-[#F4F9F4] aspect-[4/5] lg:aspect-[3/4]">
                     @if($project->heroMedia)
                         <img src="{{ $project->heroMedia->url }}" alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async">
@@ -49,7 +49,7 @@
                 </div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-[10px] uppercase tracking-[0.2em] font-semibold text-accent mb-1 lg:mb-2">0{{ $i+1 }} / {{ $project->neighborhood ?? $cityName }}</p>
+                        <p class="text-[10px] uppercase tracking-[0.2em] font-semibold text-accent mb-1 lg:mb-2">0{{ $index+1 }} / {{ $project->neighborhood ?? $cityName }}</p>
                         <h3 class="text-xl lg:text-3xl font-serif text-forest">{{ $project->title }}</h3>
                     </div>
                     <a href="{{ url('/portfolio/' . $project->slug) }}" class="group-hover:translate-x-2 transition-transform duration-500 mt-2 block">

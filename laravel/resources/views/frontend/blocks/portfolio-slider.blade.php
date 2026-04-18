@@ -19,10 +19,10 @@
             </div>
         </div>
 
-        <div id="portfolio-track" class="mobile-swipe flex gap-5 lg:gap-10 px-6 lg:px-12 w-full lg:w-max no-scrollbar">
+        <div class="mobile-swipe flex gap-5 lg:gap-10 px-6 lg:px-12 w-full lg:w-max no-scrollbar overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory lg:snap-none">
             @for($i = 1; $i <= 4; $i++)
                 @if(!empty($content["item_{$i}_img"]))
-                <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer {{ $i == 4 ? 'lg:pr-12' : '' }}">
+                <div class="mobile-swipe-item w-[85vw] sm:w-[50vw] lg:w-[35vw] flex-shrink-0 group cursor-pointer snap-center {{ $i == 4 ? 'lg:pr-12' : '' }}">
                     <div class="overflow-hidden mb-4 lg:mb-6 border border-black/5 bg-[#F4F9F4] aspect-video lg:aspect-[3/2]">
                         <img src="{{ $content["item_{$i}_img"] }}" alt="Portfolio item" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async">
                     </div>

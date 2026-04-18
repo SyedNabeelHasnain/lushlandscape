@@ -13,7 +13,7 @@ class ConsultationPageSeeder extends Seeder
             [
                 'block_type' => 'consultation_wizard_luxury',
                 'is_enabled' => true,
-                'data_source_id' => 'consultation', // Resolves to the 'consultation' form slug
+                'data_source' => ['model' => 'App\Models\Form', 'filters' => ['slug' => 'consultation']],
                 'content' => [
                     'eyebrow' => 'Project Intake',
                     'heading' => 'Request a<br>Design Consultation',
