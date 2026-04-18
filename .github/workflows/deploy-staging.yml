@@ -47,7 +47,7 @@ jobs:
           if [ -z "$PORT" ]; then PORT=65002; fi
           ssh-keyscan -p "$PORT" -H "${{ secrets.STAGING_SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      - name: Deploy (fresh)
+      - name: Execute Deploy Script
         env:
           HOST: ${{ secrets.STAGING_SSH_HOST }}
           PORT: ${{ secrets.STAGING_SSH_PORT }}

@@ -32,7 +32,7 @@ class ThemeLayoutBlueprintServiceTest extends TestCase
 
     public function test_scaffold_creates_builder_safe_header_and_footer_drafts(): void
     {
-        Setting::set('nav_cta_text', 'Request Quote');
+        Setting::set('nav_cta_text', 'Request Consultation');
         Setting::set('nav_cta_url', '/consultation');
 
         $layouts = app(ThemeLayoutBlueprintService::class)->scaffold();

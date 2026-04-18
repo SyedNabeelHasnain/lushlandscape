@@ -13,6 +13,14 @@ Legacy systems are support-only (migration-only, non-authoritative, not valid fo
 - `page_sections`
 - `page_content_blocks`
 
+## Domain Language Truth (Stabilized)
+
+The system operates strictly under a "Consultation-led" inquiry model. All legacy transactional language has been systematically purged.
+
+- **Forbidden Semantics:** "Quote", "Estimate", "Request Quote"
+- **Authoritative Semantics:** "Consultation", "Scope Plan", "Proposal", "Book Consultation"
+- **Authoritative Inquiry Path:** `/consultation` (using `$form->slug === 'consultation'`)
+
 ## Runtime Presentation Architecture (What is active today)
 
 ### Unified storage + renderer
@@ -35,6 +43,15 @@ The active header/footer path is theme-layout-driven and block-driven:
 Normalized rendering context is produced by:
 
 - [PageContextService.php](../app/Services/PageContextService.php)
+
+## Platform & Runtime Truth (Stabilized)
+
+The application operates under the following strict platform requirements to ensure deterministic staging and production environments:
+
+- **PHP Version:** 8.4+ (Enforced via `composer.json`)
+- **Node.js Version:** 20.x (Enforced via `deploy.sh` nvm auto-installer)
+- **Database:** MySQL/MariaDB (Strict Mode Enabled)
+- **Deployment:** Staging and production deployments rely on strict lockfile installations (`npm ci` or `--no-audit` fallbacks, `composer install --no-dev`).
 
 ## Builder Registries (Governance)
 

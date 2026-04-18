@@ -169,7 +169,7 @@ class HomePageBlueprintService
                     ],
                     [
                         'icon' => 'clipboard-list',
-                        'title' => 'Scope & Estimate',
+                        'title' => 'Scope & Proposal',
                         'desc' => 'You receive a detailed plan with material direction, budget clarity, and a buildable execution path.',
                     ],
                     [

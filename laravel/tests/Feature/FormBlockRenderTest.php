@@ -143,7 +143,7 @@ class FormBlockRenderTest extends TestCase
             'id' => 1,
             'name' => 'Project Inquiry',
             'slug' => 'consultation',
-            'form_type' => 'quote',
+            'form_type' => 'consultation',
             'status' => 'active',
             'requires_email_verification' => false,
             'honeypot_enabled' => true,

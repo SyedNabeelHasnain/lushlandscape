@@ -71,17 +71,17 @@
                 <p class="text-sm text-text-secondary mb-7">This form helps our team prepare the right next step for your consultation.</p>
 
                 @if($form)
-                <div x-data="contactForm('quote-form', 'consultation')" x-cloak>
+                <div x-data="contactForm('consultation-form', 'consultation')" x-cloak>
                     @php
                         $hiddenHtml = '';
                         if(request('service') || request('city')) {
-                            $hiddenHtml .= '<input type="hidden" id="quote-form-pre_service" name="pre_service" value="'.e(request('service','')).'">';
-                            $hiddenHtml .= '<input type="hidden" id="quote-form-pre_city" name="pre_city" value="'.e(request('city','')).'">';
+                            $hiddenHtml .= '<input type="hidden" id="consultation-form-pre_service" name="pre_service" value="'.e(request('service','')).'">';
+                            $hiddenHtml .= '<input type="hidden" id="consultation-form-pre_city" name="pre_city" value="'.e(request('city','')).'">';
                         }
                     @endphp
                     @include('frontend.blocks.partials._form-fields', [
                         'form' => $form,
-                        'formId' => 'quote-form',
+                        'formId' => 'consultation-form',
                         'variant' => 'panel',
                         'tone' => 'light',
                         'labelClass' => 'text-text',

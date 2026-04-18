@@ -291,7 +291,7 @@ class BlockRendererTest extends TestCase
             'show_on_tablet' => true,
             'show_on_mobile' => true,
             'content' => [
-                'text' => 'Request Quote',
+                'text' => 'Request Consultation',
                 'url' => '/contact',
                 'style' => 'primary',
                 '_layout_slot' => 'right',
@@ -334,7 +334,7 @@ class BlockRendererTest extends TestCase
 
         $this->assertStringContainsString('data-header-mode="glass"', $html);
         $this->assertStringContainsString('Brand', $html);
-        $this->assertStringContainsString('Request Quote', $html);
+        $this->assertStringContainsString('Request Consultation', $html);
         $this->assertStringContainsString('theme-header-mobile-overlay', $html);
         $this->assertStringContainsString('Mobile navigation copy', $html);
     }

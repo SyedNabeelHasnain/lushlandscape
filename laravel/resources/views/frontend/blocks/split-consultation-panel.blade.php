@@ -77,7 +77,7 @@
                             ])
                         
                         {{-- Success State --}}
-                        <div x-show="isSuccess" x-cloak x-transition.opacity class="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center text-center p-8">
+                        <div x-show="formSuccess" x-cloak x-transition.opacity class="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center text-center p-8">
                             <div class="w-16 h-16 bg-forest/10 rounded-full flex items-center justify-center text-forest mb-6">
                                 <i data-lucide="check" class="w-8 h-8"></i>
                             </div>

@@ -117,7 +117,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 
-    <style nonce="{{ csp_nonce() }}">
+    <style nonce="{{ Vite::cspNonce() }}">
         :root {
             {!! $cssVars !!}
         }
