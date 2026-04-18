@@ -61,9 +61,9 @@ class CityController extends Controller
         // Parse city_body JSON fields from form
         $validated['city_body'] = $this->parseCityBody($request);
         $validated['keywords_json'] = [
-            'primary' => array_filter(array_map('trim', explode(',', $request->input('keywords_primary', '')))),
-            'secondary' => array_filter(array_map('trim', explode(',', $request->input('keywords_secondary', '')))),
-            'long_tail' => array_filter(array_map('trim', explode(',', $request->input('keywords_long_tail', '')))),
+            'primary' => is_array($request->input('keywords_primary')) ? $request->input('keywords_primary') : array_filter(array_map('trim', explode(',', (string) $request->input('keywords_primary', '')))),
+            'secondary' => is_array($request->input('keywords_secondary')) ? $request->input('keywords_secondary') : array_filter(array_map('trim', explode(',', (string) $request->input('keywords_secondary', '')))),
+            'long_tail' => is_array($request->input('keywords_long_tail')) ? $request->input('keywords_long_tail') : array_filter(array_map('trim', explode(',', (string) $request->input('keywords_long_tail', '')))),
         ];
 
         $blocksJson = $request->input('blocks_json');
@@ -132,9 +132,9 @@ class CityController extends Controller
 
         $validated['city_body'] = $this->parseCityBody($request);
         $validated['keywords_json'] = [
-            'primary' => array_filter(array_map('trim', explode(',', $request->input('keywords_primary', '')))),
-            'secondary' => array_filter(array_map('trim', explode(',', $request->input('keywords_secondary', '')))),
-            'long_tail' => array_filter(array_map('trim', explode(',', $request->input('keywords_long_tail', '')))),
+            'primary' => is_array($request->input('keywords_primary')) ? $request->input('keywords_primary') : array_filter(array_map('trim', explode(',', (string) $request->input('keywords_primary', '')))),
+            'secondary' => is_array($request->input('keywords_secondary')) ? $request->input('keywords_secondary') : array_filter(array_map('trim', explode(',', (string) $request->input('keywords_secondary', '')))),
+            'long_tail' => is_array($request->input('keywords_long_tail')) ? $request->input('keywords_long_tail') : array_filter(array_map('trim', explode(',', (string) $request->input('keywords_long_tail', '')))),
         ];
 
         // Extract category_ids before mass-assignment

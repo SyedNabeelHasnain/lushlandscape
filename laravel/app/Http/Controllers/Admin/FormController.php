@@ -45,7 +45,8 @@ class FormController extends Controller
         $validated['honeypot_enabled'] = $request->boolean('honeypot_enabled');
         foreach (['email_to', 'email_cc', 'email_bcc'] as $emailField) {
             if (! empty($validated[$emailField])) {
-                $validated[$emailField] = array_map('trim', explode(',', $validated[$emailField]));
+                $val = $validated[$emailField];
+                $validated[$emailField] = is_array($val) ? $val : array_map('trim', explode(',', (string) $val));
             }
         }
 
@@ -86,7 +87,8 @@ class FormController extends Controller
         $validated['honeypot_enabled'] = $request->boolean('honeypot_enabled');
         foreach (['email_to', 'email_cc', 'email_bcc'] as $emailField) {
             if (! empty($validated[$emailField])) {
-                $validated[$emailField] = array_map('trim', explode(',', $validated[$emailField]));
+                $val = $validated[$emailField];
+                $validated[$emailField] = is_array($val) ? $val : array_map('trim', explode(',', (string) $val));
             }
         }
 

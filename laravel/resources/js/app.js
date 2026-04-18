@@ -1205,7 +1205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             
             // Close mobile menu if open (assuming it's managed via Alpine or similar)
-            const mobileMenuBtn = document.querySelector('[aria-label="Toggle navigation menu"]');
+            const mobileMenuBtn = document.querySelector('[aria-label="Toggle mobile menu"]');
             if (mobileMenuBtn && mobileMenuBtn.getAttribute('aria-expanded') === 'true') {
                 mobileMenuBtn.click();
             }

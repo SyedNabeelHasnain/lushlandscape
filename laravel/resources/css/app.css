@@ -137,6 +137,16 @@
     }
 }
 
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
 /* Alpine cloak */
 [x-cloak] { display: none !important; }
 
@@ -235,6 +245,7 @@
     mask-image: linear-gradient(to top, transparent, black 15%);
     -webkit-mask-image: linear-gradient(to top, transparent, black 15%);
 }
+
 .transition-top-fade-to-airy {
     background: linear-gradient(to bottom, var(--color-forest-50) 0%, transparent 15%);
 }
