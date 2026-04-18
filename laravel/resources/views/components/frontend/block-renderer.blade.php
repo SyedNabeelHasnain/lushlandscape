@@ -304,13 +304,15 @@
             $appendStyleRule($inheritSelector, 'text-align:inherit;', $minWidth);
         }
 
-        foreach (['top', 'bottom', 'left', 'right'] as $side) {
+        foreach (['top', 'bottom'] as $side) {
             $spacingPreset = $block->getStyle('spacing_preset', $styleDevice, 'section');
             $presetDeclaration = data_get($spacingPresetMap, $spacingPreset.'.'.$styleDevice.'.'.$side);
             if ($presetDeclaration) {
                 $declarations[] = 'padding-'.$side.':'.$presetDeclaration;
             }
-
+        }
+        
+        foreach (['top', 'bottom', 'left', 'right'] as $side) {
             $paddingValue = $block->getStyle('padding_'.$side, $styleDevice);
             if (isset($spaceMap[$paddingValue])) {
                 $declarations[] = 'padding-'.$side.':'.$spaceMap[$paddingValue];

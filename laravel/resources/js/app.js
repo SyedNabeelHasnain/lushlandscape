@@ -119,6 +119,9 @@ const initScrollAnimations = () => {
 
 // ─── Hero Slider Initialization ──────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Lucide icons
+    createIcons({ icons });
+
     document.querySelectorAll('.hero-swiper').forEach(el => {
         const captionEl = el.querySelector('[data-hero-caption-display]');
         const updateCaption = (swiper) => {
@@ -1016,29 +1019,6 @@ if (!prefersReducedMotion && motionPreset !== 'none') {
         ScrollTrigger.refresh();
     });
 }
-
-// ─── GSAP: Glassmorphism Nav Transition on Scroll ────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-    if (prefersReducedMotion || motionPreset === 'none') return;
-
-    const header = document.querySelector('header');
-    if (!header) return;
-
-    ScrollTrigger.create({
-        start: 'top -1',
-        onUpdate: (self) => {
-            if (self.scroll() > 60) {
-                header.classList.add('nav-glass-scrolled');
-                header.classList.remove('nav-glass');
-            } else {
-                header.classList.remove('nav-glass-scrolled');
-                header.classList.add('nav-glass');
-            }
-        },
-    });
-});
-
-
 
 // ─── Testimonials Swiper ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {

@@ -75,6 +75,9 @@
     --surface-gradient-deep-start: rgba(21, 56, 35, 0.92);
     --surface-gradient-deep-end: rgba(22, 56, 35, 0.78);
     
+    --airy-green-gradient: linear-gradient(180deg, #E4ECE4 0%, #F6F9F6 100%);
+    --color-bg-secondary: #F6F9F6;
+    
     --color-card-border: #DBDEDA;
     --color-card-hover-border: var(--color-accent);
     --color-field-bg: #F8F8F6;

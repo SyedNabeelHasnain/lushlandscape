@@ -45,6 +45,7 @@ return [
         'local_seo_hero_luxury' => 'local_seo_hero_luxury',
         'local_projects_carousel_luxury' => 'local_projects_carousel_luxury',
         'local_faq_accordion_luxury' => 'local_faq_accordion_luxury',
+        'newsletter_cta_luxury' => 'newsletter_cta_luxury',
         'enclaves_tabs' => 'enclaves_tabs',
         'consultation_form_split' => 'consultation_form_split',
         'consultation_wizard_luxury' => 'consultation_wizard_luxury',
@@ -1048,6 +1049,23 @@ return [
             'defaults' => [
                 'eyebrow' => 'Project Guidelines',
                 'heading' => 'Common Inquiries',
+            ],
+        ],
+
+        'newsletter_cta_luxury' => [
+            'label' => 'Newsletter CTA (Luxury)',
+            'icon' => 'mail',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'subtext', 'label' => 'Subtext', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Stay Updated',
+                'heading' => 'Landscape Insights & Project Planning',
+                'subtext' => 'Join 2,000+ Ontario homeowners getting our free monthly newsletter.',
             ],
         ],
 
