@@ -1,0 +1,100 @@
+#20 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/artisan(9): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
+#22 {main}
+"} 
+[2026-04-18 05:37:41] production.ERROR: stty: tcsetattr: Input/output error {"exception":"[object] (RuntimeException(code: 1): stty: tcsetattr: Input/output error at /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php:133)
+[stacktrace]
+#0 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php(74): Laravel\\Prompts\\Terminal->exec('stty gfmt1:cfla...')
+#1 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Prompt.php(446): Laravel\\Prompts\\Terminal->restoreTty()
+#2 [internal function]: Laravel\\Prompts\\Prompt->__destruct()
+#3 {main}
+"} 
+[2026-04-18 05:50:23] production.ERROR: fread(): Read of 8192 bytes failed with errno=5 Input/output error {"exception":"[object] (ErrorException(code: 0): fread(): Read of 8192 bytes failed with errno=5 Input/output error at /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php:53)
+[stacktrace]
+#0 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'fread(): Read o...', '/Users/syednabe...', 53)
+#1 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():257}(8, 'fread(): Read o...', '/Users/syednabe...', 53)
+#2 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php(53): fread(Resource id #1, 1024)
+#3 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Prompt.php(169): Laravel\\Prompts\\Terminal->read()
+#4 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Prompt.php(131): Laravel\\Prompts\\Prompt->runLoop(Object(Closure))
+#5 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/helpers.php(148): Laravel\\Prompts\\Prompt->prompt()
+#6 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Console/ConfirmableTrait.php(33): Laravel\\Prompts\\confirm('Are you sure yo...', false)
+#7 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Database/Console/Seeds/SeedCommand.php(60): Illuminate\\Database\\Console\\Seeds\\SeedCommand->confirmToProceed()
+#8 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Illuminate\\Database\\Console\\Seeds\\SeedCommand->handle()
+#9 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::{closure:Illuminate\\Container\\BoundMethod::call():35}()
+#10 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(96): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/Container.php(799): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Console/Command.php(280): Illuminate\\Container\\Container->call(Array)
+#14 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Command/Command.php(291): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#15 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Console/Command.php(249): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(1107): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(356): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Seeds\\SeedCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(195): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/artisan(9): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
+#22 {main}
+"} 
+[2026-04-18 05:50:23] production.ERROR: stty: tcsetattr: Input/output error {"exception":"[object] (RuntimeException(code: 1): stty: tcsetattr: Input/output error at /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php:133)
+[stacktrace]
+#0 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php(74): Laravel\\Prompts\\Terminal->exec('stty gfmt1:cfla...')
+#1 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Prompt.php(446): Laravel\\Prompts\\Terminal->restoreTty()
+#2 [internal function]: Laravel\\Prompts\\Prompt->__destruct()
+#3 {main}
+"} 
+[2026-04-18 06:00:43] production.ERROR: fread(): Read of 8192 bytes failed with errno=5 Input/output error {"exception":"[object] (ErrorException(code: 0): fread(): Read of 8192 bytes failed with errno=5 Input/output error at /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php:53)
+[stacktrace]
+#0 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'fread(): Read o...', '/Users/syednabe...', 53)
+#1 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:Illuminate\\Foundation\\Bootstrap\\HandleExceptions::forwardsTo():257}(8, 'fread(): Read o...', '/Users/syednabe...', 53)
+#2 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php(53): fread(Resource id #1, 1024)
+#3 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Prompt.php(169): Laravel\\Prompts\\Terminal->read()
+#4 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Prompt.php(131): Laravel\\Prompts\\Prompt->runLoop(Object(Closure))
+#5 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/helpers.php(148): Laravel\\Prompts\\Prompt->prompt()
+#6 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Console/ConfirmableTrait.php(33): Laravel\\Prompts\\confirm('Are you sure yo...', false)
+#7 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Database/Console/Seeds/SeedCommand.php(60): Illuminate\\Database\\Console\\Seeds\\SeedCommand->confirmToProceed()
+#8 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Illuminate\\Database\\Console\\Seeds\\SeedCommand->handle()
+#9 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate\\Container\\BoundMethod::{closure:Illuminate\\Container\\BoundMethod::call():35}()
+#10 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(96): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#11 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#12 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Container/Container.php(799): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#13 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Console/Command.php(280): Illuminate\\Container\\Container->call(Array)
+#14 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Command/Command.php(291): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#15 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Console/Command.php(249): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#16 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(1107): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#17 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(356): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Seeds\\SeedCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#18 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(195): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#19 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#20 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#21 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/artisan(9): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
+#22 {main}
+"} 
+[2026-04-18 06:00:43] production.ERROR: stty: tcsetattr: Input/output error {"exception":"[object] (RuntimeException(code: 1): stty: tcsetattr: Input/output error at /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php:133)
+[stacktrace]
+#0 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Terminal.php(74): Laravel\\Prompts\\Terminal->exec('stty gfmt1:cfla...')
+#1 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/prompts/src/Prompt.php(446): Laravel\\Prompts\\Terminal->restoreTty()
+#2 [internal function]: Laravel\\Prompts\\Prompt->__destruct()
+#3 {main}
+"} 
+[2026-04-18 06:51:05] production.ERROR: Command "tinker" is not defined. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"tinker\" is not defined. at /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php:749)
+[stacktrace]
+#0 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(298): Symfony\\Component\\Console\\Application->find('tinker')
+#1 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/symfony/console/Application.php(195): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#2 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/artisan(9): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
+#5 {main}
+"} 
+[2026-04-18 06:59:50] production.ERROR: Uncaught Error: Call to private method App\Services\BlockBuilderService::normalizePageId() from global scope in Command line code:1
+Stack trace:
+#0 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught Error: Call to private method App\\Services\\BlockBuilderService::normalizePageId() from global scope in Command line code:1
+Stack trace:
+#0 {main}
+  thrown at Command line code:1)
+[stacktrace]
+#0 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(247): Symfony\\Component\\ErrorHandler\\Error\\FatalError->__construct(message: ''Uncaught Error...', code: '0', error: '['type' => 1, '...', traceOffset: '0', traceArgs: '???', trace: '???')
+#1 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(234): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->fatalErrorFromPhpError(error: '['type' => 1, '...', traceOffset: '0')
+#2 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleShutdown()
+#3 /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(0): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->{closure:/Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:257-259}()
+#4 {main}
+"} 

@@ -155,6 +155,14 @@ class PageBlock extends Model
         $globalDataSource = $typeConfig['data_source'] ?? [];
         $instanceDataSource = $this->data_source ?? [];
 
+        if (!is_array($globalDataSource)) {
+            $globalDataSource = [];
+        }
+        
+        if (!is_array($instanceDataSource)) {
+            $instanceDataSource = [];
+        }
+
         return array_merge($globalDataSource, $instanceDataSource);
     }
 

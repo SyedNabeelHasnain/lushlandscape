@@ -1,0 +1,7 @@
+Route / -> Status: 200
+Route /services -> Status: 200
+Route /portfolio -> Status: 200
+Route /about-us -> Status: 200
+Route /locations -> Status: 200
+Route /contact -> Status: 200
+Route /consultation -> Status: 200

@@ -1,10 +1,3 @@
-Count: 9
-ID: 1205, Type: hero_luxury, Page ID: NULL
-ID: 1206, Type: architectural_standard, Page ID: NULL
-ID: 1207, Type: architectural_services, Page ID: NULL
-ID: 1208, Type: parallax_banner_luxury, Page ID: NULL
-ID: 1209, Type: portfolio_slider, Page ID: NULL
-ID: 1210, Type: marquee_brand, Page ID: NULL
-ID: 1211, Type: architectural_process, Page ID: NULL
-ID: 1212, Type: enclaves_tabs, Page ID: NULL
-ID: 1213, Type: consultation_form_split, Page ID: NULL
+Line 18: *   - data_source: dynamic data configuration (for data blocks)
+Line 1110: 'data_source' => 'form_slug',
+Line 1136: 'data_source' => 'form_slug',
