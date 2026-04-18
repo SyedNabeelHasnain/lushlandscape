@@ -29,6 +29,11 @@ return [
         'architectural_services' => 'architectural_services',
         'parallax_banner_luxury' => 'parallax_banner_luxury',
         'portfolio_slider' => 'portfolio_slider',
+        'portfolio_masonry_grid_luxury' => 'portfolio_masonry_grid_luxury',
+        'portfolio_project_hero_luxury' => 'portfolio_project_hero_luxury',
+        'project_spec_sheet_luxury' => 'project_spec_sheet_luxury',
+        'before_after_slider_luxury' => 'before_after_slider_luxury',
+        'portfolio_gallery_masonry_luxury' => 'portfolio_gallery_masonry_luxury',
         'marquee_brand' => 'marquee_brand',
         'architectural_process' => 'architectural_process',
         'enclaves_tabs' => 'enclaves_tabs',
@@ -692,6 +697,73 @@ return [
                 'item_4_img' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
                 'item_4_eyebrow' => '04 / Bridle Path',
                 'item_4_title' => 'Arrival Sequence',
+            ],
+        ],
+
+        'portfolio_masonry_grid_luxury' => [
+            'label' => 'Portfolio Masonry (Luxury)',
+            'icon' => 'layout-grid',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Our Legacy',
+                'heading' => 'Completed<br>Environments',
+                'description' => 'A curated selection of luxury landscape constructions across the Greater Toronto Area.',
+            ],
+        ],
+
+        'portfolio_project_hero_luxury' => [
+            'label' => 'Project Hero (Luxury)',
+            'icon' => 'image',
+            'category' => 'data',
+            'content_fields' => [],
+            'data_source' => null,
+            'defaults' => [],
+        ],
+
+        'project_spec_sheet_luxury' => [
+            'label' => 'Project Spec Sheet (Luxury)',
+            'icon' => 'file-text',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Project Overview',
+            ],
+        ],
+
+        'before_after_slider_luxury' => [
+            'label' => 'Before/After Slider (Luxury)',
+            'icon' => 'sliders-horizontal',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'heading' => 'Site Transformation',
+                'description' => 'Drag the slider to reveal the structural correction and design integration.',
+            ],
+        ],
+
+        'portfolio_gallery_masonry_luxury' => [
+            'label' => 'Project Gallery Masonry (Luxury)',
+            'icon' => 'layout-grid',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'heading' => 'Visual Documentation',
             ],
         ],
 

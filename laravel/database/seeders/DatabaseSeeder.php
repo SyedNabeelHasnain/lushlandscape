@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             // Home page content blocks (6 blocks: intro, features, stats, CTA, areas, map)
             HomePageContentSeeder::class,
             ConsultationPageSeeder::class,
+            PortfolioPageSeeder::class,
 
             // Interactive map blocks for city + service-city pages
             MapContentSeeder::class,
