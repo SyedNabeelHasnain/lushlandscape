@@ -228,6 +228,21 @@
                         <i data-lucide="newspaper" class="w-3.5 h-3.5 shrink-0"></i>
                         Blog Index
                     </a>
+                    <a href="{{ route('admin.page-builders.edit', ['page' => 'faqs-index']) }}"
+                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.page-builders.*') && request()->route('page') === 'faqs-index' ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
+                        <i data-lucide="help-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                        FAQ Index
+                    </a>
+                    <a href="{{ route('admin.page-builders.edit', ['page' => 'contact']) }}"
+                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.page-builders.*') && request()->route('page') === 'contact' ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
+                        <i data-lucide="phone" class="w-3.5 h-3.5 shrink-0"></i>
+                        Contact Page
+                    </a>
+                    <a href="{{ route('admin.page-builders.edit', ['page' => 'consultation']) }}"
+                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.page-builders.*') && request()->route('page') === 'consultation' ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
+                        <i data-lucide="clipboard-signature" class="w-3.5 h-3.5 shrink-0"></i>
+                        Consultation Page
+                    </a>
                     <a href="{{ route('admin.static-pages.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.static-pages.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="file-text" class="w-3.5 h-3.5 shrink-0"></i>
