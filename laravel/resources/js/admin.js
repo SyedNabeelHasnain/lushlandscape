@@ -925,7 +925,7 @@ Alpine.data('blockEditor', (pageType, initialBlocks, blockTypes, styleFields = [
 
     return {
         pageType,
-        blocks: initialBlocks.map(prep),
+        blocks: (initialBlocks || []).map(b => prep(b)),
         blockTypes: filteredBlockTypes,
         styleFields,
         styleDefaults,

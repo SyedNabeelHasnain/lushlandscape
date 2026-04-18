@@ -13,7 +13,7 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
     $dynamicVariableGroups = app(\App\Services\BlockVariableService::class)->editorVariableGroups();
     $hasLegacyMarkers = \App\Services\LegacyGovernanceService::hasLegacyMarkers($blocks);
 @endphp
-<div x-data="blockEditor(@js($pageType), @js($blocks), @js($blockTypes), @js($styleFields), @js($styleDefaults), @js($dynamicVariableGroups))" class="space-y-4">
+<div x-data="blockEditor('{{ $pageType }}', {{ json_encode($blocks ?: []) }}, {{ json_encode($blockTypes ?: []) }}, {{ json_encode($styleFields ?: []) }}, {{ json_encode($styleDefaults ?: []) }}, {{ json_encode($dynamicVariableGroups ?: []) }})" class="space-y-4">
     {{-- Hidden input carrying block data --}}
     <input type="hidden" name="blocks_json" :value="blocksJson">
 
