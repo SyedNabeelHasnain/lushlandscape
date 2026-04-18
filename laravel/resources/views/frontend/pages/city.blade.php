@@ -27,8 +27,14 @@
 </div>
 
 {{-- Unified Page Builder Rendering --}}
-@foreach($blocks as $block)
-    <x-frontend.block-renderer :block="$block" :context="$context" />
-@endforeach
+@if(isset($blocks) && $blocks->isNotEmpty())
+    @foreach($blocks as $block)
+        <x-frontend.block-renderer :block="$block" :context="$context" />
+    @endforeach
+@else
+    <section class="bg-white py-32 px-6 text-center">
+        <p class="text-ink/50">City landing page content is currently empty. Please configure blocks in the CMS.</p>
+    </section>
+@endif
 
 @endsection

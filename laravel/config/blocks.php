@@ -42,6 +42,9 @@ return [
         'service_category_cards_luxury' => 'service_category_cards_luxury',
         'service_list_masonry_luxury' => 'service_list_masonry_luxury',
         'locations_grid_luxury' => 'locations_grid_luxury',
+        'local_seo_hero_luxury' => 'local_seo_hero_luxury',
+        'local_projects_carousel_luxury' => 'local_projects_carousel_luxury',
+        'local_faq_accordion_luxury' => 'local_faq_accordion_luxury',
         'enclaves_tabs' => 'enclaves_tabs',
         'consultation_form_split' => 'consultation_form_split',
         'consultation_wizard_luxury' => 'consultation_wizard_luxury',
@@ -1006,6 +1009,45 @@ return [
                 'eyebrow' => 'Service Footprint',
                 'heading' => 'Geographical<br>Execution',
                 'description' => 'Providing landscape execution exclusively for the Greater Toronto Area\'s most established residential communities.',
+            ],
+        ],
+
+        'local_seo_hero_luxury' => [
+            'label' => 'Local SEO Hero (Luxury)',
+            'icon' => 'map-pin',
+            'category' => 'data',
+            'content_fields' => [],
+            'data_source' => null,
+            'defaults' => [],
+        ],
+
+        'local_projects_carousel_luxury' => [
+            'label' => 'Local Projects Carousel (Luxury)',
+            'icon' => 'image',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Local Portfolio',
+                'heading' => 'Recent Installations in [City]',
+            ],
+        ],
+
+        'local_faq_accordion_luxury' => [
+            'label' => 'Local FAQ Accordion (Luxury)',
+            'icon' => 'help-circle',
+            'category' => 'data',
+            'content_fields' => [
+                ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
+                ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
+            ],
+            'data_source' => null,
+            'defaults' => [
+                'eyebrow' => 'Project Guidelines',
+                'heading' => 'Common Inquiries',
             ],
         ],
 
