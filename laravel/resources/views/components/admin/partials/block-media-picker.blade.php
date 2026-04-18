@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div x-show="tab === ' x-cloaklibrary'" class="flex-1 overflow-hidden flex flex-col min-h-[400px]">
+            <div x-show="tab === 'library'" x-cloak class="flex-1 overflow-hidden flex flex-col min-h-[400px]">
                 <div class="flex flex-col gap-3 border-b border-gray-100 px-4 py-3 sm:flex-row sm:px-6">
                     <input type="text" x-model="search" @input.debounce.400ms="fetchMedia(1)" placeholder="Search by title…" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-forest/30">
                     <select x-model="mediaType" @change="fetchMedia(1)" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-forest/30 sm:w-44">
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div x-show="tab === ' x-cloakupload'" class="flex-1 overflow-y-auto p-4 min-h-[400px] sm:p-6">
+            <div x-show="tab === 'upload'" x-cloak class="flex-1 overflow-y-auto p-4 min-h-[400px] sm:p-6">
                 <div x-ref="uploadForm" class="max-w-2xl mx-auto space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-text mb-1.5">File <span class="text-red-500">*</span></label>

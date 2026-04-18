@@ -46,7 +46,7 @@
             </div>
 
             {{-- Library Tab --}}
-            <div x-show="tab === ' x-cloaklibrary'" class="flex-1 overflow-hidden flex flex-col">
+            <div x-show="tab === 'library'" x-cloak class="flex-1 overflow-hidden flex flex-col">
                 <div class="flex flex-col gap-3 px-4 py-3 border-b border-gray-100 sm:flex-row sm:px-6">
                     <input type="text" x-model="search" x-on:input.debounce.400ms="fetchMedia(1)" placeholder="Search by title…" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-forest/30">
                     <select x-model="mediaType" x-on:change="fetchMedia(1)" class="px-3 py-2 border border-gray-200 rounded-lg text-sm">
@@ -78,8 +78,8 @@
                 </div>
             </div>
 
-            {{-- Upload Tab — intentionally a div, NOT a form, to avoid nested-form issues --}}
-            <div x-show="tab === ' x-cloakupload'" class="flex-1 overflow-y-auto p-4 sm:p-6">
+            {{-- Upload Tab --}}
+            <div x-show="tab === 'upload'" x-cloak class="flex-1 overflow-y-auto p-4 sm:p-6">
                 <div x-ref="uploadForm" class="space-y-4">
                     {{-- Styled file picker --}}
                     <div>

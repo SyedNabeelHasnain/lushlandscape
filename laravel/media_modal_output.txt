@@ -1,0 +1,2 @@
+File Blade: /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/resources/views/admin/layouts/app.blade.php
+File JS: /Users/syednabeelhasnain/Nabeel Dev/Lush 2.0/Lush/laravel/resources/js/admin.js

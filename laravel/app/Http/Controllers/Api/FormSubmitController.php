@@ -116,15 +116,15 @@ class FormSubmitController extends Controller
                     preheader: "New {$form->name} submission received",
                 );
 
-                $emailTo = array_filter(array_map('trim', explode(',', $form->email_to)));
+                $emailTo = is_array($form->email_to) ? $form->email_to : array_filter(array_map('trim', explode(',', (string)$form->email_to)));
                 $mailer = Mail::to($emailTo);
                 
-                if ($form->email_cc) {
-                    $emailCc = array_filter(array_map('trim', explode(',', $form->email_cc)));
+                if (!empty($form->email_cc)) {
+                    $emailCc = is_array($form->email_cc) ? $form->email_cc : array_filter(array_map('trim', explode(',', (string)$form->email_cc)));
                     if (!empty($emailCc)) $mailer->cc($emailCc);
                 }
-                if ($form->email_bcc) {
-                    $emailBcc = array_filter(array_map('trim', explode(',', $form->email_bcc)));
+                if (!empty($form->email_bcc)) {
+                    $emailBcc = is_array($form->email_bcc) ? $form->email_bcc : array_filter(array_map('trim', explode(',', (string)$form->email_bcc)));
                     if (!empty($emailBcc)) $mailer->bcc($emailBcc);
                 }
                 $mailer->send($adminMail);
