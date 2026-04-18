@@ -360,8 +360,8 @@
                     <span class="hidden sm:inline">|</span>
                     <a href="{{ url('/terms-of-service') }}" class="hover:text-white transition-colors">Terms</a>
                     <div class="flex gap-4 lg:gap-5 text-white/90 text-sm md:border-l border-white/20 md:pl-8 mt-2 md:mt-0">
-                        @if($igUrl)<a href="{{ $igUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram hover:text-white transition-all cursor-pointer"></i></a>@endif
-                        @if($fbUrl)<a href="{{ $fbUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook hover:text-white transition-all cursor-pointer"></i></a>@endif
+                        @if($igUrl)<a href="{{ $igUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i data-lucide="instagram" class="w-4 h-4 hover:text-white transition-all cursor-pointer"></i></a>@endif
+                        @if($fbUrl)<a href="{{ $fbUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i data-lucide="facebook" class="w-4 h-4 hover:text-white transition-all cursor-pointer"></i></a>@endif
                     </div>
                 </div>
             </div>
