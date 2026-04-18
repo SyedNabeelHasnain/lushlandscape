@@ -103,70 +103,63 @@
 
         {{-- Desktop Navigation --}}
         <nav class="hidden lg:flex items-center gap-12" aria-label="Main Navigation">
-            <div class="relative"
-                 x-on:mouseenter="openMenu('services')"
-                 x-on:mouseleave="scheduleClose()"
-                 x-on:focusin="openMenu('services')"
-                 x-on:focusout="scheduleClose()">
-                <button x-on:click="activeMenu === 'services' ? closeAll() : openMenu('services')"
-                        class="nav-link flex items-center gap-1.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300"
-                        :class="activeMenu === 'services' ? 'text-forest' : ''"
-                        aria-haspopup="true" :aria-expanded="activeMenu === 'services'">
-                    Services
-                    <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300" :class="activeMenu === 'services' ? 'rotate-180' : ''"></i>
-                </button>
-            </div>
-
-            <div class="relative"
-                 x-on:mouseenter="openMenu('locations')"
-                 x-on:mouseleave="scheduleClose()"
-                 x-on:focusin="openMenu('locations')"
-                 x-on:focusout="scheduleClose()">
-                <button x-on:click="activeMenu === 'locations' ? closeAll() : openMenu('locations')"
-                        class="nav-link flex items-center gap-1.5 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300"
-                        :class="activeMenu === 'locations' ? 'text-forest' : ''"
-                        aria-haspopup="true" :aria-expanded="activeMenu === 'locations'">
-                    Locations
-                    <i data-lucide="chevron-down" class="w-3 h-3 transition-transform duration-300" :class="activeMenu === 'locations' ? 'rotate-180' : ''"></i>
-                </button>
-            </div>
-
+            <a href="{{ url('/services') }}" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300">Services</a>
             <a href="{{ url('/portfolio') }}" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300">Portfolio</a>
-            <a href="{{ url('/about') }}" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300">About</a>
-        </nav>
-
-        {{-- Desktop Right --}}
-        <div class="hidden lg:flex items-center gap-4 shrink-0">
-            @if($showSearch)
-            <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.desktopSearch.focus())"
-                    class="w-10 h-10 flex items-center justify-center text-forest/50 hover:text-forest transition-all duration-300"
-                    aria-label="Search">
-                <i data-lucide="search" class="w-4 h-4"></i>
-            </button>
-            @endif
+            <a href="{{ url('/about-us') }}" class="nav-link text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300">Process</a>
             @if($phone)
             <a href="tel:{{ $phoneClean }}" class="hidden xl:flex items-center gap-2 text-forest/50 hover:text-forest text-[11px] tracking-[0.15em] transition-all duration-300">
                 <i data-lucide="phone" class="w-3.5 h-3.5"></i>{{ $phone }}
             </a>
             @endif
-            <a href="{{ $navCtaUrl }}" class="border border-forest text-forest hover:bg-forest hover:text-white transition-colors px-8 h-10 inline-flex items-center justify-center text-[10px] font-bold tracking-[0.15em] uppercase rounded-sm">
-                {{ $navCtaText }}
-            </a>
-        </div>
-
-        {{-- Mobile --}}
-        <div class="lg:hidden flex items-center gap-3 z-[110]">
             @if($showSearch)
-            <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.mobileSearch.focus())"
-                    class="w-10 h-10 flex items-center justify-center text-forest hover:text-forest/80 transition" aria-label="Search">
+            <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.desktopSearch.focus())"
+                    class="w-4 h-4 flex items-center justify-center text-forest/50 hover:text-forest transition-all duration-300"
+                    aria-label="Search">
+                <i data-lucide="search" class="w-4 h-4"></i>
+            </button>
+            @endif
+            <a href="{{ $navCtaUrl }}" class="border border-deepGreen text-deepGreen hover:bg-deepGreen hover:text-white transition-colors px-8 h-10 inline-flex items-center justify-center text-[10px] font-bold tracking-[0.15em] uppercase rounded-sm">
+                Request Quote
+            </a>
+        </nav>
+
+        {{-- Mobile Toggle --}}
+        <div class="lg:hidden flex items-center gap-4 z-[110]">
+            @if($showSearch)
+            <button x-on:click="searchOpen = !searchOpen; if(searchOpen) $nextTick(() => $refs.desktopSearch.focus())"
+                    class="w-6 h-6 flex items-center justify-center text-forest hover:text-forest/80 transition" aria-label="Search">
                 <i data-lucide="search" class="w-5 h-5"></i>
             </button>
             @endif
-            <button x-on:click="mobileOpen = !mobileOpen"
-                    class="w-10 h-10 flex items-center justify-center text-forest hover:text-forest/80 transition" aria-label="Toggle navigation">
-                <i data-lucide="menu" class="w-5 h-5" x-show="!mobileOpen" x-cloak></i>
-                <i data-lucide="x" class="w-5 h-5" x-show="mobileOpen" x-cloak></i>
+            <button @click="mobileOpen = !mobileOpen" class="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none group" aria-label="Toggle mobile menu" :aria-expanded="mobileOpen.toString()">
+                <span class="w-6 h-[2px] bg-deepGreen block transition-all duration-300 origin-center" :class="mobileOpen ? 'rotate-45 translate-y-[8px]' : ''"></span>
+                <span class="w-6 h-[2px] bg-deepGreen block transition-all duration-300" :class="mobileOpen ? 'opacity-0' : ''"></span>
+                <span class="w-6 h-[2px] bg-deepGreen block transition-all duration-300 origin-center" :class="mobileOpen ? '-rotate-45 -translate-y-[8px]' : ''"></span>
             </button>
+        </div>
+    </div>
+
+    {{-- Mobile Menu Overlay --}}
+    <div x-show="mobileOpen" 
+         x-transition:enter="transition ease-out duration-500" 
+         x-transition:enter-start="opacity-0 -translate-y-full" 
+         x-transition:enter-end="opacity-100 translate-y-0" 
+         x-transition:leave="transition ease-in duration-400" 
+         x-transition:leave-start="opacity-100 translate-y-0" 
+         x-transition:leave-end="opacity-0 -translate-y-full" 
+         class="fixed inset-0 bg-white z-[105] lg:hidden flex flex-col pt-24 px-6 pb-10 overflow-y-auto" x-cloak>
+        <nav class="flex flex-col gap-8 mb-12">
+            <a href="{{ url('/services') }}" @click="mobileOpen = false" class="text-3xl font-serif text-deepGreen border-b border-stone/30 pb-4">Services</a>
+            <a href="{{ url('/portfolio') }}" @click="mobileOpen = false" class="text-3xl font-serif text-deepGreen border-b border-stone/30 pb-4">Portfolio</a>
+            <a href="{{ url('/about-us') }}" @click="mobileOpen = false" class="text-3xl font-serif text-deepGreen border-b border-stone/30 pb-4">Process</a>
+        </nav>
+        <div class="mt-auto flex flex-col gap-6">
+            <a href="{{ url('/consultation') }}" @click="mobileOpen = false" class="btn-solid h-14 flex items-center justify-center w-full text-xs font-bold tracking-[0.2em] uppercase rounded-sm">Request Quote</a>
+            @if($phone)
+            <a href="tel:{{ $phoneClean }}" class="text-center text-sm font-semibold tracking-widest text-deepGreen/70 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-phone"></i> {{ $phone }}
+            </a>
+            @endif
         </div>
     </div>
 

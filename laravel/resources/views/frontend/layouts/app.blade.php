@@ -357,196 +357,51 @@
             @endforeach
         </footer>
     @else
-        <footer class="bg-forest-dark text-white/60">
-            @php
-                if (empty($footerColumns)) {
-                    $footerCities = $globalCities;
-                    $footerCats = $globalServiceCategories;
-                }
-            @endphp
-
-            <div class="h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
-
-            <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-20 lg:pt-28 pb-16 lg:pb-20">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10">
-
-                    {{-- Brand column --}}
-                    <div class="lg:col-span-4">
-                        <a href="{{ url('/') }}" class="inline-block mb-6">
-                            @if($footerLogo)
-                                <img src="{{ $footerLogo->url }}" alt="{{ $siteName }}" class="h-12 w-auto object-contain"
-                                    height="48" loading="lazy" decoding="async">
-                            @else
-                                <span class="text-white font-heading text-2xl font-bold tracking-tight">{{ $siteName }}</span>
-                            @endif
-                        </a>
-                        <p class="text-sm text-white/65 leading-relaxed max-w-sm">{{ $footerTagline }}</p>
-                        @if($phone)
-                            <a href="tel:{{ $phoneClean }}"
-                                class="inline-flex items-center gap-3 mt-8 text-white font-heading text-xl font-bold hover:text-white/80 transition group">
-                                <span
-                                    class="w-10 h-10 bg-white/15 flex items-center justify-center shrink-0 group-hover:bg-white/25 transition">
-                                    <i data-lucide="phone" class="w-4 h-4"></i>
-                                </span>
-                                {{ $phone }}
-                            </a>
-                        @endif
-                        <div class="flex items-center gap-2.5 mt-8">
-                            @if($fbUrl)<a href="{{ $fbUrl }}" target="_blank" rel="noopener noreferrer"
-                                aria-label="Facebook"
-                                class="w-9 h-9 bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"><i
-                            data-lucide="facebook" class="w-3.5 h-3.5 text-white/70"></i></a>@endif
-                            @if($igUrl)<a href="{{ $igUrl }}" target="_blank" rel="noopener noreferrer"
-                                aria-label="Instagram"
-                                class="w-9 h-9 bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"><i
-                            data-lucide="instagram" class="w-3.5 h-3.5 text-white/70"></i></a>@endif
-                            @if($ytUrl)<a href="{{ $ytUrl }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube"
-                                class="w-9 h-9 bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"><i
-                            data-lucide="youtube" class="w-3.5 h-3.5 text-white/70"></i></a>@endif
-                            @if($googleBizUrl)<a href="{{ $googleBizUrl }}" target="_blank" rel="noopener noreferrer"
-                                aria-label="Google Business"
-                                class="w-9 h-9 bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"><i
-                            data-lucide="search" class="w-3.5 h-3.5 text-white/70"></i></a>@endif
-                        </div>
-                        @if($houzzUrl || $homestarsUrl)
-                            <div class="flex items-center gap-3 mt-4 text-xs text-white/25">
-                                @if($houzzUrl)<a href="{{ $houzzUrl }}" target="_blank" rel="noopener noreferrer"
-                                class="hover:text-white/50 transition link-underline">Houzz</a>@endif
-                                @if($houzzUrl && $homestarsUrl)<span aria-hidden="true">&middot;</span>@endif
-                                @if($homestarsUrl)<a href="{{ $homestarsUrl }}" target="_blank" rel="noopener noreferrer"
-                                class="hover:text-white/50 transition link-underline">HomeStars</a>@endif
-                            </div>
-                        @endif
-                    </div>
-
-                    {{-- Link columns --}}
-                    @if(empty($footerColumns))
-                        <div class="lg:col-span-2">
-                            <h3
-                                class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-6 pb-3 border-b border-white/15">
-                                Services</h3>
-                            <ul class="space-y-3 text-sm">
-                                @foreach($footerCats as $fc)
-                                    <li><a href="{{ url('/services/' . $fc->slug_final) }}"
-                                            class="hover:text-white transition">{{ $fc->name }}</a></li>
-                                @endforeach
-                                <li class="pt-1"><a href="{{ url('/services') }}"
-                                        class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">View
-                                        All &rarr;</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="lg:col-span-2">
-                            <h3
-                                class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-6 pb-3 border-b border-white/15">
-                                Locations</h3>
-                            <ul class="space-y-3 text-sm">
-                                @foreach($footerCities as $fc)
-                                    <li><a href="{{ url('/landscaping-' . $fc->slug_final) }}"
-                                            class="hover:text-white transition">{{ $fc->name }}</a></li>
-                                @endforeach
-                                <li class="pt-1"><a href="{{ url('/locations') }}"
-                                        class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">All
-                                        Areas &rarr;</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="lg:col-span-2">
-                            <h3
-                                class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-6 pb-3 border-b border-white/15">
-                                Company</h3>
-                            <ul class="space-y-3 text-sm">
-                                <li><a href="{{ url('/about') }}" class="hover:text-white transition">About Us</a></li>
-                                <li><a href="{{ url('/portfolio') }}" class="hover:text-white transition">Portfolio</a></li>
-                                <li><a href="{{ url('/blog') }}" class="hover:text-white transition">Blog</a></li>
-                                <li><a href="{{ url('/faqs') }}" class="hover:text-white transition">FAQs</a></li>
-                                <li><a href="{{ url('/contact') }}" class="hover:text-white transition">Contact Us</a></li>
-                                <li><a href="{{ $navCtaUrl }}" class="hover:text-white transition">{{ $navCtaText }}</a></li>
-                            </ul>
-                            <div class="mt-8 p-5 bg-white/8 border border-white/15">
-                                <p class="text-[11px] text-white/60 tracking-wide uppercase mb-1">
-                                    {{ $getSetting('business_hours_weekday', 'Mon–Fri: 8am–6pm') }}</p>
-                                <p class="text-[11px] text-white/60 tracking-wide uppercase mb-4">
-                                    {{ $getSetting('business_hours_weekend', 'Sat: 9am–4pm') }}</p>
-                                @if($phone)
-                                    <a href="tel:{{ $phoneClean }}"
-                                        class="btn-luxury btn-luxury-primary w-full text-[10px] py-3">Call Now</a>
-                                @endif
-                            </div>
-                        </div>
-
+        <footer class="bg-forest pt-16 lg:pt-24 pb-8 lg:pb-10 px-5 lg:px-12 text-white border-t border-white/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 text-white/90 text-sm border-b border-white/10 pb-12 lg:pb-16 mb-8 lg:mb-10">
+                <div class="sm:col-span-2 lg:pr-8">
+                    @if($footerLogo)
+                        <img src="{{ $footerLogo->url }}" alt="{{ $siteName }}" class="h-8 mb-6 lg:mb-8 w-auto brightness-0 invert opacity-90" loading="lazy" width="200" height="32">
+                    @elseif($logoDesktop)
+                        <img src="{{ $logoDesktop->url }}" alt="{{ $siteName }}" class="h-8 mb-6 lg:mb-8 w-auto brightness-0 invert opacity-90" loading="lazy" width="200" height="32">
                     @else
-                        @foreach($footerColumns as $col)
-                            <div class="lg:col-span-{{ floor(8 / max(count($footerColumns), 1)) }}">
-                                <h3
-                                    class="text-white text-[11px] font-semibold uppercase tracking-[0.2em] mb-6 pb-3 border-b border-white/15">
-                                    {{ $col['heading'] ?? '' }}</h3>
-                                <ul class="space-y-3 text-sm">
-                                    @if(($col['type'] ?? 'custom') === 'auto_services')
-                                        @foreach($globalServiceCategories as $fc)
-                                            <li><a href="{{ url('/services/' . $fc->slug_final) }}"
-                                                    class="hover:text-white transition">{{ $fc->name }}</a></li>
-                                        @endforeach
-                                        <li class="pt-1"><a href="{{ url('/services') }}"
-                                                class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">View
-                                                All &rarr;</a></li>
-                                    @elseif(($col['type'] ?? 'custom') === 'auto_cities')
-                                        @foreach($globalCities as $fc)
-                                            <li><a href="{{ url('/landscaping-' . $fc->slug_final) }}"
-                                                    class="hover:text-white transition">{{ $fc->name }}</a></li>
-                                        @endforeach
-                                        <li class="pt-1"><a href="{{ url('/locations') }}"
-                                                class="text-white/80 hover:text-white transition text-xs font-semibold uppercase tracking-[0.1em]">All
-                                                Areas &rarr;</a></li>
-                                    @else
-                                        @foreach($col['links'] ?? [] as $link)
-                                            <li><a href="{{ $link['url'] ?? '#' }}"
-                                                    class="hover:text-white transition">{{ $link['label'] ?? '' }}</a></li>
-                                        @endforeach
-                                    @endif
-                                </ul>
-                            </div>
+                        <span class="text-white font-heading text-2xl font-bold tracking-tight block mb-6 lg:mb-8">{{ $siteName }}</span>
+                    @endif
+                    <p class="max-w-md leading-[1.8] font-light text-white/90">The GTA's technical authority for luxury outdoor construction. We specialize in high-ticket hardscaping, structural masonry, and complete outdoor living environments, backed by a 10-year workmanship warranty.</p>
+                </div>
+                <div>
+                    <h3 class="text-white text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] mb-4 lg:mb-6">Signature Disciplines</h3>
+                    <ul class="space-y-3 lg:space-y-4 font-light text-white/90">
+                        @foreach($globalServiceCategories->take(4) as $cat)
+                        <li><a href="{{ url('/services/' . $cat->slug_final) }}" class="hover:text-white transition-colors">{{ $cat->name }}</a></li>
                         @endforeach
-                    @endif
+                    </ul>
                 </div>
-
-                {{-- Trust badges row --}}
-                <div class="mt-16 pt-10 border-t border-white/10">
-                    <div
-                        class="flex flex-wrap items-center justify-center gap-8 lg:gap-14 text-[11px] text-white/50 tracking-wide uppercase">
-                        <span class="flex items-center gap-2"><i data-lucide="shield-check"
-                                class="w-4 h-4 text-white/70"></i>10-Year Warranty</span>
-                        <span class="flex items-center gap-2"><i data-lucide="award" class="w-4 h-4 text-white/70"></i>CMHA
-                            Certified</span>
-                        <span class="flex items-center gap-2"><i data-lucide="file-check"
-                                class="w-4 h-4 text-white/70"></i>$5M Insured</span>
-                        <span class="flex items-center gap-2"><i data-lucide="hard-hat"
-                                class="w-4 h-4 text-white/70"></i>WSIB Compliant</span>
+                <div>
+                    <h3 class="text-white text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] mb-4 lg:mb-6">Primary Enclaves</h3>
+                    <ul class="space-y-3 lg:space-y-4 font-light text-white/90">
+                        <li>Lorne Park & Mineola</li>
+                        <li>Joshua Creek & Morrison</li>
+                        <li>Shoreacres & Roseland</li>
+                        <li>The Bridle Path & Forest Hill</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[9px] lg:text-[10px] uppercase tracking-[0.2em] text-white/70 gap-4 lg:gap-6">
+                <p class="text-center md:text-left">&copy; {{ date('Y') }} {{ $siteName }}. All Rights Reserved.</p>
+                <div class="flex items-center gap-4 lg:gap-8 flex-wrap justify-center">
+                    <a href="{{ url('/privacy-policy') }}" class="hover:text-white transition-colors">Privacy</a>
+                    <span class="hidden sm:inline">|</span>
+                    <a href="{{ url('/terms-of-service') }}" class="hover:text-white transition-colors">Terms</a>
+                    <div class="flex gap-4 lg:gap-5 text-white/90 text-sm md:border-l border-white/20 md:pl-8 mt-2 md:mt-0">
+                        @if($igUrl)<a href="{{ $igUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram hover:text-white transition-all cursor-pointer"></i></a>@endif
+                        @if($fbUrl)<a href="{{ $fbUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook hover:text-white transition-all cursor-pointer"></i></a>@endif
                     </div>
-                </div>
-
-                {{-- Copyright bar --}}
-                <div
-                    class="mt-10 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p class="text-[11px] text-white/60 tracking-wide">{{ $footerCopyright }}</p>
-                    @if(!empty($footerBottomLinks))
-                        <div class="flex gap-6 text-[11px] text-white/60 tracking-wide">
-                            @foreach($footerBottomLinks as $link)
-                                <a href="{{ $link['url'] ?? '#' }}"
-                                    class="hover:text-white/70 transition">{{ $link['label'] ?? '' }}</a>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="flex gap-6 text-[11px] text-white/60 tracking-wide">
-                            <a href="{{ url('/privacy-policy') }}" class="hover:text-white/70 transition">Privacy Policy</a>
-                            <a href="{{ url('/terms') }}" class="hover:text-white/70 transition">Terms &amp; Conditions</a>
-                            <a href="{{ url('/sitemap.xml') }}" class="hover:text-white/70 transition">Sitemap</a>
-                        </div>
-                    @endif
                 </div>
             </div>
         </footer>
     @endif
+
 
     {{-- Sticky mobile CTA --}}
     <div
@@ -570,7 +425,7 @@
     </div>
     <div class="h-16 lg:hidden" aria-hidden="true"></div>
 
-    {{-- ── Cookie Consent Banner ─────────────────────────────────────────────── --}}
+    {{-- Cookie Consent ────────────────────────────────────────────────────── --}}
     @if($cookieConsentEnabled)
         <div x-data="cookieConsent()" x-init="init()" x-show="visible" x-cloak
             x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4"
