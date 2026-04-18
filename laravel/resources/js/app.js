@@ -1093,7 +1093,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 return -(totalWidth - window.innerWidth);
             };
-            
+
+            // Store original gsap tween instance for navigation buttons to control
             const portfolioScroll = gsap.to(track, {
                 x: getScrollAmount,
                 ease: "none",
@@ -1103,36 +1104,134 @@ document.addEventListener('DOMContentLoaded', () => {
                     scrub: 1,
                     start: "top top",
                     end: () => {
-                        const wrapperPaddingX = 96; // lg:px-12 * 2
-                        const trackWidth = track.scrollWidth;
-                        const viewportWidth = window.innerWidth;
-                        
-                        return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
+                        return `+=${Math.abs(getScrollAmount())}`;
                     },
                     invalidateOnRefresh: true,
-                    anticipatePin: 1
+                    anticipatePin: 1,
+                    onEnter: () => wrapper._gsapScrollTriggerActive = true,
+                    onLeave: () => wrapper._gsapScrollTriggerActive = false,
+                    onEnterBack: () => wrapper._gsapScrollTriggerActive = true,
+                    onLeaveBack: () => wrapper._gsapScrollTriggerActive = false
                 }
             });
             
             ScrollTrigger.addEventListener('refresh', () => {
-                portfolioScroll.scrollTrigger.end = () => {
-                    const wrapperPaddingX = 96;
-                    const trackWidth = track.scrollWidth;
-                    const viewportWidth = window.innerWidth;
-                    return `+=${Math.max(0, trackWidth - viewportWidth + wrapperPaddingX)}`;
-                };
+                if (portfolioScroll.scrollTrigger) {
+                    portfolioScroll.scrollTrigger.end = () => `+=${Math.abs(getScrollAmount())}`;
+                }
             });
+
+                // Navigation Buttons (Desktop GSAP scrub control)
+                const prevBtn = wrapper.querySelector('#portfolio-prev, .portfolio-nav-btn[aria-label="Previous"]');
+                const nextBtn = wrapper.querySelector('#portfolio-next, .portfolio-nav-btn[aria-label="Next"]');
+                
+                if (prevBtn && nextBtn) {
+                    const scrollStep = () => {
+                        const card = track.querySelector('.mobile-swipe-item');
+                        if (!card) return 0.25;
+                        const cardWidth = card.offsetWidth;
+                        const trackStyle = window.getComputedStyle(track);
+                        const gap = parseFloat(trackStyle.gap) || 40;
+                        const totalScroll = Math.abs(getScrollAmount());
+                        if (totalScroll === 0) return 0;
+                        return (cardWidth + gap) / totalScroll;
+                    };
+    
+                    // Update button states based on scroll progress
+                    const updateButtons = () => {
+                        if (!portfolioScroll.scrollTrigger) return;
+                        const prog = portfolioScroll.scrollTrigger.progress;
+                        if (prog <= 0.01) {
+                            prevBtn.style.opacity = '0.3';
+                            prevBtn.style.pointerEvents = 'none';
+                        } else {
+                            prevBtn.style.opacity = '1';
+                            prevBtn.style.pointerEvents = 'auto';
+                        }
+                        
+                        if (prog >= 0.99) {
+                            nextBtn.style.opacity = '0.3';
+                            nextBtn.style.pointerEvents = 'none';
+                        } else {
+                            nextBtn.style.opacity = '1';
+                            nextBtn.style.pointerEvents = 'auto';
+                        }
+                    };
+                    
+                    // Tie button updates to scroll trigger updates
+                    if (portfolioScroll.scrollTrigger) {
+                        // Poll for scroll changes since GSAP scrub ties progress directly to scroll
+                        window.addEventListener('scroll', () => {
+                            if (portfolioScroll.scrollTrigger.isActive) {
+                                updateButtons();
+                            }
+                        }, { passive: true });
+                        ScrollTrigger.addEventListener('refresh', updateButtons);
+                        updateButtons();
+                    }
+                    
+                    prevBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (portfolioScroll.scrollTrigger) {
+                            const st = portfolioScroll.scrollTrigger;
+                            
+                            if (window.scrollY > st.end) {
+                                if (window.lenis) window.lenis.scrollTo(st.end, { duration: 0.8 });
+                                else window.scrollTo({ top: st.end, behavior: 'smooth' });
+                                return;
+                            }
+                            
+                            const currentProgress = st.progress;
+                            if (currentProgress <= 0) return;
+                            
+                            const newProgress = Math.max(0, currentProgress - scrollStep());
+                            const targetScroll = st.start + (st.end - st.start) * newProgress;
+                            
+                            if (window.lenis) {
+                                window.lenis.scrollTo(targetScroll, { duration: 1.2, force: true, lock: true });
+                            } else {
+                                window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                            }
+                        }
+                    });
+    
+                    nextBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (portfolioScroll.scrollTrigger) {
+                            const st = portfolioScroll.scrollTrigger;
+                            
+                            if (window.scrollY < st.start) {
+                                if (window.lenis) window.lenis.scrollTo(st.start, { duration: 0.8 });
+                                else window.scrollTo({ top: st.start, behavior: 'smooth' });
+                                return;
+                            }
+                            
+                            const currentProgress = st.progress;
+                            if (currentProgress >= 1) return;
+                            
+                            const newProgress = Math.min(1, currentProgress + scrollStep());
+                            const targetScroll = st.start + (st.end - st.start) * newProgress;
+                            
+                            if (window.lenis) {
+                                window.lenis.scrollTo(targetScroll, { duration: 1.2, force: true, lock: true });
+                            } else {
+                                window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                            }
+                        }
+                    });
+                }
         });
         
         return () => ScrollTrigger.getAll().forEach(t => t.kill()); // Cleanup
     });
 
-    // Portfolio navigation buttons (mobile + desktop fallback)
-    const initPortfolioSliders = () => {
+    // Portfolio navigation buttons (Mobile Native Scroll fallback)
+    let mmMobile = gsap.matchMedia();
+    mmMobile.add("(max-width: 1023px)", () => {
         document.querySelectorAll('.portfolio-pin-wrapper').forEach(wrapper => {
             const track = wrapper.querySelector('.mobile-swipe');
-            const prevBtn = wrapper.querySelector('[aria-label="Previous"], #portfolio-prev');
-            const nextBtn = wrapper.querySelector('[aria-label="Next"], #portfolio-next');
+            const prevBtn = wrapper.querySelector('#portfolio-prev, .portfolio-nav-btn[aria-label="Previous"]');
+            const nextBtn = wrapper.querySelector('#portfolio-next, .portfolio-nav-btn[aria-label="Next"]');
             
             if (track && prevBtn && nextBtn) {
                 const getCardWidth = () => {
@@ -1144,16 +1243,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     return cardWidth + gap;
                 };
                 
-                prevBtn.addEventListener('click', () => {
+                prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     track.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
                 });
-                nextBtn.addEventListener('click', () => {
+                nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     track.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
                 });
             }
         });
-    };
-    initPortfolioSliders();
+    });
 
     // Parallax
     gsap.utils.toArray('.parallax-img').forEach((img) => {
