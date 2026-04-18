@@ -21,7 +21,6 @@
     $topKeys = ['hero', 'stats_bar', 'service_hero', 'parallax_media_band'];
     $btmKeys = ['trust_badges', 'cta_section', 'split_consultation_panel', 'services_grid'];
 
-    // Legacy rows used section_key; unified rows use block_type
     $getBlockKey = fn($b) => $b->block_type ?? null;
 
     $topBlocks  = $blocks->filter(fn($b) => in_array($getBlockKey($b), $topKeys));

@@ -8,7 +8,7 @@
         
         {{-- Header --}}
         <div class="text-center max-w-3xl mx-auto mb-16 lg:mb-24 gs-reveal">
-            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent mb-4 lg:mb-6">{{ $content['eyebrow'] ?? 'Our Legacy' }}</p>
+            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-accent mb-4 lg:mb-6">{{ $content['eyebrow'] ?? 'Our Work' }}</p>
             <h1 class="fluid-heading text-forest mb-6 word-wrap-safe">{!! $content['heading'] ?? 'Completed<br>Environments' !!}</h1>
             @if(!empty($content['description']))
             <p class="text-ink/70 text-base lg:text-lg font-light leading-relaxed">{{ $content['description'] }}</p>

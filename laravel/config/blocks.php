@@ -148,7 +148,6 @@ return [
         ],
         [
             'key' => 'surface_style',
-            'label' => 'Legacy Surface Style',
             'type' => 'select',
             'tab' => 'background',
             'options' => [
@@ -267,7 +266,6 @@ return [
         ],
         [
             'key' => 'max_width',
-            'label' => 'Legacy Max Width',
             'type' => 'select',
             'tab' => 'layout',
             'options' => ['full' => 'Full Width', 'xl' => '7xl (1280px)', 'lg' => '5xl (1024px)', 'md' => '3xl (768px)', 'sm' => 'xl (576px)'],
@@ -299,7 +297,6 @@ return [
         ],
         [
             'key' => 'text_align',
-            'label' => 'Legacy Text Align',
             'type' => 'select',
             'tab' => 'layout',
             'options' => ['left' => 'Left', 'center' => 'Center', 'right' => 'Right'],
@@ -367,14 +364,12 @@ return [
         ['key' => 'rounded', 'label' => 'Rounded Corners', 'type' => 'toggle', 'tab' => 'appearance'],
         [
             'key' => 'border',
-            'label' => 'Legacy Border',
             'type' => 'select',
             'tab' => 'appearance',
             'options' => ['none' => 'None', 'light' => 'Light', 'medium' => 'Medium'],
         ],
         [
             'key' => 'shadow',
-            'label' => 'Legacy Shadow',
             'type' => 'select',
             'tab' => 'appearance',
             'options' => ['none' => 'None', 'sm' => 'Small', 'md' => 'Medium', 'lg' => 'Large'],
@@ -721,7 +716,7 @@ return [
             ],
             'data_source' => null,
             'defaults' => [
-                'eyebrow' => 'Our Legacy',
+                'eyebrow' => 'Our Work',
                 'heading' => 'Completed<br>Environments',
                 'description' => 'A curated selection of luxury landscape constructions across the Greater Toronto Area.',
             ],

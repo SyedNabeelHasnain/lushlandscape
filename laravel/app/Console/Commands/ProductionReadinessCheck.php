@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Services\BlockBuilderService;
-use App\Services\LegacyGovernanceService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -110,14 +109,6 @@ class ProductionReadinessCheck extends Command
             $notes[] = 'Database connection succeeded.';
         } catch (\Throwable $exception) {
             $issues[] = 'Database readiness check failed: '.$exception->getMessage();
-        }
-
-        if (! LegacyGovernanceService::strictEnabled()) {
-            $warnings[] = 'LEGACY_STRICT is disabled. Strict mode should remain enabled for release readiness.';
-        } else {
-            $notes[] = 'LEGACY_STRICT is enabled.';
-        }
-
         }
 
         $this->renderSection('Passes', $notes, 'info');

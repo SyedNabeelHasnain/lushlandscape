@@ -164,7 +164,6 @@ class BlockCapabilityAuditService
         }
 
         $lines[] = '';
-        $lines[] = '## Legacy Renderer Views';
         $lines[] = '';
 
             $lines[] = '- None';

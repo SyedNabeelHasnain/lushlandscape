@@ -11,17 +11,12 @@ Outputs a hidden input `blocks_json` with the serialized block array on form sub
     $styleFields = \App\Services\BlockBuilderService::styleFields();
     $styleDefaults = \App\Services\BlockBuilderService::styleDefaults();
     $dynamicVariableGroups = app(\App\Services\BlockVariableService::class)->editorVariableGroups();
-    $hasLegacyMarkers = \App\Services\LegacyGovernanceService::hasLegacyMarkers($blocks);
 @endphp
 <div x-data="blockEditor('{{ $pageType }}', {{ json_encode($blocks ?: []) }}, {{ json_encode($blockTypes ?: []) }}, {{ json_encode($styleFields ?: []) }}, {{ json_encode($styleDefaults ?: []) }}, {{ json_encode($dynamicVariableGroups ?: []) }})" class="space-y-4">
     {{-- Hidden input carrying block data --}}
     <input type="hidden" name="blocks_json" :value="blocksJson">
 
-    @if($hasLegacyMarkers)
-        <div class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-            This page contains legacy-supported presentation data. New changes must be made through the unified builder only.
         </div>
-    @endif
 
     {{-- Toolbar: Add Block --}}
     <div class="flex flex-wrap items-center gap-3">

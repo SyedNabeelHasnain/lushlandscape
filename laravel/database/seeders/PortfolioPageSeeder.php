@@ -15,7 +15,7 @@ class PortfolioPageSeeder extends Seeder
                 'block_type' => 'portfolio_masonry_grid_luxury',
                 'is_enabled' => true,
                 'content' => [
-                    'eyebrow' => 'Our Legacy',
+                    'eyebrow' => 'Our Work',
                     'heading' => 'Completed<br>Environments',
                     'description' => 'A curated selection of luxury landscape constructions across the Greater Toronto Area.',
                 ],
