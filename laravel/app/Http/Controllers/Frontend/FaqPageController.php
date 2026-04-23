@@ -27,13 +27,13 @@ class FaqPageController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $cities = City::where('status', 'published')
+        $cities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
             ->orderBy('sort_order')
-            ->get(['id', 'name', 'slug_final']);
+            ->get(['id', 'name', 'slug']);
 
-        $services = Service::where('status', 'published')
+        $services = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published')
             ->orderBy('sort_order')
-            ->get(['id', 'name', 'slug_final']);
+            ->get(['id', 'name', 'slug']);
 
         // Build FAQ query based on filters
         $query = Faq::where('status', 'published')
@@ -136,9 +136,9 @@ class FaqPageController extends Controller
 
         // Match city pages: /professional-{slug}
         if (preg_match('/^professional-([a-z0-9\-]+)$/', $path, $m)) {
-            $city = City::where('slug_final', $m[1])->first();
+            $city = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $m[1])->first();
             if ($city) {
-                $context['city'] = $city->name;
+                $context['city'] = $city->title;
                 $context['type'] = 'local';
             }
 
@@ -149,9 +149,9 @@ class FaqPageController extends Controller
         if (preg_match('/^services\//', $path)) {
             $segments = explode('/', $path);
             $slug = end($segments);
-            $service = Service::where('slug_final', $slug)->first();
+            $service = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('slug', $slug)->first();
             if ($service) {
-                $context['service'] = $service->name;
+                $context['service'] = $service->title;
                 $context['type'] = 'service';
             }
 
@@ -160,13 +160,13 @@ class FaqPageController extends Controller
 
         // Match service-city pages (catch-all slug)
         if ($path && ! str_contains($path, '/')) {
-            $page = ServiceCityPage::where('slug_final', $path)
+            $page = ServiceCityPage::where('slug', $path)
                 ->where('is_active', true)
                 ->with(['service', 'city'])
                 ->first();
             if ($page) {
-                $context['service'] = $page->service->name;
-                $context['city'] = $page->city->name;
+                $context['service'] = $page->service->title;
+                $context['city'] = $page->city->title;
                 $context['type'] = 'service';
             }
         }

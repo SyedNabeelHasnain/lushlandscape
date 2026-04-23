@@ -35,7 +35,7 @@ $cityPages = $context['cityPages'] ?? collect();
         @if($categoryMap->count() > 1)
         <div class="flex flex-wrap gap-2 mb-10">
             @foreach($categoryMap as $cat)
-            <a href="#cat-{{ $cat->slug_final }}"
+            <a href="#cat-{{ $cat->slug }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-stone  text-sm text-text-secondary hover:border-forest/20 hover:text-forest transition">
                 <i data-lucide="{{ $cat->icon ?? 'layers' }}" class="w-3.5 h-3.5"></i>
                 {{ $cat->name }}
@@ -48,7 +48,7 @@ $cityPages = $context['cityPages'] ?? collect();
         @foreach($categoryMap as $catIdx => $cat)
         @php $catPages = $grouped->get($cat->id, collect()); @endphp
         @if($catPages->isNotEmpty())
-        <div id="cat-{{ $cat->slug_final }}" class="{{ $catIdx > 0 ? 'mt-12' : '' }}">
+        <div id="cat-{{ $cat->slug }}" class="{{ $catIdx > 0 ? 'mt-12' : '' }}">
             <div class="flex items-center gap-3 mb-2">
                 <div class="w-9 h-9 bg-forest/10  flex items-center justify-center shrink-0">
                     <i data-lucide="{{ $cat->icon ?? 'layers' }}" class="w-4 h-4 text-forest"></i>

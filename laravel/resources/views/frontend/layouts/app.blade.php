@@ -339,7 +339,7 @@
                     <h3 class="text-white text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.2em] mb-4 lg:mb-6">Signature Disciplines</h3>
                     <ul class="space-y-3 lg:space-y-4 font-light text-white/90">
                         @foreach($globalServiceCategories->take(4) as $cat)
-                        <li><a href="{{ url('/services/' . $cat->slug_final) }}" class="hover:text-white transition-colors">{{ $cat->name }}</a></li>
+                        <li><a href="{{ url('/services/' . $cat->slug) }}" class="hover:text-white transition-colors">{{ $cat->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>

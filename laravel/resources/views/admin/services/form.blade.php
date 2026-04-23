@@ -2,7 +2,7 @@
 @section('title', isset($service) ? 'Edit Service' : 'Create Service')
 @section('content')
 <x-admin.flash-message />
-<x-admin.page-header :title="isset($service) ? 'Edit: ' . $service->name : 'Create Service'" :viewUrl="isset($service) ? url('/services/' . ($service->category?->slug_final ?? '_') . '/' . $service->slug_final) : null" />
+<x-admin.page-header :title="isset($service) ? 'Edit: ' . $service->name : 'Create Service'" :viewUrl="isset($service) ? url('/services/' . ($service->category?->slug ?? '_') . '/' . $service->slug) : null" />
 <form method="POST" action="{{ isset($service) ? route('admin.services.update', $service) : route('admin.services.store') }}" data-ajax-form="true" data-success-message="{{ isset($service) ? 'Service updated successfully.' : 'Service created.' }}">
     @csrf
     @if(isset($service)) @method('PUT') @endif
@@ -78,7 +78,7 @@
                             @foreach($service->cityPages->sortBy(fn($cp) => $cp->city?->name) as $cp)
                             <tr class="group">
                                 <td class="py-2 pr-4 font-medium text-text">{{ $cp->city?->name ?? '-' }}</td>
-                                <td class="py-2 pr-4 text-text-secondary text-xs font-mono truncate max-w-[180px]">{{ $cp->slug_final }}</td>
+                                <td class="py-2 pr-4 text-text-secondary text-xs font-mono truncate max-w-[180px]">{{ $cp->slug }}</td>
                                 <td class="py-2 pr-4">
                                     @if($cp->is_active)
                                     <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700">Active</span>

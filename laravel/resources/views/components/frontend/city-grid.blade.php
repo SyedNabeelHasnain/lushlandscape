@@ -6,7 +6,7 @@
 
 @php
     if ($cities->isEmpty()) {
-        $cities = \App\Models\City::where('status', 'published')
+        $cities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
             ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->orderBy('sort_order')])
             ->orderBy('sort_order')
             ->get();
@@ -33,17 +33,17 @@
             'lat'      => (float) $c->latitude,
             'lng'      => (float) $c->longitude,
             'type'     => 'city',
-            'slug'     => $c->slug_final,
+            'slug'     => $c->slug,
             'heading'  => 'Professional Services in ' . $c->name,
             'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->name . '. Serving ' . $hoodNames . '.',
             'cta_text' => $popupCta,
-            'cta_url'  => '/professional-' . $c->slug_final,
+            'cta_url'  => '/professional-' . $c->slug,
             'services' => '',
             'hoods'    => $c->relationLoaded('neighborhoods')
                 ? $c->neighborhoods->map(fn($n) => ['name' => $n->name, 'lat' => (float) $n->latitude, 'lng' => (float) $n->longitude, 'slug' => $n->slug])->toArray()
                 : [],
         ];
-        $filterItems[] = ['name' => $c->name, 'slug' => $c->slug_final, 'type' => 'city'];
+        $filterItems[] = ['name' => $c->name, 'slug' => $c->slug, 'type' => 'city'];
     }
 
     $mapId           = 'imap-' . uniqid();
@@ -52,8 +52,8 @@
     // City lat/lng for 3D globe projection
     $globeCities = $cities->map(fn($c) => [
         'name'  => $c->name,
-        'slug'  => $c->slug_final,
-        'url'   => '/professional-' . $c->slug_final,
+        'slug'  => $c->slug,
+        'url'   => '/professional-' . $c->slug,
         'lat'   => (float) $c->latitude,
         'lng'   => (float) $c->longitude,
         'hoods' => $c->relationLoaded('neighborhoods') ? $c->neighborhoods->take(4)->pluck('name')->implode(', ') : '',
@@ -112,14 +112,14 @@
             <div class="reveal-right">
                 <div class="space-y-1">
                     @foreach($cities as $city)
-                    <a href="{{ url('/professional-' .  $city->slug_final  . '') }}"
+                    <a href="{{ url('/professional-' .  $city->slug  . '') }}"
                        class="group flex items-center justify-between gap-4 px-5 py-4 bg-white border border-transparent hover:border-forest/15 hover:shadow-luxury transition-all duration-500"
-                       x-on:mouseenter="setActive('{{ $city->slug_final }}')"
+                       x-on:mouseenter="setActive('{{ $city->slug }}')"
                        x-on:mouseleave="clearActive()"
-                       :class="activeCity === '{{ $city->slug_final }}' ? 'border-forest/15 shadow-luxury' : ''">
+                       :class="activeCity === '{{ $city->slug }}' ? 'border-forest/15 shadow-luxury' : ''">
                         <div class="min-w-0">
                             <span class="block text-base font-heading font-bold text-ink group-hover:text-forest transition-colors duration-300"
-                                  :class="activeCity === '{{ $city->slug_final }}' ? 'text-forest' : ''">{{ $city->name }}</span>
+                                  :class="activeCity === '{{ $city->slug }}' ? 'text-forest' : ''">{{ $city->name }}</span>
                             @if($city->relationLoaded('neighborhoods') && $city->neighborhoods->isNotEmpty())
                             <span class="block text-sm text-text-secondary mt-0.5 truncate">{{ $city->neighborhoods->take(4)->pluck('name')->implode(', ') }}</span>
                             @endif
@@ -184,7 +184,7 @@
         {{-- City link grid --}}
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-px bg-stone reveal-stagger">
             @foreach($cities as $city)
-            <a href="{{ url('/professional-' .  $city->slug_final  . '') }}"
+            <a href="{{ url('/professional-' .  $city->slug  . '') }}"
                class="group bg-white p-8 flex flex-col items-center text-center hover:bg-forest transition-all duration-500">
                 <i data-lucide="map-pin" class="w-5 h-5 text-forest group-hover:text-white transition-colors duration-500 mb-4"></i>
                 <span class="text-sm font-semibold text-ink group-hover:text-white transition-colors duration-300">{{ $city->name }}</span>
@@ -199,7 +199,7 @@
         <noscript>
             <div class="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                 @foreach($cities as $city)
-                <a href="{{ url('/professional-' .  $city->slug_final  . '') }}" class="flex items-center gap-2 bg-white border border-stone px-4 py-3 hover:border-forest transition">
+                <a href="{{ url('/professional-' .  $city->slug  . '') }}" class="flex items-center gap-2 bg-white border border-stone px-4 py-3 hover:border-forest transition">
                     <svg class="w-4 h-4 text-forest shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <span class="text-sm font-medium text-text">{{ $city->name }}</span>
                 </a>

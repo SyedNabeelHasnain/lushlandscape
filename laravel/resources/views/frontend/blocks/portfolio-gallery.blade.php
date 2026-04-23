@@ -7,7 +7,7 @@ $cityPages = $context['cityPages'] ?? collect();
 @endphp
 {{-- Section: portfolio_gallery --}}
 @php
-    use App\Models\PortfolioProject;
+    use App\Models\Entry;
     $galleryLimit   = (int) ($section['settings']['limit'] ?? 6);
     $isCityContext  = isset($city);
     $isPageContext  = isset($page) && !$isCityContext; // service-city page context

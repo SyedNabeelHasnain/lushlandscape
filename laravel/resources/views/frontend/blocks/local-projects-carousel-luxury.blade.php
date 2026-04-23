@@ -5,7 +5,7 @@
     
     // Get projects tagged to this specific city
     // In a real app, this might come pre-loaded in the context
-    $projects = \App\Models\PortfolioProject::where('status', 'published')
+    $projects = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
         ->when($city, function($q) use ($city) {
             return $q->where('city_id', $city->id);
         })
@@ -28,7 +28,7 @@
                     <h2 class="fluid-heading text-forest word-wrap-safe">{{ $heading }}</h2>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="{{ url('/portfolio?city=' . ($city->slug_final ?? '')) }}" class="text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.15em] text-forest-light border-b border-forest-light pb-1 hover:text-accent hover:border-accent transition-colors">View All {{ $cityName }} Projects</a>
+                    <a href="{{ url('/portfolio?city=' . ($city->slug ?? '')) }}" class="text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.15em] text-forest-light border-b border-forest-light pb-1 hover:text-accent hover:border-accent transition-colors">View All {{ $cityName }} Projects</a>
                     <div class="flex items-center gap-2 ml-4">
                         <button id="portfolio-prev" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-accent/25 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all" aria-label="Previous"><i class="fa-solid fa-arrow-left text-xs lg:text-sm"></i></button>
                         <button id="portfolio-next" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-accent/25 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all" aria-label="Next"><i class="fa-solid fa-arrow-right text-xs lg:text-sm"></i></button>

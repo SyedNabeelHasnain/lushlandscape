@@ -10,7 +10,7 @@
     <tr class="hover:bg-gray-50 transition" data-delete-row>
         <td class="px-6 py-4 text-sm font-medium text-text">{{ $city->name }}</td>
         <td class="px-6 py-4 text-sm text-text-secondary">{{ $city->region_name ?? '-' }}</td>
-        <td class="px-6 py-4 text-sm text-text-secondary">{{ $city->slug_final }}</td>
+        <td class="px-6 py-4 text-sm text-text-secondary">{{ $city->slug }}</td>
         <td class="px-6 py-4 text-sm text-text-secondary">{{ $city->active_service_pages_count }} / {{ $city->service_pages_count }}</td>
         <td class="px-6 py-4"><x-admin.status-badge :status="$city->status" /></td>
         <td class="px-6 py-4 text-right">

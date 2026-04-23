@@ -2,7 +2,7 @@
 @section('title', isset($city) ? 'Edit City' : 'Create City')
 @section('content')
 <x-admin.flash-message />
-<x-admin.page-header :title="isset($city) ? 'Edit: ' . $city->name : 'Create City'" :viewUrl="isset($city) ? url('/professional-' . $city->slug_final) : null" />
+<x-admin.page-header :title="isset($city) ? 'Edit: ' . $city->name : 'Create City'" :viewUrl="isset($city) ? url('/professional-' . $city->slug) : null" />
 <form method="POST" action="{{ isset($city) ? route('admin.cities.update', $city) : route('admin.cities.store') }}" data-ajax-form="true" data-success-message="{{ isset($city) ? 'City updated successfully.' : 'City created.' }}">
     @csrf
     @if(isset($city)) @method('PUT') @endif

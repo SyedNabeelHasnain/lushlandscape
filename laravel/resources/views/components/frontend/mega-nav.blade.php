@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-span-3 grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4">
                     @foreach($services as $service)
-                        <a href="{{ url('/services/' . $service->slug_final) }}" role="menuitem" class="group flex items-center gap-3 p-4 hover:bg-[#F4F9F4] rounded-sm transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-inset">
+                        <a href="{{ url('/services/' . $service->slug) }}" role="menuitem" class="group flex items-center gap-3 p-4 hover:bg-[#F4F9F4] rounded-sm transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-inset">
                             <div class="w-8 h-8 rounded-full border border-forest/10 flex items-center justify-center bg-white group-hover:border-accent group-hover:text-accent transition-colors shrink-0">
                                 <i data-lucide="leaf" aria-hidden="true" class="w-3.5 h-3.5"></i>
                             </div>

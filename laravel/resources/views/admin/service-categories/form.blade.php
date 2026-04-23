@@ -2,7 +2,7 @@
 @section('title', isset($category) ? 'Edit Category' : 'Create Category')
 @section('content')
 <x-admin.flash-message />
-<x-admin.page-header :title="isset($category) ? 'Edit: ' . $category->name : 'Create Service Category'" :viewUrl="isset($category) ? url('/services/' . $category->slug_final) : null" />
+<x-admin.page-header :title="isset($category) ? 'Edit: ' . $category->name : 'Create Service Category'" :viewUrl="isset($category) ? url('/services/' . $category->slug) : null" />
 <form method="POST" action="{{ isset($category) ? route('admin.service-categories.update', $category) : route('admin.service-categories.store') }}" data-ajax-form="true" data-success-message="{{ isset($category) ? 'Category updated successfully.' : 'Category created.' }}">
     @csrf
     @if(isset($category)) @method('PUT') @endif

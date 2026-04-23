@@ -53,18 +53,45 @@ class EntityController extends Controller
         $contentType = $entry->contentType;
         $template = $contentType->layout_template ?? 'default';
 
-        // In the future, this will dynamically load the assigned layout blocks
-        // For now, we pass the generic entity to the view
-        
         $viewName = "frontend.entries.{$template}";
         if (!view()->exists($viewName)) {
             $viewName = 'frontend.entries.default'; // Fallback
         }
 
+        // Fetch Unified Blocks
+        $blocks = \App\Services\BlockBuilderService::getUnifiedBlocks('entry', $entry->id);
+
+        // Generate generic context for WMS Variables
+        $context = [
+            'entry' => $entry->toArray(),
+            'data' => $entry->data ? $entry->data->toArray() : [],
+            'content_type' => $contentType->slug,
+            'title' => $entry->title,
+            'slug' => $entry->slug,
+        ];
+
+        // Generic SEO Schema fallback
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'name' => $entry->title,
+            'url' => url($entry->slug),
+        ];
+
+        // Breadcrumbs fallback
+        $breadcrumbs = [
+            ['title' => 'Home', 'url' => url('/')],
+            ['title' => $entry->title, 'url' => null],
+        ];
+
         return view($viewName, [
             'entry' => $entry,
             'contentType' => $contentType,
-            'data' => $entry->data, // The Hybrid JSON attributes
+            'data' => $entry->data,
+            'blocks' => $blocks,
+            'context' => $context,
+            'schema' => json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 

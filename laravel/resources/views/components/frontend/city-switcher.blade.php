@@ -36,9 +36,9 @@
             @php
                 $isCurrent = $city->id === $currentId;
                 if ($mode === 'service-city' && $serviceSlug) {
-                    $href = '/' . $serviceSlug . '-' . $city->slug_final;
+                    $href = '/' . $serviceSlug . '-' . $city->slug;
                 } else {
-                    $href = '/professional-' . $city->slug_final;
+                    $href = '/professional-' . $city->slug;
                 }
             @endphp
             <a href="{{ $href }}"

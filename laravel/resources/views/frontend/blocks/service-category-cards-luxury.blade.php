@@ -20,7 +20,7 @@
                 $firstService = $category->services->first();
                 $heroUrl = $firstService && $firstService->heroMedia ? $firstService->heroMedia->url : 'https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp';
             @endphp
-            <a href="{{ url('/services/' . $category->slug_final) }}" class="group relative block w-full aspect-square md:aspect-[4/5] lg:aspect-[3/4] overflow-hidden border border-black/5 bg-[#F4F9F4] gs-reveal">
+            <a href="{{ url('/services/' . $category->slug) }}" class="group relative block w-full aspect-square md:aspect-[4/5] lg:aspect-[3/4] overflow-hidden border border-black/5 bg-[#F4F9F4] gs-reveal">
                 
                 {{-- Background Image with Scale Effect --}}
                 <img src="{{ $heroUrl }}" alt="{{ $category->name }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.05]" loading="lazy" decoding="async">

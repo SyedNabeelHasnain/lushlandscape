@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
 use App\Services\BlockBuilderService;
 use App\Services\PageContextService;
 use App\Services\SchemaService;
@@ -24,7 +23,7 @@ class HomeController extends Controller
 
         // Schema is always required for SEO
         $citiesServed = Cache::remember('home_schema_cities', 3600, function () {
-            return City::where('status', 'published')->orderBy('sort_order')->pluck('name')->toArray();
+            return \App\Models\Entry::whereHas('contentType', function($q) { $q->where('slug', 'city'); })->where('status', 'published')->orderBy('sort_order')->pluck('name')->toArray();
         });
         $schema = SchemaService::webSite().SchemaService::organization().SchemaService::localBusiness(null, $citiesServed);
 

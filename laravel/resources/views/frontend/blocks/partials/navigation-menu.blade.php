@@ -85,7 +85,7 @@
                 <p class="text-[10px] font-semibold uppercase tracking-[0.24em] {{ $overlayMetaClass }}">Selected Services</p>
                 <div class="flex flex-wrap justify-center gap-2.5">
                     @foreach($navCats as $cat)
-                        <a href="{{ url('/services/' .  $cat->slug_final  . '') }}"
+                        <a href="{{ url('/services/' .  $cat->slug  . '') }}"
                             class="rounded-full px-3.5 py-2 text-[11px] font-medium transition {{ $overlayChipClass }}">
                             {{ $cat->name }}
                         </a>
@@ -99,7 +99,7 @@
                 <p class="text-[10px] font-semibold uppercase tracking-[0.24em] {{ $overlayMetaClass }}">Featured Locations</p>
                 <div class="flex flex-wrap justify-center gap-2.5">
                     @foreach($navCities as $city)
-                        <a href="{{ url('/professional-' .  $city->slug_final  . '') }}"
+                        <a href="{{ url('/professional-' .  $city->slug  . '') }}"
                             class="rounded-full px-3.5 py-2 text-[11px] font-medium transition {{ $overlayChipClass }}">
                             {{ $city->name }}
                         </a>
@@ -118,7 +118,7 @@
                 </a>
                 <div class="absolute top-full left-0 mt-3 min-w-[18rem] rounded-2xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition z-50 {{ $panelClass }}">
                     @foreach($navCats as $cat)
-                        <a href="{{ url('/services/' .  $cat->slug_final  . '') }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
+                        <a href="{{ url('/services/' .  $cat->slug  . '') }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
                             {{ $cat->name }}
                         </a>
                     @endforeach
@@ -133,7 +133,7 @@
                 </a>
                 <div class="absolute top-full left-0 mt-3 min-w-[18rem] rounded-2xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition z-50 {{ $panelClass }}">
                     @foreach($navCities as $city)
-                        <a href="{{ url('/professional-' .  $city->slug_final  . '') }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
+                        <a href="{{ url('/professional-' .  $city->slug  . '') }}" class="block rounded-xl px-4 py-3 text-sm transition {{ $panelLinkClass }}">
                             {{ $city->name }}
                         </a>
                     @endforeach

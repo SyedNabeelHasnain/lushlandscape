@@ -6,7 +6,7 @@
     :ogTitle="$service->default_og_title ?? null"
     :ogDescription="$service->default_og_description ?? null"
     :ogImage="$service->heroMedia?->url ?? null"
-    :canonical="url('/services/' . ($service->category?->slug_final ?? '') . '/' . $service->slug_final)"
+    :canonical="url('/services/' . ($service->category?->slug ?? '') . '/' . $service->slug)"
     :schema="$schema"
 />
 @endsection

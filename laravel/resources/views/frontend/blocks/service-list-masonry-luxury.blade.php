@@ -17,7 +17,7 @@
         @if($services && count($services) > 0)
         <div class="columns-1 md:columns-2 gap-6 lg:gap-8 space-y-6 lg:space-y-8">
             @foreach($services as $service)
-            <a href="{{ url('/services/' . $service->category->slug_final . '/' . $service->slug_final) }}" class="block group break-inside-avoid gs-reveal">
+            <a href="{{ url('/services/' . $service->category->slug . '/' . $service->slug) }}" class="block group break-inside-avoid gs-reveal">
                 <div class="relative overflow-hidden bg-[#F4F9F4] border border-black/5 mb-4 lg:mb-6">
                     @if($service->heroMedia)
                         <img src="{{ $service->heroMedia->url }}" alt="{{ $service->name }}" class="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" loading="lazy" decoding="async">

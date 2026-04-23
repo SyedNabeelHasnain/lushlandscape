@@ -80,7 +80,7 @@
         @if($showCategoryNav && $categoryMap->count() > 1)
             <div class="flex flex-wrap gap-3 mb-12 animate-on-scroll" data-animation="fade-in">
                 @foreach($categoryMap as $cat)
-                    <a href="#cat-{{ $cat->slug_final }}" class="inline-flex items-center gap-2.5 rounded-full border px-6 py-3 text-sm font-semibold transition-all duration-300 {{ $sectionTone['chip'] }}">
+                    <a href="#cat-{{ $cat->slug }}" class="inline-flex items-center gap-2.5 rounded-full border px-6 py-3 text-sm font-semibold transition-all duration-300 {{ $sectionTone['chip'] }}">
                         <i data-lucide="{{ $cat->icon ?? 'layers' }}" class="w-4 h-4"></i>
                         {{ $cat->name }}
                     </a>
@@ -91,7 +91,7 @@
         @foreach($categoryMap->isEmpty() ? [null] : $categoryMap as $catIdx => $cat)
             @php $catServices = $cat ? $grouped->get($cat->id, collect()) : $data; @endphp
             @if($catServices->isNotEmpty())
-                <div @if($cat) id="cat-{{ $cat->slug_final }}" @endif class="{{ $catIdx > 0 ? 'mt-20' : '' }}">
+                <div @if($cat) id="cat-{{ $cat->slug }}" @endif class="{{ $catIdx > 0 ? 'mt-20' : '' }}">
                     @if($cat)
                         <div class="flex items-center gap-4 mb-8">
                             <div class="flex h-10 w-10 items-center justify-center rounded-xl {{ $tone === 'dark' ? 'bg-white/10' : 'bg-forest text-white' }}">
@@ -111,7 +111,7 @@
                             <div class="animate-on-scroll" data-animation="fade-up" data-delay="{{ $sIdx * 40 }}">
                                 <x-frontend.service-card 
                                     :service="$service" 
-                                    :url="$service->category ? $service->public_url : '/services/'.($service->slug_final ?? '')"
+                                    :url="$service->category ? $service->public_url : '/services/'.($service->slug ?? '')"
                                     :variant="$variant"
                                     :show-icon="$showIcon"
                                     :show-divider="$showDivider"

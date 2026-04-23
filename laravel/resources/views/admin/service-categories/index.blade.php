@@ -9,7 +9,7 @@
     @forelse($categories as $cat)
     <tr class="hover:bg-gray-50 transition" data-delete-row>
         <td class="px-6 py-4 text-sm font-medium text-text">{{ $cat->name }}</td>
-        <td class="px-6 py-4 text-sm text-text-secondary">{{ $cat->slug_final }}</td>
+        <td class="px-6 py-4 text-sm text-text-secondary">{{ $cat->slug }}</td>
         <td class="px-6 py-4 text-sm text-text-secondary">{{ $cat->services_count }}</td>
         <td class="px-6 py-4"><x-admin.status-badge :status="$cat->status" /></td>
         <td class="px-6 py-4 text-sm text-text-secondary">{{ $cat->sort_order }}</td>

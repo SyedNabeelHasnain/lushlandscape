@@ -174,13 +174,45 @@ class BlockBuilderService
             $modelClass = $block->content['data_model'];
         }
 
+        // --- Super WMS Legacy Adapter ---
+        $legacyMap = [
+            'App\Models\Service' => ['model' => \App\Models\Entry::class, 'type' => 'service'],
+            'App\Models\City' => ['model' => \App\Models\Entry::class, 'type' => 'city'],
+            'App\Models\PortfolioProject' => ['model' => \App\Models\Entry::class, 'type' => 'portfolio-project'],
+            'App\Models\BlogPost' => ['model' => \App\Models\Entry::class, 'type' => 'blog-post'],
+            'App\Models\ServiceCategory' => ['model' => \App\Models\Term::class, 'taxonomy' => 'service-categories'],
+            'App\Models\PortfolioCategory' => ['model' => \App\Models\Term::class, 'taxonomy' => 'portfolio-categories'],
+            'App\Models\BlogCategory' => ['model' => \App\Models\Term::class, 'taxonomy' => 'blog-categories'],
+        ];
+
+        $wmsFilters = [];
+        if (isset($legacyMap[$modelClass])) {
+            $map = $legacyMap[$modelClass];
+            $modelClass = $map['model'];
+            if (isset($map['type'])) {
+                $wmsFilters['content_type_id'] = \App\Models\ContentType::where('slug', $map['type'])->value('id');
+            }
+            if (isset($map['taxonomy'])) {
+                $wmsFilters['taxonomy_id'] = \App\Models\Taxonomy::where('slug', $map['taxonomy'])->value('id');
+            }
+        }
+        // --- End Legacy Adapter ---
+
         if (! class_exists($modelClass)) {
             return new Collection;
         }
 
         $query = $modelClass::query();
 
-        if (method_exists($modelClass, 'scopePublished')) {
+        // Apply WMS mapped filters
+        foreach ($wmsFilters as $k => $v) {
+            $query->where($k, $v);
+        }
+
+        // Instead of scopePublished for old models, enforce Entry/Term status natively
+        if ($modelClass === \App\Models\Entry::class) {
+            $query->where('status', 'published');
+        } elseif (method_exists($modelClass, 'scopePublished')) {
             $query->published();
         }
 

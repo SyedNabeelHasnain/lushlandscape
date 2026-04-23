@@ -2,7 +2,7 @@
 @section('title', isset($page) ? 'Edit Page' : 'Create Service-City Page')
 @section('content')
 <x-admin.flash-message />
-<x-admin.page-header :title="isset($page) ? 'Edit: ' . ($page->page_title ?? '') : 'Create Service-City Page'" :viewUrl="isset($page) ? url('/' . $page->slug_final) : null" />
+<x-admin.page-header :title="isset($page) ? 'Edit: ' . ($page->page_title ?? '') : 'Create Service-City Page'" :viewUrl="isset($page) ? url('/' . $page->slug) : null" />
 <form method="POST" action="{{ isset($page) ? route('admin.service-city-pages.update', $page) : route('admin.service-city-pages.store') }}" data-ajax-form="true" data-success-message="{{ isset($page) ? 'Page updated successfully.' : 'Page created.' }}">
     @csrf
     @if(isset($page)) @method('PUT') @endif
@@ -100,10 +100,10 @@
             <x-admin.card title="Publishing">
                 <div class="space-y-5">
                     <x-admin.form-toggle name="is_active" label="Active" :checked="$page->is_active ?? true" help="Page appears on site when active" tooltip="Active pages are publicly visible and indexed. Inactive pages still exist in the database but are hidden from visitors." />
-                    @if(isset($page) && $page->slug_final)
+                    @if(isset($page) && $page->slug)
                     <div class="p-3 bg-gray-50 rounded-lg text-xs text-text-secondary break-all">
                         <span class="font-medium text-text">URL:</span>
-                        <a href="{{ url('/'.$page->slug_final) }}" target="_blank" class="text-forest hover:underline ml-1">{{ url('/'.$page->slug_final) }}</a>
+                        <a href="{{ url('/'.$page->slug) }}" target="_blank" class="text-forest hover:underline ml-1">{{ url('/'.$page->slug) }}</a>
                     </div>
                     @endif
                     <x-admin.form-toggle name="is_indexable" label="Indexable" :checked="$page->is_indexable ?? true" help="Include in sitemap and allow indexing" tooltip="Controls whether search engines can index this page (robots meta tag). Turn off for thin or duplicate-risk pages to protect overall site quality." />

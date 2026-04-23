@@ -19,7 +19,7 @@
 
     if (in_array($mode, ['combined', 'map_only'])) {
         if ($mapMode === 'all_cities') {
-            $allCities = \App\Models\City::where('status', 'published')
+            $allCities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
                 ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->orderBy('sort_order')])
                 ->orderBy('sort_order')
                 ->get();
@@ -31,18 +31,18 @@
                     'lat'      => (float) $c->latitude,
                     'lng'      => (float) $c->longitude,
                     'type'     => 'city',
-                    'slug'     => $c->slug_final,
+                    'slug'     => $c->slug,
                     'heading'  => 'Professional Services in ' . $c->name,
                     'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->name . '. Serving ' . $hoodNames . '.',
                     'cta_text' => $popupCta,
-                    'cta_url'  => '/professional-' . $c->slug_final,
+                    'cta_url'  => '/professional-' . $c->slug,
                     'services' => '',
                     'hoods'    => $c->neighborhoods->map(fn($n) => ['name' => $n->name, 'lat' => (float) $n->latitude, 'lng' => (float) $n->longitude, 'slug' => $n->slug])->toArray(),
                 ];
-                $filterItems[] = ['name' => $c->name, 'slug' => $c->slug_final, 'type' => 'city'];
+                $filterItems[] = ['name' => $c->name, 'slug' => $c->slug, 'type' => 'city'];
             }
         } elseif ($mapMode === 'single_city') {
-            $city = \App\Models\City::where('slug_final', $citySlug)->where('status', 'published')
+            $city = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $citySlug)->where('status', 'published')
                 ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->whereNotNull('latitude')->orderBy('sort_order')])
                 ->first();
             if ($city) {
@@ -59,7 +59,7 @@
                         'heading'  => $n->name . ', ' . $city->name,
                         'desc'     => $n->summary,
                         'cta_text' => $popupCta,
-                        'cta_url'  => '/professional-' . $city->slug_final,
+                        'cta_url'  => '/professional-' . $city->slug,
                         'services' => '',
                         'hoods'    => [],
                     ];
@@ -80,7 +80,7 @@
     }
 
     if (in_array($mode, ['combined', 'list_only']) && empty($areas) && $allCities->isEmpty()) {
-        $allCities = \App\Models\City::where('status', 'published')->orderBy('sort_order')->get();
+        $allCities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')->orderBy('sort_order')->get();
     }
 
     $mapId = 'imap-' . uniqid();
@@ -182,7 +182,7 @@
             @elseif($allCities->isNotEmpty())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                 @foreach($allCities as $c)
-                <a href="{{ url('/professional-' .  $c->slug_final  . '') }}"
+                <a href="{{ url('/professional-' .  $c->slug  . '') }}"
                    class="flex items-center gap-3 bg-white border border-stone px-5 py-4 hover:border-forest hover:shadow-luxury transition-all duration-500 group">
                     <i data-lucide="map-pin" class="w-4 h-4 text-forest shrink-0"></i>
                     <span class="text-sm font-medium text-ink group-hover:text-forest transition-colors">{{ $c->name }}</span>

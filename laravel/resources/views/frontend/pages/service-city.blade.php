@@ -3,7 +3,7 @@
 <x-frontend.seo-head
     :title="($page->meta_title ?? $page->page_title) . ' | Super WMS Service'"
     :description="$page->meta_description ?? \Illuminate\Support\Str::limit(strip_tags($page->local_intro ?? ''), 155)"
-    :canonical="url('/' . $page->slug_final)"
+    :canonical="url('/' . $page->slug)"
     :ogTitle="$page->og_title ?? null"
     :ogDescription="$page->og_description ?? null"
     :ogImage="$page->heroMedia?->url ?? null"

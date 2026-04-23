@@ -40,7 +40,7 @@
     <tr class="hover:bg-gray-50 transition" data-delete-row>
         <td class="px-6 py-4 text-sm font-medium text-text">{{ $pg->service->name ?? '-' }}</td>
         <td class="px-6 py-4 text-sm text-text-secondary">{{ $pg->city->name ?? '-' }}</td>
-        <td class="px-6 py-4 text-sm text-text-secondary font-mono text-xs">{{ $pg->slug_final }}</td>
+        <td class="px-6 py-4 text-sm text-text-secondary font-mono text-xs">{{ $pg->slug }}</td>
         <td class="px-6 py-4"><x-admin.status-badge :status="$pg->is_active ? 'active' : 'inactive'" /></td>
         <td class="px-6 py-4 text-sm text-text-secondary">{{ $pg->is_indexable ? 'Yes' : 'No' }}</td>
         <td class="px-6 py-4 text-right">

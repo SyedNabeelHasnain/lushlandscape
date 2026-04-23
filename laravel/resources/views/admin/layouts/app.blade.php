@@ -53,8 +53,35 @@
                 Dashboard
             </a>
 
+            <!-- Core Super WMS Architecture -->
             <div class="pt-3 pb-1.5 px-3">
-                <p class="text-xs font-semibold text-white/30 uppercase tracking-wider">Content</p>
+                <p class="text-xs font-semibold text-white/30 uppercase tracking-wider">Super WMS Core</p>
+            </div>
+
+            <a href="{{ route('admin.content-types.index') }}"
+                class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('admin.content-types.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/75 hover:text-white hover:bg-sidebar-hover' }}">
+                <i data-lucide="layers" class="w-4 h-4 shrink-0"></i>
+                Content Types
+            </a>
+
+            @php
+                $navContentTypes = \App\Models\ContentType::orderBy('name')->get();
+            @endphp
+            @foreach($navContentTypes as $ct)
+            <a href="{{ route('admin.entries.index', ['type' => $ct->id]) }}"
+                class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('admin.entries.*') && request('type') == $ct->id ? 'bg-sidebar-active text-white font-medium' : 'text-white/75 hover:text-white hover:bg-sidebar-hover' }}">
+                <i data-lucide="{{ $ct->icon ?? 'file-text' }}" class="w-4 h-4 shrink-0"></i>
+                {{ Str::plural($ct->name) }}
+            </a>
+            @endforeach
+
+            <!-- Global Taxonomies (Placeholder for Future) -->
+            <div class="pt-3 pb-1.5 px-3">
+                <p class="text-xs font-semibold text-white/30 uppercase tracking-wider">Taxonomies</p>
+            </div>
+
+            <div class="pt-3 pb-1.5 px-3">
+                <p class="text-xs font-semibold text-white/30 uppercase tracking-wider">Legacy Modules</p>
             </div>
 
             {{-- Services Group (Categories, Services, Cities, City Pages, Matrix) --}}

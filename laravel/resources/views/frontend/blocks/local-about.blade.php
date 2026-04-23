@@ -25,7 +25,7 @@ $cityPages = $context['cityPages'] ?? collect();
                 ['target' => $yearsExp, 'suffix' => '+', 'label' => 'Years Experience'],
                 ['target' => (int) filter_var($totalProjects, FILTER_SANITIZE_NUMBER_INT) ?: 500, 'suffix' => '+', 'label' => 'Projects Completed'],
                 ['target' => (int) $warrantyYears, 'suffix' => '-Year', 'label' => 'Workmanship Warranty'],
-                ['target' => (int) \App\Models\City::where('status', 'published')->count(), 'suffix' => '+', 'label' => 'Cities Served'],
+                ['target' => (int) \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')->count(), 'suffix' => '+', 'label' => 'Cities Served'],
             ] as $stat)
             <div class="text-center p-6 border border-stone bg-cream/50"
                  x-data="{ count: 0, target: {{ $stat['target'] }} }">

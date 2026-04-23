@@ -25,7 +25,7 @@
 
     if ($mapMode === 'all_cities') {
         $cities = \Illuminate\Support\Facades\Cache::remember('interactive_map_all_cities', 3600, function () {
-            return \App\Models\City::where('status', 'published')
+            return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
                 ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->orderBy('sort_order')])
                 ->orderBy('sort_order')
                 ->get();
@@ -38,11 +38,11 @@
                 'lat'      => (float) $c->latitude,
                 'lng'      => (float) $c->longitude,
                 'type'     => 'city',
-                'slug'     => $c->slug_final,
+                'slug'     => $c->slug,
                 'heading'  => 'Professional Services in ' . $c->name,
                 'desc'     => 'Professional landscape construction, interlocking, concrete, and hardscaping services for ' . $c->name . ' homeowners. Serving neighbourhoods including ' . $hoodNames . '.',
                 'cta_text' => $popupCta,
-                'cta_url'  => '/professional-' . $c->slug_final,
+                'cta_url'  => '/professional-' . $c->slug,
                 'services' => '',
                 'hoods'    => $c->neighborhoods->map(fn($n) => [
                     'name' => $n->name,
@@ -51,10 +51,10 @@
                     'slug' => $n->slug,
                 ])->toArray(),
             ];
-            $filterItems[] = ['name' => $c->name, 'slug' => $c->slug_final, 'type' => 'city'];
+            $filterItems[] = ['name' => $c->name, 'slug' => $c->slug, 'type' => 'city'];
         }
     } elseif ($mapMode === 'single_city') {
-        $city = \App\Models\City::where('slug_final', $citySlug)->where('status', 'published')
+        $city = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $citySlug)->where('status', 'published')
             ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->whereNotNull('latitude')->orderBy('sort_order')])
             ->first();
 
@@ -73,7 +73,7 @@
                     'heading'  => $n->name . ', ' . $city->name,
                     'desc'     => $n->summary,
                     'cta_text' => $popupCta,
-                    'cta_url'  => '/professional-' . $city->slug_final,
+                    'cta_url'  => '/professional-' . $city->slug,
                     'services' => '',
                     'hoods'    => [],
                 ];

@@ -49,15 +49,12 @@ Route::post('/admin/logout', [LoginController::class, 'logout'])->middleware('au
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('service-categories', ServiceCategoryController::class)->except(['show']);
-    Route::resource('services', ServiceController::class)->except(['show']);
-    Route::resource('cities', CityController::class)->except(['show']);
-    Route::resource('service-city-pages', ServiceCityPageController::class)->except(['show']);
-    Route::post('service-city-pages/generate', [ServiceCityPageController::class, 'generate'])->name('service-city-pages.generate');
-    Route::get('service-city-matrix', [ServiceCityPageController::class, 'matrix'])->name('service-city-matrix');
-    Route::post('service-city-pages/bulk-update', [ServiceCityPageController::class, 'bulkUpdate'])->name('service-city-pages.bulk-update');
-    Route::patch('service-city-pages/{serviceCityPage}/toggle', [ServiceCityPageController::class, 'toggle'])->name('service-city-pages.toggle');
-    Route::resource('static-pages', AdminStaticPageController::class)->except(['show']);
+    
+    // Super WMS Dynamic Core
+    Route::resource('content-types', \App\Http\Controllers\Admin\ContentTypeController::class)->except(['show']);
+    Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class)->except(['show']);
+    
+    // Legacy Routes (To be deprecated)
     Route::resource('card-templates', CardTemplateController::class)->except(['show']);
     Route::resource('theme-layouts', ThemeLayoutController::class)->except(['show']);
     Route::get('media/json', [MediaAssetController::class, 'json'])->name('media.json');
@@ -65,14 +62,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::post('media/populate-urls', [MediaAssetController::class, 'populateUrls'])->name('media.populate-urls');
     Route::post('media/{medium}/download', [MediaAssetController::class, 'downloadSingle'])->name('media.download-single');
     Route::resource('media', MediaAssetController::class)->except(['show']);
-    Route::resource('blog-categories', TaxonomyCrudController::class)->except(['show']);
-    Route::resource('portfolio-categories', TaxonomyCrudController::class)->except(['show']);
-    Route::resource('faq-categories', TaxonomyCrudController::class)->except(['show']);
-    Route::resource('review-categories', TaxonomyCrudController::class)->except(['show']);
     Route::resource('faqs', FaqController::class)->except(['show']);
     Route::resource('reviews', ReviewController::class)->except(['show']);
-    Route::resource('blog-posts', BlogPostController::class)->except(['show']);
-    Route::resource('portfolio', PortfolioProjectController::class)->except(['show']);
     Route::resource('forms', FormController::class)->except(['show']);
     Route::get('submissions', [FormSubmissionController::class, 'index'])->name('submissions.index');
     Route::get('submissions/{submission}', [FormSubmissionController::class, 'show'])->name('submissions.show');
@@ -110,27 +101,13 @@ Route::get('/llms-full.txt', [LlmsTxtController::class, 'full'])->name('llms-ful
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/services', [ServicePageController::class, 'hub'])->name('services.hub');
-Route::get('/services/{slug}', [ServicePageController::class, 'category'])->name('services.category');
-Route::get('/services/{categorySlug}/{slug}', [ServicePageController::class, 'detail'])->name('services.detail');
-Route::get('/locations', [LocationPageController::class, 'hub'])->name('locations.hub');
-Route::get('/landscaping-{slug}', [LocationPageController::class, 'city'])->name('locations.city');
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/category/{slug}', [BlogController::class, 'category'])->name('blog.category');
-Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
-Route::get('/portfolio/category/{slug}', [PortfolioController::class, 'category'])->name('portfolio.category');
-Route::get('/portfolio/{slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::get('/consultation', [ContactController::class, 'consultation'])->name('contact.consultation');
 Route::get('/search/live', [SearchController::class, 'live'])->middleware('throttle:30,1')->name('search.live');
 Route::get('/search', [SearchController::class, 'results'])->middleware('throttle:30,1')->name('search.results');
 Route::get('/faqs', [FaqPageController::class, 'index'])->name('faqs.index');
 
-// Catch-All Dynamic Route Resolver (Legacy & New Engine)
-// The new WMS Universal RouteAlias lookup takes precedence.
-Route::get('/wms/{slug}', [\App\Http\Controllers\Frontend\EntityController::class, 'resolve'])
+// Super WMS Engine Catch-All Route Resolver
+Route::get('/{slug}', [\App\Http\Controllers\Frontend\EntityController::class, 'resolve'])
     ->where('slug', '.*')
     ->name('wms.resolve');
-
-Route::get('/{slug}', [SlugResolverController::class, 'resolve'])->where('slug', '[a-z0-9\-]+')->name('slug.resolve');

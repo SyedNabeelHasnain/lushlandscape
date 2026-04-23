@@ -31,23 +31,23 @@ class SearchController extends Controller
             ]);
         }
 
-        $services = $this->applySearch(Service::where('status', 'published'), $q, ['name', 'service_summary'])
+        $services = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['name', 'service_summary'])
             ->with('category')
             ->orderBy('sort_order')
             ->take(5)
-            ->get(['id', 'category_id', 'name', 'slug_final']);
+            ->get(['id', 'category_id', 'name', 'slug']);
 
-        $categories = $this->applySearch(ServiceCategory::where('status', 'published'), $q, ['name', 'short_description', 'long_description'])
+        $categories = $this->applySearch(\App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->where('status', 'published'), $q, ['name', 'short_description', 'long_description'])
             ->orderBy('sort_order')
             ->take(3)
-            ->get(['id', 'name', 'slug_final', 'short_description']);
+            ->get(['id', 'name', 'slug', 'short_description']);
 
-        $cities = $this->applySearch(City::where('status', 'published'), $q, ['name', 'region_name'])
+        $cities = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['name', 'region_name'])
             ->orderBy('name')
             ->take(6)
-            ->get(['id', 'name', 'slug_final']);
+            ->get(['id', 'name', 'slug']);
 
-        $blog = $this->applySearch(BlogPost::where('status', 'published'), $q, ['title', 'excerpt'])
+        $blog = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published'), $q, ['title', 'excerpt'])
             ->orderByDesc('published_at')
             ->take(4)
             ->get(['id', 'title', 'slug']);
@@ -56,7 +56,7 @@ class SearchController extends Controller
             ->take(3)
             ->get(['id', 'question', 'slug']);
 
-        $portfolio = $this->applySearch(PortfolioProject::where('status', 'published'), $q, ['title', 'description'])
+        $portfolio = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published'), $q, ['title', 'description'])
             ->orderByDesc('completion_date')
             ->take(3)
             ->get(['id', 'title', 'slug']);
@@ -90,13 +90,13 @@ class SearchController extends Controller
 
         return response()->json([
             'services' => $services
-                ->map(fn (Service $service) => ['name' => $service->name, 'url' => $service->frontend_url])
+                ->map(fn (Service $service) => ['name' => $service->title, 'url' => $service->frontend_url])
                 ->values(),
             'categories' => $categories
-                ->map(fn (ServiceCategory $category) => ['name' => $category->name, 'url' => $category->frontend_url])
+                ->map(fn (ServiceCategory $category) => ['name' => $category->title, 'url' => $category->frontend_url])
                 ->values(),
             'cities' => $cities
-                ->map(fn (City $city) => ['name' => $city->name, 'url' => $city->frontend_url])
+                ->map(fn (City $city) => ['name' => $city->title, 'url' => $city->frontend_url])
                 ->values(),
             'blog' => $blog
                 ->map(fn (BlogPost $post) => ['title' => $post->title, 'url' => $post->frontend_url])
@@ -130,20 +130,20 @@ class SearchController extends Controller
             ]);
         }
 
-        $services = $this->applySearch(Service::where('status', 'published'), $q, ['name', 'service_summary'])
+        $services = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['name', 'service_summary'])
             ->with(['category', 'heroMedia'])
             ->orderBy('sort_order')
             ->take(20)->get();
 
-        $categories = $this->applySearch(ServiceCategory::where('status', 'published'), $q, ['name', 'short_description', 'long_description'])
+        $categories = $this->applySearch(\App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->where('status', 'published'), $q, ['name', 'short_description', 'long_description'])
             ->with('heroMedia')
             ->orderBy('sort_order')
             ->take(20)->get();
 
-        $cities = $this->applySearch(City::where('status', 'published'), $q, ['name', 'region_name'])
+        $cities = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['name', 'region_name'])
             ->take(20)->get();
 
-        $blog = $this->applySearch(BlogPost::where('status', 'published'), $q, ['title', 'excerpt', 'body'])
+        $blog = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published'), $q, ['title', 'excerpt', 'body'])
             ->with('heroMedia')
             ->orderByDesc('published_at')
             ->take(20)->get();
@@ -151,7 +151,7 @@ class SearchController extends Controller
         $faqs = $this->applySearch(Faq::where('status', 'published'), $q, ['question', 'answer'])
             ->take(20)->get();
 
-        $portfolio = $this->applySearch(PortfolioProject::where('status', 'published'), $q, ['title', 'description'])
+        $portfolio = $this->applySearch(\App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published'), $q, ['title', 'description'])
             ->with('heroMedia')
             ->take(20)->get();
 
