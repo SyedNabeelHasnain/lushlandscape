@@ -2,14 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\BlogPost;
-use App\Models\City;
-use App\Models\PortfolioProject;
-use App\Models\Service;
-use App\Models\ServiceCategory;
-use App\Models\ServiceCityPage;
 use App\Models\Setting;
-use App\Models\StaticPage;
 use App\Models\ThemeLayout;
 use App\Services\BlockBuilderService;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -32,13 +25,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Relation::enforceMorphMap([
-            'service_category' => ServiceCategory::class,
-            'service' => Service::class,
-            'city' => City::class,
-            'service_city_page' => ServiceCityPage::class,
-            'static_page' => StaticPage::class,
-            'blog_post' => BlogPost::class,
-            'portfolio_project' => PortfolioProject::class,
             'entry' => \App\Models\Entry::class,
             'term' => \App\Models\Term::class,
             'content_type' => \App\Models\ContentType::class,
@@ -48,10 +34,16 @@ class AppServiceProvider extends ServiceProvider
         View::composer('frontend.layouts.app', function ($view) {
             $settings = Setting::getAll();
             $globalCities = Cache::remember('global_cities_footer', 3600, function () {
-                return City::where('status', 'published')->orderBy('sort_order')->limit(12)->get(['id', 'name', 'slug_final']);
+                return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))
+                    ->where('status', 'published')
+                    ->orderBy('sort_order')
+                    ->limit(12)
+                    ->get(['id', 'title', 'slug']);
             });
             $globalServiceCategories = Cache::remember('global_service_categories_footer', 3600, function () {
-                return ServiceCategory::where('status', 'published')->orderBy('sort_order')->get(['id', 'name', 'slug_final']);
+                return \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))
+                    ->orderBy('sort_order')
+                    ->get(['id', 'name', 'slug']);
             });
 
             $globalThemeHeader = Cache::remember('global_theme_header', 3600, function () {

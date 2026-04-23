@@ -2,20 +2,14 @@
 
 namespace App\Console\Commands;
 
-use App\Models\BlogPost;
-use App\Models\City;
+use App\Models\Entry;
+use App\Models\Term;
 use App\Models\MediaAsset;
-use App\Models\PortfolioProject;
-use App\Models\Service;
-use App\Models\ServiceCategory;
-use App\Models\ServiceCityPage;
-use App\Models\StaticPage;
 use Illuminate\Console\Command;
 
 class GenerateSitemap extends Command
 {
     protected $signature = 'sitemap:generate';
-
     protected $description = 'Generate XML sitemap';
 
     public function handle()
@@ -30,85 +24,77 @@ class GenerateSitemap extends Command
         $urls[] = ['loc' => $baseUrl.'/portfolio', 'changefreq' => 'weekly', 'priority' => '0.7'];
         $urls[] = ['loc' => $baseUrl.'/contact', 'changefreq' => 'monthly', 'priority' => '0.8'];
 
-        ServiceCategory::where('status', 'published')->with('heroMedia')->cursor()->each(function ($cat) use (&$urls, $baseUrl) {
-            $entry = ['loc' => $baseUrl.'/services/'.$cat->slug_final, 'changefreq' => 'weekly', 'priority' => '0.8'];
-            if ($cat->heroMedia) {
-                $entry['images'][] = ['url' => $cat->heroMedia->url, 'title' => $cat->name];
+        $addMedia = function (&$entry, $model, $title) {
+            if (!empty($model->data['hero_media_id']) && $media = MediaAsset::find($model->data['hero_media_id'])) {
+                $entry['images'][] = ['url' => $media->url, 'title' => $title];
             }
+        };
+
+        $resolveUrl = function ($slug) use ($baseUrl) {
+            return rtrim($baseUrl, '/') . '/' . ltrim($slug, '/');
+        };
+
+        Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->cursor()->each(function ($cat) use (&$urls, $resolveUrl, $addMedia) {
+            $entry = ['loc' => $resolveUrl('services/' . $cat->slug), 'changefreq' => 'weekly', 'priority' => '0.8'];
+            $addMedia($entry, $cat, $cat->name);
             $urls[] = $entry;
         });
 
-        Service::where('status', 'published')->with(['category', 'heroMedia'])->cursor()->each(function ($svc) use (&$urls, $baseUrl) {
-            if ($svc->category) {
-                $entry = ['loc' => $baseUrl.'/services/'.$svc->category->slug_final.'/'.$svc->slug_final, 'changefreq' => 'weekly', 'priority' => '0.8'];
-                if ($svc->heroMedia) {
-                    $entry['images'][] = ['url' => $svc->heroMedia->url, 'title' => $svc->name];
+        $dynamicEntryTypes = [
+            'service' => ['changefreq' => 'weekly', 'priority' => '0.8'],
+            'city' => ['changefreq' => 'weekly', 'priority' => '0.8'],
+            'service-city-page' => ['changefreq' => 'weekly', 'priority' => '0.9'],
+            'static-page' => ['changefreq' => 'monthly', 'priority' => '0.6'],
+            'blog-post' => ['changefreq' => 'monthly', 'priority' => '0.7'],
+        ];
+
+        foreach ($dynamicEntryTypes as $slug => $meta) {
+            Entry::whereHas('contentType', fn($q) => $q->where('slug', $slug))->where('status', 'published')
+                ->with('routeAlias')->cursor()->each(function ($page) use (&$urls, $resolveUrl, $addMedia, $meta) {
+                if (!$page->routeAlias) return;
+
+                $entry = [
+                    'loc' => $resolveUrl($page->routeAlias->slug),
+                    'changefreq' => $meta['changefreq'],
+                    'priority' => $meta['priority'],
+                ];
+                if (!empty($page->updated_at)) {
+                    $entry['lastmod'] = $page->updated_at->toW3cString();
                 }
+                $addMedia($entry, $page, $page->title);
                 $urls[] = $entry;
-            }
-        });
+            });
+        }
 
-        City::where('status', 'published')->with('heroMedia')->cursor()->each(function ($city) use (&$urls, $baseUrl) {
-            $entry = ['loc' => $baseUrl.'/professional-'.$city->slug_final, 'changefreq' => 'weekly', 'priority' => '0.8'];
-            if ($city->heroMedia) {
-                $entry['images'][] = ['url' => $city->heroMedia->url, 'title' => $city->name];
-            }
-            $urls[] = $entry;
-        });
-
-        ServiceCityPage::where('is_active', true)->where('is_indexable', true)->with('heroMedia')->cursor()->each(function ($page) use (&$urls, $baseUrl) {
-            $entry = ['loc' => $baseUrl.'/'.$page->slug_final, 'changefreq' => 'weekly', 'priority' => '0.9'];
-            if ($page->heroMedia) {
-                $entry['images'][] = ['url' => $page->heroMedia->url, 'title' => $page->meta_title ?? $page->slug_final];
-            }
-            $urls[] = $entry;
-        });
-
-        StaticPage::where('status', 'published')->where('is_indexable', true)->with('heroMedia')->cursor()->each(function ($page) use (&$urls, $baseUrl) {
-            $entry = ['loc' => $baseUrl.'/'.$page->slug, 'changefreq' => 'monthly', 'priority' => '0.6'];
-            if ($page->heroMedia) {
-                $entry['images'][] = ['url' => $page->heroMedia->url, 'title' => $page->title];
-            }
-            $urls[] = $entry;
-        });
-
-        BlogPost::where('status', 'published')->with('heroMedia')->cursor()->each(function ($post) use (&$urls, $baseUrl) {
-            $entry = [
-                'loc' => $baseUrl.'/blog/'.$post->slug,
-                'changefreq' => 'monthly',
-                'priority' => '0.7',
-                'lastmod' => $post->updated_at->toW3cString(),
-            ];
-            if ($post->heroMedia) {
-                $entry['images'][] = ['url' => $post->heroMedia->url, 'title' => $post->title];
-            }
-            $urls[] = $entry;
-        });
-
-        $portfolioProjects = PortfolioProject::where('status', 'published')->with('heroMedia')->get();
+        $portfolioProjects = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
+            ->with('routeAlias')->get();
+        
         $allMediaIds = [];
         foreach ($portfolioProjects as $proj) {
-            if (! empty($proj->gallery_media_ids)) {
-                $allMediaIds = array_merge($allMediaIds, $proj->gallery_media_ids);
+            if (!empty($proj->data['gallery_media_ids'])) {
+                $allMediaIds = array_merge($allMediaIds, $proj->data['gallery_media_ids']);
+            }
+            if (!empty($proj->data['hero_media_id'])) {
+                $allMediaIds[] = $proj->data['hero_media_id'];
             }
         }
-        $allMediaIds = array_unique($allMediaIds);
-        $mediaAssets = $allMediaIds ? MediaAsset::whereIn('id', $allMediaIds)->get()->keyBy('id') : collect();
+        $mediaAssets = array_unique($allMediaIds) ? MediaAsset::whereIn('id', array_unique($allMediaIds))->get()->keyBy('id') : collect();
 
         foreach ($portfolioProjects as $proj) {
-            $entry = ['loc' => $baseUrl.'/portfolio/'.$proj->slug, 'changefreq' => 'monthly', 'priority' => '0.6'];
-            if ($proj->heroMedia) {
-                $entry['images'][] = ['url' => $proj->heroMedia->getAttribute('url'), 'title' => $proj->title];
+            if (!$proj->routeAlias) continue;
+            $entry = ['loc' => $resolveUrl($proj->routeAlias->slug), 'changefreq' => 'monthly', 'priority' => '0.6'];
+            
+            if (!empty($proj->data['hero_media_id']) && $img = $mediaAssets->get($proj->data['hero_media_id'])) {
+                $entry['images'][] = ['url' => $img->getAttribute('url'), 'title' => $proj->title];
             }
 
-            if (! empty($proj->gallery_media_ids)) {
-                foreach ($proj->gallery_media_ids as $mediaId) {
+            if (!empty($proj->data['gallery_media_ids'])) {
+                foreach ($proj->data['gallery_media_ids'] as $mediaId) {
                     if ($img = $mediaAssets->get($mediaId)) {
                         $entry['images'][] = ['url' => $img->getAttribute('url'), 'title' => $img->getAttribute('default_alt_text') ?? $proj->title];
                     }
                 }
             }
-
             $urls[] = $entry;
         }
 
@@ -126,18 +112,16 @@ class GenerateSitemap extends Command
             foreach ($url['images'] ?? [] as $image) {
                 $xml .= '    <image:image>'."\n";
                 $xml .= '      <image:loc>'.htmlspecialchars($image['url']).'</image:loc>'."\n";
-                if (! empty($image['title'])) {
+                if (!empty($image['title'])) {
                     $xml .= '      <image:title>'.htmlspecialchars($image['title']).'</image:title>'."\n";
                 }
                 $xml .= '    </image:image>'."\n";
             }
             $xml .= '  </url>'."\n";
         }
-
         $xml .= '</urlset>';
 
         file_put_contents(public_path('sitemap.xml'), $xml);
-
         $this->info('Sitemap generated with '.count($urls).' URLs.');
 
         return Command::SUCCESS;

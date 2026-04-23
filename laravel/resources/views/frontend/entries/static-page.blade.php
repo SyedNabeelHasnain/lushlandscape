@@ -1,3 +1,8 @@
+@php
+$page = clone $entry;
+$page->title = $entry->title;
+$page->h1 = $entry->data['h1'] ?? $entry->title;
+@endphp
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head

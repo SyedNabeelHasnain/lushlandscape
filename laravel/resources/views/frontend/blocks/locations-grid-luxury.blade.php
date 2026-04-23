@@ -32,7 +32,7 @@
                     <div class="transform transition-transform duration-500 group-hover:-translate-y-2">
                         <div class="flex items-center justify-between mb-2">
                             <h3 class="text-2xl lg:text-3xl font-serif text-white">{{ $city->name }}</h3>
-                            <i class="fa-solid fa-arrow-right text-white/50 group-hover:text-white -rotate-45 group-hover:rotate-0 transition-all duration-500"></i>
+                            <i data-lucide="arrow-right" class="w-6 h-6 text-white/50 group-hover:text-white -rotate-45 group-hover:rotate-0 transition-all duration-500"></i>
                         </div>
                         <div class="overflow-hidden max-h-0 group-hover:max-h-10 transition-all duration-500 ease-in-out">
                             <p class="text-[10px] text-accent font-bold uppercase tracking-[0.15em] pt-2">

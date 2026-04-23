@@ -1,4 +1,14 @@
 @extends('frontend.layouts.app')
+
+@php
+$city = clone $entry;
+$city->name = $entry->title;
+$city->city_summary = $entry->data['city_summary'] ?? '';
+$city->city_body = $entry->data['city_body'] ?? [];
+$city->local_conditions_json = $entry->data['local_conditions_json'] ?? [];
+$city->heroMedia = $entry->data['hero_media_id'] ? \App\Models\MediaAsset::find($entry->data['hero_media_id']) : null;
+@endphp
+
 @section('seo')
 <x-frontend.seo-head
     :title="($city->default_meta_title ?? 'Professional Services in ' . $city->name . ', Our Region') . ' | Super WMS Service'"

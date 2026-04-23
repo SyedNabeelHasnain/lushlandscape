@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
 use App\Models\Faq;
 use App\Models\FaqCategory;
-use App\Models\Service;
-use App\Models\ServiceCityPage;
 use App\Services\BlockBuilderService;
 use App\Services\PageContextService;
 use App\Services\SchemaService;
@@ -29,11 +26,11 @@ class FaqPageController extends Controller
 
         $cities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
             ->orderBy('sort_order')
-            ->get(['id', 'name', 'slug']);
+            ->get(['id', 'title as name', 'slug']);
 
         $services = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published')
             ->orderBy('sort_order')
-            ->get(['id', 'name', 'slug']);
+            ->get(['id', 'title as name', 'slug']);
 
         // Build FAQ query based on filters
         $query = Faq::where('status', 'published')
@@ -160,14 +157,27 @@ class FaqPageController extends Controller
 
         // Match service-city pages (catch-all slug)
         if ($path && ! str_contains($path, '/')) {
-            $page = ServiceCityPage::where('slug', $path)
-                ->where('is_active', true)
-                ->with(['service', 'city'])
+            $page = \App\Models\Entry::where('slug', $path)
+                ->where('status', 'published')
+                ->whereHas('contentType', fn($q) => $q->where('slug', 'service-city-page'))
+                ->with(['relatedEntries' => function ($q) {
+                    $q->whereIn('relation_type', ['matrix_service', 'matrix_city']);
+                }])
                 ->first();
+                
             if ($page) {
-                $context['service'] = $page->service->title;
-                $context['city'] = $page->city->title;
-                $context['type'] = 'service';
+                $serviceEntry = $page->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service');
+                $cityEntry = $page->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city');
+
+                if ($serviceEntry) {
+                    $context['service'] = $serviceEntry->title;
+                }
+                if ($cityEntry) {
+                    $context['city'] = $cityEntry->title;
+                }
+                if ($serviceEntry || $cityEntry) {
+                    $context['type'] = 'service';
+                }
             }
         }
 

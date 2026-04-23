@@ -3,15 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\BlogPost;
-use App\Models\City;
 use App\Models\Faq;
-use App\Models\PortfolioProject;
-use App\Models\Service;
-use App\Models\ServiceCategory;
 use App\Models\Setting;
-use App\Models\StaticPage;
-
+use Illuminate\Support\Facades\URL;
 class LlmsTxtController extends Controller
 {
     public function show()
@@ -34,17 +28,17 @@ class LlmsTxtController extends Controller
         $lines[] = '';
 
         $lines[] = '## Service Categories';
-        $categories = \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->where('status', 'published')->orderBy('sort_order')->get();
+        $categories = \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->orderBy('sort_order')->get();
         foreach ($categories as $cat) {
-            $lines[] = "- [{$cat->title}](".url('/services/'.$cat->slug).'): '.($cat->data['description'] ?? '');
+            $lines[] = "- [{$cat->name}](".url('/services/'.$cat->slug).'): '.($cat->description ?? '');
         }
         $lines[] = '';
 
         $lines[] = '## Services';
-        $services = Service::with('category')->where('status', 'published')->orderBy('sort_order')->get();
+        $services = \App\Models\Entry::with('terms')->whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published')->orderBy('sort_order')->get();
         foreach ($services as $svc) {
-            $catSlug = $svc->category->slug ?? '_';
-            $lines[] = "- [{$svc->title}](".url('/services/'.$catSlug.'/'.$svc->slug).'): '.($svc->service_summary ?? '');
+            $catSlug = $svc->terms->first()->slug ?? '_';
+            $lines[] = "- [{$svc->title}](".url('/services/'.$catSlug.'/'.$svc->slug).'): '.($svc->data['service_summary'] ?? '');
         }
         $lines[] = '';
 
@@ -94,26 +88,23 @@ class LlmsTxtController extends Controller
 
         // Service categories with full descriptions
         $lines[] = '## Service Categories';
-        $categories = \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->where('status', 'published')->orderBy('sort_order')->get();
+        $categories = \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->orderBy('sort_order')->get();
         foreach ($categories as $cat) {
-            $lines[] = "### [{$cat->title}](".url('/services/'.$cat->slug).')';
-            if ($cat->data['description']) {
-                $lines[] = $cat->data['description'];
-            }
-            if ($cat->long_description) {
-                $lines[] = $cat->long_description;
+            $lines[] = "### [{$cat->name}](".url('/services/'.$cat->slug).')';
+            if ($cat->description) {
+                $lines[] = $cat->description;
             }
             $lines[] = '';
         }
 
         // Services with summaries
         $lines[] = '## Services';
-        $services = Service::with('category')->where('status', 'published')->orderBy('sort_order')->get();
+        $services = \App\Models\Entry::with('terms')->whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published')->orderBy('sort_order')->get();
         foreach ($services as $svc) {
-            $catSlug = $svc->category->slug ?? '_';
+            $catSlug = $svc->terms->first()->slug ?? '_';
             $lines[] = "### [{$svc->title}](".url('/services/'.$catSlug.'/'.$svc->slug).')';
-            if ($svc->service_summary) {
-                $lines[] = $svc->service_summary;
+            if (!empty($svc->data['service_summary'])) {
+                $lines[] = $svc->data['service_summary'];
             }
             $lines[] = '';
         }
@@ -122,7 +113,8 @@ class LlmsTxtController extends Controller
         $lines[] = '## Service Areas';
         $cities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')->orderBy('sort_order')->get();
         foreach ($cities as $city) {
-            $lines[] = "- [{$city->title}, {$city->region_name}](".url('/professional-'.$city->slug).')';
+            $region = $city->data['region_name'] ?? 'Our Region';
+            $lines[] = "- [{$city->title}, {$region}](".url('/professional-'.$city->slug).')';
         }
         $lines[] = '';
 
@@ -132,8 +124,8 @@ class LlmsTxtController extends Controller
             $lines[] = '## Blog';
             foreach ($posts as $post) {
                 $lines[] = "### [{$post->title}](".url('/blog/'.$post->slug).')';
-                if ($post->excerpt) {
-                    $lines[] = $post->excerpt;
+                if (!empty($post->data['excerpt'])) {
+                    $lines[] = $post->data['excerpt'];
                 }
                 $lines[] = '';
             }
@@ -161,7 +153,7 @@ class LlmsTxtController extends Controller
         }
 
         // Static pages
-        $pages = StaticPage::where('status', 'published')->get();
+        $pages = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'static-page'))->where('status', 'published')->get();
         if ($pages->isNotEmpty()) {
             $lines[] = '## Pages';
             foreach ($pages as $page) {

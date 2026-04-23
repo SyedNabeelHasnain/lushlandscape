@@ -14,7 +14,13 @@
 @endsection
 @section('content')
 
-@php
+$page = clone $entry;
+$page->page_title = $entry->title;
+$page->h1 = $entry->data['h1'] ?? '';
+$page->local_intro = $entry->data['local_intro'] ?? '';
+$page->heroMedia = $entry->data['hero_media_id'] ? \App\Models\MediaAsset::find($entry->data['hero_media_id']) : null;
+$page->city = $entry->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city');
+$page->service = $entry->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service');
     $phone = \App\Models\Setting::get('phone', '');
 
     // Divide blocks into layout regions

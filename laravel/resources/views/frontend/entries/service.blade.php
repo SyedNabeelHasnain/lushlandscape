@@ -1,4 +1,14 @@
 @extends('frontend.layouts.app')
+
+@php
+$service = clone $entry;
+$service->name = $entry->title;
+$service->service_summary = $entry->data['service_summary'] ?? '';
+$service->service_body = $entry->data['service_body'] ?? [];
+$service->heroMedia = $entry->data['hero_media_id'] ? \App\Models\MediaAsset::find($entry->data['hero_media_id']) : null;
+$service->category = clone $entry->terms->first();
+@endphp
+
 @section('seo')
 <x-frontend.seo-head
     :title="($service->default_meta_title ?? $service->name . ' in Our Region') . ' | Super WMS Service'"

@@ -30,8 +30,8 @@
                 <div class="flex items-center gap-4">
                     <a href="{{ url('/portfolio?city=' . ($city->slug ?? '')) }}" class="text-[10px] lg:text-[11px] font-bold uppercase tracking-[0.15em] text-forest-light border-b border-forest-light pb-1 hover:text-accent hover:border-accent transition-colors">View All {{ $cityName }} Projects</a>
                     <div class="flex items-center gap-2 ml-4">
-                        <button id="portfolio-prev" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-accent/25 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all" aria-label="Previous"><i class="fa-solid fa-arrow-left text-xs lg:text-sm"></i></button>
-                        <button id="portfolio-next" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-accent/25 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all" aria-label="Next"><i class="fa-solid fa-arrow-right text-xs lg:text-sm"></i></button>
+                        <button id="portfolio-prev" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-accent/25 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all" aria-label="Previous"><i data-lucide="arrow-left" class="w-4 h-4"></i></button>
+                        <button id="portfolio-next" class="portfolio-nav-btn w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-accent/25 flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all" aria-label="Next"><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         <h3 class="text-xl lg:text-3xl font-serif text-forest">{{ $project->title }}</h3>
                     </div>
                     <a href="{{ url('/portfolio/' . $project->slug) }}" class="group-hover:translate-x-2 transition-transform duration-500 mt-2 block">
-                        <i class="fa-solid fa-arrow-right text-forest-light -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-forest-light -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
                     </a>
                 </div>
             </div>

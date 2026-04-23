@@ -17,13 +17,13 @@
             <div class="space-y-4 lg:space-y-6 text-forest">
                 @if($phone)
                 <div class="flex items-center gap-4 lg:gap-5">
-                    <div class="w-8 h-8 lg:w-10 lg:h-10 border border-forest/20 rounded-full flex items-center justify-center"><i class="fa-solid fa-phone text-xs lg:text-sm" aria-hidden="true"></i></div>
+                    <div class="w-8 h-8 lg:w-10 lg:h-10 border border-forest/20 rounded-full flex items-center justify-center"><i data-lucide="phone" class="w-3.5 h-3.5 lg:w-4 lg:h-4" aria-hidden="true"></i></div>
                     <span class="text-base lg:text-lg font-medium tracking-wide">{{ $phone }}</span>
                 </div>
                 @endif
                 @if($email)
                 <div class="flex items-center gap-4 lg:gap-5">
-                    <div class="w-8 h-8 lg:w-10 lg:h-10 border border-forest/20 rounded-full flex items-center justify-center"><i class="fa-solid fa-envelope text-xs lg:text-sm" aria-hidden="true"></i></div>
+                    <div class="w-8 h-8 lg:w-10 lg:h-10 border border-forest/20 rounded-full flex items-center justify-center"><i data-lucide="mail" class="w-3.5 h-3.5 lg:w-4 lg:h-4" aria-hidden="true"></i></div>
                     <span class="text-base lg:text-lg font-medium tracking-wide break-all">{{ $email }}</span>
                 </div>
                 @endif

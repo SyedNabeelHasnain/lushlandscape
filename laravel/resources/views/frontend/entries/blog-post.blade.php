@@ -1,4 +1,14 @@
 @extends('frontend.layouts.app')
+
+@php
+$post = clone $entry;
+$post->title = $entry->title;
+$post->excerpt = $entry->data['excerpt'] ?? '';
+$post->body = $entry->data['body'] ?? '';
+$post->featuredImage = $entry->data['featured_image_id'] ? \App\Models\MediaAsset::find($entry->data['featured_image_id']) : null;
+$post->category = clone $entry->terms->first();
+@endphp
+
 @section('seo')
 <x-frontend.seo-head
     :title="($post->meta_title ?? $post->title) . ' | Super WMS Blog'"

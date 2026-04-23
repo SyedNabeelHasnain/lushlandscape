@@ -14,7 +14,7 @@
             @for($i = 1; $i <= 4; $i++)
                 @if(!empty($content["card_{$i}_title"]))
                 <div class="bg-white p-8 lg:p-10 border border-black/5 hover:border-accent transition-colors duration-500 gs-reveal shadow-sm">
-                    <i class="{{ $content["card_{$i}_icon"] ?? 'fa-solid fa-vector-square' }} text-2xl text-forest-light mb-5 lg:mb-6" aria-hidden="true"></i>
+                    <i data-lucide="{{ $content["card_{$i}_icon"] ?? 'square' }}" class="w-6 h-6 text-forest-light mb-5 lg:mb-6" aria-hidden="true"></i>
                     <h3 class="text-2xl font-serif text-forest mb-3 lg:mb-4">{{ $content["card_{$i}_title"] }}</h3>
                     <p class="text-ink/60 text-sm leading-[1.7] mb-5 lg:mb-6 font-light">{{ $content["card_{$i}_desc"] }}</p>
                     
@@ -39,10 +39,10 @@
                 </div>
                 
                 <div class="absolute top-1/2 left-4 -translate-y-1/2 z-20">
-                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2" aria-label="Previous image"><i class="fa-solid fa-chevron-left text-xs" aria-hidden="true"></i></button>
+                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2" aria-label="Previous image"><i data-lucide="chevron-left" class="w-4 h-4" aria-hidden="true"></i></button>
                 </div>
                 <div class="absolute top-1/2 right-4 -translate-y-1/2 z-20">
-                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2" aria-label="Next image"><i class="fa-solid fa-chevron-right text-xs" aria-hidden="true"></i></button>
+                    <button @click="active = active === 1 ? 2 : 1; clearInterval(timer); timer = setInterval(() => { active = active === 1 ? 2 : 1 }, 5000)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 backdrop-blur-md flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2" aria-label="Next image"><i data-lucide="chevron-right" class="w-4 h-4" aria-hidden="true"></i></button>
                 </div>
 
                 <div class="absolute inset-0 z-10 p-8 lg:p-10 flex flex-col justify-end pointer-events-none">

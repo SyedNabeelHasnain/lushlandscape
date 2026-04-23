@@ -41,7 +41,7 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-2xl lg:text-4xl font-serif text-white">{{ $category->name }}</h3>
                         <div class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white backdrop-blur-sm bg-white/5 group-hover:bg-white group-hover:text-forest transition-colors duration-500">
-                            <i class="fa-solid fa-arrow-right text-sm -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
+                            <i data-lucide="arrow-right" class="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform duration-500"></i>
                         </div>
                     </div>
                     

@@ -1,3 +1,10 @@
+@php
+$category = clone $term;
+$category->name = $term->name;
+$category->description = $term->data['description'] ?? '';
+$category->heroMedia = $term->data['hero_media_id'] ? \App\Models\MediaAsset::find($term->data['hero_media_id']) : null;
+$services = $entries;
+@endphp
 @extends('frontend.layouts.app')
 @section('seo')
 <x-frontend.seo-head
