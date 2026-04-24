@@ -51,7 +51,9 @@ class EntryController extends Controller
                 ->pluck('title', 'id');
         }
 
-        return View::make('admin.entries.form', compact('contentType', 'parents'));
+        $taxonomies = \App\Models\Taxonomy::with('terms')->orderBy('name')->get();
+
+        return View::make('admin.entries.form', compact('contentType', 'parents', 'taxonomies'));
     }
 
     public function store(Request $request)
@@ -64,12 +66,18 @@ class EntryController extends Controller
             'status' => 'required|in:draft,published,archived',
             'sort_order' => 'nullable|integer',
             'data_json' => 'nullable|json',
+            'data' => 'nullable|array',
         ]);
 
         $contentType = ContentType::findOrFail($validated['content_type_id']);
         
-        $data = $request->input('data_json') ? json_decode($request->input('data_json'), true) : [];
-        $validated['data'] = $data;
+        // Use dynamically submitted data array if present, otherwise fallback to raw JSON
+        if ($request->has('data') && is_array($request->input('data'))) {
+            $validated['data'] = $request->input('data');
+        } else {
+            $data = $request->input('data_json') ? json_decode($request->input('data_json'), true) : [];
+            $validated['data'] = $data;
+        }
         
         if ($validated['status'] === 'published') {
             $validated['published_at'] = now();
@@ -77,12 +85,17 @@ class EntryController extends Controller
 
         $blocksJson = $request->input('blocks_json');
 
-        $entry = DB::transaction(function () use ($validated, $blocksJson) {
+        $entry = DB::transaction(function () use ($validated, $blocksJson, $request) {
             $entry = Entry::create($validated);
+
+            // Save Taxonomies
+            if ($request->has('terms')) {
+                $entry->terms()->sync($request->input('terms'));
+            }
 
             // Generate RouteAlias
             RouteAlias::create([
-                'slug' => $entry->slug, // In a real app, logic would prepend taxonomy slugs if needed
+                'slug' => ltrim($entry->slug, '/'),
                 'routable_type' => Entry::class,
                 'routable_id' => $entry->id,
                 'is_active' => $entry->status === 'published'
@@ -120,8 +133,9 @@ class EntryController extends Controller
 
         $blocks = BlockBuilderService::getUnifiedBlocks('entry', $entry->id);
         $blockTypes = BlockBuilderService::allTypes();
+        $taxonomies = \App\Models\Taxonomy::with('terms')->orderBy('name')->get();
 
-        return view('admin.entries.form', compact('entry', 'contentType', 'parents', 'blocks', 'blockTypes'));
+        return view('admin.entries.form', compact('entry', 'contentType', 'parents', 'blocks', 'blockTypes', 'taxonomies'));
     }
 
     public function update(Request $request, Entry $entry)
@@ -133,13 +147,19 @@ class EntryController extends Controller
             'status' => 'required|in:draft,published,archived',
             'sort_order' => 'nullable|integer',
             'data_json' => 'nullable|json',
+            'data' => 'nullable|array',
         ]);
 
-        $data = $request->input('data_json') ? json_decode($request->input('data_json'), true) : [];
-        
-        // Merge with existing data so we don't lose unstructured fields not in the form
         $entryData = $entry->data ? $entry->data->toArray() : [];
-        $validated['data'] = array_merge($entryData, $data);
+        
+        if ($request->has('data') && is_array($request->input('data'))) {
+            // Update using dynamic form array
+            $validated['data'] = array_merge($entryData, $request->input('data'));
+        } else {
+            // Fallback to raw JSON
+            $data = $request->input('data_json') ? json_decode($request->input('data_json'), true) : [];
+            $validated['data'] = array_merge($entryData, $data);
+        }
 
         if ($validated['status'] === 'published' && !$entry->published_at) {
             $validated['published_at'] = now();
@@ -147,24 +167,23 @@ class EntryController extends Controller
 
         $blocksJson = $request->input('blocks_json', '[]');
 
-        DB::transaction(function () use ($entry, $validated, $blocksJson) {
+        DB::transaction(function () use ($entry, $validated, $blocksJson, $request) {
             $entry->update($validated);
 
-            // Update RouteAlias
-            $alias = $entry->routeAlias;
-            if ($alias) {
-                $alias->update([
-                    'slug' => $entry->slug,
-                    'is_active' => $entry->status === 'published'
-                ]);
+            // Update Taxonomies
+            if ($request->has('terms')) {
+                $entry->terms()->sync($request->input('terms'));
             } else {
-                RouteAlias::create([
-                    'slug' => $entry->slug,
-                    'routable_type' => Entry::class,
-                    'routable_id' => $entry->id,
-                    'is_active' => $entry->status === 'published'
-                ]);
+                $entry->terms()->detach();
             }
+
+            // Update RouteAlias
+            $alias = $entry->routeAlias ?? new RouteAlias();
+            $alias->slug = ltrim($entry->slug, '/');
+            $alias->routable_type = Entry::class;
+            $alias->routable_id = $entry->id;
+            $alias->is_active = $entry->status === 'published';
+            $alias->save();
 
             // Save unified blocks
             $blocksData = json_decode($blocksJson, true) ?: [];

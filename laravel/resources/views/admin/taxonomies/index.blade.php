@@ -1,37 +1,49 @@
 @extends('admin.layouts.app')
-@section('title', $cfg['label'])
+
+@section('title', 'Taxonomies | Super WMS')
+@section('header', 'Taxonomies')
+
 @section('content')
-<x-admin.flash-message />
-<x-admin.page-header
-    :title="$cfg['label']"
-    :createRoute="route('admin.' . $cfg['key'] . '.create')"
-    createLabel="Add {{ $cfg['singular'] }}"
->
-    <x-admin.import-export-buttons :table="str_replace('-', '_', $cfg['key'])" />
-</x-admin.page-header>
-<x-admin.data-table :headers="['Name', 'Slug', ucfirst($rel), 'Status', 'Order']">
-    @forelse($items as $item)
-    <tr class="hover:bg-gray-50 transition" data-delete-row>
-        <td class="px-6 py-4">
-            <div class="text-sm font-medium text-text">{{ $item->name }}</div>
-            @if($item->parent)
-                <div class="text-xs text-text-secondary mt-0.5">Under: {{ $item->parent->name }}</div>
-            @endif
-        </td>
-        <td class="px-6 py-4 text-sm text-text-secondary">{{ $item->slug }}</td>
-        <td class="px-6 py-4 text-sm text-text-secondary">{{ $item->{$rel . '_count'} }}</td>
-        <td class="px-6 py-4"><x-admin.status-badge :status="$item->status" /></td>
-        <td class="px-6 py-4 text-sm text-text-secondary">{{ $item->sort_order }}</td>
-        <td class="px-6 py-4 text-right">
-            <div class="flex items-center justify-end gap-1">
-                <a href="{{ route('admin.' . $cfg['key'] . '.edit', $item) }}" data-tippy-content="Edit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-gray-400 hover:text-forest hover:bg-forest-50 transition"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></a>
-                <x-admin.delete-form :route="route('admin.' . $cfg['key'] . '.destroy', $item)" />
-            </div>
-        </td>
-    </tr>
-    @empty
-    <tr><td colspan="6" class="px-6 py-12 text-center text-sm text-text-secondary">No {{ strtolower($cfg['label']) }} yet.</td></tr>
-    @endforelse
-    <x-slot:pagination>{{ $items->links() }}</x-slot:pagination>
-</x-admin.data-table>
+<div class="card p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-serif text-forest">Manage Taxonomies</h2>
+        <a href="{{ route('admin.taxonomies.create') }}" class="btn-solid bg-forest text-white px-4 py-2 rounded-sm text-xs font-bold uppercase tracking-widest">Create New</a>
+    </div>
+
+    <table class="w-full text-left text-sm">
+        <thead>
+            <tr class="border-b border-stone/50">
+                <th class="pb-3 font-semibold text-forest">Name</th>
+                <th class="pb-3 font-semibold text-forest">Slug</th>
+                <th class="pb-3 font-semibold text-forest">Type</th>
+                <th class="pb-3 font-semibold text-forest text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-stone/20">
+            @foreach($taxonomies as $tax)
+            <tr class="group hover:bg-stone/5 transition-colors">
+                <td class="py-4 font-medium text-forest">{{ $tax->name }}</td>
+                <td class="py-4 text-stone/70">{{ $tax->slug }}</td>
+                <td class="py-4">
+                    <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-forest/10 text-forest">
+                        {{ $tax->is_hierarchical ? 'Category (Hierarchical)' : 'Tag (Flat)' }}
+                    </span>
+                </td>
+                <td class="py-4 text-right">
+                    <a href="{{ route('admin.taxonomies.edit', $tax) }}" class="text-forest hover:text-accent mr-3">Edit</a>
+                    <form action="{{ route('admin.taxonomies.destroy', $tax) }}" method="POST" class="inline" onsubmit="return confirm('Delete this taxonomy?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    
+    <div class="mt-6">
+        {{ $taxonomies->links() }}
+    </div>
+</div>
 @endsection

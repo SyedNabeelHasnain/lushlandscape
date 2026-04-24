@@ -62,6 +62,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     
     // Super WMS Dynamic Core
     Route::resource('content-types', \App\Http\Controllers\Admin\ContentTypeController::class)->except(['show']);
+    Route::resource('taxonomies', \App\Http\Controllers\Admin\TaxonomyController::class)->except(['show']);
     Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class)->except(['show']);
     
     // Legacy Routes (To be deprecated)

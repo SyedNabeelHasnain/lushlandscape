@@ -77,6 +77,12 @@
                 <p class="text-xs font-semibold text-white/30 uppercase tracking-wider">Taxonomies</p>
             </div>
 
+            <a href="{{ route('admin.taxonomies.index') }}"
+                class="flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition {{ request()->routeIs('admin.taxonomies.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/75 hover:text-white hover:bg-sidebar-hover' }}">
+                <i data-lucide="tags" class="w-4 h-4 shrink-0"></i>
+                Taxonomy Manager
+            </a>
+
             <div class="pt-3 pb-1.5 px-3">
                 <p class="text-xs font-semibold text-white/30 uppercase tracking-wider">Legacy Modules</p>
             </div>
