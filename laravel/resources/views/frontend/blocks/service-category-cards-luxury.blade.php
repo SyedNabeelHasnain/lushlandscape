@@ -17,7 +17,7 @@
             @foreach($categories as $category)
             @php
                 // Try to find a hero image from the first service in the category, or use a default
-                $firstService = $category->services->first();
+                $firstService = $category->entries->first();
                 $heroUrl = $firstService && $firstService->heroMedia ? $firstService->heroMedia->url : 'https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp';
             @endphp
             <a href="{{ url('/services/' . $category->slug) }}" class="group relative block w-full aspect-square md:aspect-[4/5] lg:aspect-[3/4] overflow-hidden border border-black/5 bg-[#F4F9F4] gs-reveal">
@@ -48,13 +48,13 @@
                     {{-- Service List Preview --}}
                     <div class="mt-6 overflow-hidden max-h-0 group-hover:max-h-40 transition-all duration-700 ease-in-out">
                         <ul class="space-y-2 text-white/70 text-xs lg:text-sm font-light">
-                            @foreach($category->services->take(4) as $service)
+                            @foreach($category->entries->take(4) as $service)
                             <li class="flex items-center gap-2">
-                                <span class="w-1 h-1 bg-accent rounded-full"></span> {{ $service->name }}
+                                <span class="w-1 h-1 bg-accent rounded-full"></span> {{ $service->title }}
                             </li>
                             @endforeach
-                            @if($category->services->count() > 4)
-                            <li class="text-accent italic pt-1">+ {{ $category->services->count() - 4 }} more</li>
+                            @if($category->entries->count() > 4)
+                            <li class="text-accent italic pt-1">+ {{ $category->entries->count() - 4 }} more</li>
                             @endif
                         </ul>
                     </div>

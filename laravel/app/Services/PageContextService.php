@@ -29,7 +29,7 @@ class PageContextService
             'page' => $page,
             'page_id' => $page->id,
             'page_title' => $page->title,
-            'hero_media' => $page->data['hero_media_id'] ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
+            'hero_media' => !empty($page->data['hero_media_id']) ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
         ]);
     }
 
@@ -54,7 +54,7 @@ class PageContextService
             'service_name' => $service->title,
             'category_id' => $category?->id,
             'category_name' => $category?->name,
-            'hero_media' => $service->data['hero_media_id'] ? \App\Models\MediaAsset::find($service->data['hero_media_id']) : null,
+            'hero_media' => !empty($service->data['hero_media_id']) ? \App\Models\MediaAsset::find($service->data['hero_media_id']) : null,
             'cityPages' => $cityPages ?? collect(),
         ]);
     }
@@ -68,7 +68,7 @@ class PageContextService
             'city_name' => $city->title,
             'province_name' => $city->data['province_name'] ?? '',
             'city_summary' => $city->data['city_summary'] ?? '',
-            'hero_media' => $city->data['hero_media_id'] ? \App\Models\MediaAsset::find($city->data['hero_media_id']) : null,
+            'hero_media' => !empty($city->data['hero_media_id']) ? \App\Models\MediaAsset::find($city->data['hero_media_id']) : null,
             'cityPages' => $servicePages ?? collect(),
         ]);
     }
@@ -83,7 +83,7 @@ class PageContextService
             'post_id' => $post->id,
             'category_id' => $category?->id,
             'category_name' => $category?->name,
-            'hero_media' => $post->data['featured_image_id'] ? \App\Models\MediaAsset::find($post->data['featured_image_id']) : null,
+            'hero_media' => !empty($post->data['featured_image_id']) ? \App\Models\MediaAsset::find($post->data['featured_image_id']) : null,
         ]);
     }
 
@@ -108,7 +108,7 @@ class PageContextService
             'category_name' => $category->name ?? '',
             'province_name' => $city->data['province_name'] ?? '',
             'city_summary' => $city->data['city_summary'] ?? '',
-            'hero_media' => $project->data['hero_media_id'] ? \App\Models\MediaAsset::find($project->data['hero_media_id']) : null,
+            'hero_media' => !empty($project->data['hero_media_id']) ? \App\Models\MediaAsset::find($project->data['hero_media_id']) : null,
         ]);
     }
 
@@ -137,7 +137,7 @@ class PageContextService
             'category_name' => $category->name ?? '',
             'province_name' => $city->data['province_name'] ?? '',
             'city_summary' => $city->data['city_summary'] ?? '',
-            'hero_media' => $page->data['hero_media_id'] ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
+            'hero_media' => !empty($page->data['hero_media_id']) ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
             'cityPages' => $cityPages ?? collect(),
             'faqs' => $faqs ?? collect(),
             'generalFaqs' => $generalFaqs ?? collect(),

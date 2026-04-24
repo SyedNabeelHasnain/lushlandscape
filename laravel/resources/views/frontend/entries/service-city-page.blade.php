@@ -1,4 +1,16 @@
 @extends('frontend.layouts.app')
+
+@php
+$page = clone $entry;
+$page->page_title = $entry->title;
+$page->h1 = $entry->data['h1'] ?? '';
+$page->local_intro = $entry->data['local_intro'] ?? '';
+$page->heroMedia = $entry->data['hero_media_id'] ? \App\Models\MediaAsset::find($entry->data['hero_media_id']) : null;
+$page->city = clone $entry->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city') ?? new \App\Models\Entry;
+$page->city->name = $page->city->title ?? '';
+$page->service = clone $entry->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service') ?? new \App\Models\Entry;
+@endphp
+
 @section('seo')
 <x-frontend.seo-head
     :title="($page->meta_title ?? $page->page_title) . ' | Super WMS Service'"
@@ -13,14 +25,7 @@
 />
 @endsection
 @section('content')
-
-$page = clone $entry;
-$page->page_title = $entry->title;
-$page->h1 = $entry->data['h1'] ?? '';
-$page->local_intro = $entry->data['local_intro'] ?? '';
-$page->heroMedia = $entry->data['hero_media_id'] ? \App\Models\MediaAsset::find($entry->data['hero_media_id']) : null;
-$page->city = $entry->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city');
-$page->service = $entry->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service');
+@php
     $phone = \App\Models\Setting::get('phone', '');
 
     // Divide blocks into layout regions

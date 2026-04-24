@@ -34,11 +34,11 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\FaqPageController;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\LlmsTxtController;
+use App\Http\Controllers\Frontend\ServicePageController;
 use App\Http\Controllers\Frontend\LocationPageController;
 use App\Http\Controllers\Frontend\PortfolioController;
+use App\Http\Controllers\Frontend\LlmsTxtController;
 use App\Http\Controllers\Frontend\SearchController;
-use App\Http\Controllers\Frontend\ServicePageController;
 use App\Http\Controllers\Frontend\SitemapController;
 use App\Http\Controllers\Frontend\SlugResolverController;
 use Illuminate\Support\Facades\Route;
@@ -101,6 +101,10 @@ Route::get('/llms-full.txt', [LlmsTxtController::class, 'full'])->name('llms-ful
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/services', [ServicePageController::class, 'hub'])->name('services.hub');
+Route::get('/locations', [LocationPageController::class, 'hub'])->name('locations.hub');
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
 Route::get('/consultation', [ContactController::class, 'consultation'])->name('contact.consultation');
 Route::get('/search/live', [SearchController::class, 'live'])->middleware('throttle:30,1')->name('search.live');

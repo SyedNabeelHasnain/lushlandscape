@@ -23,7 +23,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-stagger">
             @foreach($posts->take(3) as $post)
-            <a href="{{ route('blog.show', $post->slug) }}" class="group bg-white border border-stone overflow-hidden hover:border-forest transition-all duration-500 hover:shadow-luxury">
+            <a href="{{ url('/blog/' . $post->slug) }}" class="group bg-white border border-stone overflow-hidden hover:border-forest transition-all duration-500 hover:shadow-luxury">
                 <div class="aspect-16/10 overflow-hidden bg-cream">
                     @if($post->heroMedia ?? null)
                     <img src="{{ $post->heroMedia->url }}"

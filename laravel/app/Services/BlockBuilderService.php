@@ -292,7 +292,15 @@ class BlockBuilderService
             }
         }
 
-        $query->orderBy($dataSource['order_by'] ?? 'sort_order', $dataSource['order_dir'] ?? 'asc');
+        if (! empty($dataSource['order_by'])) {
+            if ($modelClass === \App\Models\Entry::class && !in_array($dataSource['order_by'], ['id', 'title', 'slug', 'status', 'content_type_id', 'parent_id', 'sort_order', 'published_at', 'created_at', 'updated_at'])) {
+                $query->orderBy('data->' . $dataSource['order_by'], $dataSource['order_dir'] ?? 'asc');
+            } else {
+                $query->orderBy($dataSource['order_by'], $dataSource['order_dir'] ?? 'asc');
+            }
+        } elseif ($modelClass !== \App\Models\Form::class && \Illuminate\Support\Facades\Schema::hasColumn((new $modelClass)->getTable(), 'sort_order')) {
+            $query->orderBy('sort_order', $dataSource['order_dir'] ?? 'asc');
+        }
 
         $limit = $dataSource['limit'] ?? null;
         if ($limit === 'auto' && ! empty($block->content['limit'])) {

@@ -27,7 +27,7 @@ class SearchController extends Controller
         $services = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['title', 'data->service_summary'])
             ->with('routeAlias')->orderBy('sort_order')->take(5)->get(['id', 'title', 'slug', 'data']);
 
-        $categories = $this->applySearch(Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->short_description', 'data->long_description'])
+        $categories = $this->applySearch(Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->description', 'data->long_description'])
             ->orderBy('sort_order')->take(3)->get(['id', 'name', 'slug', 'data']);
 
         $cities = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['title', 'data->region_name'])
@@ -75,7 +75,7 @@ class SearchController extends Controller
 
         return response()->json([
             'services' => $services->map(fn ($service) => ['name' => $service->title, 'url' => $service->frontend_url])->values(),
-            'categories' => $categories->map(fn ($category) => ['name' => $category->name, 'url' => $category->frontend_url])->values(),
+            'categories' => $categories->map(fn ($category) => ['name' => $category->title, 'url' => $category->frontend_url])->values(),
             'cities' => $cities->map(fn ($city) => ['name' => $city->title, 'url' => $city->frontend_url])->values(),
             'blog' => $blog->map(fn ($post) => ['title' => $post->title, 'url' => $post->frontend_url])->values(),
             'faqs' => $faqs->map(fn ($faq) => ['question' => $faq->question, 'url' => $faq->frontend_url])->values(),
@@ -100,7 +100,7 @@ class SearchController extends Controller
         $services = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['title', 'data->service_summary'])
             ->with('routeAlias')->orderBy('sort_order')->take(20)->get();
 
-        $categories = $this->applySearch(Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->short_description', 'data->long_description'])
+        $categories = $this->applySearch(Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->description', 'data->long_description'])
             ->orderBy('sort_order')->take(20)->get();
 
         $cities = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['title', 'data->region_name'])
@@ -124,7 +124,7 @@ class SearchController extends Controller
             return $items->map(function ($item) use ($mediaAssets) {
                 $item->frontend_url = $item->routeAlias ? url('/' . ltrim($item->routeAlias->slug, '/')) : null;
                 $item->heroMedia = $mediaAssets->get($item->data['hero_media_id'] ?? null);
-                $item->name = $item->title ?? $item->name;
+                $item->title = $item->title ?? $item->title;
                 $item->service_summary = $item->data['service_summary'] ?? null;
                 $item->excerpt = $item->data['excerpt'] ?? null;
                 return $item;
@@ -135,7 +135,7 @@ class SearchController extends Controller
             return $items->map(function ($item) use ($mediaAssets) {
                 $item->frontend_url = url('/services/' . ltrim($item->slug, '/'));
                 $item->heroMedia = $mediaAssets->get($item->data['hero_media_id'] ?? null);
-                $item->short_description = $item->data['short_description'] ?? null;
+                $item->description = $item->data['short_description'] ?? null;
                 return $item;
             })->filter(fn ($item) => filled($item->frontend_url))->values();
         };

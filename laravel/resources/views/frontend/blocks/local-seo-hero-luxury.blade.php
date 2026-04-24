@@ -2,16 +2,26 @@
     $page = $context['page'] ?? null;
     if (!$page) return;
 
-    $city = $page->city;
-    $service = $page->service;
+    $city = $context['city'] ?? null;
+    $service = $context['service'] ?? null;
     
-    $title = $page->h1 ?? "{$service->name} in {$city->name}";
-    $subtitle = $page->local_intro ?? '';
+    // Determine the H1 and Subtitle dynamically based on what is available
+    if ($city && $service) {
+        $title = $page->h1 ?? "{$service->title} in {$city->title}";
+    } elseif ($city) {
+        $title = $page->h1 ?? "Professional Services in {$city->title}";
+    } elseif ($service) {
+        $title = $page->h1 ?? "{$service->title} Services";
+    } else {
+        $title = $page->h1 ?? $page->title ?? 'Professional Services';
+    }
+    
+    $subtitle = $page->data['local_intro'] ?? $page->data['city_summary'] ?? $page->data['service_summary'] ?? '';
     
     // Attempt to grab a specific hero image, fallback to city, then service, then default
     $heroUrl = $page->heroMedia?->url 
-        ?? $city->heroMedia?->url 
-        ?? $service->heroMedia?->url 
+        ?? $city?->heroMedia?->url 
+        ?? $service?->heroMedia?->url 
         ?? 'https://images.unsplash.com/photo-1598228723654-419b48f68e4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2500&q=80&fm=webp';
 @endphp
 
@@ -22,11 +32,19 @@
     </div>
     
     <div class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 gs-reveal">
+        @if($city || $service)
         <div class="flex flex-wrap items-center gap-3 lg:gap-4 text-[9px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-4 lg:mb-6">
-            <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3 h-3"></i> {{ $city->name }}, ON</span>
+            @if($city)
+            <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3 h-3"></i> {{ $city->title }}, ON</span>
+            @endif
+            @if($city && $service)
             <span class="w-1 h-1 bg-accent rounded-full"></span>
-            <span>{{ $service->name }}</span>
+            @endif
+            @if($service)
+            <span>{{ $service->title }}</span>
+            @endif
         </div>
+        @endif
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
             <div class="lg:col-span-7">

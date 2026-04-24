@@ -94,11 +94,11 @@
                         <div class="pt-6 border-t {{ $toneMap['divider'] }}">
                             @if($showServicePreview)
                                 <ul class="mb-8 space-y-2">
-                                    @foreach($cat->services->take(3) as $service)
+                                    @foreach($cat->entries->take(3) as $service)
                                         <li class="group/link flex items-center gap-2 text-sm {{ $toneMap['sub'] }}">
                                             <div class="h-1.5 w-1.5 rounded-full bg-forest/30 transition-colors group-hover/link:bg-forest"></div>
                                             <a href="{{ url('/services/' .  $cat->slug  . '/' .  $service->slug  . '') }}" class="transition {{ $tone === 'dark' ? 'hover:text-white' : 'hover:text-forest' }}">
-                                                {{ $service->name }}
+                                                {{ $service->title }}
                                             </a>
                                         </li>
                                     @endforeach

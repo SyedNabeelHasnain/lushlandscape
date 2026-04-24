@@ -305,58 +305,93 @@ class WmsMigrateLegacyData extends Command
             }
             $this->info('Matrix Pages (ServiceCityPages) migrated.');
 
-            // 10. Migrate Blog Categories & Posts
+            // 10. Migrate Blog Categories & Tags & Posts
             $blogCatMap = [];
-            $blogCats = DB::table('blog_categories')->get();
-            foreach ($blogCats as $cat) {
-                $term = Term::create([
-                    'taxonomy_id' => $taxBlogCat->id,
-                    'name' => $cat->name,
-                    'slug' => $cat->slug,
-                    'description' => $cat->description,
-                ]);
-                $blogCatMap[$cat->id] = $term->id;
-                
-                RouteAlias::create([
-                    'slug' => 'blog/category/' . $cat->slug,
-                    'routable_type' => Term::class,
-                    'routable_id' => $term->id,
-                    'is_active' => true
-                ]);
+            if (Schema::hasTable('blog_categories')) {
+                $blogCats = DB::table('blog_categories')->get();
+                foreach ($blogCats as $cat) {
+                    $term = Term::create([
+                        'taxonomy_id' => $taxBlogCat->id,
+                        'name' => $cat->name,
+                        'slug' => $cat->slug,
+                        'description' => $cat->description,
+                    ]);
+                    $blogCatMap[$cat->id] = $term->id;
+                    
+                    RouteAlias::create([
+                        'slug' => 'blog/category/' . $cat->slug,
+                        'routable_type' => Term::class,
+                        'routable_id' => $term->id,
+                        'is_active' => true
+                    ]);
+                }
             }
 
-            $blogPosts = DB::table('blog_posts')->get();
-            foreach ($blogPosts as $post) {
-                $entry = Entry::create([
-                    'content_type_id' => $ctBlog->id,
-                    'title' => $post->title,
-                    'slug' => $post->slug,
-                    'status' => $post->status,
-                    'author_id' => $post->author_id,
-                    'published_at' => $post->published_at,
-                    'data' => [
-                        'excerpt' => $post->excerpt,
-                        'body' => $post->body,
-                        'content_json' => json_decode($post->content_json, true),
-                        'featured_image_id' => $post->featured_image_id,
-                        'meta_title' => $post->meta_title,
-                        'meta_description' => $post->meta_description,
-                    ]
-                ]);
-
-                if ($post->category_id && isset($blogCatMap[$post->category_id])) {
-                    $entry->terms()->attach($blogCatMap[$post->category_id]);
+            $blogTagMap = [];
+            if (Schema::hasTable('blog_tags')) {
+                $blogTags = DB::table('blog_tags')->get();
+                foreach ($blogTags as $tag) {
+                    $term = Term::create([
+                        'taxonomy_id' => $taxBlogTag->id,
+                        'name' => $tag->name,
+                        'slug' => $tag->slug,
+                    ]);
+                    $blogTagMap[$tag->id] = $term->id;
+                    
+                    RouteAlias::create([
+                        'slug' => 'blog/tag/' . $tag->slug,
+                        'routable_type' => Term::class,
+                        'routable_id' => $term->id,
+                        'is_active' => true
+                    ]);
                 }
+            }
 
-                RouteAlias::create([
-                    'slug' => 'blog/' . $post->slug,
-                    'routable_type' => Entry::class,
-                    'routable_id' => $entry->id,
-                    'is_active' => $post->status === 'published'
-                ]);
+            if (Schema::hasTable('blog_posts')) {
+                $blogPosts = DB::table('blog_posts')->get();
+                foreach ($blogPosts as $post) {
+                    $entry = Entry::create([
+                        'content_type_id' => $ctBlog->id,
+                        'title' => $post->title,
+                        'slug' => $post->slug,
+                        'status' => $post->status,
+                        'author_id' => $post->author_id,
+                        'published_at' => $post->published_at,
+                        'data' => [
+                            'excerpt' => $post->excerpt,
+                            'body' => $post->body,
+                            'content_json' => json_decode($post->content_json, true),
+                            'featured_image_id' => $post->featured_image_id,
+                            'meta_title' => $post->meta_title,
+                            'meta_description' => $post->meta_description,
+                        ]
+                    ]);
 
-                DB::table('page_blocks')->where('page_type', 'blog_post')->where('page_id', $post->id)
-                    ->update(['page_type' => 'entry', 'page_id' => $entry->id]);
+                    if ($post->category_id && isset($blogCatMap[$post->category_id])) {
+                        $entry->terms()->attach($blogCatMap[$post->category_id]);
+                    }
+
+                    if (Schema::hasTable('blog_post_tag')) {
+                        $postTags = DB::table('blog_post_tag')->where('blog_post_id', $post->id)->get();
+                        foreach ($postTags as $pt) {
+                            if (isset($blogTagMap[$pt->blog_tag_id])) {
+                                $entry->terms()->attach($blogTagMap[$pt->blog_tag_id]);
+                            }
+                        }
+                    }
+
+                    RouteAlias::create([
+                        'slug' => 'blog/' . $post->slug,
+                        'routable_type' => Entry::class,
+                        'routable_id' => $entry->id,
+                        'is_active' => $post->status === 'published'
+                    ]);
+
+                    if (Schema::hasTable('page_blocks')) {
+                        DB::table('page_blocks')->where('page_type', 'blog_post')->where('page_id', $post->id)
+                            ->update(['page_type' => 'entry', 'page_id' => $entry->id]);
+                    }
+                }
             }
             $this->info('Blog Posts migrated.');
 

@@ -30,7 +30,7 @@ class LlmsTxtController extends Controller
         $lines[] = '## Service Categories';
         $categories = \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->orderBy('sort_order')->get();
         foreach ($categories as $cat) {
-            $lines[] = "- [{$cat->name}](".url('/services/'.$cat->slug).'): '.($cat->description ?? '');
+            $lines[] = "- [{$cat->title}](".url('/services/'.$cat->slug).'): '.($cat->data['description'] ?? '');
         }
         $lines[] = '';
 
@@ -90,9 +90,9 @@ class LlmsTxtController extends Controller
         $lines[] = '## Service Categories';
         $categories = \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->orderBy('sort_order')->get();
         foreach ($categories as $cat) {
-            $lines[] = "### [{$cat->name}](".url('/services/'.$cat->slug).')';
-            if ($cat->description) {
-                $lines[] = $cat->description;
+            $lines[] = "### [{$cat->title}](".url('/services/'.$cat->slug).')';
+            if (!empty($cat->data['description'])) {
+                $lines[] = $cat->data['description'];
             }
             $lines[] = '';
         }

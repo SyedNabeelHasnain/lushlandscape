@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RouteAlias;
 use App\Models\Entry;
 use App\Models\Term;
+use App\Services\PageContextService;
 use Illuminate\Http\Request;
 
 class EntityController extends Controller
@@ -14,7 +15,7 @@ class EntityController extends Controller
      * Universal route resolver for the Super WMS.
      * O(1) lookup mapping URL directly to the corresponding polymorphic entity.
      */
-    public function resolve(Request $request, $slug)
+    public function resolve(Request $request, $slug, PageContextService $pageContext)
     {
         // 1. High-speed lookup in the RouteAlias table
         $alias = RouteAlias::where('slug', $slug)
@@ -30,11 +31,11 @@ class EntityController extends Controller
 
         // 3. Determine the rendering path based on the entity type
         if ($entity instanceof Entry) {
-            return $this->renderEntry($entity, $request);
+            return $this->renderEntry($entity, $request, $pageContext);
         }
 
         if ($entity instanceof Term) {
-            return $this->renderTerm($entity, $request);
+            return $this->renderTerm($entity, $request, $pageContext);
         }
 
         abort(404);
@@ -43,7 +44,7 @@ class EntityController extends Controller
     /**
      * Render a standard Content Entry.
      */
-    protected function renderEntry(Entry $entry, Request $request)
+    protected function renderEntry(Entry $entry, Request $request, PageContextService $pageContext)
     {
         // Check publish status
         if ($entry->status !== 'published') {
@@ -59,16 +60,25 @@ class EntityController extends Controller
         }
 
         // Fetch Unified Blocks
-        $blocks = \App\Services\BlockBuilderService::getUnifiedBlocks('entry', $entry->id);
+        $blocks = \App\Services\BlockBuilderService::getBlocks('entry', $entry->id);
 
-        // Generate generic context for WMS Variables
-        $context = [
-            'entry' => $entry->toArray(),
-            'data' => $entry->data ? $entry->data->toArray() : [],
-            'content_type' => $contentType->slug,
-            'title' => $entry->title,
-            'slug' => $entry->slug,
-        ];
+        // Generate generic context for WMS Variables using PageContextService
+        $context = match($contentType->slug) {
+            'service' => $pageContext->service($entry, $entry->inverseRelatedEntries()->where('relation_type', 'matrix_service')->where('status', 'published')->get()),
+            'city' => $pageContext->city($entry, $entry->inverseRelatedEntries()->where('relation_type', 'matrix_city')->where('status', 'published')->get()),
+            'portfolio-project' => $pageContext->portfolioProject($entry),
+            'blog-post' => $pageContext->blogPost($entry),
+            'service-city-page' => $pageContext->serviceCityPage($entry),
+            'static-page' => $pageContext->staticPage($entry),
+            default => $pageContext->compose([
+                'page' => $entry,
+                'entry' => $entry,
+                'data' => $entry->data ? $entry->data->toArray() : [],
+                'content_type' => $contentType->slug,
+                'title' => $entry->title,
+                'slug' => $entry->slug,
+            ])
+        };
 
         // Generic SEO Schema fallback
         $schema = [
@@ -80,8 +90,7 @@ class EntityController extends Controller
 
         // Breadcrumbs fallback
         $breadcrumbs = [
-            ['title' => 'Home', 'url' => url('/')],
-            ['title' => $entry->title, 'url' => null],
+            ['label' => $entry->title, 'url' => null],
         ];
 
         return view($viewName, [
@@ -98,7 +107,7 @@ class EntityController extends Controller
     /**
      * Render a Taxonomy Term (Archive/Category Page).
      */
-    protected function renderTerm(Term $term, Request $request)
+    protected function renderTerm(Term $term, Request $request, PageContextService $pageContext)
     {
         $taxonomy = $term->taxonomy;
         
@@ -110,10 +119,43 @@ class EntityController extends Controller
         // Paginate the entries associated with this term
         $entries = $term->entries()->where('status', 'published')->paginate(12);
 
+        // Fetch Unified Blocks (Taxonomies can have blocks too in the future, fallback to empty)
+        $blocks = \App\Services\BlockBuilderService::getBlocks('term', $term->id);
+
+        // Generate generic context
+        $context = match($taxonomy->slug) {
+            'service-categories' => $pageContext->serviceCategory($term),
+            default => $pageContext->compose([
+                'page' => $term,
+                'term' => $term,
+                'data' => $term->data ? $term->data->toArray() : [],
+                'taxonomy' => $taxonomy->slug,
+                'name' => $term->title,
+                'slug' => $term->slug,
+            ])
+        };
+
+        // Generic SEO Schema fallback
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'name' => $term->title,
+            'url' => url($term->slug),
+        ];
+
+        // Breadcrumbs fallback
+        $breadcrumbs = [
+            ['label' => $term->title, 'url' => null],
+        ];
+
         return view($viewName, [
             'term' => $term,
             'taxonomy' => $taxonomy,
             'entries' => $entries,
+            'blocks' => $blocks,
+            'context' => $context,
+            'schema' => json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
 }

@@ -47,7 +47,7 @@ $post->category = clone $entry->terms->first();
                 <header class="mb-8">
                     <div class="flex flex-wrap items-center gap-2 mb-4">
                         @if($post->category ?? null)
-                        <a href="{{ route('blog.category', $post->category->slug) }}" class="text-xs bg-forest/10 text-forest px-3 py-1.5 font-semibold hover:bg-forest hover:text-white transition">{{ $post->category->name }}</a>
+                        <a href="{{ url('/blog/category/' . $post->category->slug) }}" class="text-xs bg-forest/10 text-forest px-3 py-1.5 font-semibold hover:bg-forest hover:text-white transition">{{ $post->category->name }}</a>
                         @endif
                         <time class="text-sm text-text-secondary" datetime="{{ $post->published_at?->toIso8601String() }}">{{ $post->published_at?->format('F j, Y') }}</time>
                         @if($post->read_time ?? null)<span class="text-sm text-text-secondary">· {{ $post->read_time }} min read</span>@endif
@@ -108,7 +108,7 @@ $post->category = clone $entry->terms->first();
                         <ul class="space-y-4">
                             @foreach($popularPosts as $pp)
                             <li>
-                                <a href="{{ route('blog.show', $pp->slug) }}" class="text-sm text-text hover:text-forest transition font-medium line-clamp-2">{{ $pp->title }}</a>
+                                <a href="{{ url('/blog/' . $pp->slug) }}" class="text-sm text-text hover:text-forest transition font-medium line-clamp-2">{{ $pp->title }}</a>
                                 <p class="text-xs text-text-secondary mt-0.5">{{ $pp->published_at?->format('M j, Y') }}</p>
                             </li>
                             @endforeach

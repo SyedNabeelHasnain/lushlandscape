@@ -9,7 +9,7 @@ $posts = $entries;
 <x-frontend.seo-head
     :title="($category->meta_title ?? $category->name . ' Blog Articles') . ' | Super WMS Blog'"
     :description="$category->meta_description ?? $category->short_description ?? ''"
-    :canonical="route('blog.category', $category->slug)"
+    :canonical="url('/blog/category/' . $category->slug)"
     :ogTitle="$category->og_title ?? null"
     :ogDescription="$category->og_description ?? null"
     :ogImage="$category->image?->url ?? null"
