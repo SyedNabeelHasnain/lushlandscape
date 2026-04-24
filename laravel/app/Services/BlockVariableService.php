@@ -2,16 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\BlogCategory;
-use App\Models\BlogPost;
-use App\Models\City;
-use App\Models\PortfolioCategory;
-use App\Models\PortfolioProject;
-use App\Models\Service;
-use App\Models\ServiceCategory;
-use App\Models\ServiceCityPage;
+use App\Models\Entry;
+use App\Models\Term;
 use App\Models\Setting;
-use App\Models\StaticPage;
 use Illuminate\Support\Carbon;
 
 class BlockVariableService
@@ -226,19 +219,25 @@ class BlockVariableService
             return data_get($subject, 'url');
         }
 
-        return match (true) {
-            $subject instanceof Service => $this->serviceUrl($subject),
-            $subject instanceof City => $this->cityUrl($subject),
-            $subject instanceof ServiceCategory => $this->serviceCategoryUrl($subject),
-            $subject instanceof BlogCategory => $this->blogCategoryUrl($subject),
-            $subject instanceof PortfolioCategory => $this->portfolioCategoryUrl($subject),
-            $subject instanceof BlogPost => $this->blogPostUrl($subject),
-            $subject instanceof PortfolioProject => $this->portfolioProjectUrl($subject),
-            $subject instanceof ServiceCityPage => $this->serviceCityPageUrl($subject),
-            $subject instanceof StaticPage => $this->staticPageUrl($subject),
-            is_array($subject) => $this->arrayUrl($subject, $scope),
-            default => null,
-        };
+        if ($subject instanceof Entry) {
+            return $subject->routeAlias ? url('/' . ltrim($subject->routeAlias->slug, '/')) : null;
+        }
+
+        if ($subject instanceof Term) {
+            $base = match ($subject->taxonomy->slug) {
+                'service-categories' => '/services/',
+                'blog-categories' => '/blog/category/',
+                'portfolio-categories' => '/portfolio/category/',
+                default => '/'
+            };
+            return url($base . ltrim($subject->slug, '/'));
+        }
+
+        if (is_array($subject)) {
+            return $this->arrayUrl($subject, $scope);
+        }
+
+        return null;
     }
 
     private function resolveScopedAlias(string $scope, string $field, array $context): mixed
@@ -408,57 +407,6 @@ class BlockVariableService
         }
 
         return data_get($subject, 'url');
-    }
-
-    private function serviceUrl(Service $service): ?string
-    {
-        if (! $service->slug_final) {
-            return null;
-        }
-
-        $categorySlug = $service->category?->slug_final;
-
-        return $categorySlug ? route('services.detail', ['categorySlug' => $categorySlug, 'slug' => $service->slug_final]) : null;
-    }
-
-    private function cityUrl(City $city): ?string
-    {
-        return $city->slug_final ? route('locations.city', ['slug' => $city->slug_final]) : null;
-    }
-
-    private function serviceCategoryUrl(ServiceCategory $category): ?string
-    {
-        return $category->slug_final ? route('services.category', ['slug' => $category->slug_final]) : null;
-    }
-
-    private function blogCategoryUrl(BlogCategory $category): ?string
-    {
-        return $category->slug ? route('blog.category', ['slug' => $category->slug]) : null;
-    }
-
-    private function portfolioCategoryUrl(PortfolioCategory $category): ?string
-    {
-        return $category->slug ? route('portfolio.category', ['slug' => $category->slug]) : null;
-    }
-
-    private function blogPostUrl(BlogPost $post): ?string
-    {
-        return $post->slug ? route('blog.show', ['slug' => $post->slug]) : null;
-    }
-
-    private function portfolioProjectUrl(PortfolioProject $project): ?string
-    {
-        return $project->slug ? route('portfolio.show', ['slug' => $project->slug]) : null;
-    }
-
-    private function serviceCityPageUrl(ServiceCityPage $page): ?string
-    {
-        return $page->slug_final ? url('/'.$page->slug_final) : null;
-    }
-
-    private function staticPageUrl(StaticPage $page): ?string
-    {
-        return $page->slug ? url('/'.$page->slug) : null;
     }
 
     private function isRenderableScalar(mixed $value): bool

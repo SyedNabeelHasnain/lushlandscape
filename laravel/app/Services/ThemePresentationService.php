@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\City;
 use App\Models\MediaAsset;
-use App\Models\ServiceCategory;
 use App\Models\Setting;
 use Illuminate\Support\Collection;
 
@@ -228,33 +226,35 @@ class ThemePresentationService
 
     public function navCategories(int $limit = 6): Collection
     {
-        return ServiceCategory::where('status', 'published')
+        return \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))
             ->whereNull('parent_id')
             ->orderBy('sort_order')
             ->limit($limit)
-            ->get(['id', 'name', 'slug_final']);
+            ->get(['id', 'name', 'slug']);
     }
 
     public function navCities(int $limit = 8): Collection
     {
-        return City::where('status', 'published')
+        return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))
+            ->where('status', 'published')
             ->orderBy('sort_order')
             ->limit($limit)
-            ->get(['id', 'name', 'slug_final']);
+            ->get(['id', 'title as name', 'slug']);
     }
 
     public function allFooterCategories(): Collection
     {
-        return ServiceCategory::where('status', 'published')
+        return \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))
             ->orderBy('sort_order')
-            ->get(['id', 'name', 'slug_final']);
+            ->get(['id', 'name', 'slug']);
     }
 
     public function allFooterCities(int $limit = 12): Collection
     {
-        return City::where('status', 'published')
+        return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))
+            ->where('status', 'published')
             ->orderBy('sort_order')
             ->limit($limit)
-            ->get(['id', 'name', 'slug_final']);
+            ->get(['id', 'title as name', 'slug']);
     }
 }

@@ -23,7 +23,7 @@ class HomeController extends Controller
 
         // Schema is always required for SEO
         $citiesServed = Cache::remember('home_schema_cities', 3600, function () {
-            return \App\Models\Entry::whereHas('contentType', function($q) { $q->where('slug', 'city'); })->where('status', 'published')->orderBy('sort_order')->pluck('name')->toArray();
+            return \App\Models\Entry::whereHas('contentType', function($q) { $q->where('slug', 'city'); })->where('status', 'published')->orderBy('sort_order')->pluck('title')->toArray();
         });
         $schema = SchemaService::webSite().SchemaService::organization().SchemaService::localBusiness(null, $citiesServed);
 

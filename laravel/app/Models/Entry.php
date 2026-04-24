@@ -74,4 +74,105 @@ class Entry extends Model
         return $this->belongsToMany(Entry::class, 'entry_relations', 'target_entry_id', 'source_entry_id')
                     ->withPivot('relation_type', 'sort_order');
     }
+
+    // --- Legacy Fallback Accessors for Frontend Compatibility ---
+    
+    public function getHeroMediaAttribute()
+    {
+        if (isset($this->data['hero_media_id'])) {
+            return \App\Models\MediaAsset::find($this->data['hero_media_id']);
+        }
+        if (isset($this->data['featured_image_id'])) {
+            return \App\Models\MediaAsset::find($this->data['featured_image_id']);
+        }
+        return null;
+    }
+
+    public function getCategoryAttribute()
+    {
+        return $this->terms->first();
+    }
+
+    public function getServiceAttribute()
+    {
+        return $this->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_service') 
+            ?? $this->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service');
+    }
+
+    public function getCityAttribute()
+    {
+        return $this->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_city') 
+            ?? $this->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city');
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->title;
+    }
+
+    public function getSlugFinalAttribute()
+    {
+        return $this->slug;
+    }
+
+    public function getProvinceNameAttribute()
+    {
+        return $this->data['province_name'] ?? null;
+    }
+
+    public function getCitySummaryAttribute()
+    {
+        return $this->data['city_summary'] ?? null;
+    }
+
+    public function getServiceSummaryAttribute()
+    {
+        return $this->data['service_summary'] ?? null;
+    }
+
+    public function getExcerptAttribute()
+    {
+        return $this->data['excerpt'] ?? null;
+    }
+
+    public function getBodyAttribute()
+    {
+        return $this->data['body'] ?? null;
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->data['description'] ?? null;
+    }
+
+    public function getFrontendUrlAttribute()
+    {
+        return $this->routeAlias ? url('/' . ltrim($this->routeAlias->slug, '/')) : url('/' . $this->slug);
+    }
+
+    public function getLatitudeAttribute()
+    {
+        return $this->data['latitude'] ?? null;
+    }
+
+    public function getLongitudeAttribute()
+    {
+        return $this->data['longitude'] ?? null;
+    }
+
+    public function getNeighborhoodsAttribute()
+    {
+        $hoods = $this->data['city_body']['neighborhoods_served'] ?? [];
+        if (!is_array($hoods)) return collect();
+        
+        return collect($hoods)->map(function ($hood) {
+            return (object)[
+                'name' => $hood,
+                'slug' => \Illuminate\Support\Str::slug($hood),
+                'latitude' => $this->data['latitude'] ?? null,
+                'longitude' => $this->data['longitude'] ?? null,
+                'summary' => '',
+            ];
+        });
+    }
 }

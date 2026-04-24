@@ -186,7 +186,9 @@ class BlockBuilderService
         ];
 
         $wmsFilters = [];
+        $isWms = false;
         if (isset($legacyMap[$modelClass])) {
+            $isWms = true;
             $map = $legacyMap[$modelClass];
             $modelClass = $map['model'];
             if (isset($map['type'])) {
@@ -247,6 +249,18 @@ class BlockBuilderService
 
         if (! empty($dataSource['with'])) {
             $with = $dataSource['with'];
+            if ($isWms && is_array($with)) {
+                // Filter out legacy relationships that don't exist on Entry/Term
+                $with = array_filter($with, function($rel) {
+                    if (is_array($rel)) $rel = key($rel);
+                    return !in_array($rel, ['category', 'heroMedia', 'service', 'city', 'neighborhoods']);
+                });
+                if ($modelClass === \App\Models\Entry::class) {
+                    $with[] = 'terms';
+                    $with[] = 'routeAlias';
+                }
+            }
+            
             if (is_array($with)) {
                 $simpleWith = array_filter($with, fn ($value) => is_string($value));
                 if (! empty($simpleWith)) {

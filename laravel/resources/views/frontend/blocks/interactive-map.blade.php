@@ -24,60 +24,56 @@
     $filterItems = [];
 
     if ($mapMode === 'all_cities') {
-        $cities = \Illuminate\Support\Facades\Cache::remember('interactive_map_all_cities', 3600, function () {
-            return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
-                ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->orderBy('sort_order')])
-                ->orderBy('sort_order')
-                ->get();
-        });
+        $allCities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
+            ->orderBy('sort_order')
+            ->get();
 
-        foreach ($cities as $c) {
-            $hoodNames = $c->neighborhoods->pluck('name')->take(5)->implode(', ');
+        foreach ($allCities as $c) {
+            $hoodNames = '';
+            if (!empty($c->data['city_body']['neighborhoods_served']) && is_array($c->data['city_body']['neighborhoods_served'])) {
+                $hoodNames = collect($c->data['city_body']['neighborhoods_served'])->take(5)->implode(', ');
+            }
+            
             $mapMarkers[] = [
-                'name'     => $c->name,
-                'lat'      => (float) $c->latitude,
-                'lng'      => (float) $c->longitude,
+                'name'     => $c->title,
+                'lat'      => (float) ($c->data['latitude'] ?? 0),
+                'lng'      => (float) ($c->data['longitude'] ?? 0),
                 'type'     => 'city',
                 'slug'     => $c->slug,
-                'heading'  => 'Professional Services in ' . $c->name,
-                'desc'     => 'Professional landscape construction, interlocking, concrete, and hardscaping services for ' . $c->name . ' homeowners. Serving neighbourhoods including ' . $hoodNames . '.',
+                'heading'  => 'Professional Services in ' . $c->title,
+                'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->title . '. Serving ' . $hoodNames . '.',
                 'cta_text' => $popupCta,
                 'cta_url'  => '/professional-' . $c->slug,
                 'services' => '',
-                'hoods'    => $c->neighborhoods->map(fn($n) => [
-                    'name' => $n->name,
-                    'lat'  => (float) $n->latitude,
-                    'lng'  => (float) $n->longitude,
-                    'slug' => $n->slug,
-                ])->toArray(),
+                'hoods'    => [],
             ];
-            $filterItems[] = ['name' => $c->name, 'slug' => $c->slug, 'type' => 'city'];
+            $filterItems[] = ['name' => $c->title, 'slug' => $c->slug, 'type' => 'city'];
         }
     } elseif ($mapMode === 'single_city') {
         $city = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $citySlug)->where('status', 'published')
-            ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->whereNotNull('latitude')->orderBy('sort_order')])
             ->first();
-
         if ($city) {
-            $centerLat = (float) $city->latitude;
-            $centerLng = (float) $city->longitude;
+            $centerLat = (float) ($city->data['latitude'] ?? 0);
+            $centerLng = (float) ($city->data['longitude'] ?? 0);
             $zoom = max($zoom, 12);
-
-            foreach ($city->neighborhoods as $n) {
-                $mapMarkers[] = [
-                    'name'     => $n->name,
-                    'lat'      => (float) $n->latitude,
-                    'lng'      => (float) $n->longitude,
-                    'type'     => 'neighborhood',
-                    'slug'     => $n->slug,
-                    'heading'  => $n->name . ', ' . $city->name,
-                    'desc'     => $n->summary,
-                    'cta_text' => $popupCta,
-                    'cta_url'  => '/professional-' . $city->slug,
-                    'services' => '',
-                    'hoods'    => [],
-                ];
-                $filterItems[] = ['name' => $n->name, 'slug' => $n->slug, 'type' => 'neighborhood'];
+            
+            if (!empty($city->data['city_body']['neighborhoods_served']) && is_array($city->data['city_body']['neighborhoods_served'])) {
+                foreach ($city->data['city_body']['neighborhoods_served'] as $n) {
+                    $mapMarkers[] = [
+                        'name'     => $n,
+                        'lat'      => (float) ($city->data['latitude'] ?? 0),
+                        'lng'      => (float) ($city->data['longitude'] ?? 0),
+                        'type'     => 'neighborhood',
+                        'slug'     => \Illuminate\Support\Str::slug($n),
+                        'heading'  => $n . ', ' . $city->title,
+                        'desc'     => '',
+                        'cta_text' => $popupCta,
+                        'cta_url'  => '/professional-' . $city->slug,
+                        'services' => '',
+                        'hoods'    => [],
+                    ];
+                    $filterItems[] = ['name' => $n, 'slug' => \Illuminate\Support\Str::slug($n), 'type' => 'neighborhood'];
+                }
             }
         }
     }

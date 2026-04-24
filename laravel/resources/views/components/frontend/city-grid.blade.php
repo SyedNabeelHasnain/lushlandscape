@@ -7,7 +7,6 @@
 @php
     if ($cities->isEmpty()) {
         $cities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
-            ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->orderBy('sort_order')])
             ->orderBy('sort_order')
             ->get();
     }
@@ -24,41 +23,46 @@
     $zoom        = 9;
 
     foreach ($cities as $c) {
-        $hoodNames = $c->relationLoaded('neighborhoods')
-            ? $c->neighborhoods->pluck('name')->take(5)->implode(', ')
-            : '';
+        $hoodNames = '';
+        if (!empty($c->data['city_body']['neighborhoods_served']) && is_array($c->data['city_body']['neighborhoods_served'])) {
+            $hoodNames = collect($c->data['city_body']['neighborhoods_served'])->take(5)->implode(', ');
+        }
 
         $mapMarkers[] = [
-            'name'     => $c->name,
-            'lat'      => (float) $c->latitude,
-            'lng'      => (float) $c->longitude,
+            'name'     => $c->title,
+            'lat'      => (float) ($c->data['latitude'] ?? 0),
+            'lng'      => (float) ($c->data['longitude'] ?? 0),
             'type'     => 'city',
             'slug'     => $c->slug,
-            'heading'  => 'Professional Services in ' . $c->name,
-            'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->name . '. Serving ' . $hoodNames . '.',
+            'heading'  => 'Professional Services in ' . $c->title,
+            'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->title . '. Serving ' . $hoodNames . '.',
             'cta_text' => $popupCta,
             'cta_url'  => '/professional-' . $c->slug,
             'services' => '',
-            'hoods'    => $c->relationLoaded('neighborhoods')
-                ? $c->neighborhoods->map(fn($n) => ['name' => $n->name, 'lat' => (float) $n->latitude, 'lng' => (float) $n->longitude, 'slug' => $n->slug])->toArray()
-                : [],
+            'hoods'    => [],
         ];
-        $filterItems[] = ['name' => $c->name, 'slug' => $c->slug, 'type' => 'city'];
+        $filterItems[] = ['name' => $c->title, 'slug' => $c->slug, 'type' => 'city'];
     }
 
     $mapId           = 'imap-' . uniqid();
     $googleMapsJsKey = \App\Models\Setting::get('google_maps_js_key', '');
 
     // City lat/lng for 3D globe projection
-    $globeCities = $cities->map(fn($c) => [
-        'name'  => $c->name,
-        'slug'  => $c->slug,
-        'url'   => '/professional-' . $c->slug,
-        'lat'   => (float) $c->latitude,
-        'lng'   => (float) $c->longitude,
-        'hoods' => $c->relationLoaded('neighborhoods') ? $c->neighborhoods->take(4)->pluck('name')->implode(', ') : '',
-        'desc'  => $c->city_summary ?? ('Professional professional services in ' . $c->name),
-    ])->values()->toArray();
+    $globeCities = $cities->map(function($c) {
+        $hoodNames = '';
+        if (!empty($c->data['city_body']['neighborhoods_served']) && is_array($c->data['city_body']['neighborhoods_served'])) {
+            $hoodNames = collect($c->data['city_body']['neighborhoods_served'])->take(4)->implode(', ');
+        }
+        return [
+            'name'  => $c->title,
+            'slug'  => $c->slug,
+            'url'   => '/professional-' . $c->slug,
+            'lat'   => (float) ($c->data['latitude'] ?? 0),
+            'lng'   => (float) ($c->data['longitude'] ?? 0),
+            'hoods' => $hoodNames,
+            'desc'  => $c->data['city_summary'] ?? ('Professional professional services in ' . $c->title),
+        ];
+    })->values()->toArray();
 @endphp
 
 @if($cities->isNotEmpty())
@@ -119,9 +123,9 @@
                        :class="activeCity === '{{ $city->slug }}' ? 'border-forest/15 shadow-luxury' : ''">
                         <div class="min-w-0">
                             <span class="block text-base font-heading font-bold text-ink group-hover:text-forest transition-colors duration-300"
-                                  :class="activeCity === '{{ $city->slug }}' ? 'text-forest' : ''">{{ $city->name }}</span>
-                            @if($city->relationLoaded('neighborhoods') && $city->neighborhoods->isNotEmpty())
-                            <span class="block text-sm text-text-secondary mt-0.5 truncate">{{ $city->neighborhoods->take(4)->pluck('name')->implode(', ') }}</span>
+                                  :class="activeCity === '{{ $city->slug }}' ? 'text-forest' : ''">{{ $city->title }}</span>
+                            @if(!empty($city->data['city_body']['neighborhoods_served']) && is_array($city->data['city_body']['neighborhoods_served']))
+                            <span class="block text-sm text-text-secondary mt-0.5 truncate">{{ collect($city->data['city_body']['neighborhoods_served'])->take(4)->implode(', ') }}</span>
                             @endif
                         </div>
                         <i data-lucide="arrow-right" class="w-4 h-4 text-stone-dark group-hover:text-forest shrink-0 transition-all duration-300 group-hover:translate-x-1"></i>
@@ -187,9 +191,9 @@
             <a href="{{ url('/professional-' .  $city->slug  . '') }}"
                class="group bg-white p-8 flex flex-col items-center text-center hover:bg-forest transition-all duration-500">
                 <i data-lucide="map-pin" class="w-5 h-5 text-forest group-hover:text-white transition-colors duration-500 mb-4"></i>
-                <span class="text-sm font-semibold text-ink group-hover:text-white transition-colors duration-300">{{ $city->name }}</span>
-                @if($city->relationLoaded('neighborhoods') && $city->neighborhoods->isNotEmpty())
-                <span class="text-xs text-text-secondary group-hover:text-white/60 mt-2 transition-colors leading-relaxed">{{ $city->neighborhoods->take(3)->pluck('name')->implode(', ') }}</span>
+                <span class="text-sm font-semibold text-ink group-hover:text-white transition-colors duration-300">{{ $city->title }}</span>
+                @if(!empty($city->data['city_body']['neighborhoods_served']) && is_array($city->data['city_body']['neighborhoods_served']))
+                <span class="text-xs text-text-secondary group-hover:text-white/60 mt-2 transition-colors leading-relaxed">{{ collect($city->data['city_body']['neighborhoods_served'])->take(3)->implode(', ') }}</span>
                 @endif
             </a>
             @endforeach
@@ -201,7 +205,7 @@
                 @foreach($cities as $city)
                 <a href="{{ url('/professional-' .  $city->slug  . '') }}" class="flex items-center gap-2 bg-white border border-stone px-4 py-3 hover:border-forest transition">
                     <svg class="w-4 h-4 text-forest shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <span class="text-sm font-medium text-text">{{ $city->name }}</span>
+                    <span class="text-sm font-medium text-text">{{ $city->title }}</span>
                 </a>
                 @endforeach
             </div>

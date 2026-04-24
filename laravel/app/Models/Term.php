@@ -43,4 +43,48 @@ class Term extends Model
     {
         return $this->morphedByMany(Entry::class, 'termable');
     }
+
+    // --- Legacy Fallback Accessors for Frontend Compatibility ---
+
+    public function getHeroMediaAttribute()
+    {
+        if (isset($this->data['hero_media_id'])) {
+            return \App\Models\MediaAsset::find($this->data['hero_media_id']);
+        }
+        return null;
+    }
+
+    public function getTitleAttribute()
+    {
+        return $this->name;
+    }
+
+    public function getSlugFinalAttribute()
+    {
+        return $this->slug;
+    }
+
+    public function getShortDescriptionAttribute()
+    {
+        return $this->description;
+    }
+
+    public function getLongDescriptionAttribute()
+    {
+        return $this->data['long_description'] ?? null;
+    }
+
+    public function getFrontendUrlAttribute()
+    {
+        if ($this->taxonomy && $this->taxonomy->slug === 'service-categories') {
+            return url('/services/' . ltrim($this->slug, '/'));
+        }
+        if ($this->taxonomy && $this->taxonomy->slug === 'portfolio-categories') {
+            return url('/portfolio/category/' . ltrim($this->slug, '/'));
+        }
+        if ($this->taxonomy && $this->taxonomy->slug === 'blog-categories') {
+            return url('/blog/category/' . ltrim($this->slug, '/'));
+        }
+        return url('/' . $this->slug);
+    }
 }

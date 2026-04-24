@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\BlogCategory;
 use App\Models\FaqCategory;
-use App\Models\PortfolioCategory;
 use App\Models\ReviewCategory;
+use App\Models\Term;
 
 /**
  * Taxonomy Registry — drives TaxonomyCrudController and admin sidebar/views.
@@ -22,11 +21,11 @@ use App\Models\ReviewCategory;
 return [
 
     'blog-categories' => [
-        'model' => BlogCategory::class,
+        'model' => Term::class,
         'label' => 'Blog Categories',
         'singular' => 'Blog Category',
         'icon' => 'folder',
-        'post_rel' => 'posts',
+        'post_rel' => 'entries',
         'has_icon' => false,
         'has_language' => false,
         'schema_default' => 'CollectionPage',
@@ -35,11 +34,11 @@ return [
     ],
 
     'portfolio-categories' => [
-        'model' => PortfolioCategory::class,
+        'model' => Term::class,
         'label' => 'Portfolio Categories',
         'singular' => 'Portfolio Category',
         'icon' => 'layers',
-        'post_rel' => 'projects',
+        'post_rel' => 'entries',
         'has_icon' => true,
         'has_language' => false,
         'schema_default' => 'ItemList',

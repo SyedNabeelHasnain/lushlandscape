@@ -20,50 +20,53 @@
     if (in_array($mode, ['combined', 'map_only'])) {
         if ($mapMode === 'all_cities') {
             $allCities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
-                ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->orderBy('sort_order')])
                 ->orderBy('sort_order')
                 ->get();
 
             foreach ($allCities as $c) {
-                $hoodNames = $c->neighborhoods->pluck('name')->take(5)->implode(', ');
+                $hoodNames = '';
+                if (!empty($c->data['city_body']['neighborhoods_served']) && is_array($c->data['city_body']['neighborhoods_served'])) {
+                    $hoodNames = collect($c->data['city_body']['neighborhoods_served'])->take(5)->implode(', ');
+                }
                 $mapMarkers[] = [
-                    'name'     => $c->name,
-                    'lat'      => (float) $c->latitude,
-                    'lng'      => (float) $c->longitude,
+                    'name'     => $c->title,
+                    'lat'      => (float) ($c->data['latitude'] ?? 0),
+                    'lng'      => (float) ($c->data['longitude'] ?? 0),
                     'type'     => 'city',
                     'slug'     => $c->slug,
-                    'heading'  => 'Professional Services in ' . $c->name,
-                    'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->name . '. Serving ' . $hoodNames . '.',
+                    'heading'  => 'Professional Services in ' . $c->title,
+                    'desc'     => 'Professional landscape construction and hardscaping services for ' . $c->title . '. Serving ' . $hoodNames . '.',
                     'cta_text' => $popupCta,
                     'cta_url'  => '/professional-' . $c->slug,
                     'services' => '',
-                    'hoods'    => $c->neighborhoods->map(fn($n) => ['name' => $n->name, 'lat' => (float) $n->latitude, 'lng' => (float) $n->longitude, 'slug' => $n->slug])->toArray(),
+                    'hoods'    => [],
                 ];
-                $filterItems[] = ['name' => $c->name, 'slug' => $c->slug, 'type' => 'city'];
+                $filterItems[] = ['name' => $c->title, 'slug' => $c->slug, 'type' => 'city'];
             }
         } elseif ($mapMode === 'single_city') {
             $city = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $citySlug)->where('status', 'published')
-                ->with(['neighborhoods' => fn($q) => $q->where('status', 'published')->whereNotNull('latitude')->orderBy('sort_order')])
                 ->first();
             if ($city) {
-                $centerLat = (float) $city->latitude;
-                $centerLng = (float) $city->longitude;
+                $centerLat = (float) ($city->data['latitude'] ?? 0);
+                $centerLng = (float) ($city->data['longitude'] ?? 0);
                 $zoom = max($zoom, 12);
-                foreach ($city->neighborhoods as $n) {
-                    $mapMarkers[] = [
-                        'name'     => $n->name,
-                        'lat'      => (float) $n->latitude,
-                        'lng'      => (float) $n->longitude,
-                        'type'     => 'neighborhood',
-                        'slug'     => $n->slug,
-                        'heading'  => $n->name . ', ' . $city->name,
-                        'desc'     => $n->summary,
-                        'cta_text' => $popupCta,
-                        'cta_url'  => '/professional-' . $city->slug,
-                        'services' => '',
-                        'hoods'    => [],
-                    ];
-                    $filterItems[] = ['name' => $n->name, 'slug' => $n->slug, 'type' => 'neighborhood'];
+                if (!empty($city->data['city_body']['neighborhoods_served']) && is_array($city->data['city_body']['neighborhoods_served'])) {
+                    foreach ($city->data['city_body']['neighborhoods_served'] as $n) {
+                        $mapMarkers[] = [
+                            'name'     => $n,
+                            'lat'      => (float) ($city->data['latitude'] ?? 0),
+                            'lng'      => (float) ($city->data['longitude'] ?? 0),
+                            'type'     => 'neighborhood',
+                            'slug'     => \Illuminate\Support\Str::slug($n),
+                            'heading'  => $n . ', ' . $city->title,
+                            'desc'     => '',
+                            'cta_text' => $popupCta,
+                            'cta_url'  => '/professional-' . $city->slug,
+                            'services' => '',
+                            'hoods'    => [],
+                        ];
+                        $filterItems[] = ['name' => $n, 'slug' => \Illuminate\Support\Str::slug($n), 'type' => 'neighborhood'];
+                    }
                 }
             }
         }
@@ -185,7 +188,7 @@
                 <a href="{{ url('/professional-' .  $c->slug  . '') }}"
                    class="flex items-center gap-3 bg-white border border-stone px-5 py-4 hover:border-forest hover:shadow-luxury transition-all duration-500 group">
                     <i data-lucide="map-pin" class="w-4 h-4 text-forest shrink-0"></i>
-                    <span class="text-sm font-medium text-ink group-hover:text-forest transition-colors">{{ $c->name }}</span>
+                    <span class="text-sm font-medium text-ink group-hover:text-forest transition-colors">{{ $c->title }}</span>
                 </a>
                 @endforeach
             </div>

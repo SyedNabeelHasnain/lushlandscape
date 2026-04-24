@@ -2,13 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\BlogPost;
-use App\Models\City;
-use App\Models\PortfolioProject;
-use App\Models\Service;
-use App\Models\ServiceCategory;
-use App\Models\ServiceCityPage;
-use App\Models\StaticPage;
+use App\Models\Entry;
+use App\Models\Term;
 use Illuminate\Support\Collection;
 
 class PageContextService
@@ -28,17 +23,17 @@ class PageContextService
         ], $overrides));
     }
 
-    public function staticPage(StaticPage $page): array
+    public function staticPage(Entry $page): array
     {
         return $this->compose([
             'page' => $page,
             'page_id' => $page->id,
             'page_title' => $page->title,
-            'hero_media' => $page->heroMedia ?? null,
+            'hero_media' => $page->data['hero_media_id'] ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
         ]);
     }
 
-    public function serviceCategory(ServiceCategory $category): array
+    public function serviceCategory(Term $category): array
     {
         return $this->compose([
             'page' => $category,
@@ -48,91 +43,101 @@ class PageContextService
         ]);
     }
 
-    public function service(Service $service, ?Collection $cityPages = null): array
+    public function service(Entry $service, ?Collection $cityPages = null): array
     {
+        $category = $service->terms->first();
         return $this->compose([
             'page' => $service,
             'service' => $service,
-            'category' => $service->category,
+            'category' => $category,
             'service_id' => $service->id,
-            'service_name' => $service->name,
-            'category_id' => $service->category?->id,
-            'category_name' => $service->category?->name,
-            'hero_media' => $service->heroMedia,
+            'service_name' => $service->title,
+            'category_id' => $category?->id,
+            'category_name' => $category?->name,
+            'hero_media' => $service->data['hero_media_id'] ? \App\Models\MediaAsset::find($service->data['hero_media_id']) : null,
             'cityPages' => $cityPages ?? collect(),
         ]);
     }
 
-    public function city(City $city, ?Collection $servicePages = null): array
+    public function city(Entry $city, ?Collection $servicePages = null): array
     {
         return $this->compose([
             'page' => $city,
             'city' => $city,
             'city_id' => $city->id,
-            'city_name' => $city->name,
-            'province_name' => $city->province_name,
-            'city_summary' => $city->city_summary,
-            'hero_media' => $city->heroMedia,
+            'city_name' => $city->title,
+            'province_name' => $city->data['province_name'] ?? '',
+            'city_summary' => $city->data['city_summary'] ?? '',
+            'hero_media' => $city->data['hero_media_id'] ? \App\Models\MediaAsset::find($city->data['hero_media_id']) : null,
             'cityPages' => $servicePages ?? collect(),
         ]);
     }
 
-    public function blogPost(BlogPost $post): array
+    public function blogPost(Entry $post): array
     {
+        $category = $post->terms->first();
         return $this->compose([
             'page' => $post,
             'post' => $post,
-            'category' => $post->category,
+            'category' => $category,
             'post_id' => $post->id,
-            'category_id' => $post->category_id,
-            'category_name' => $post->category?->name,
-            'hero_media' => $post->heroMedia,
+            'category_id' => $category?->id,
+            'category_name' => $category?->name,
+            'hero_media' => $post->data['featured_image_id'] ? \App\Models\MediaAsset::find($post->data['featured_image_id']) : null,
         ]);
     }
 
-    public function portfolioProject(PortfolioProject $project): array
+    public function portfolioProject(Entry $project): array
     {
+        $service = clone $project->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_service') ?? new Entry;
+        $city = clone $project->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_city') ?? new Entry;
+        $category = clone $project->terms->first() ?? new Term;
+
         return $this->compose([
             'page' => $project,
             'project' => $project,
-            'service' => $project->service,
-            'city' => $project->city,
-            'category' => $project->category,
+            'service' => $service,
+            'city' => $city,
+            'category' => $category,
             'project_id' => $project->id,
-            'service_id' => $project->service?->id,
-            'city_id' => $project->city?->id,
-            'category_id' => $project->category?->id,
-            'service_name' => $project->service?->name,
-            'city_name' => $project->city?->name,
-            'category_name' => $project->category?->name,
-            'province_name' => $project->city?->province_name,
-            'city_summary' => $project->city?->city_summary,
-            'hero_media' => $project->heroMedia,
+            'service_id' => $service->id,
+            'city_id' => $city->id,
+            'category_id' => $category->id,
+            'service_name' => $service->title ?? '',
+            'city_name' => $city->title ?? '',
+            'category_name' => $category->name ?? '',
+            'province_name' => $city->data['province_name'] ?? '',
+            'city_summary' => $city->data['city_summary'] ?? '',
+            'hero_media' => $project->data['hero_media_id'] ? \App\Models\MediaAsset::find($project->data['hero_media_id']) : null,
         ]);
     }
 
     public function serviceCityPage(
-        ServiceCityPage $page,
+        Entry $page,
         ?Collection $cityPages = null,
         ?Collection $faqs = null,
         ?Collection $generalFaqs = null,
         ?Collection $cityFaqs = null
     ): array {
+        $service = clone $page->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service') ?? new Entry;
+        $city = clone $page->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city') ?? new Entry;
+        $category = clone $service->terms->first() ?? new Term;
+
         return $this->compose([
             'page' => $page,
-            'service' => $page->service,
-            'city' => $page->city,
-            'category' => $page->service->category ?? null,
+            'service' => $service,
+            'city' => $city,
+            'category' => $category,
             'page_id' => $page->id,
-            'service_id' => $page->service?->id,
-            'city_id' => $page->city?->id,
-            'category_id' => $page->service->category?->id,
-            'service_name' => $page->service?->name,
-            'city_name' => $page->city?->name,
-            'category_name' => $page->service->category?->name,
-            'province_name' => $page->city?->province_name,
-            'city_summary' => $page->city?->city_summary,
-            'hero_media' => $page->heroMedia,
+            'service_id' => $service->id,
+            'city_id' => $city->id,
+            'category_id' => $category->id,
+            'service_name' => $service->title ?? '',
+            'city_name' => $city->title ?? '',
+            'category_name' => $category->name ?? '',
+            'province_name' => $city->data['province_name'] ?? '',
+            'city_summary' => $city->data['city_summary'] ?? '',
+            'hero_media' => $page->data['hero_media_id'] ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
             'cityPages' => $cityPages ?? collect(),
             'faqs' => $faqs ?? collect(),
             'generalFaqs' => $generalFaqs ?? collect(),
