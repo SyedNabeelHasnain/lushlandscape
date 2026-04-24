@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Concerns\HandlesAjaxRequests;
@@ -110,6 +112,8 @@ class EntryController extends Controller
             return $entry;
         });
 
+        event('entry.saved', $entry);
+
         if ($this->isAjax($request)) {
             return $this->jsonSuccess('Entry created.', [], route('admin.entries.edit', $entry));
         }
@@ -190,6 +194,8 @@ class EntryController extends Controller
             BlockBuilderService::saveUnifiedBlocks('entry', $entry->id, $blocksData);
         });
 
+        event('entry.saved', $entry);
+
         if ($this->isAjax($request)) {
             return $this->jsonSuccess('Entry updated.');
         }
@@ -208,6 +214,8 @@ class EntryController extends Controller
             }
             $entry->delete();
         });
+
+        event('entry.deleted', $entry);
 
         if ($this->isAjax($request)) {
             return $this->jsonSuccess('Entry deleted.');

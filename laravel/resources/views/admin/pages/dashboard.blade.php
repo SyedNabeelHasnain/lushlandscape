@@ -11,24 +11,10 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
         <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mb-3">
-            <i data-lucide="map-pin" class="w-4.5 h-4.5 text-forest"></i>
+            <i data-lucide="layers" class="w-4.5 h-4.5 text-forest"></i>
         </div>
-        <p class="text-2xl font-bold text-text">{{ $stats['cities'] }}</p>
-        <p class="text-xs text-text-secondary mt-0.5">Active Cities</p>
-    </div>
-    <div class="bg-white rounded-2xl p-5 border border-gray-100">
-        <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mb-3">
-            <i data-lucide="wrench" class="w-4.5 h-4.5 text-forest"></i>
-        </div>
-        <p class="text-2xl font-bold text-text">{{ $stats['services'] }}</p>
-        <p class="text-xs text-text-secondary mt-0.5">Published Services</p>
-    </div>
-    <div class="bg-white rounded-2xl p-5 border border-gray-100">
-        <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mb-3">
-            <i data-lucide="file-text" class="w-4.5 h-4.5 text-forest"></i>
-        </div>
-        <p class="text-2xl font-bold text-text">{{ $stats['active_pages'] }} <span class="text-sm font-normal text-text-secondary">/ {{ $stats['total_pages'] }}</span></p>
-        <p class="text-xs text-text-secondary mt-0.5">City-Service Pages</p>
+        <p class="text-2xl font-bold text-text">{{ $stats['entries'] }} <span class="text-sm font-normal text-text-secondary">/ {{ $stats['total_entries'] }}</span></p>
+        <p class="text-xs text-text-secondary mt-0.5">Published Entries</p>
     </div>
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
         <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mb-3">
@@ -39,24 +25,10 @@
     </div>
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
         <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mb-3">
-            <i data-lucide="pen-line" class="w-4.5 h-4.5 text-forest"></i>
-        </div>
-        <p class="text-2xl font-bold text-text">{{ $stats['blog_posts'] }}</p>
-        <p class="text-xs text-text-secondary mt-0.5">Blog Posts</p>
-    </div>
-    <div class="bg-white rounded-2xl p-5 border border-gray-100">
-        <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mb-3">
             <i data-lucide="star" class="w-4.5 h-4.5 text-forest"></i>
         </div>
         <p class="text-2xl font-bold text-text">{{ $stats['reviews'] }}</p>
         <p class="text-xs text-text-secondary mt-0.5">Published Reviews</p>
-    </div>
-    <div class="bg-white rounded-2xl p-5 border border-gray-100">
-        <div class="w-9 h-9 bg-green-50 rounded-xl flex items-center justify-center mb-3">
-            <i data-lucide="image" class="w-4.5 h-4.5 text-forest"></i>
-        </div>
-        <p class="text-2xl font-bold text-text">{{ $stats['portfolio'] }}</p>
-        <p class="text-xs text-text-secondary mt-0.5">Portfolio Projects</p>
     </div>
 </div>
 

@@ -14,11 +14,11 @@
             @php
         // Pre-compute which groups are active so sidebar auto-opens the right group
         $g = [
-            'faqs' => request()->routeIs('admin.faq-categories.*', 'admin.faqs.*'),
-            'reviews' => request()->routeIs('admin.review-categories.*', 'admin.reviews.*'),
-            'content' => request()->routeIs('admin.static-pages.*', 'admin.popups.*', 'admin.home-page.*'),
+            'faqs' => request()->routeIs('admin.faqs.*'),
+            'reviews' => request()->routeIs('admin.reviews.*'),
+            'content' => request()->routeIs('admin.popups.*', 'admin.home-page.*'),
             'forms' => request()->routeIs('admin.forms.*', 'admin.submissions.*'),
-            'system' => request()->routeIs('admin.redirects.*', 'admin.security-rules.*'),
+            'system' => request()->routeIs('admin.redirects.*', 'admin.security-rules.*', 'admin.webhooks.*'),
         ];
     @endphp
 
@@ -107,11 +107,6 @@
                         :class="g.faqs ? 'rotate-90' : ''"></i>
                 </button>
                 <div x-show="g.faqs" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
-                    <a href="{{ route('admin.faq-categories.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.faq-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
-                        FAQ Categories
-                    </a>
                     <a href="{{ route('admin.faqs.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.faqs.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="message-circle-question" class="w-3.5 h-3.5 shrink-0"></i>
@@ -131,11 +126,6 @@
                         :class="g.reviews ? 'rotate-90' : ''"></i>
                 </button>
                 <div x-show="g.reviews" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
-                    <a href="{{ route('admin.review-categories.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.review-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
-                        Categories
-                    </a>
                     <a href="{{ route('admin.reviews.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.reviews.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="thumbs-up" class="w-3.5 h-3.5 shrink-0"></i>
@@ -194,11 +184,6 @@
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.page-builders.*') && request()->route('page') === 'consultation' ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="clipboard-signature" class="w-3.5 h-3.5 shrink-0"></i>
                         Consultation Page
-                    </a>
-                    <a href="{{ route('admin.static-pages.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.static-pages.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="file-text" class="w-3.5 h-3.5 shrink-0"></i>
-                        Static Pages
                     </a>
                     <a href="{{ route('admin.popups.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.popups.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
@@ -298,6 +283,11 @@
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.security-rules.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
                         <i data-lucide="shield-alert" class="w-3.5 h-3.5 shrink-0"></i>
                         Security Rules
+                    </a>
+                    <a href="{{ route('admin.webhooks.index') }}"
+                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.webhooks.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
+                        <i data-lucide="webhook" class="w-3.5 h-3.5 shrink-0"></i>
+                        Webhooks
                     </a>
                     <a href="{{ route('admin.import-export.index') }}"
                         class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.import-export.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">

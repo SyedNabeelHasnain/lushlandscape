@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -89,6 +91,8 @@ class FormSubmitController extends Controller
                 'campaign' => $request->input('utm_campaign'),
             ],
         ]);
+
+        event('form.submitted', $submission);
 
         $siteName = Setting::get('site_name', 'Super WMS');
         $appUrl = rtrim(config('app.url'), '/');

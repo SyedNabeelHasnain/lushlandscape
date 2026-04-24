@@ -10,17 +10,33 @@
     $classes = $styleClasses[$style] ?? $styleClasses['default'];
 @endphp
 @if(!empty($items))
-<div class="space-y-2">
+<div class="space-y-2" x-data="{ activeIndex: null }">
     @foreach($items as $i => $item)
-    <details class="group border rounded-lg {{ $classes }}" {{ ($item['open'] ?? false) ? 'open' : '' }}>
-        <summary class="flex items-center justify-between cursor-pointer p-5 font-semibold text-text list-none">
-            {{ $item['title'] ?? '' }}
-            <i data-lucide="chevron-down" class="w-5 h-5 text-text-secondary transition-transform group-open:rotate-180"></i>
-        </summary>
-        <div class="px-5 pb-5 text-text-secondary leading-relaxed">
+    @php
+        $itemId = 'accordion-item-' . uniqid();
+    @endphp
+    <div class="border rounded-lg {{ $classes }} overflow-hidden">
+        <button 
+            type="button"
+            class="w-full flex items-center justify-between text-left p-5 font-semibold text-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest transition-colors"
+            :aria-expanded="activeIndex === {{ $i }}"
+            aria-controls="{{ $itemId }}"
+            @click="activeIndex === {{ $i }} ? activeIndex = null : activeIndex = {{ $i }}"
+        >
+            <span>{{ $item['title'] ?? '' }}</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-text-secondary transition-transform" :class="activeIndex === {{ $i }} ? 'rotate-180' : ''"></i>
+        </button>
+        <div 
+            id="{{ $itemId }}"
+            x-show="activeIndex === {{ $i }}"
+            x-collapse
+            x-cloak
+            role="region"
+            class="px-5 pb-5 text-text-secondary leading-relaxed"
+        >
             {!! $item['content'] ?? '' !!}
         </div>
-    </details>
+    </div>
     @endforeach
 </div>
 @endif

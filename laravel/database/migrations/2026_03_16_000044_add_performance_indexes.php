@@ -66,50 +66,69 @@ return new class extends Migration
             $table->index(['page_type', 'page_id', 'is_enabled'], 'idx_content_blocks_lookup');
         });
 
-        // FULLTEXT indexes for search functionality
-        Schema::table('services', function (Blueprint $table) {
-            $table->fullText(['name', 'service_summary'], 'ft_services_search');
-        });
+        // FULLTEXT indexes for search functionality (if supported by driver)
+        if (DB::getDriverName() !== 'sqlite') {
+            Schema::table('services', function (Blueprint $table) {
+                $table->fullText(['name', 'service_summary'], 'ft_services_search');
+            });
 
-        Schema::table('cities', function (Blueprint $table) {
-            $table->fullText(['name', 'region_name'], 'ft_cities_search');
-        });
+            Schema::table('cities', function (Blueprint $table) {
+                $table->fullText(['name', 'region_name'], 'ft_cities_search');
+            });
 
-        Schema::table('blog_posts', function (Blueprint $table) {
-            $table->fullText(['title', 'excerpt'], 'ft_blog_posts_search');
-        });
+            Schema::table('blog_posts', function (Blueprint $table) {
+                $table->fullText(['title', 'excerpt'], 'ft_blog_posts_search');
+            });
 
-        Schema::table('faqs', function (Blueprint $table) {
-            $table->fullText(['question', 'answer'], 'ft_faqs_search');
-        });
+            Schema::table('faqs', function (Blueprint $table) {
+                $table->fullText(['question', 'answer'], 'ft_faqs_search');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->dropIndex('idx_services_status_sort');
-            $table->dropFullText('ft_services_search');
-        });
+        if (DB::getDriverName() !== 'sqlite') {
+            Schema::table('services', function (Blueprint $table) {
+                $table->dropIndex('idx_services_status_sort');
+                $table->dropFullText('ft_services_search');
+            });
+            Schema::table('cities', function (Blueprint $table) {
+                $table->dropIndex('idx_cities_status_sort');
+                $table->dropFullText('ft_cities_search');
+            });
+            Schema::table('blog_posts', function (Blueprint $table) {
+                $table->dropIndex('idx_blog_posts_status_published');
+                $table->dropFullText('ft_blog_posts_search');
+            });
+            Schema::table('faqs', function (Blueprint $table) {
+                $table->dropIndex('idx_faqs_status_order');
+                $table->dropIndex('idx_faqs_category_order');
+                $table->dropFullText('ft_faqs_search');
+            });
+        } else {
+            Schema::table('services', function (Blueprint $table) {
+                $table->dropIndex('idx_services_status_sort');
+            });
+            Schema::table('cities', function (Blueprint $table) {
+                $table->dropIndex('idx_cities_status_sort');
+            });
+            Schema::table('blog_posts', function (Blueprint $table) {
+                $table->dropIndex('idx_blog_posts_status_published');
+            });
+            Schema::table('faqs', function (Blueprint $table) {
+                $table->dropIndex('idx_faqs_status_order');
+                $table->dropIndex('idx_faqs_category_order');
+            });
+        }
+        
         Schema::table('service_categories', function (Blueprint $table) {
             $table->dropIndex('idx_service_categories_status_sort');
-        });
-        Schema::table('cities', function (Blueprint $table) {
-            $table->dropIndex('idx_cities_status_sort');
-            $table->dropFullText('ft_cities_search');
         });
         Schema::table('service_city_pages', function (Blueprint $table) {
             $table->dropIndex('idx_scp_is_active');
             $table->dropIndex('idx_scp_city_active');
             $table->dropIndex('idx_scp_service_active');
-        });
-        Schema::table('blog_posts', function (Blueprint $table) {
-            $table->dropIndex('idx_blog_posts_status_published');
-            $table->dropFullText('ft_blog_posts_search');
-        });
-        Schema::table('faqs', function (Blueprint $table) {
-            $table->dropIndex('idx_faqs_status_order');
-            $table->dropIndex('idx_faqs_category_order');
-            $table->dropFullText('ft_faqs_search');
         });
         Schema::table('reviews', function (Blueprint $table) {
             $table->dropIndex('idx_reviews_status_sort');

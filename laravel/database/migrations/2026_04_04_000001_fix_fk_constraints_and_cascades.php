@@ -21,16 +21,18 @@ return new class extends Migration
         });
 
         // Change faqs.category_id from cascadeOnDelete to restrictOnDelete
-        Schema::table('faqs', function (Blueprint $table) {
-            $table->dropForeign('faqs_category_id_foreign');
-            $table->foreign('category_id')->references('id')->on('faq_categories')->restrictOnDelete();
-        });
+        if (\Illuminate\Support\Facades\DB::getDriverName() !== 'sqlite') {
+            Schema::table('faqs', function (Blueprint $table) {
+                $table->dropForeign('faqs_category_id_foreign');
+                $table->foreign('category_id')->references('id')->on('faq_categories')->restrictOnDelete();
+            });
 
-        // Change form_submissions.form_id from cascadeOnDelete to restrictOnDelete
-        Schema::table('form_submissions', function (Blueprint $table) {
-            $table->dropForeign('form_submissions_form_id_foreign');
-            $table->foreign('form_id')->references('id')->on('forms')->restrictOnDelete();
-        });
+            // Change form_submissions.form_id from cascadeOnDelete to restrictOnDelete
+            Schema::table('form_submissions', function (Blueprint $table) {
+                $table->dropForeign('form_submissions_form_id_foreign');
+                $table->foreign('form_id')->references('id')->on('forms')->restrictOnDelete();
+            });
+        }
 
         // Add index on login_attempts.ip_address
         Schema::table('login_attempts', function (Blueprint $table) {
@@ -45,17 +47,19 @@ return new class extends Migration
             $table->dropIndex(['ip_address']);
         });
 
-        // Restore form_submissions.form_id to cascadeOnDelete
-        Schema::table('form_submissions', function (Blueprint $table) {
-            $table->dropForeign('form_submissions_form_id_foreign');
-            $table->foreign('form_id')->references('id')->on('forms')->cascadeOnDelete();
-        });
+        if (\Illuminate\Support\Facades\DB::getDriverName() !== 'sqlite') {
+            // Restore form_submissions.form_id to cascadeOnDelete
+            Schema::table('form_submissions', function (Blueprint $table) {
+                $table->dropForeign('form_submissions_form_id_foreign');
+                $table->foreign('form_id')->references('id')->on('forms')->cascadeOnDelete();
+            });
 
-        // Restore faqs.category_id to cascadeOnDelete
-        Schema::table('faqs', function (Blueprint $table) {
-            $table->dropForeign('faqs_category_id_foreign');
-            $table->foreign('category_id')->references('id')->on('faq_categories')->cascadeOnDelete();
-        });
+            // Restore faqs.category_id to cascadeOnDelete
+            Schema::table('faqs', function (Blueprint $table) {
+                $table->dropForeign('faqs_category_id_foreign');
+                $table->foreign('category_id')->references('id')->on('faq_categories')->cascadeOnDelete();
+            });
+        }
 
         // Remove FK + index on service_categories.hero_media_id
         Schema::table('service_categories', function (Blueprint $table) {

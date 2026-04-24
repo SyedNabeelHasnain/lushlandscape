@@ -22,7 +22,9 @@
         <tbody class="divide-y divide-stone/20">
             @foreach($taxonomies as $tax)
             <tr class="group hover:bg-stone/5 transition-colors">
-                <td class="py-4 font-medium text-forest">{{ $tax->name }}</td>
+                <td class="py-4 font-medium text-forest">
+                    <a href="{{ route('admin.taxonomies.terms.index', $tax) }}" class="hover:text-accent">{{ $tax->name }}</a>
+                </td>
                 <td class="py-4 text-stone/70">{{ $tax->slug }}</td>
                 <td class="py-4">
                     <span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-forest/10 text-forest">
@@ -30,7 +32,8 @@
                     </span>
                 </td>
                 <td class="py-4 text-right">
-                    <a href="{{ route('admin.taxonomies.edit', $tax) }}" class="text-forest hover:text-accent mr-3">Edit</a>
+                    <a href="{{ route('admin.taxonomies.terms.index', $tax) }}" class="text-forest hover:text-accent mr-3">Manage Terms</a>
+                    <a href="{{ route('admin.taxonomies.edit', $tax) }}" class="text-forest hover:text-accent mr-3">Edit Schema</a>
                     <form action="{{ route('admin.taxonomies.destroy', $tax) }}" method="POST" class="inline" onsubmit="return confirm('Delete this taxonomy?')">
                         @csrf
                         @method('DELETE')

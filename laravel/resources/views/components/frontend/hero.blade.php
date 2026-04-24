@@ -51,7 +51,7 @@
 
 <section class="relative overflow-hidden {{ $heightClass }} flex {{ $contentAlignClass }} bg-forest" data-hero>
 
-    <div class="absolute inset-0 z-[1] pointer-events-none"
+    <div class="absolute inset-0 z-[1] pointer-events-none" aria-hidden="true"
         @if($overlayPreset === 'none')
             style="background:transparent;"
         @elseif($overlayPreset === 'solid')
@@ -63,7 +63,7 @@
 
     {{-- ── Video background ──────────────────────────────────── --}}
     @if($hasVideo)
-    <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 z-0" aria-hidden="true">
         @if(($backgroundVideo['type'] ?? null) === 'video')
             <video class="w-full h-full object-cover parallax-hero" autoplay muted loop playsinline data-hero-video>
                 <source src="{{ $backgroundVideo['src'] }}" type="{{ $backgroundVideo['mime'] ?? 'video/mp4' }}">
@@ -111,11 +111,11 @@
         
         <div class="hero-pagination absolute bottom-12 left-0 right-0 flex justify-center z-30"></div>
         
-        <button type="button" class="hero-prev absolute left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/5 hover:bg-white/12 border border-white/10 flex items-center justify-center transition-all duration-400 group" aria-label="Previous slide">
-            <i data-lucide="chevron-left" class="w-5 h-5 text-white/70 group-hover:text-white transition-colors"></i>
+        <button type="button" class="hero-prev absolute left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/5 hover:bg-white/12 border border-white/10 flex items-center justify-center transition-all duration-400 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Previous slide">
+            <i data-lucide="chevron-left" class="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true"></i>
         </button>
-        <button type="button" class="hero-next absolute right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/5 hover:bg-white/12 border border-white/10 flex items-center justify-center transition-all duration-400 group" aria-label="Next slide">
-            <i data-lucide="chevron-right" class="w-5 h-5 text-white/70 group-hover:text-white transition-colors"></i>
+        <button type="button" class="hero-next absolute right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/5 hover:bg-white/12 border border-white/10 flex items-center justify-center transition-all duration-400 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Next slide">
+            <i data-lucide="chevron-right" class="w-5 h-5 text-white/70 group-hover:text-white transition-colors" aria-hidden="true"></i>
         </button>
 
         {{-- Desktop Caption (Integrated into pagination area or separate) --}}
@@ -128,7 +128,7 @@
 
     {{-- ── Single image background ────────────────────────────── --}}
     @elseif($isSingle)
-    <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 z-0" aria-hidden="true">
         <x-frontend.media
             :asset="$singleImg"
             class="w-full h-full object-cover parallax-hero"
@@ -139,7 +139,7 @@
 
     {{-- ── No media fallback ─────────────────────────────────── --}}
     @else
-    <div class="absolute inset-0 z-0 bg-forest flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0 bg-forest flex items-center justify-center overflow-hidden" aria-hidden="true">
         <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
     </div>
     @endif
@@ -174,7 +174,7 @@
 
                 @if($phone)
                 <a href="tel:{{ $phoneClean }}" class="btn-luxury btn-luxury-ghost text-sm px-10 py-4 max-sm:w-full max-sm:justify-center">
-                    <i data-lucide="phone" class="w-4 h-4"></i>Call {{ $phone }}
+                    <i data-lucide="phone" class="w-4 h-4" aria-hidden="true"></i>Call {{ $phone }}
                 </a>
                 @endif
             </div>

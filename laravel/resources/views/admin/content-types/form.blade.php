@@ -25,18 +25,26 @@
             <textarea name="description" class="field-ui w-full" rows="3">{{ old('description', $contentType->description) }}</textarea>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="field-wrapper">
+                <label class="block text-sm font-bold tracking-widest text-forest mb-2">Icon</label>
+                <input type="text" name="icon" value="{{ old('icon', $contentType->icon) }}" class="field-ui w-full" placeholder="e.g. file-text, image, wrench">
+                <p class="text-xs text-stone/50 mt-1">Lucide icon name for the sidebar.</p>
+            </div>
             <div class="field-wrapper">
                 <label class="block text-sm font-bold tracking-widest text-forest mb-2">Layout Template</label>
-                <input type="text" name="layout_template" value="{{ old('layout_template', $contentType->layout_template) }}" class="field-ui w-full">
+                <input type="text" name="layout_template" value="{{ old('layout_template', $contentType->layout_template) }}" class="field-ui w-full" placeholder="e.g. service-city-page">
             </div>
-            <div class="field-wrapper flex items-center pt-8">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="field-wrapper flex items-center">
                 <label class="flex items-center gap-2 cursor-pointer text-sm font-medium text-forest">
                     <input type="checkbox" name="is_hierarchical" value="1" {{ old('is_hierarchical', $contentType->is_hierarchical) ? 'checked' : '' }} class="rounded border-stone/50 text-forest focus:ring-forest">
                     Is Hierarchical
                 </label>
             </div>
-            <div class="field-wrapper flex items-center pt-8">
+            <div class="field-wrapper flex items-center">
                 <label class="flex items-center gap-2 cursor-pointer text-sm font-medium text-forest">
                     <input type="checkbox" name="has_archives" value="1" {{ old('has_archives', $contentType->has_archives) ? 'checked' : '' }} class="rounded border-stone/50 text-forest focus:ring-forest">
                     Has Archives

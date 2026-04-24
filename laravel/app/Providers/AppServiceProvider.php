@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Models\Setting;
@@ -7,9 +9,11 @@ use App\Models\ThemeLayout;
 use App\Services\BlockBuilderService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Listeners\WebhookEventSubscriber;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Event::subscribe(WebhookEventSubscriber::class);
+
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }

@@ -117,7 +117,17 @@ document.addEventListener('alpine:init', () => {
                 
                 this.formSuccess = result.success;
                 this.formMessage = result.message || 'Your submission has been received.';
-                if (result.success) form.reset();
+                if (result.success) {
+                    form.reset();
+                    // Push to global data layer for external analytics (GTM, Meta Pixel, etc.)
+                    if (window.WMS_DataLayer && typeof window.WMS_DataLayer.push === 'function') {
+                        window.WMS_DataLayer.push({
+                            'event': 'form_submission',
+                            'form_slug': this._formSlug,
+                            'form_id': this._formId
+                        });
+                    }
+                }
             } catch (err) {
                 this.formSuccess = false;
                 this.formMessage = err.message || 'Something went wrong. Please try again or call us directly.';

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -26,8 +28,8 @@ class ContentTypeController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:content_types,slug',
             'description' => 'nullable|string|max:500',
-            'icon' => 'nullable|string|max:100',
-            'layout_template' => 'nullable|string|max:100',
+            'icon' => 'nullable|string|max:50',
+            'layout_template' => 'nullable|string|max:255',
             'is_hierarchical' => 'boolean',
             'has_archives' => 'boolean',
             'schema_json' => 'nullable|json',
@@ -53,8 +55,8 @@ class ContentTypeController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:content_types,slug,' . $contentType->id,
             'description' => 'nullable|string|max:500',
-            'icon' => 'nullable|string|max:100',
-            'layout_template' => 'nullable|string|max:100',
+            'icon' => 'nullable|string|max:50',
+            'layout_template' => 'nullable|string|max:255',
             'is_hierarchical' => 'boolean',
             'has_archives' => 'boolean',
             'schema_json' => 'nullable|json',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -12,25 +14,17 @@ class DashboardController extends Controller
     public function index()
     {
         $counts = DB::table(DB::raw('
-            (SELECT "cities" as type, COUNT(*) as count FROM cities WHERE status = "published"
-            UNION ALL SELECT "services", COUNT(*) FROM services WHERE status = "published"
-            UNION ALL SELECT "active_pages", COUNT(*) FROM service_city_pages WHERE is_active = 1
-            UNION ALL SELECT "total_pages", COUNT(*) FROM service_city_pages
+            (SELECT "entries" as type, COUNT(*) as count FROM entries WHERE status = "published"
+            UNION ALL SELECT "total_entries", COUNT(*) FROM entries
             UNION ALL SELECT "submissions", COUNT(*) FROM form_submissions WHERE status = "new"
-            UNION ALL SELECT "blog_posts", COUNT(*) FROM blog_posts WHERE status = "published"
-            UNION ALL SELECT "reviews", COUNT(*) FROM reviews WHERE status = "published"
-            UNION ALL SELECT "portfolio", COUNT(*) FROM portfolio_projects WHERE status = "published") as counts
+            UNION ALL SELECT "reviews", COUNT(*) FROM reviews WHERE status = "published") as counts
         '))->pluck('count', 'type')->all();
 
         $stats = [
-            'cities' => $counts['cities'] ?? 0,
-            'services' => $counts['services'] ?? 0,
-            'active_pages' => $counts['active_pages'] ?? 0,
-            'total_pages' => $counts['total_pages'] ?? 0,
+            'entries' => $counts['entries'] ?? 0,
+            'total_entries' => $counts['total_entries'] ?? 0,
             'submissions' => $counts['submissions'] ?? 0,
-            'blog_posts' => $counts['blog_posts'] ?? 0,
             'reviews' => $counts['reviews'] ?? 0,
-            'portfolio' => $counts['portfolio'] ?? 0,
         ];
 
         $recentSubmissions = FormSubmission::with('form')

@@ -79,19 +79,19 @@
                         <div class="mt-8 space-y-4">
                             @if($contactPhone)
                                 <a href="tel:{{ preg_replace('/[^+\d]/', '', $contactPhone) }}" class="flex items-center gap-3 {{ $tone === 'cream' ? 'text-ink' : 'text-white/80' }}">
-                                    <i data-lucide="phone" class="w-4 h-4 text-accent"></i>
+                                    <i data-lucide="phone" class="w-4 h-4 text-accent" aria-hidden="true"></i>
                                     <span>{{ $contactPhone }}</span>
                                 </a>
                             @endif
                             @if($contactEmail)
                                 <a href="mailto:{{ $contactEmail }}" class="flex items-center gap-3 {{ $tone === 'cream' ? 'text-ink' : 'text-white/80' }}">
-                                    <i data-lucide="mail" class="w-4 h-4 text-accent"></i>
+                                    <i data-lucide="mail" class="w-4 h-4 text-accent" aria-hidden="true"></i>
                                     <span>{{ $contactEmail }}</span>
                                 </a>
                             @endif
                             @if($contactAddress)
                                 <div class="flex items-start gap-3 {{ $splitInfoSubClass }}">
-                                    <i data-lucide="map-pin" class="w-4 h-4 text-accent mt-0.5"></i>
+                                    <i data-lucide="map-pin" class="w-4 h-4 text-accent mt-0.5" aria-hidden="true"></i>
                                     <span class="whitespace-pre-line">{{ $contactAddress }}</span>
                                 </div>
                             @endif

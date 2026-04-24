@@ -159,7 +159,7 @@
                                     {{ $requiresHtmlValidation && $index === 0 ? 'required' : '' }}
                                 >
                                 <span class="field-choice-panel rounded-2xl" data-tone="{{ $tone }}">
-                                    <span class="field-choice-indicator"></span>
+                                    <span class="field-choice-indicator" aria-hidden="true"></span>
                                     <span class="min-w-0">
                                         <span class="block text-sm font-semibold {{ $tone === 'dark' ? 'text-white' : 'text-ink' }}">{{ $option['label'] }}</span>
                                     </span>
@@ -180,7 +180,7 @@
                                     class="field-choice-input peer sr-only"
                                 >
                                 <span class="field-choice-panel rounded-2xl" data-tone="{{ $tone }}">
-                                    <span class="field-choice-indicator"></span>
+                                    <span class="field-choice-indicator" aria-hidden="true"></span>
                                     <span class="min-w-0">
                                         <span class="block text-sm font-semibold {{ $tone === 'dark' ? 'text-white' : 'text-ink' }}">{{ $option['label'] }}</span>
                                     </span>
@@ -200,7 +200,7 @@
                             {{ $requiresHtmlValidation ? 'required' : '' }}
                         >
                         <span class="field-choice-panel rounded-2xl" data-tone="{{ $tone }}">
-                            <span class="field-choice-indicator"></span>
+                            <span class="field-choice-indicator" aria-hidden="true"></span>
                             <span class="min-w-0">
                                 <span class="block text-sm font-semibold {{ $tone === 'dark' ? 'text-white' : 'text-ink' }}">{{ $field->label }}</span>
                                 @if($field->help_text)

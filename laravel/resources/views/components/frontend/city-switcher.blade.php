@@ -12,8 +12,8 @@
 <div x-data="{ open: false }" class="relative" x-on:click.outside="open = false" x-on:keydown.escape.window="open = false">
     <button type="button"
             x-on:click="open = !open"
-            class="w-full flex items-center justify-between gap-2 bg-white border border-stone px-4 py-3 text-sm text-ink hover:border-forest transition group"
-            aria-haspopup="listbox" :aria-expanded="open">
+            class="w-full flex items-center justify-between gap-2 bg-white border border-stone px-4 py-3 text-sm text-ink hover:border-forest transition group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest"
+            aria-haspopup="listbox" :aria-expanded="open ? 'true' : 'false'">
         <span class="flex items-center gap-2">
             <i data-lucide="map-pin" class="w-4 h-4 text-forest shrink-0"></i>
             <span class="font-medium">{{ $currentCity?->name ?? 'Select City' }}</span>

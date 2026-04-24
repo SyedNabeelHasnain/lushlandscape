@@ -33,6 +33,7 @@
         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
         x-on:click.stop
+        role="document"
     >
         <button x-on:click="dismiss()" type="button"
                 class="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-stone-light hover:bg-stone text-text-secondary hover:text-ink transition"

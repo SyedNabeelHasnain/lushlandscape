@@ -63,6 +63,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     // Super WMS Dynamic Core
     Route::resource('content-types', \App\Http\Controllers\Admin\ContentTypeController::class)->except(['show']);
     Route::resource('taxonomies', \App\Http\Controllers\Admin\TaxonomyController::class)->except(['show']);
+    Route::resource('taxonomies.terms', \App\Http\Controllers\Admin\TermController::class)->except(['show']);
     Route::resource('entries', \App\Http\Controllers\Admin\EntryController::class)->except(['show']);
     
     // Legacy Routes (To be deprecated)
@@ -85,6 +86,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::resource('popups', PopupController::class)->except(['show']);
     Route::resource('redirects', RedirectController::class)->except(['show']);
     Route::resource('security-rules', SecurityRuleController::class)->except(['show']);
+    Route::resource('webhooks', \App\Http\Controllers\Admin\WebhookController::class)->except(['show']);
     Route::get('search-analytics', [SearchAnalyticsController::class, 'index'])->name('search-analytics');
     Route::get('home-page', [HomePageController::class, 'edit'])->name('home-page.edit');
     Route::put('home-page', [HomePageController::class, 'update'])->name('home-page.update');

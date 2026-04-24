@@ -70,11 +70,27 @@ To ensure the WMS is infinitely scalable for generations without requiring struc
 1. Build the new `ContentType`, `Entry`, `Taxonomy`, and `RouteAlias` models and migrations.
 2. Build the Universal `EntityController` to handle dynamic routing.
 
-### Phase 4: Migration & Teardown
+### Phase 4: Migration & Teardown (COMPLETED)
 1. Write a custom migration command to port existing Lush Landscape data (Services, Cities, Portfolio) into the new `Entry` system.
 2. Migrate all `PageBlock` attachments to the new `Entry` IDs.
 3. Safely drop the old hardcoded tables and controllers.
 
+### Phase 5: Admin CMS Overhaul (COMPLETED)
+1. Build dynamic `ContentTypeController` and `EntryController` forms using JSON Schema rendering.
+2. Implement global `TaxonomyController` and `TermController` for managing categories and tags dynamically.
+3. Delete all legacy Admin Controllers (`ServiceCategoryController`, `CityController`, etc.) and Blade Views.
+4. Rewire the Admin Dashboard sidebar and metrics to use the new `entries` table and dynamic Lucide Icons.
+
+### Phase 6: Webhooks, Events & Decoupled Integrations (COMPLETED)
+1. Implement the generic Event system (Actions/Filters).
+2. Refactor existing hardcoded analytics (GTM, FB) into a global `WMS_DataLayer`.
+3. Create Webhook system for triggering external rebuilds (e.g. Vercel) or notifying CRMs when entries change.
+
+### Phase 7: Phase 0/1/2 Backlog Sweep (COMPLETED)
+1. Finalize the Tailwind CSS variable extraction (Phase 2).
+2. Complete WCAG accessibility audits on Blade components (Phase 1).
+3. Ensure absolute compliance with PHP 8.4/8.5 types.
+
 ---
 *Document Version: 1.2 (Enterprise Architectural Update)*
-*Status: AWAITING APPROVAL*
+*Status: COMPLETED*

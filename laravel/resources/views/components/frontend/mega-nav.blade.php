@@ -75,7 +75,7 @@
                     class="relative w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 rounded-sm group" 
                     aria-controls="mobile-menu"
                     aria-label="Toggle mobile menu" 
-                    :aria-expanded="mobileOpen.toString()">
+                    :aria-expanded="mobileOpen ? 'true' : 'false'">
                 <span class="w-6 h-[2px] bg-forest block transition-all duration-300 origin-center" :class="mobileOpen ? 'rotate-45 translate-y-[8px]' : ''"></span>
                 <span class="w-6 h-[2px] bg-forest block transition-all duration-300" :class="mobileOpen ? 'opacity-0' : ''"></span>
                 <span class="w-6 h-[2px] bg-forest block transition-all duration-300 origin-center" :class="mobileOpen ? '-rotate-45 -translate-y-[8px]' : ''"></span>

@@ -12,6 +12,7 @@
         'trust'         => ['icon' => 'star',             'label' => 'Trust & Social'],
         'social'        => ['icon' => 'share-2',          'label' => 'Social Links'],
         'integrations'  => ['icon' => 'plug',             'label' => 'Integrations'],
+        'analytics'     => ['icon' => 'bar-chart-2',      'label' => 'Analytics'],
         'seo'           => ['icon' => 'search',           'label' => 'SEO'],
         'theme'         => ['icon' => 'palette',          'label' => 'Theme & Branding'],
         'navigation'    => ['icon' => 'navigation',       'label' => 'Navigation'],
@@ -136,6 +137,17 @@
             <div class="space-y-5">
                 @foreach($settings->get('integrations', collect()) as $s)
                     <x-admin.form-input :name="$s->key" :label="$s->label ?? $s->key" :value="$s->value ?? ''" :tooltip="$settingTooltips[$s->key] ?? 'Integration key for ' . ($s->label ?? $s->key) . '. Keep this value confidential. Do not share publicly.'" />
+                @endforeach
+            </div>
+        </x-admin.card>
+    </div>
+
+    {{-- ===== ANALYTICS ===== --}}
+    <div x-show="tab === 'analytics'" x-cloak>
+        <x-admin.card title="Analytics & Tracking">
+            <div class="space-y-5">
+                @foreach($settings->get('analytics', collect()) as $s)
+                    <x-admin.form-input :name="$s->key" :label="$s->label ?? $s->key" :value="$s->value ?? ''" :tooltip="$settingTooltips[$s->key] ?? 'Global tracking configuration for ' . ($s->label ?? $s->key) . '. Automatically injected into the WMS DataLayer.'" />
                 @endforeach
             </div>
         </x-admin.card>
