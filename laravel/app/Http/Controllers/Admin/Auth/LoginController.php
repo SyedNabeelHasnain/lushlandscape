@@ -34,18 +34,18 @@ class LoginController extends Controller
 
             LoginAttempt::create([
                 'user_id' => Auth::id(),
-                'ip_address' => $request->ip(),
+                'ip_address' => $request->ip() ?? '127.0.0.1',
                 'status' => 'success',
-                'user_agent' => $request->userAgent(),
+                'user_agent' => substr($request->userAgent() ?? '', 0, 255),
             ]);
 
             return Redirect::intended(route('admin.dashboard'));
         }
 
         LoginAttempt::create([
-            'ip_address' => $request->ip(),
+            'ip_address' => $request->ip() ?? '127.0.0.1',
             'status' => 'failed',
-            'user_agent' => $request->userAgent(),
+            'user_agent' => substr($request->userAgent() ?? '', 0, 255),
         ]);
 
         return Redirect::back()->withErrors([

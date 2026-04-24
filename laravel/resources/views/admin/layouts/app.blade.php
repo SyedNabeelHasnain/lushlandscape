@@ -11,12 +11,9 @@
 
 <body class="bg-gray-50 min-h-screen overflow-x-hidden" x-data="{ sidebarOpen: false }" :class="sidebarOpen ? 'overflow-hidden lg:overflow-x-hidden' : ''">
 
-    @php
+            @php
         // Pre-compute which groups are active so sidebar auto-opens the right group
         $g = [
-            'services' => request()->routeIs('admin.service-categories.*', 'admin.services.*', 'admin.cities.*', 'admin.service-city-pages.*', 'admin.service-city-matrix'),
-            'blog' => request()->routeIs('admin.blog-categories.*', 'admin.blog-posts.*'),
-            'portfolio' => request()->routeIs('admin.portfolio-categories.*', 'admin.portfolio.*'),
             'faqs' => request()->routeIs('admin.faq-categories.*', 'admin.faqs.*'),
             'reviews' => request()->routeIs('admin.review-categories.*', 'admin.reviews.*'),
             'content' => request()->routeIs('admin.static-pages.*', 'admin.popups.*', 'admin.home-page.*'),
@@ -85,91 +82,13 @@
             </div>
 
             {{-- Services Group (Categories, Services, Cities, City Pages, Matrix) --}}
-            <div>
-                <button type="button" x-on:click="g.services = !g.services"
-                    class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition"
-                    :class="g.services ? 'text-white bg-sidebar-hover' : 'text-white/75 hover:text-white hover:bg-sidebar-hover'">
-                    <i data-lucide="wrench" class="w-4 h-4 shrink-0"></i>
-                    <span class="flex-1 text-left font-medium">Services</span>
-                    <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
-                        :class="g.services ? 'rotate-90' : ''"></i>
-                </button>
-                <div x-show="g.services" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
-                    <a href="{{ route('admin.service-categories.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.service-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="layers" class="w-3.5 h-3.5 shrink-0"></i>
-                        Categories
-                    </a>
-                    <a href="{{ route('admin.services.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.services.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="list-checks" class="w-3.5 h-3.5 shrink-0"></i>
-                        Services
-                    </a>
-                    <a href="{{ route('admin.cities.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.cities.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="building-2" class="w-3.5 h-3.5 shrink-0"></i>
-                        Cities
-                    </a>
-                    <a href="{{ route('admin.service-city-pages.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.service-city-pages.*') && !request()->routeIs('admin.service-city-matrix') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="file-text" class="w-3.5 h-3.5 shrink-0"></i>
-                        City Pages
-                    </a>
-                    <a href="{{ route('admin.service-city-matrix') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.service-city-matrix') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="grid-3x3" class="w-3.5 h-3.5 shrink-0"></i>
-                        Matrix View
-                    </a>
-                </div>
-            </div>
+            {{-- Removed Legacy Routing --}}
 
             {{-- Blog Group --}}
-            <div>
-                <button type="button" x-on:click="g.blog = !g.blog"
-                    class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition"
-                    :class="g.blog ? 'text-white bg-sidebar-hover' : 'text-white/75 hover:text-white hover:bg-sidebar-hover'">
-                    <i data-lucide="pen-line" class="w-4 h-4 shrink-0"></i>
-                    <span class="flex-1 text-left font-medium">Blog</span>
-                    <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
-                        :class="g.blog ? 'rotate-90' : ''"></i>
-                </button>
-                <div x-show="g.blog" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
-                    <a href="{{ route('admin.blog-categories.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.blog-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
-                        Blog Categories
-                    </a>
-                    <a href="{{ route('admin.blog-posts.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.blog-posts.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="newspaper" class="w-3.5 h-3.5 shrink-0"></i>
-                        Blog Posts
-                    </a>
-                </div>
-            </div>
+            {{-- Removed Legacy Routing --}}
 
             {{-- Portfolio Group --}}
-            <div>
-                <button type="button" x-on:click="g.portfolio = !g.portfolio"
-                    class="w-full flex items-center gap-3 px-3 py-2.5 text-sm rounded-lg transition"
-                    :class="g.portfolio ? 'text-white bg-sidebar-hover' : 'text-white/75 hover:text-white hover:bg-sidebar-hover'">
-                    <i data-lucide="image" class="w-4 h-4 shrink-0"></i>
-                    <span class="flex-1 text-left font-medium">Portfolio</span>
-                    <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0 transition-transform duration-200"
-                        :class="g.portfolio ? 'rotate-90' : ''"></i>
-                </button>
-                <div x-show="g.portfolio" x-cloak x-collapse class="mt-0.5 ml-3 pl-3 border-l border-white/10 space-y-0.5">
-                    <a href="{{ route('admin.portfolio-categories.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.portfolio-categories.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="folder" class="w-3.5 h-3.5 shrink-0"></i>
-                        Categories
-                    </a>
-                    <a href="{{ route('admin.portfolio.index') }}"
-                        class="flex items-center gap-2.5 px-3 py-2 text-xs rounded-lg transition {{ request()->routeIs('admin.portfolio.*') ? 'bg-sidebar-active text-white font-medium' : 'text-white/65 hover:text-white hover:bg-sidebar-hover' }}">
-                        <i data-lucide="layout-grid" class="w-3.5 h-3.5 shrink-0"></i>
-                        Projects
-                    </a>
-                </div>
-            </div>
+            {{-- Removed Legacy Routing --}}
 
             {{-- FAQs Group --}}
             <div>

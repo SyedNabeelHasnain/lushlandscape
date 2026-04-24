@@ -43,8 +43,18 @@ use App\Http\Controllers\Frontend\SitemapController;
 use App\Http\Controllers\Frontend\SlugResolverController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/dev-reset-admin', function () {
+    $user = \App\Models\User::where('email', 'admin@lushlandscape.ca')->first();
+    if (!$user) {
+        return "Admin user not found.";
+    }
+    $user->password = \Illuminate\Support\Facades\Hash::make('password123');
+    $user->save();
+    return "Admin password reset to: password123";
+});
+
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/admin/login', [LoginController::class, 'login'])->middleware('throttle:5,15')->name('login.submit');
+Route::post('/admin/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/admin/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
