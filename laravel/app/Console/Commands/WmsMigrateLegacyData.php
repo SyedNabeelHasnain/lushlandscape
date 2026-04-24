@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use App\Models\ContentType;
+use App\Models\Entry;
+use App\Models\EntryRelation;
+use App\Models\RouteAlias;
 use App\Models\Taxonomy;
 use App\Models\Term;
-use App\Models\Entry;
-use App\Models\RouteAlias;
-use App\Models\EntryRelation;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class WmsMigrateLegacyData extends Command
 {
     protected $signature = 'wms:migrate-legacy';
+
     protected $description = 'Migrates legacy hardcoded tables into the Super WMS dynamic engine';
 
     public function handle()
@@ -63,17 +63,17 @@ class WmsMigrateLegacyData extends Command
                     'data' => [
                         'icon' => $cat->icon,
                         'hero_media_id' => $cat->hero_media_id,
-                        'status' => $cat->status
+                        'status' => $cat->status,
                     ],
                     'sort_order' => $cat->sort_order,
                 ]);
                 $serviceCatMap[$cat->id] = $term->id;
-                
+
                 RouteAlias::create([
-                    'slug' => 'services/' . $cat->slug_final,
+                    'slug' => 'services/'.$cat->slug_final,
                     'routable_type' => Term::class,
                     'routable_id' => $term->id,
-                    'is_active' => $cat->status === 'published'
+                    'is_active' => $cat->status === 'published',
                 ]);
             }
 
@@ -96,19 +96,19 @@ class WmsMigrateLegacyData extends Command
                         'default_meta_description' => $service->default_meta_description,
                         'icon' => $service->icon,
                         'hero_media_id' => $service->hero_media_id,
-                    ]
+                    ],
                 ]);
                 $serviceMap[$service->id] = $entry->id;
 
                 if ($service->category_id && isset($serviceCatMap[$service->category_id])) {
                     $entry->terms()->attach($serviceCatMap[$service->category_id]);
                     $catSlug = DB::table('service_categories')->where('id', $service->category_id)->value('slug_final');
-                    
+
                     RouteAlias::create([
-                        'slug' => 'services/' . $catSlug . '/' . $service->slug_final,
+                        'slug' => 'services/'.$catSlug.'/'.$service->slug_final,
                         'routable_type' => Entry::class,
                         'routable_id' => $entry->id,
-                        'is_active' => $service->status === 'published'
+                        'is_active' => $service->status === 'published',
                     ]);
                 }
 
@@ -138,15 +138,15 @@ class WmsMigrateLegacyData extends Command
                         'city_body' => json_decode($city->city_body, true),
                         'local_conditions_json' => json_decode($city->local_conditions_json, true),
                         'hero_media_id' => $city->hero_media_id,
-                    ]
+                    ],
                 ]);
                 $cityMap[$city->id] = $entry->id;
 
                 RouteAlias::create([
-                    'slug' => 'professional-' . $city->slug_final, // Used to be landscaping-
+                    'slug' => 'professional-'.$city->slug_final, // Used to be landscaping-
                     'routable_type' => Entry::class,
                     'routable_id' => $entry->id,
-                    'is_active' => $city->status === 'published'
+                    'is_active' => $city->status === 'published',
                 ]);
 
                 // Map PageBlocks
@@ -167,12 +167,12 @@ class WmsMigrateLegacyData extends Command
                     'sort_order' => $cat->sort_order,
                 ]);
                 $portCatMap[$cat->id] = $term->id;
-                
+
                 RouteAlias::create([
-                    'slug' => 'portfolio/category/' . $cat->slug,
+                    'slug' => 'portfolio/category/'.$cat->slug,
                     'routable_type' => Term::class,
                     'routable_id' => $term->id,
-                    'is_active' => $cat->status === 'published'
+                    'is_active' => $cat->status === 'published',
                 ]);
             }
 
@@ -194,7 +194,7 @@ class WmsMigrateLegacyData extends Command
                         'gallery_media_ids' => json_decode($project->gallery_media_ids, true),
                         'project_value_range' => $project->project_value_range,
                         'completion_date' => $project->completion_date,
-                    ]
+                    ],
                 ]);
 
                 if ($project->category_id && isset($portCatMap[$project->category_id])) {
@@ -205,7 +205,7 @@ class WmsMigrateLegacyData extends Command
                     EntryRelation::create([
                         'source_entry_id' => $entry->id,
                         'target_entry_id' => $serviceMap[$project->service_id],
-                        'relation_type' => 'portfolio_service'
+                        'relation_type' => 'portfolio_service',
                     ]);
                 }
 
@@ -213,15 +213,15 @@ class WmsMigrateLegacyData extends Command
                     EntryRelation::create([
                         'source_entry_id' => $entry->id,
                         'target_entry_id' => $cityMap[$project->city_id],
-                        'relation_type' => 'portfolio_city'
+                        'relation_type' => 'portfolio_city',
                     ]);
                 }
 
                 RouteAlias::create([
-                    'slug' => 'portfolio/' . $project->slug,
+                    'slug' => 'portfolio/'.$project->slug,
                     'routable_type' => Entry::class,
                     'routable_id' => $entry->id,
-                    'is_active' => $project->status === 'published'
+                    'is_active' => $project->status === 'published',
                 ]);
 
                 // Map PageBlocks
@@ -243,14 +243,14 @@ class WmsMigrateLegacyData extends Command
                         'excerpt' => $page->excerpt,
                         'meta_title' => $page->meta_title,
                         'meta_description' => $page->meta_description,
-                    ]
+                    ],
                 ]);
 
                 RouteAlias::create([
                     'slug' => $page->slug,
                     'routable_type' => Entry::class,
                     'routable_id' => $entry->id,
-                    'is_active' => $page->status === 'published'
+                    'is_active' => $page->status === 'published',
                 ]);
 
                 // Map PageBlocks
@@ -261,9 +261,9 @@ class WmsMigrateLegacyData extends Command
 
             // 9. Migrate ServiceCityPages (The Matrix)
             $matrixPages = DB::table('service_city_pages')->get();
-            $this->info('Migrating ' . count($matrixPages) . ' Matrix Pages...');
+            $this->info('Migrating '.count($matrixPages).' Matrix Pages...');
             foreach ($matrixPages as $page) {
-                $this->info('Processing Matrix Page: ' . $page->id);
+                $this->info('Processing Matrix Page: '.$page->id);
                 $entry = Entry::create([
                     'content_type_id' => $ctMatrix->id,
                     'title' => $page->page_title,
@@ -275,14 +275,14 @@ class WmsMigrateLegacyData extends Command
                         'h1' => $page->h1,
                         'local_intro' => $page->local_intro,
                         'hero_media_id' => $page->hero_media_id,
-                    ]
+                    ],
                 ]);
 
                 if ($page->service_id && isset($serviceMap[$page->service_id])) {
                     EntryRelation::create([
                         'source_entry_id' => $entry->id,
                         'target_entry_id' => $serviceMap[$page->service_id],
-                        'relation_type' => 'matrix_service'
+                        'relation_type' => 'matrix_service',
                     ]);
                 }
 
@@ -290,7 +290,7 @@ class WmsMigrateLegacyData extends Command
                     EntryRelation::create([
                         'source_entry_id' => $entry->id,
                         'target_entry_id' => $cityMap[$page->city_id],
-                        'relation_type' => 'matrix_city'
+                        'relation_type' => 'matrix_city',
                     ]);
                 }
 
@@ -298,7 +298,7 @@ class WmsMigrateLegacyData extends Command
                     'slug' => $page->slug_final,
                     'routable_type' => Entry::class,
                     'routable_id' => $entry->id,
-                    'is_active' => $page->is_active
+                    'is_active' => $page->is_active,
                 ]);
 
                 // Map PageBlocks
@@ -319,12 +319,12 @@ class WmsMigrateLegacyData extends Command
                         'description' => $cat->description,
                     ]);
                     $blogCatMap[$cat->id] = $term->id;
-                    
+
                     RouteAlias::create([
-                        'slug' => 'blog/category/' . $cat->slug,
+                        'slug' => 'blog/category/'.$cat->slug,
                         'routable_type' => Term::class,
                         'routable_id' => $term->id,
-                        'is_active' => true
+                        'is_active' => true,
                     ]);
                 }
             }
@@ -339,12 +339,12 @@ class WmsMigrateLegacyData extends Command
                         'slug' => $tag->slug,
                     ]);
                     $blogTagMap[$tag->id] = $term->id;
-                    
+
                     RouteAlias::create([
-                        'slug' => 'blog/tag/' . $tag->slug,
+                        'slug' => 'blog/tag/'.$tag->slug,
                         'routable_type' => Term::class,
                         'routable_id' => $term->id,
-                        'is_active' => true
+                        'is_active' => true,
                     ]);
                 }
             }
@@ -366,7 +366,7 @@ class WmsMigrateLegacyData extends Command
                             'featured_image_id' => $post->featured_image_id,
                             'meta_title' => $post->meta_title,
                             'meta_description' => $post->meta_description,
-                        ]
+                        ],
                     ]);
 
                     if ($post->category_id && isset($blogCatMap[$post->category_id])) {
@@ -383,10 +383,10 @@ class WmsMigrateLegacyData extends Command
                     }
 
                     RouteAlias::create([
-                        'slug' => 'blog/' . $post->slug,
+                        'slug' => 'blog/'.$post->slug,
                         'routable_type' => Entry::class,
                         'routable_id' => $entry->id,
-                        'is_active' => $post->status === 'published'
+                        'is_active' => $post->status === 'published',
                     ]);
 
                     if (Schema::hasTable('page_blocks')) {

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContentType;
 use App\Models\Entry;
 use App\Models\RouteAlias;
+use App\Models\Taxonomy;
 use App\Services\BlockBuilderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +54,7 @@ class EntryController extends Controller
                 ->pluck('title', 'id');
         }
 
-        $taxonomies = \App\Models\Taxonomy::with('terms')->orderBy('name')->get();
+        $taxonomies = Taxonomy::with('terms')->orderBy('name')->get();
 
         return View::make('admin.entries.form', compact('contentType', 'parents', 'taxonomies'));
     }
@@ -72,7 +73,7 @@ class EntryController extends Controller
         ]);
 
         $contentType = ContentType::findOrFail($validated['content_type_id']);
-        
+
         // Use dynamically submitted data array if present, otherwise fallback to raw JSON
         if ($request->has('data') && is_array($request->input('data'))) {
             $validated['data'] = $request->input('data');
@@ -80,7 +81,7 @@ class EntryController extends Controller
             $data = $request->input('data_json') ? json_decode($request->input('data_json'), true) : [];
             $validated['data'] = $data;
         }
-        
+
         if ($validated['status'] === 'published') {
             $validated['published_at'] = now();
         }
@@ -100,7 +101,7 @@ class EntryController extends Controller
                 'slug' => ltrim($entry->slug, '/'),
                 'routable_type' => Entry::class,
                 'routable_id' => $entry->id,
-                'is_active' => $entry->status === 'published'
+                'is_active' => $entry->status === 'published',
             ]);
 
             // Save unified blocks
@@ -137,7 +138,7 @@ class EntryController extends Controller
 
         $blocks = BlockBuilderService::getUnifiedBlocks('entry', $entry->id);
         $blockTypes = BlockBuilderService::allTypes();
-        $taxonomies = \App\Models\Taxonomy::with('terms')->orderBy('name')->get();
+        $taxonomies = Taxonomy::with('terms')->orderBy('name')->get();
 
         return view('admin.entries.form', compact('entry', 'contentType', 'parents', 'blocks', 'blockTypes', 'taxonomies'));
     }
@@ -155,7 +156,7 @@ class EntryController extends Controller
         ]);
 
         $entryData = $entry->data ? $entry->data->toArray() : [];
-        
+
         if ($request->has('data') && is_array($request->input('data'))) {
             // Update using dynamic form array
             $validated['data'] = array_merge($entryData, $request->input('data'));
@@ -165,7 +166,7 @@ class EntryController extends Controller
             $validated['data'] = array_merge($entryData, $data);
         }
 
-        if ($validated['status'] === 'published' && !$entry->published_at) {
+        if ($validated['status'] === 'published' && ! $entry->published_at) {
             $validated['published_at'] = now();
         }
 
@@ -182,7 +183,7 @@ class EntryController extends Controller
             }
 
             // Update RouteAlias
-            $alias = $entry->routeAlias ?? new RouteAlias();
+            $alias = $entry->routeAlias ?? new RouteAlias;
             $alias->slug = ltrim($entry->slug, '/');
             $alias->routable_type = Entry::class;
             $alias->routable_id = $entry->id;
@@ -207,7 +208,7 @@ class EntryController extends Controller
     public function destroy(Request $request, Entry $entry)
     {
         $typeId = $entry->content_type_id;
-        
+
         DB::transaction(function () use ($entry) {
             if ($entry->routeAlias) {
                 $entry->routeAlias->delete();

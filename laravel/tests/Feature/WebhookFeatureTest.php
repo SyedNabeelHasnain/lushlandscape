@@ -9,7 +9,7 @@ use App\Models\ContentType;
 use App\Models\Entry;
 use App\Models\Webhook;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
@@ -20,7 +20,6 @@ class WebhookFeatureTest extends TestCase
 
     public function test_entry_saved_event_dispatches_webhook_job()
     {
-        $this->artisan('migrate');
         Queue::fake();
 
         $webhook = Webhook::create([
@@ -42,9 +41,7 @@ class WebhookFeatureTest extends TestCase
             'status' => 'draft',
         ]);
 
-        // Create subscriber manually and test handle instead of relying on app boot
-        $subscriber = new \App\Listeners\WebhookEventSubscriber();
-        $subscriber->handle('entry.saved', [$entry]);
+        event('entry.saved', [$entry]);
 
         Queue::assertPushed(DispatchWebhook::class, function ($job) use ($webhook) {
             return $job->webhook->id === $webhook->id && $job->event === 'entry.saved';
@@ -53,9 +50,8 @@ class WebhookFeatureTest extends TestCase
 
     public function test_dispatch_webhook_job_sends_http_request()
     {
-        $this->artisan('migrate');
         Http::fake([
-            'example.com/*' => Http::response(['ok' => true], 200)
+            'example.com/*' => Http::response(['ok' => true], 200),
         ]);
 
         $webhook = Webhook::create([
@@ -70,7 +66,7 @@ class WebhookFeatureTest extends TestCase
         $job = new DispatchWebhook($webhook, 'test.event', ['data' => 'test']);
         $job->handle();
 
-        Http::assertSent(function (\Illuminate\Http\Client\Request $request) {
+        Http::assertSent(function (Request $request) {
             return $request->url() === 'https://example.com/webhook' &&
                    $request['data'] === 'test' &&
                    $request->hasHeader('X-Custom', 'Value') &&

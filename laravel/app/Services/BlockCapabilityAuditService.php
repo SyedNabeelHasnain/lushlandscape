@@ -89,7 +89,6 @@ class BlockCapabilityAuditService
             ->values()
             ->all();
 
-
         return [
             'summary' => [
                 'registered_block_types' => count($blockMatrix),
@@ -162,15 +161,6 @@ class BlockCapabilityAuditService
         } else {
             foreach ($audit['blocks_missing_render_surface'] as $blockType) {
                 $lines[] = '- `'.$blockType.'`';
-            }
-        }
-
-        $lines[] = '';
-        $lines[] = '';
-
-            $lines[] = '- None';
-        } else {
-                $lines[] = '- `'.$path.'`';
             }
         }
 

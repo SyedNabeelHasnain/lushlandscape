@@ -30,7 +30,7 @@ return new class extends Migration
             $indexes = Schema::getIndexes('media_assets');
             $indexNames = array_column($indexes, 'name');
 
-            if (!in_array('media_assets_checksum_idx', $indexNames)) {
+            if (! in_array('media_assets_checksum_idx', $indexNames)) {
                 $table->index('checksum', 'media_assets_checksum_idx');
             }
         });

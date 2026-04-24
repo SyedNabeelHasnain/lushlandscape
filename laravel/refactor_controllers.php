@@ -1,6 +1,7 @@
 <?php
+
 // refactor_controllers.php
-$dir = new RecursiveDirectoryIterator(__DIR__ . '/app/Http/Controllers/Frontend');
+$dir = new RecursiveDirectoryIterator(__DIR__.'/app/Http/Controllers/Frontend');
 $iter = new RecursiveIteratorIterator($dir);
 $files = new RegexIterator($iter, '/^.+\.php$/i', RecursiveRegexIterator::GET_MATCH);
 
@@ -56,7 +57,7 @@ foreach ($files as $file) {
         '\\App\\Models\\Entry::whereHas(\'contentType\', fn($q) => $q->where(\'slug\', \'blog-post\'))->where(\'status\', \'published\')',
         $content
     );
-    
+
     // ServiceCategory
     $content = preg_replace(
         '/ServiceCategory::where/i',

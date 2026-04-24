@@ -18,7 +18,7 @@ return new class extends Migration
             $table->json('data')->nullable(); // For custom fields on terms (e.g. icon, color)
             $table->integer('sort_order')->default(0);
             $table->timestamps();
-            
+
             $table->unique(['taxonomy_id', 'slug']);
         });
 

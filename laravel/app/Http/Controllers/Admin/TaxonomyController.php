@@ -14,12 +14,13 @@ class TaxonomyController extends Controller
     public function index()
     {
         $taxonomies = Taxonomy::orderBy('name')->paginate(20);
+
         return View::make('admin.taxonomies.index', compact('taxonomies'));
     }
 
     public function create()
     {
-        return View::make('admin.taxonomies.form', ['taxonomy' => new Taxonomy()]);
+        return View::make('admin.taxonomies.form', ['taxonomy' => new Taxonomy]);
     }
 
     public function store(Request $request)
@@ -50,7 +51,7 @@ class TaxonomyController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:taxonomies,slug,' . $taxonomy->id,
+            'slug' => 'required|string|max:255|unique:taxonomies,slug,'.$taxonomy->id,
             'description' => 'nullable|string|max:500',
             'is_hierarchical' => 'boolean',
             'schema_json' => 'nullable|json',

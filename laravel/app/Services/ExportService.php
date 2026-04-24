@@ -54,8 +54,6 @@ class ExportService
             abort(422, 'Table not exportable.');
         }
 
-        }
-
         $filename = $table.'_'.date('Y-m-d_His').'.csv';
 
         return new StreamedResponse(function () use ($table) {

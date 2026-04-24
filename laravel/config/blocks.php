@@ -576,22 +576,22 @@ return [
                 ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
                 ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'card_1_icon', 'label' => 'Card 1 Icon (FontAwesome class)', 'type' => 'text'],
                 ['key' => 'card_1_title', 'label' => 'Card 1 Title', 'type' => 'text'],
                 ['key' => 'card_1_desc', 'label' => 'Card 1 Description', 'type' => 'textarea'],
                 ['key' => 'card_1_list', 'label' => 'Card 1 List Items (comma separated)', 'type' => 'text'],
-                
+
                 ['key' => 'card_2_icon', 'label' => 'Card 2 Icon', 'type' => 'text'],
                 ['key' => 'card_2_title', 'label' => 'Card 2 Title', 'type' => 'text'],
                 ['key' => 'card_2_desc', 'label' => 'Card 2 Description', 'type' => 'textarea'],
                 ['key' => 'card_2_list', 'label' => 'Card 2 List Items', 'type' => 'text'],
-                
+
                 ['key' => 'card_3_icon', 'label' => 'Card 3 Icon', 'type' => 'text'],
                 ['key' => 'card_3_title', 'label' => 'Card 3 Title', 'type' => 'text'],
                 ['key' => 'card_3_desc', 'label' => 'Card 3 Description', 'type' => 'textarea'],
                 ['key' => 'card_3_list', 'label' => 'Card 3 List Items', 'type' => 'text'],
-                
+
                 ['key' => 'card_4_icon', 'label' => 'Card 4 Icon', 'type' => 'text'],
                 ['key' => 'card_4_title', 'label' => 'Card 4 Title', 'type' => 'text'],
                 ['key' => 'card_4_desc', 'label' => 'Card 4 Description', 'type' => 'textarea'],
@@ -607,27 +607,27 @@ return [
                 'eyebrow' => 'Core Disciplines',
                 'heading' => 'Architectural<br>Solutions',
                 'description' => 'The complete realization of complex master plans, categorized into four signature disciplines.',
-                
+
                 'card_1_icon' => 'fa-solid fa-vector-square',
                 'card_1_title' => 'Paving & Arrival',
                 'card_1_desc' => 'Professional driveways, natural stone, and porcelain surfaces engineered for entry sequences.',
                 'card_1_list' => '8,000 PSI Pavers, Open-Graded Bases',
-                
+
                 'card_2_icon' => 'fa-solid fa-fire-burner',
                 'card_2_title' => 'Outdoor Living',
                 'card_2_desc' => 'Patios, culinary masonry, and atmospheric lighting crafted for seamless hospitality.',
                 'card_2_list' => 'Custom Masonry, Gas-Line Integration',
-                
+
                 'card_3_icon' => 'fa-solid fa-mountain-sun',
                 'card_3_title' => 'Structural Corrective',
                 'card_3_desc' => 'Retaining walls, complex grading, and frost-mitigation ensuring absolute surface stability.',
                 'card_3_list' => 'Ravine Stabilization, Engineered Drainage',
-                
+
                 'card_4_icon' => 'fa-solid fa-compass-drafting',
                 'card_4_title' => 'Estate Construction',
                 'card_4_desc' => 'The complete realization of complex master plans through rigorous project management.',
                 'card_4_list' => 'Turnkey Logistics, In-House Execution',
-                
+
                 'slider_img_1' => 'https://images.unsplash.com/photo-1591825729269-caeb344f6df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
                 'slider_img_2' => 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
                 'slider_eyebrow' => 'Material Integrity',
@@ -663,19 +663,19 @@ return [
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
                 ['key' => 'link_text', 'label' => 'Link Text', 'type' => 'text'],
                 ['key' => 'link_url', 'label' => 'Link URL', 'type' => 'text'],
-                
+
                 ['key' => 'item_1_img', 'label' => 'Item 1 Image URL', 'type' => 'text'],
                 ['key' => 'item_1_eyebrow', 'label' => 'Item 1 Eyebrow', 'type' => 'text'],
                 ['key' => 'item_1_title', 'label' => 'Item 1 Title', 'type' => 'text'],
-                
+
                 ['key' => 'item_2_img', 'label' => 'Item 2 Image URL', 'type' => 'text'],
                 ['key' => 'item_2_eyebrow', 'label' => 'Item 2 Eyebrow', 'type' => 'text'],
                 ['key' => 'item_2_title', 'label' => 'Item 2 Title', 'type' => 'text'],
-                
+
                 ['key' => 'item_3_img', 'label' => 'Item 3 Image URL', 'type' => 'text'],
                 ['key' => 'item_3_eyebrow', 'label' => 'Item 3 Eyebrow', 'type' => 'text'],
                 ['key' => 'item_3_title', 'label' => 'Item 3 Title', 'type' => 'text'],
-                
+
                 ['key' => 'item_4_img', 'label' => 'Item 4 Image URL', 'type' => 'text'],
                 ['key' => 'item_4_eyebrow', 'label' => 'Item 4 Eyebrow', 'type' => 'text'],
                 ['key' => 'item_4_title', 'label' => 'Item 4 Title', 'type' => 'text'],
@@ -686,19 +686,19 @@ return [
                 'heading' => 'Selected Portfolio',
                 'link_text' => 'Explore All Cases',
                 'link_url' => '/portfolio',
-                
+
                 'item_1_img' => 'https://images.unsplash.com/photo-1600607688969-a5bfcd64bd28?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
                 'item_1_eyebrow' => '01 / Old Oakville',
                 'item_1_title' => 'Contemporary Stone',
-                
+
                 'item_2_img' => 'https://images.unsplash.com/photo-1598228723654-419b48f68e4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
                 'item_2_eyebrow' => '02 / Lorne Park',
                 'item_2_title' => 'Estate Backyard',
-                
+
                 'item_3_img' => 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
                 'item_3_eyebrow' => '03 / Shoreacres',
                 'item_3_title' => 'Lakeside Luxury',
-                
+
                 'item_4_img' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80&fm=webp',
                 'item_4_eyebrow' => '04 / Bridle Path',
                 'item_4_title' => 'Arrival Sequence',
@@ -821,19 +821,19 @@ return [
             'content_fields' => [
                 ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
-                
+
                 ['key' => 'cred_1_icon', 'label' => 'Credential 1 Icon (Lucide)', 'type' => 'text'],
                 ['key' => 'cred_1_title', 'label' => 'Credential 1 Title', 'type' => 'text'],
                 ['key' => 'cred_1_desc', 'label' => 'Credential 1 Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'cred_2_icon', 'label' => 'Credential 2 Icon', 'type' => 'text'],
                 ['key' => 'cred_2_title', 'label' => 'Credential 2 Title', 'type' => 'text'],
                 ['key' => 'cred_2_desc', 'label' => 'Credential 2 Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'cred_3_icon', 'label' => 'Credential 3 Icon', 'type' => 'text'],
                 ['key' => 'cred_3_title', 'label' => 'Credential 3 Title', 'type' => 'text'],
                 ['key' => 'cred_3_desc', 'label' => 'Credential 3 Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'cred_4_icon', 'label' => 'Credential 4 Icon', 'type' => 'text'],
                 ['key' => 'cred_4_title', 'label' => 'Credential 4 Title', 'type' => 'text'],
                 ['key' => 'cred_4_desc', 'label' => 'Credential 4 Description', 'type' => 'textarea'],
@@ -842,19 +842,19 @@ return [
             'defaults' => [
                 'eyebrow' => 'The Firm',
                 'heading' => 'Institutional Grade Security',
-                
+
                 'cred_1_icon' => 'shield-check',
                 'cred_1_title' => '10-Year Workmanship Warranty',
                 'cred_1_desc' => 'Every structural installation is backed by a rigorous, written decade-long warranty, ensuring complete peace of mind.',
-                
+
                 'cred_2_icon' => 'file-check-2',
                 'cred_2_title' => '$5M Liability Insurance',
                 'cred_2_desc' => 'We carry comprehensive coverage specifically designed for complex residential and estate-level construction.',
-                
+
                 'cred_3_icon' => 'award',
                 'cred_3_title' => 'WSIB Cleared & Compliant',
                 'cred_3_desc' => 'Full Workers\' Safety and Insurance Board clearance guarantees our in-house teams are protected and professional.',
-                
+
                 'cred_4_icon' => 'hard-hat',
                 'cred_4_title' => 'In-House Execution',
                 'cred_4_desc' => 'We do not broker out our core trades. Our master stonemasons and structural teams are dedicated Super WMS personnel.',
@@ -868,15 +868,15 @@ return [
             'content_fields' => [
                 ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
-                
+
                 ['key' => 'year_1', 'label' => 'Year 1', 'type' => 'text'],
                 ['key' => 'title_1', 'label' => 'Title 1', 'type' => 'text'],
                 ['key' => 'desc_1', 'label' => 'Description 1', 'type' => 'textarea'],
-                
+
                 ['key' => 'year_2', 'label' => 'Year 2', 'type' => 'text'],
                 ['key' => 'title_2', 'label' => 'Title 2', 'type' => 'text'],
                 ['key' => 'desc_2', 'label' => 'Description 2', 'type' => 'textarea'],
-                
+
                 ['key' => 'year_3', 'label' => 'Year 3', 'type' => 'text'],
                 ['key' => 'title_3', 'label' => 'Title 3', 'type' => 'text'],
                 ['key' => 'desc_3', 'label' => 'Description 3', 'type' => 'textarea'],
@@ -885,15 +885,15 @@ return [
             'defaults' => [
                 'eyebrow' => 'Our Evolution',
                 'heading' => 'A Heritage of Craftsmanship',
-                
+
                 'year_1' => '2018',
                 'title_1' => 'The Foundation',
                 'desc_1' => 'Super WMS was established with a singular focus on elevating residential stonework and structural hardscaping in the Greater Toronto Area.',
-                
+
                 'year_2' => '2021',
                 'title_2' => 'Scale & Maturation',
                 'desc_2' => 'Expanded our core operations to handle full estate transformations, integrating luxury outdoor living spaces and high-end pool construction into our repertoire.',
-                
+
                 'year_3' => '2024',
                 'title_3' => 'The Architectural Standard',
                 'desc_3' => 'Solidified our position as the design-build firm of choice for the top 1% of the Region, partnering exclusively with prestige properties and heritage estates.',
@@ -908,23 +908,23 @@ return [
                 ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
                 ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'step_1_phase', 'label' => 'Step 1 Phase Label', 'type' => 'text'],
                 ['key' => 'step_1_title', 'label' => 'Step 1 Title', 'type' => 'text'],
                 ['key' => 'step_1_desc', 'label' => 'Step 1 Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'step_2_phase', 'label' => 'Step 2 Phase Label', 'type' => 'text'],
                 ['key' => 'step_2_title', 'label' => 'Step 2 Title', 'type' => 'text'],
                 ['key' => 'step_2_desc', 'label' => 'Step 2 Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'step_3_phase', 'label' => 'Step 3 Phase Label', 'type' => 'text'],
                 ['key' => 'step_3_title', 'label' => 'Step 3 Title', 'type' => 'text'],
                 ['key' => 'step_3_desc', 'label' => 'Step 3 Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'step_4_phase', 'label' => 'Step 4 Phase Label', 'type' => 'text'],
                 ['key' => 'step_4_title', 'label' => 'Step 4 Title', 'type' => 'text'],
                 ['key' => 'step_4_desc', 'label' => 'Step 4 Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'step_5_phase', 'label' => 'Step 5 Phase Label', 'type' => 'text'],
                 ['key' => 'step_5_title', 'label' => 'Step 5 Title', 'type' => 'text'],
                 ['key' => 'step_5_desc', 'label' => 'Step 5 Description', 'type' => 'textarea'],
@@ -934,23 +934,23 @@ return [
                 'eyebrow' => 'Methodology',
                 'heading' => 'A Refined<br>Process',
                 'description' => 'Designed to keep decision-making calm, informed, and rigorously managed from initiation to final aftercare.',
-                
+
                 'step_1_phase' => 'Phase 01',
                 'step_1_title' => 'Initial Consultation',
                 'step_1_desc' => 'A focused discussion around the property, the scope being considered, and the architectural atmosphere you wish the environment to carry.',
-                
+
                 'step_2_phase' => 'Phase 02',
                 'step_2_title' => 'Site Review & Design',
                 'step_2_desc' => 'We assess circulation, structural grade, material intent, visual hierarchy, and practical site conditions to establish clear direction.',
-                
+
                 'step_3_phase' => 'Phase 03',
                 'step_3_title' => 'Scope Development',
                 'step_3_desc' => 'The principal construction elements, project sequencing, and financial path are defined with absolute clarity, so expectations remain aligned.',
-                
+
                 'step_4_phase' => 'Phase 04',
                 'step_4_title' => 'Precision Execution',
                 'step_4_desc' => 'Construction is managed by our in-house teams with severe discipline, site control, and unyielding attention to detail.',
-                
+
                 'step_5_phase' => 'Phase 05',
                 'step_5_title' => 'Completion & Aftercare',
                 'step_5_desc' => 'The environment is reviewed, refined, and transitioned to you with practical guidance for long-term architectural confidence.',
@@ -1072,19 +1072,19 @@ return [
                 ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
                 ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'tab_1_name', 'label' => 'Tab 1 Name (City)', 'type' => 'text'],
                 ['key' => 'tab_1_items', 'label' => 'Tab 1 Items (comma separated)', 'type' => 'textarea'],
-                
+
                 ['key' => 'tab_2_name', 'label' => 'Tab 2 Name', 'type' => 'text'],
                 ['key' => 'tab_2_items', 'label' => 'Tab 2 Items', 'type' => 'textarea'],
-                
+
                 ['key' => 'tab_3_name', 'label' => 'Tab 3 Name', 'type' => 'text'],
                 ['key' => 'tab_3_items', 'label' => 'Tab 3 Items', 'type' => 'textarea'],
-                
+
                 ['key' => 'tab_4_name', 'label' => 'Tab 4 Name', 'type' => 'text'],
                 ['key' => 'tab_4_items', 'label' => 'Tab 4 Items', 'type' => 'textarea'],
-                
+
                 ['key' => 'tab_5_name', 'label' => 'Tab 5 Name', 'type' => 'text'],
                 ['key' => 'tab_5_items', 'label' => 'Tab 5 Items', 'type' => 'textarea'],
             ],
@@ -1093,19 +1093,19 @@ return [
                 'eyebrow' => 'The Top 1% of the Region',
                 'heading' => 'Executive Enclaves',
                 'description' => 'Providing landscape execution exclusively for the Greater Toronto Area\'s most established residential communities.',
-                
+
                 'tab_1_name' => 'Oakville',
                 'tab_1_items' => 'Morrison, South West Oakville, Old Oakville, Ford',
-                
+
                 'tab_2_name' => 'Mississauga',
                 'tab_2_items' => 'Lorne Park, Mineola West, Gordon Woods, Credit Mills',
-                
+
                 'tab_3_name' => 'Toronto',
                 'tab_3_items' => 'The Bridle Path, Forest Hill, Lawrence Park, Yorkville',
-                
+
                 'tab_4_name' => 'Burlington',
                 'tab_4_items' => 'Shoreacres, Roseland, Tyandaga, Downtown',
-                
+
                 'tab_5_name' => 'Vaughan',
                 'tab_5_items' => 'Kleinburg, Islington Woods, Patterson, Vellore Village',
             ],
@@ -1121,7 +1121,7 @@ return [
                 ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
             ],
             'data_source' => [
-                'model' => 'App\\Models\\Form'
+                'model' => 'App\\Models\\Form',
             ],
             'defaults' => [
                 'eyebrow' => 'Initiate Project',
@@ -1138,7 +1138,7 @@ return [
                 ['key' => 'eyebrow', 'label' => 'Eyebrow', 'type' => 'text'],
                 ['key' => 'heading', 'label' => 'Heading', 'type' => 'text'],
                 ['key' => 'description', 'label' => 'Description', 'type' => 'textarea'],
-                
+
                 ['key' => 'badge_1_icon', 'label' => 'Badge 1 Icon (Lucide)', 'type' => 'text'],
                 ['key' => 'badge_1_text', 'label' => 'Badge 1 Text', 'type' => 'text'],
                 ['key' => 'badge_2_icon', 'label' => 'Badge 2 Icon', 'type' => 'text'],
@@ -1149,7 +1149,7 @@ return [
                 ['key' => 'badge_4_text', 'label' => 'Badge 4 Text', 'type' => 'text'],
             ],
             'data_source' => [
-                'model' => 'App\\Models\\Form'
+                'model' => 'App\\Models\\Form',
             ],
             'defaults' => [
                 'eyebrow' => 'Project Intake',

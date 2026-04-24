@@ -6,7 +6,7 @@ namespace App\Listeners;
 
 use App\Jobs\DispatchWebhook;
 use App\Models\Webhook;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Events\Dispatcher;
 
 class WebhookEventSubscriber
 {
@@ -25,13 +25,13 @@ class WebhookEventSubscriber
 
         foreach ($webhooks as $webhook) {
             $data = is_array($actualPayload) ? ($actualPayload[0] ?? $actualPayload) : $actualPayload;
-            
+
             if (is_object($data) && method_exists($data, 'toArray')) {
                 $data = $data->toArray();
             } elseif (is_object($data)) {
                 $data = (array) $data;
             }
-            
+
             DispatchWebhook::dispatch($webhook, $event, (array) $data);
         }
     }
@@ -39,7 +39,7 @@ class WebhookEventSubscriber
     /**
      * Register the listeners for the subscriber.
      */
-    public function subscribe(\Illuminate\Events\Dispatcher $events): array
+    public function subscribe(Dispatcher $events): array
     {
         return [
             'entry.saved' => 'handle',

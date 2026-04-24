@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -21,7 +22,7 @@ return new class extends Migration
         });
 
         // Change faqs.category_id from cascadeOnDelete to restrictOnDelete
-        if (\Illuminate\Support\Facades\DB::getDriverName() !== 'sqlite') {
+        if (DB::getDriverName() !== 'sqlite') {
             Schema::table('faqs', function (Blueprint $table) {
                 $table->dropForeign('faqs_category_id_foreign');
                 $table->foreign('category_id')->references('id')->on('faq_categories')->restrictOnDelete();
@@ -47,7 +48,7 @@ return new class extends Migration
             $table->dropIndex(['ip_address']);
         });
 
-        if (\Illuminate\Support\Facades\DB::getDriverName() !== 'sqlite') {
+        if (DB::getDriverName() !== 'sqlite') {
             // Restore form_submissions.form_id to cascadeOnDelete
             Schema::table('form_submissions', function (Blueprint $table) {
                 $table->dropForeign('form_submissions_form_id_foreign');

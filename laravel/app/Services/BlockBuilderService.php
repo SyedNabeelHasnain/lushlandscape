@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\ContentType;
+use App\Models\Entry;
+use App\Models\Form;
 use App\Models\PageBlock;
+use App\Models\Taxonomy;
+use App\Models\Term;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schema;
 
 class BlockBuilderService
 {
-
     /**
      * Get all enabled blocks for a page, ordered by sort_order.
      */
@@ -178,13 +182,13 @@ class BlockBuilderService
 
         // --- Super WMS Legacy Adapter ---
         $legacyMap = [
-            'App\Models\Service' => ['model' => \App\Models\Entry::class, 'type' => 'service'],
-            'App\Models\City' => ['model' => \App\Models\Entry::class, 'type' => 'city'],
-            'App\Models\PortfolioProject' => ['model' => \App\Models\Entry::class, 'type' => 'portfolio-project'],
-            'App\Models\BlogPost' => ['model' => \App\Models\Entry::class, 'type' => 'blog-post'],
-            'App\Models\ServiceCategory' => ['model' => \App\Models\Term::class, 'taxonomy' => 'service-categories'],
-            'App\Models\PortfolioCategory' => ['model' => \App\Models\Term::class, 'taxonomy' => 'portfolio-categories'],
-            'App\Models\BlogCategory' => ['model' => \App\Models\Term::class, 'taxonomy' => 'blog-categories'],
+            'App\Models\Service' => ['model' => Entry::class, 'type' => 'service'],
+            'App\Models\City' => ['model' => Entry::class, 'type' => 'city'],
+            'App\Models\PortfolioProject' => ['model' => Entry::class, 'type' => 'portfolio-project'],
+            'App\Models\BlogPost' => ['model' => Entry::class, 'type' => 'blog-post'],
+            'App\Models\ServiceCategory' => ['model' => Term::class, 'taxonomy' => 'service-categories'],
+            'App\Models\PortfolioCategory' => ['model' => Term::class, 'taxonomy' => 'portfolio-categories'],
+            'App\Models\BlogCategory' => ['model' => Term::class, 'taxonomy' => 'blog-categories'],
         ];
 
         $wmsFilters = [];
@@ -194,10 +198,10 @@ class BlockBuilderService
             $map = $legacyMap[$modelClass];
             $modelClass = $map['model'];
             if (isset($map['type'])) {
-                $wmsFilters['content_type_id'] = \App\Models\ContentType::where('slug', $map['type'])->value('id');
+                $wmsFilters['content_type_id'] = ContentType::where('slug', $map['type'])->value('id');
             }
             if (isset($map['taxonomy'])) {
-                $wmsFilters['taxonomy_id'] = \App\Models\Taxonomy::where('slug', $map['taxonomy'])->value('id');
+                $wmsFilters['taxonomy_id'] = Taxonomy::where('slug', $map['taxonomy'])->value('id');
             }
         }
         // --- End Legacy Adapter ---
@@ -214,7 +218,7 @@ class BlockBuilderService
         }
 
         // Instead of scopePublished for old models, enforce Entry/Term status natively
-        if ($modelClass === \App\Models\Entry::class) {
+        if ($modelClass === Entry::class) {
             $query->where('status', 'published');
         } elseif (method_exists($modelClass, 'scopePublished')) {
             $query->published();
@@ -253,16 +257,19 @@ class BlockBuilderService
             $with = $dataSource['with'];
             if ($isWms && is_array($with)) {
                 // Filter out legacy relationships that don't exist on Entry/Term
-                $with = array_filter($with, function($rel) {
-                    if (is_array($rel)) $rel = key($rel);
-                    return !in_array($rel, ['category', 'heroMedia', 'service', 'city', 'neighborhoods']);
+                $with = array_filter($with, function ($rel) {
+                    if (is_array($rel)) {
+                        $rel = key($rel);
+                    }
+
+                    return ! in_array($rel, ['category', 'heroMedia', 'service', 'city', 'neighborhoods']);
                 });
-                if ($modelClass === \App\Models\Entry::class) {
+                if ($modelClass === Entry::class) {
                     $with[] = 'terms';
                     $with[] = 'routeAlias';
                 }
             }
-            
+
             if (is_array($with)) {
                 $simpleWith = array_filter($with, fn ($value) => is_string($value));
                 if (! empty($simpleWith)) {
@@ -295,12 +302,12 @@ class BlockBuilderService
         }
 
         if (! empty($dataSource['order_by'])) {
-            if ($modelClass === \App\Models\Entry::class && !in_array($dataSource['order_by'], ['id', 'title', 'slug', 'status', 'content_type_id', 'parent_id', 'sort_order', 'published_at', 'created_at', 'updated_at'])) {
-                $query->orderBy('data->' . $dataSource['order_by'], $dataSource['order_dir'] ?? 'asc');
+            if ($modelClass === Entry::class && ! in_array($dataSource['order_by'], ['id', 'title', 'slug', 'status', 'content_type_id', 'parent_id', 'sort_order', 'published_at', 'created_at', 'updated_at'])) {
+                $query->orderBy('data->'.$dataSource['order_by'], $dataSource['order_dir'] ?? 'asc');
             } else {
                 $query->orderBy($dataSource['order_by'], $dataSource['order_dir'] ?? 'asc');
             }
-        } elseif ($modelClass !== \App\Models\Form::class && \Illuminate\Support\Facades\Schema::hasColumn((new $modelClass)->getTable(), 'sort_order')) {
+        } elseif ($modelClass !== Form::class && Schema::hasColumn((new $modelClass)->getTable(), 'sort_order')) {
             $query->orderBy('sort_order', $dataSource['order_dir'] ?? 'asc');
         }
 
@@ -480,11 +487,11 @@ class BlockBuilderService
     private static function persistUnifiedBlocks(string $pageType, mixed $pageId, array $blocksData, ?int $parentId, array &$incomingIds): void
     {
         foreach ($blocksData as $index => $item) {
-            if (isset($item['data_source_id']) && !isset($item['data_source'])) {
+            if (isset($item['data_source_id']) && ! isset($item['data_source'])) {
                 if (in_array($item['block_type'] ?? '', ['consultation_form_split', 'consultation_wizard_luxury', 'contact_form_luxury'])) {
                     $item['data_source'] = [
                         'model' => 'App\Models\Form',
-                        'filters' => ['slug' => $item['data_source_id']]
+                        'filters' => ['slug' => $item['data_source_id']],
                     ];
                 }
             }
@@ -553,5 +560,4 @@ class BlockBuilderService
 
         return $build();
     }
-
 }

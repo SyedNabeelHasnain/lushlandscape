@@ -15,7 +15,7 @@ class ServicePageController extends Controller
 {
     public function hub(PageContextService $pageContext)
     {
-        $categories = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))
+        $categories = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories'))
             ->with(['entries' => fn ($q) => $q->where('status', 'published')->orderBy('sort_order')])
             ->orderBy('sort_order')
             ->get();
@@ -31,7 +31,7 @@ class ServicePageController extends Controller
 
     public function category(string $slug, PageContextService $pageContext)
     {
-        $category = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->where('slug', $slug)->firstOrFail();
+        $category = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories'))->where('slug', $slug)->firstOrFail();
         $services = $category->entries()->where('status', 'published')->orderBy('sort_order')->get();
 
         $breadcrumbs = [
@@ -53,7 +53,7 @@ class ServicePageController extends Controller
 
     public function detail(string $categorySlug, string $slug, PageContextService $pageContext)
     {
-        $service = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('slug', $slug)->where('status', 'published')->with(['terms'])->firstOrFail();
+        $service = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'service'))->where('slug', $slug)->where('status', 'published')->with(['terms'])->firstOrFail();
 
         $serviceCategory = $service->terms->first();
         // Redirect to canonical URL if category slug doesn't match
@@ -68,7 +68,7 @@ class ServicePageController extends Controller
             $breadcrumbs[] = ['label' => $serviceCategory->name, 'url' => url('/services/'.$serviceCategory->slug)];
         }
         $breadcrumbs[] = ['label' => $service->title];
-        
+
         $heroMediaUrl = $service->heroMedia ? $service->heroMedia->url : null;
         $schema = SchemaService::breadcrumbList($breadcrumbs)
             .SchemaService::service($service->title, $service->data['service_summary'] ?? '', null, $service->frontend_url, $heroMediaUrl);

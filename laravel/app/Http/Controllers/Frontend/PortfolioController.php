@@ -15,23 +15,23 @@ class PortfolioController extends Controller
 {
     public function index(PageContextService $pageContext)
     {
-        $query = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published');
+        $query = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published');
 
         $activeCategory = request('category');
         $activeCity = request('city');
         $featured = request('featured');
 
         if ($activeCategory) {
-            $cat = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'portfolio-categories'))->where('slug', $activeCategory)->first();
+            $cat = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'portfolio-categories'))->where('slug', $activeCategory)->first();
             if ($cat) {
-                $query->whereHas('terms', fn($q) => $q->where('id', $cat->id));
+                $query->whereHas('terms', fn ($q) => $q->where('id', $cat->id));
             }
         }
 
         if ($activeCity) {
-            $city = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $activeCity)->first();
+            $city = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('slug', $activeCity)->first();
             if ($city) {
-                $query->whereHas('relatedEntries', fn($q) => $q->where('target_entry_id', $city->id)->where('relation_type', 'portfolio_city'));
+                $query->whereHas('relatedEntries', fn ($q) => $q->where('target_entry_id', $city->id)->where('relation_type', 'portfolio_city'));
             }
         }
 
@@ -44,13 +44,13 @@ class PortfolioController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        $categories = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'portfolio-categories'))
-            ->whereHas('entries', fn($q) => $q->where('status', 'published'))
+        $categories = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'portfolio-categories'))
+            ->whereHas('entries', fn ($q) => $q->where('status', 'published'))
             ->orderBy('sort_order')
             ->get();
 
-        $cities = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
-            ->whereHas('inverseRelatedEntries', fn($q) => $q->where('relation_type', 'portfolio_city')->where('status', 'published'))
+        $cities = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('status', 'published')
+            ->whereHas('inverseRelatedEntries', fn ($q) => $q->where('relation_type', 'portfolio_city')->where('status', 'published'))
             ->orderBy('sort_order')
             ->get(['id', 'title as name', 'slug']);
 
@@ -73,26 +73,26 @@ class PortfolioController extends Controller
 
     public function category(string $slug, PageContextService $pageContext)
     {
-        $category = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'portfolio-categories'))
+        $category = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'portfolio-categories'))
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $projects = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
-            ->whereHas('terms', fn($q) => $q->where('id', $category->id))
+        $projects = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
+            ->whereHas('terms', fn ($q) => $q->where('id', $category->id))
             ->orderByDesc('data->is_featured')
             ->orderByDesc('data->completion_date')
             ->paginate(12);
 
-        $categories = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'portfolio-categories'))
-            ->whereHas('entries', fn($q) => $q->where('status', 'published'))
+        $categories = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'portfolio-categories'))
+            ->whereHas('entries', fn ($q) => $q->where('status', 'published'))
             ->orderBy('sort_order')
             ->get();
 
-        $cities = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
-            ->whereHas('inverseRelatedEntries', function($q) use ($category) {
+        $cities = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('status', 'published')
+            ->whereHas('inverseRelatedEntries', function ($q) use ($category) {
                 $q->where('relation_type', 'portfolio_city')
-                  ->where('status', 'published')
-                  ->whereHas('terms', fn($q2) => $q2->where('id', $category->id));
+                    ->where('status', 'published')
+                    ->whereHas('terms', fn ($q2) => $q2->where('id', $category->id));
             })
             ->orderBy('sort_order')
             ->get(['id', 'title as name', 'slug']);
@@ -106,7 +106,7 @@ class PortfolioController extends Controller
             .SchemaService::webPage(
                 $category->data['meta_title'] ?? ($category->name.' Portfolio Projects'),
                 $category->data['meta_description'] ?? ($category->description ?? ''),
-                url('/portfolio/category/' . $category->slug)
+                url('/portfolio/category/'.$category->slug)
             );
 
         $blocks = BlockBuilderService::getBlocks('portfolio_category', $category->id);
@@ -134,7 +134,7 @@ class PortfolioController extends Controller
 
     public function show(string $slug, PageContextService $pageContext)
     {
-        $project = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('slug', $slug)
+        $project = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'portfolio-project'))->where('slug', $slug)
             ->where('status', 'published')
             ->with(['city', 'service.category', 'category', 'heroMedia', 'beforeImage', 'afterImage'])
             ->firstOrFail();
@@ -154,7 +154,7 @@ class PortfolioController extends Controller
             );
         }
 
-        $relatedProjects = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
+        $relatedProjects = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
             ->where('id', '!=', $project->id)
             ->where(function ($q) use ($project) {
                 $q->where('service_id', $project->service_id)

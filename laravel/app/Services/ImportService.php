@@ -46,8 +46,6 @@ class ImportService
      */
     public static function dryRun(string $table, UploadedFile $file): array
     {
-        }
-
         $rows = self::parseCsv($file);
         if (empty($rows)) {
             return ['success' => false, 'error' => 'CSV file is empty or could not be parsed.'];
@@ -110,8 +108,6 @@ class ImportService
      */
     public static function import(string $table, UploadedFile $file): array
     {
-        }
-
         $rows = self::parseCsv($file);
         if (empty($rows)) {
             return ['success' => false, 'error' => 'CSV file is empty.'];

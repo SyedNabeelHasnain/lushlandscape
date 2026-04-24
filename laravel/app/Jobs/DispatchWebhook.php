@@ -19,7 +19,9 @@ class DispatchWebhook implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $webhook;
+
     public $payload;
+
     public $event;
 
     /**
@@ -30,7 +32,7 @@ class DispatchWebhook implements ShouldQueue
         $this->webhook = $webhook;
         $this->event = $event;
         $this->payload = $payload;
-        
+
         // Use the webhook's configured retry count
         $this->tries = $webhook->retry_count + 1;
     }
@@ -40,7 +42,7 @@ class DispatchWebhook implements ShouldQueue
      */
     public function handle(): void
     {
-        if (!$this->webhook->is_active) {
+        if (! $this->webhook->is_active) {
             return;
         }
 
@@ -72,8 +74,8 @@ class DispatchWebhook implements ShouldQueue
             }
         } catch (\Exception $e) {
             $this->recordDelivery(null, null, null, false, $e->getMessage());
-            
-            Log::error("Webhook [{$this->webhook->name}] connection error: " . $e->getMessage());
+
+            Log::error("Webhook [{$this->webhook->name}] connection error: ".$e->getMessage());
             $this->release(60);
         }
     }

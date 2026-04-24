@@ -14,7 +14,7 @@ class LocationPageController extends Controller
 {
     public function hub(PageContextService $pageContext)
     {
-        $cities = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
+        $cities = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('status', 'published')
             ->withCount(['inverseRelatedEntries as active_service_pages_count' => function ($q) {
                 $q->where('relation_type', 'matrix_city')->where('status', 'published');
             }])
@@ -32,7 +32,7 @@ class LocationPageController extends Controller
 
     public function city(string $slug, PageContextService $pageContext)
     {
-        $city = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $slug)->where('status', 'published')->firstOrFail();
+        $city = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('slug', $slug)->where('status', 'published')->firstOrFail();
         $servicePages = $city->inverseRelatedEntries()
             ->where('relation_type', 'matrix_city')
             ->where('status', 'published')
@@ -50,7 +50,7 @@ class LocationPageController extends Controller
         $context = $pageContext->city($city, $servicePages);
 
         // All published cities for city-switcher widget
-        $allCities = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')->orderBy('sort_order')->get();
+        $allCities = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('status', 'published')->orderBy('sort_order')->get();
 
         // Use the new dynamic entry fallback
         return view('frontend.entries.city', compact('city', 'servicePages', 'breadcrumbs', 'schema', 'blocks', 'context', 'allCities'));

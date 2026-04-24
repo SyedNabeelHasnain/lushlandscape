@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Models\Entry;
-use App\Models\Term;
 use App\Models\MediaAsset;
+use App\Models\Term;
 use Illuminate\Console\Command;
 
 class GenerateSitemap extends Command
 {
     protected $signature = 'sitemap:generate';
+
     protected $description = 'Generate XML sitemap';
 
     public function handle()
@@ -27,17 +28,17 @@ class GenerateSitemap extends Command
         $urls[] = ['loc' => $baseUrl.'/contact', 'changefreq' => 'monthly', 'priority' => '0.8'];
 
         $addMedia = function (&$entry, $model, $title) {
-            if (!empty($model->data['hero_media_id']) && $media = MediaAsset::find($model->data['hero_media_id'])) {
+            if (! empty($model->data['hero_media_id']) && $media = MediaAsset::find($model->data['hero_media_id'])) {
                 $entry['images'][] = ['url' => $media->url, 'title' => $title];
             }
         };
 
         $resolveUrl = function ($slug) use ($baseUrl) {
-            return rtrim($baseUrl, '/') . '/' . ltrim($slug, '/');
+            return rtrim($baseUrl, '/').'/'.ltrim($slug, '/');
         };
 
-        Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))->cursor()->each(function ($cat) use (&$urls, $resolveUrl, $addMedia) {
-            $entry = ['loc' => $resolveUrl('services/' . $cat->slug), 'changefreq' => 'weekly', 'priority' => '0.8'];
+        Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories'))->cursor()->each(function ($cat) use (&$urls, $resolveUrl, $addMedia) {
+            $entry = ['loc' => $resolveUrl('services/'.$cat->slug), 'changefreq' => 'weekly', 'priority' => '0.8'];
             $addMedia($entry, $cat, $cat->name);
             $urls[] = $entry;
         });
@@ -51,46 +52,50 @@ class GenerateSitemap extends Command
         ];
 
         foreach ($dynamicEntryTypes as $slug => $meta) {
-            Entry::whereHas('contentType', fn($q) => $q->where('slug', $slug))->where('status', 'published')
+            Entry::whereHas('contentType', fn ($q) => $q->where('slug', $slug))->where('status', 'published')
                 ->with('routeAlias')->cursor()->each(function ($page) use (&$urls, $resolveUrl, $addMedia, $meta) {
-                if (!$page->routeAlias) return;
+                    if (! $page->routeAlias) {
+                        return;
+                    }
 
-                $entry = [
-                    'loc' => $resolveUrl($page->routeAlias->slug),
-                    'changefreq' => $meta['changefreq'],
-                    'priority' => $meta['priority'],
-                ];
-                if (!empty($page->updated_at)) {
-                    $entry['lastmod'] = $page->updated_at->toW3cString();
-                }
-                $addMedia($entry, $page, $page->title);
-                $urls[] = $entry;
-            });
+                    $entry = [
+                        'loc' => $resolveUrl($page->routeAlias->slug),
+                        'changefreq' => $meta['changefreq'],
+                        'priority' => $meta['priority'],
+                    ];
+                    if (! empty($page->updated_at)) {
+                        $entry['lastmod'] = $page->updated_at->toW3cString();
+                    }
+                    $addMedia($entry, $page, $page->title);
+                    $urls[] = $entry;
+                });
         }
 
-        $portfolioProjects = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
+        $portfolioProjects = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published')
             ->with('routeAlias')->get();
-        
+
         $allMediaIds = [];
         foreach ($portfolioProjects as $proj) {
-            if (!empty($proj->data['gallery_media_ids'])) {
+            if (! empty($proj->data['gallery_media_ids'])) {
                 $allMediaIds = array_merge($allMediaIds, $proj->data['gallery_media_ids']);
             }
-            if (!empty($proj->data['hero_media_id'])) {
+            if (! empty($proj->data['hero_media_id'])) {
                 $allMediaIds[] = $proj->data['hero_media_id'];
             }
         }
         $mediaAssets = array_unique($allMediaIds) ? MediaAsset::whereIn('id', array_unique($allMediaIds))->get()->keyBy('id') : collect();
 
         foreach ($portfolioProjects as $proj) {
-            if (!$proj->routeAlias) continue;
+            if (! $proj->routeAlias) {
+                continue;
+            }
             $entry = ['loc' => $resolveUrl($proj->routeAlias->slug), 'changefreq' => 'monthly', 'priority' => '0.6'];
-            
-            if (!empty($proj->data['hero_media_id']) && $img = $mediaAssets->get($proj->data['hero_media_id'])) {
+
+            if (! empty($proj->data['hero_media_id']) && $img = $mediaAssets->get($proj->data['hero_media_id'])) {
                 $entry['images'][] = ['url' => $img->getAttribute('url'), 'title' => $proj->title];
             }
 
-            if (!empty($proj->data['gallery_media_ids'])) {
+            if (! empty($proj->data['gallery_media_ids'])) {
                 foreach ($proj->data['gallery_media_ids'] as $mediaId) {
                     if ($img = $mediaAssets->get($mediaId)) {
                         $entry['images'][] = ['url' => $img->getAttribute('url'), 'title' => $img->getAttribute('default_alt_text') ?? $proj->title];
@@ -114,7 +119,7 @@ class GenerateSitemap extends Command
             foreach ($url['images'] ?? [] as $image) {
                 $xml .= '    <image:image>'."\n";
                 $xml .= '      <image:loc>'.htmlspecialchars($image['url']).'</image:loc>'."\n";
-                if (!empty($image['title'])) {
+                if (! empty($image['title'])) {
                     $xml .= '      <image:title>'.htmlspecialchars($image['title']).'</image:title>'."\n";
                 }
                 $xml .= '    </image:image>'."\n";

@@ -21,7 +21,7 @@ class SitemapController extends Controller
         }
 
         return response()->file($sitemapPath, [
-            'Content-Type' => 'application/xml'
+            'Content-Type' => 'application/xml',
         ]);
     }
 }

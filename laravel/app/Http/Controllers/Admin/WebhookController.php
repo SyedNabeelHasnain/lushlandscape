@@ -14,12 +14,13 @@ class WebhookController extends Controller
     public function index()
     {
         $webhooks = Webhook::latest()->paginate(20);
+
         return View::make('admin.webhooks.index', compact('webhooks'));
     }
 
     public function create()
     {
-        return View::make('admin.webhooks.form', ['webhook' => new Webhook()]);
+        return View::make('admin.webhooks.form', ['webhook' => new Webhook]);
     }
 
     public function store(Request $request)
@@ -80,6 +81,7 @@ class WebhookController extends Controller
     public function destroy(Webhook $webhook)
     {
         $webhook->delete();
+
         return redirect()->route('admin.webhooks.index')->with('success', 'Webhook deleted.');
     }
 }

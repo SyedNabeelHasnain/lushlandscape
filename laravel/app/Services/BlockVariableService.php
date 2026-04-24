@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Entry;
-use App\Models\Term;
 use App\Models\Setting;
+use App\Models\Term;
 use Illuminate\Support\Carbon;
 
 class BlockVariableService
@@ -222,7 +222,7 @@ class BlockVariableService
         }
 
         if ($subject instanceof Entry) {
-            return $subject->routeAlias ? url('/' . ltrim($subject->routeAlias->slug, '/')) : null;
+            return $subject->routeAlias ? url('/'.ltrim($subject->routeAlias->slug, '/')) : null;
         }
 
         if ($subject instanceof Term) {
@@ -232,7 +232,8 @@ class BlockVariableService
                 'portfolio-categories' => '/portfolio/category/',
                 default => '/'
             };
-            return url($base . ltrim($subject->slug, '/'));
+
+            return url($base.ltrim($subject->slug, '/'));
         }
 
         if (is_array($subject)) {

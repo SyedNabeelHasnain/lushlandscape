@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Support\Str;
 
 class Entry extends Model
 {
@@ -66,27 +67,28 @@ class Entry extends Model
     public function relatedEntries()
     {
         return $this->belongsToMany(Entry::class, 'entry_relations', 'source_entry_id', 'target_entry_id')
-                    ->withPivot('relation_type', 'sort_order')
-                    ->orderByPivot('sort_order');
+            ->withPivot('relation_type', 'sort_order')
+            ->orderByPivot('sort_order');
     }
 
     // Inbound relationships
     public function inverseRelatedEntries()
     {
         return $this->belongsToMany(Entry::class, 'entry_relations', 'target_entry_id', 'source_entry_id')
-                    ->withPivot('relation_type', 'sort_order');
+            ->withPivot('relation_type', 'sort_order');
     }
 
     // --- Legacy Fallback Accessors for Frontend Compatibility ---
-    
+
     public function getHeroMediaAttribute()
     {
         if (isset($this->data['hero_media_id'])) {
-            return \App\Models\MediaAsset::find($this->data['hero_media_id']);
+            return MediaAsset::find($this->data['hero_media_id']);
         }
         if (isset($this->data['featured_image_id'])) {
-            return \App\Models\MediaAsset::find($this->data['featured_image_id']);
+            return MediaAsset::find($this->data['featured_image_id']);
         }
+
         return null;
     }
 
@@ -97,13 +99,13 @@ class Entry extends Model
 
     public function getServiceAttribute()
     {
-        return $this->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_service') 
+        return $this->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_service')
             ?? $this->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service');
     }
 
     public function getCityAttribute()
     {
-        return $this->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_city') 
+        return $this->relatedEntries->firstWhere('pivot.relation_type', 'portfolio_city')
             ?? $this->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city');
     }
 
@@ -149,7 +151,7 @@ class Entry extends Model
 
     public function getFrontendUrlAttribute()
     {
-        return $this->routeAlias ? url('/' . ltrim($this->routeAlias->slug, '/')) : url('/' . $this->slug);
+        return $this->routeAlias ? url('/'.ltrim($this->routeAlias->slug, '/')) : url('/'.$this->slug);
     }
 
     public function getLatitudeAttribute()
@@ -165,12 +167,14 @@ class Entry extends Model
     public function getNeighborhoodsAttribute()
     {
         $hoods = $this->data['city_body']['neighborhoods_served'] ?? [];
-        if (!is_array($hoods)) return collect();
-        
+        if (! is_array($hoods)) {
+            return collect();
+        }
+
         return collect($hoods)->map(function ($hood) {
-            return (object)[
+            return (object) [
                 'name' => $hood,
-                'slug' => \Illuminate\Support\Str::slug($hood),
+                'slug' => Str::slug($hood),
                 'latitude' => $this->data['latitude'] ?? null,
                 'longitude' => $this->data['longitude'] ?? null,
                 'summary' => '',

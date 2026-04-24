@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Entry;
 use App\Models\MediaAsset;
 use App\Models\Setting;
+use App\Models\Term;
 use Illuminate\Support\Collection;
 
 class ThemePresentationService
@@ -228,7 +230,7 @@ class ThemePresentationService
 
     public function navCategories(int $limit = 6): Collection
     {
-        return \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))
+        return Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories'))
             ->whereNull('parent_id')
             ->orderBy('sort_order')
             ->limit($limit)
@@ -237,7 +239,7 @@ class ThemePresentationService
 
     public function navCities(int $limit = 8): Collection
     {
-        return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))
+        return Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))
             ->where('status', 'published')
             ->orderBy('sort_order')
             ->limit($limit)
@@ -246,14 +248,14 @@ class ThemePresentationService
 
     public function allFooterCategories(): Collection
     {
-        return \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))
+        return Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories'))
             ->orderBy('sort_order')
             ->get(['id', 'name', 'slug']);
     }
 
     public function allFooterCities(int $limit = 12): Collection
     {
-        return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))
+        return Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))
             ->where('status', 'published')
             ->orderBy('sort_order')
             ->limit($limit)

@@ -15,6 +15,7 @@ class TermController extends Controller
     public function index(Request $request, Taxonomy $taxonomy)
     {
         $terms = $taxonomy->terms()->with('parent')->orderBy('name')->paginate(20);
+
         return View::make('admin.terms.index', compact('taxonomy', 'terms'));
     }
 
@@ -27,8 +28,8 @@ class TermController extends Controller
 
         return View::make('admin.terms.form', [
             'taxonomy' => $taxonomy,
-            'term' => new Term(),
-            'parents' => $parents
+            'term' => new Term,
+            'parents' => $parents,
         ]);
     }
 
@@ -87,7 +88,7 @@ class TermController extends Controller
         $validated = $request->validate([
             'parent_id' => 'nullable|exists:terms,id',
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:terms,slug,' . $term->id,
+            'slug' => 'required|string|max:255|unique:terms,slug,'.$term->id,
             'description' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer',
             'data_json' => 'nullable|json',
@@ -95,7 +96,7 @@ class TermController extends Controller
         ]);
 
         $termData = $term->data ? $term->data->toArray() : [];
-        
+
         if ($request->has('data') && is_array($request->input('data'))) {
             $data = $request->input('data');
             // Assuming standard media picker handles file uploads and passes hidden ID

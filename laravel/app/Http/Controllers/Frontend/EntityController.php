@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\RouteAlias;
 use App\Models\Entry;
+use App\Models\RouteAlias;
 use App\Models\Term;
+use App\Services\BlockBuilderService;
 use App\Services\PageContextService;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class EntityController extends Controller
         // 2. Resolve the underlying entity (Entry, Term, etc.)
         $entity = $alias->routable;
 
-        if (!$entity) {
+        if (! $entity) {
             abort(404);
         }
 
@@ -57,15 +58,15 @@ class EntityController extends Controller
         $template = $contentType->layout_template ?? 'default';
 
         $viewName = "frontend.entries.{$template}";
-        if (!view()->exists($viewName)) {
+        if (! view()->exists($viewName)) {
             $viewName = 'frontend.entries.default'; // Fallback
         }
 
         // Fetch Unified Blocks
-        $blocks = \App\Services\BlockBuilderService::getBlocks('entry', $entry->id);
+        $blocks = BlockBuilderService::getBlocks('entry', $entry->id);
 
         // Generate generic context for WMS Variables using PageContextService
-        $context = match($contentType->slug) {
+        $context = match ($contentType->slug) {
             'service' => $pageContext->service($entry, $entry->inverseRelatedEntries()->where('relation_type', 'matrix_service')->where('status', 'published')->get()),
             'city' => $pageContext->city($entry, $entry->inverseRelatedEntries()->where('relation_type', 'matrix_city')->where('status', 'published')->get()),
             'portfolio-project' => $pageContext->portfolioProject($entry),
@@ -112,9 +113,9 @@ class EntityController extends Controller
     protected function renderTerm(Term $term, Request $request, PageContextService $pageContext)
     {
         $taxonomy = $term->taxonomy;
-        
+
         $viewName = "frontend.taxonomies.{$taxonomy->slug}";
-        if (!view()->exists($viewName)) {
+        if (! view()->exists($viewName)) {
             $viewName = 'frontend.taxonomies.default'; // Fallback
         }
 
@@ -122,10 +123,10 @@ class EntityController extends Controller
         $entries = $term->entries()->where('status', 'published')->paginate(12);
 
         // Fetch Unified Blocks (Taxonomies can have blocks too in the future, fallback to empty)
-        $blocks = \App\Services\BlockBuilderService::getBlocks('term', $term->id);
+        $blocks = BlockBuilderService::getBlocks('term', $term->id);
 
         // Generate generic context
-        $context = match($taxonomy->slug) {
+        $context = match ($taxonomy->slug) {
             'service-categories' => $pageContext->serviceCategory($term),
             default => $pageContext->compose([
                 'page' => $term,

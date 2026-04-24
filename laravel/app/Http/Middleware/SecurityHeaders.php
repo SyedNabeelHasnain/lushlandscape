@@ -41,11 +41,11 @@ class SecurityHeaders
             || str_ends_with($request->getHost(), '.test');
 
         if (config('app.debug') && $isLocalDevHost) {
-            $directives['connect-src'] .= " ws://localhost:* http://localhost:* ws://*.test:* http://*.test:*";
-            $directives['script-src'] .= " http://localhost:* http://*.test:*";
-            $directives['style-src'] .= " http://localhost:* http://*.test:*";
-            $directives['img-src'] .= " http://localhost:* http://*.test:*";
-            $directives['font-src'] .= " http://localhost:* http://*.test:*";
+            $directives['connect-src'] .= ' ws://localhost:* http://localhost:* ws://*.test:* http://*.test:*';
+            $directives['script-src'] .= ' http://localhost:* http://*.test:*';
+            $directives['style-src'] .= ' http://localhost:* http://*.test:*';
+            $directives['img-src'] .= ' http://localhost:* http://*.test:*';
+            $directives['font-src'] .= ' http://localhost:* http://*.test:*';
         }
 
         $csp = collect($directives)->map(fn ($val, $key) => "$key $val")->implode('; ');

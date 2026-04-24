@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Entry;
 use App\Models\Faq;
 use App\Models\FaqCategory;
 use App\Services\BlockBuilderService;
@@ -26,11 +27,11 @@ class FaqPageController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $cities = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published')
+        $cities = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('status', 'published')
             ->orderBy('sort_order')
             ->get(['id', 'title as name', 'slug']);
 
-        $services = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published')
+        $services = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'service'))->where('status', 'published')
             ->orderBy('sort_order')
             ->get(['id', 'title as name', 'slug']);
 
@@ -135,7 +136,7 @@ class FaqPageController extends Controller
 
         // Match city pages: /professional-{slug}
         if (preg_match('/^professional-([a-z0-9\-]+)$/', $path, $m)) {
-            $city = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('slug', $m[1])->first();
+            $city = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('slug', $m[1])->first();
             if ($city) {
                 $context['city'] = $city->title;
                 $context['type'] = 'local';
@@ -148,7 +149,7 @@ class FaqPageController extends Controller
         if (preg_match('/^services\//', $path)) {
             $segments = explode('/', $path);
             $slug = end($segments);
-            $service = \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('slug', $slug)->first();
+            $service = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'service'))->where('slug', $slug)->first();
             if ($service) {
                 $context['service'] = $service->title;
                 $context['type'] = 'service';
@@ -159,14 +160,14 @@ class FaqPageController extends Controller
 
         // Match service-city pages (catch-all slug)
         if ($path && ! str_contains($path, '/')) {
-            $page = \App\Models\Entry::where('slug', $path)
+            $page = Entry::where('slug', $path)
                 ->where('status', 'published')
-                ->whereHas('contentType', fn($q) => $q->where('slug', 'service-city-page'))
+                ->whereHas('contentType', fn ($q) => $q->where('slug', 'service-city-page'))
                 ->with(['relatedEntries' => function ($q) {
                     $q->whereIn('relation_type', ['matrix_service', 'matrix_city']);
                 }])
                 ->first();
-                
+
             if ($page) {
                 $serviceEntry = $page->relatedEntries->firstWhere('pivot.relation_type', 'matrix_service');
                 $cityEntry = $page->relatedEntries->firstWhere('pivot.relation_type', 'matrix_city');

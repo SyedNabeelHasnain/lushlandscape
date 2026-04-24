@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     public function blogPosts()
     {
-        return $this->hasMany(\App\Models\Entry::class, 'author_id')->whereHas('contentType', function($q) {
+        return $this->hasMany(Entry::class, 'author_id')->whereHas('contentType', function ($q) {
             $q->where('slug', 'blog-post');
         });
     }

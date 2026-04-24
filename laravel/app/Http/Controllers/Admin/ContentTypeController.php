@@ -14,12 +14,13 @@ class ContentTypeController extends Controller
     public function index(Request $request)
     {
         $contentTypes = ContentType::orderBy('name')->paginate(20);
+
         return View::make('admin.content-types.index', compact('contentTypes'));
     }
 
     public function create()
     {
-        return View::make('admin.content-types.form', ['contentType' => new ContentType()]);
+        return View::make('admin.content-types.form', ['contentType' => new ContentType]);
     }
 
     public function store(Request $request)
@@ -53,7 +54,7 @@ class ContentTypeController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:content_types,slug,' . $contentType->id,
+            'slug' => 'required|string|max:255|unique:content_types,slug,'.$contentType->id,
             'description' => 'nullable|string|max:500',
             'icon' => 'nullable|string|max:50',
             'layout_template' => 'nullable|string|max:255',

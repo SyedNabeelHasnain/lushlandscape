@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Entry;
+use App\Models\MediaAsset;
 use App\Models\Term;
 use Illuminate\Support\Collection;
 
@@ -31,7 +32,7 @@ class PageContextService
             'page' => $page,
             'page_id' => $page->id,
             'page_title' => $page->title,
-            'hero_media' => !empty($page->data['hero_media_id']) ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
+            'hero_media' => ! empty($page->data['hero_media_id']) ? MediaAsset::find($page->data['hero_media_id']) : null,
         ]);
     }
 
@@ -48,6 +49,7 @@ class PageContextService
     public function service(Entry $service, ?Collection $cityPages = null): array
     {
         $category = $service->terms->first();
+
         return $this->compose([
             'page' => $service,
             'service' => $service,
@@ -56,7 +58,7 @@ class PageContextService
             'service_name' => $service->title,
             'category_id' => $category?->id,
             'category_name' => $category?->name,
-            'hero_media' => !empty($service->data['hero_media_id']) ? \App\Models\MediaAsset::find($service->data['hero_media_id']) : null,
+            'hero_media' => ! empty($service->data['hero_media_id']) ? MediaAsset::find($service->data['hero_media_id']) : null,
             'cityPages' => $cityPages ?? collect(),
         ]);
     }
@@ -70,7 +72,7 @@ class PageContextService
             'city_name' => $city->title,
             'province_name' => $city->data['province_name'] ?? '',
             'city_summary' => $city->data['city_summary'] ?? '',
-            'hero_media' => !empty($city->data['hero_media_id']) ? \App\Models\MediaAsset::find($city->data['hero_media_id']) : null,
+            'hero_media' => ! empty($city->data['hero_media_id']) ? MediaAsset::find($city->data['hero_media_id']) : null,
             'cityPages' => $servicePages ?? collect(),
         ]);
     }
@@ -78,6 +80,7 @@ class PageContextService
     public function blogPost(Entry $post): array
     {
         $category = $post->terms->first();
+
         return $this->compose([
             'page' => $post,
             'post' => $post,
@@ -85,7 +88,7 @@ class PageContextService
             'post_id' => $post->id,
             'category_id' => $category?->id,
             'category_name' => $category?->name,
-            'hero_media' => !empty($post->data['featured_image_id']) ? \App\Models\MediaAsset::find($post->data['featured_image_id']) : null,
+            'hero_media' => ! empty($post->data['featured_image_id']) ? MediaAsset::find($post->data['featured_image_id']) : null,
         ]);
     }
 
@@ -110,7 +113,7 @@ class PageContextService
             'category_name' => $category->name ?? '',
             'province_name' => $city->data['province_name'] ?? '',
             'city_summary' => $city->data['city_summary'] ?? '',
-            'hero_media' => !empty($project->data['hero_media_id']) ? \App\Models\MediaAsset::find($project->data['hero_media_id']) : null,
+            'hero_media' => ! empty($project->data['hero_media_id']) ? MediaAsset::find($project->data['hero_media_id']) : null,
         ]);
     }
 
@@ -139,7 +142,7 @@ class PageContextService
             'category_name' => $category->name ?? '',
             'province_name' => $city->data['province_name'] ?? '',
             'city_summary' => $city->data['city_summary'] ?? '',
-            'hero_media' => !empty($page->data['hero_media_id']) ? \App\Models\MediaAsset::find($page->data['hero_media_id']) : null,
+            'hero_media' => ! empty($page->data['hero_media_id']) ? MediaAsset::find($page->data['hero_media_id']) : null,
             'cityPages' => $cityPages ?? collect(),
             'faqs' => $faqs ?? collect(),
             'generalFaqs' => $generalFaqs ?? collect(),

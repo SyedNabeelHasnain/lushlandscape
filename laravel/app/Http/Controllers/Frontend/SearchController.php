@@ -6,10 +6,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Entry;
-use App\Models\Term;
 use App\Models\Faq;
 use App\Models\MediaAsset;
 use App\Models\SearchLog;
+use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -26,31 +26,33 @@ class SearchController extends Controller
             ]);
         }
 
-        $services = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['title', 'data->service_summary'])
+        $services = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['title', 'data->service_summary'])
             ->with('routeAlias')->orderBy('sort_order')->take(5)->get(['id', 'title', 'slug', 'data']);
 
-        $categories = $this->applySearch(Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->description', 'data->long_description'])
+        $categories = $this->applySearch(Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->description', 'data->long_description'])
             ->orderBy('sort_order')->take(3)->get(['id', 'name', 'slug', 'data']);
 
-        $cities = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['title', 'data->region_name'])
+        $cities = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['title', 'data->region_name'])
             ->with('routeAlias')->orderBy('title')->take(6)->get(['id', 'title', 'slug', 'data']);
 
-        $blog = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published'), $q, ['title', 'data->excerpt'])
+        $blog = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'blog-post'))->where('status', 'published'), $q, ['title', 'data->excerpt'])
             ->with('routeAlias')->orderByDesc('published_at')->take(4)->get(['id', 'title', 'slug', 'data']);
 
         $faqs = $this->applySearch(Faq::where('status', 'published'), $q, ['question', 'answer'])
             ->take(3)->get(['id', 'question', 'slug']);
 
-        $portfolio = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published'), $q, ['title', 'data->description'])
+        $portfolio = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published'), $q, ['title', 'data->description'])
             ->with('routeAlias')->orderByDesc('created_at')->take(3)->get(['id', 'title', 'slug', 'data']);
 
         $enrichEntry = fn ($items) => $items->map(function ($item) {
-            $item->frontend_url = $item->routeAlias ? url('/' . ltrim($item->routeAlias->slug, '/')) : null;
+            $item->frontend_url = $item->routeAlias ? url('/'.ltrim($item->routeAlias->slug, '/')) : null;
+
             return $item;
         })->filter(fn ($item) => filled($item->frontend_url))->values();
 
         $enrichTerm = fn ($items) => $items->map(function ($item) {
-            $item->frontend_url = url('/services/' . ltrim($item->slug, '/'));
+            $item->frontend_url = url('/services/'.ltrim($item->slug, '/'));
+
             return $item;
         })->filter(fn ($item) => filled($item->frontend_url))->values();
 
@@ -99,22 +101,22 @@ class SearchController extends Controller
             ]);
         }
 
-        $services = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['title', 'data->service_summary'])
+        $services = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'service'))->where('status', 'published'), $q, ['title', 'data->service_summary'])
             ->with('routeAlias')->orderBy('sort_order')->take(20)->get();
 
-        $categories = $this->applySearch(Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->description', 'data->long_description'])
+        $categories = $this->applySearch(Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories')), $q, ['name', 'data->description', 'data->long_description'])
             ->orderBy('sort_order')->take(20)->get();
 
-        $cities = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['title', 'data->region_name'])
+        $cities = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))->where('status', 'published'), $q, ['title', 'data->region_name'])
             ->with('routeAlias')->take(20)->get();
 
-        $blog = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published'), $q, ['title', 'data->excerpt', 'data->body'])
+        $blog = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'blog-post'))->where('status', 'published'), $q, ['title', 'data->excerpt', 'data->body'])
             ->with('routeAlias')->orderByDesc('published_at')->take(20)->get();
 
         $faqs = $this->applySearch(Faq::where('status', 'published'), $q, ['question', 'answer'])
             ->take(20)->get();
 
-        $portfolio = $this->applySearch(Entry::whereHas('contentType', fn($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published'), $q, ['title', 'data->description'])
+        $portfolio = $this->applySearch(Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'portfolio-project'))->where('status', 'published'), $q, ['title', 'data->description'])
             ->with('routeAlias')->take(20)->get();
 
         // Eager load all media assets directly referenced in JSON fields to prevent N+1 issues
@@ -124,20 +126,22 @@ class SearchController extends Controller
 
         $mapEntry = function ($items) use ($mediaAssets) {
             return $items->map(function ($item) use ($mediaAssets) {
-                $item->frontend_url = $item->routeAlias ? url('/' . ltrim($item->routeAlias->slug, '/')) : null;
+                $item->frontend_url = $item->routeAlias ? url('/'.ltrim($item->routeAlias->slug, '/')) : null;
                 $item->heroMedia = $mediaAssets->get($item->data['hero_media_id'] ?? null);
                 $item->title = $item->title ?? $item->title;
                 $item->service_summary = $item->data['service_summary'] ?? null;
                 $item->excerpt = $item->data['excerpt'] ?? null;
+
                 return $item;
             })->filter(fn ($item) => filled($item->frontend_url))->values();
         };
 
         $mapTerm = function ($items) use ($mediaAssets) {
             return $items->map(function ($item) use ($mediaAssets) {
-                $item->frontend_url = url('/services/' . ltrim($item->slug, '/'));
+                $item->frontend_url = url('/services/'.ltrim($item->slug, '/'));
                 $item->heroMedia = $mediaAssets->get($item->data['hero_media_id'] ?? null);
                 $item->description = $item->data['short_description'] ?? null;
+
                 return $item;
             })->filter(fn ($item) => filled($item->frontend_url))->values();
         };

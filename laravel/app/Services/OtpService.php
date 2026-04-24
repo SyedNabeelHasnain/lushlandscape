@@ -8,6 +8,7 @@ use App\Mail\CustomerEmail;
 use App\Models\EmailVerification;
 use App\Models\Setting;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class OtpService
@@ -72,7 +73,8 @@ class OtpService
                 preheader: "Your verification code is {$otp}",
             ));
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::error('OTP Mail Error: ' . $e->getMessage() . ' Trace: ' . $e->getTraceAsString());
+            Log::error('OTP Mail Error: '.$e->getMessage().' Trace: '.$e->getTraceAsString());
+
             return ['success' => false, 'message' => 'Failed to send verification email.'];
         }
 

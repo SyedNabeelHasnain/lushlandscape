@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Listeners\WebhookEventSubscriber;
+use App\Models\ContentType;
+use App\Models\Entry;
 use App\Models\Setting;
+use App\Models\Taxonomy;
+use App\Models\Term;
 use App\Models\ThemeLayout;
 use App\Services\BlockBuilderService;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -13,7 +18,6 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use App\Listeners\WebhookEventSubscriber;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,23 +35,23 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Relation::enforceMorphMap([
-            'entry' => \App\Models\Entry::class,
-            'term' => \App\Models\Term::class,
-            'content_type' => \App\Models\ContentType::class,
-            'taxonomy' => \App\Models\Taxonomy::class,
+            'entry' => Entry::class,
+            'term' => Term::class,
+            'content_type' => ContentType::class,
+            'taxonomy' => Taxonomy::class,
         ]);
 
         View::composer('frontend.layouts.app', function ($view) {
             $settings = Setting::getAll();
             $globalCities = Cache::remember('global_cities_footer', 3600, function () {
-                return \App\Models\Entry::whereHas('contentType', fn($q) => $q->where('slug', 'city'))
+                return Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'city'))
                     ->where('status', 'published')
                     ->orderBy('sort_order')
                     ->limit(12)
                     ->get(['id', 'title', 'slug']);
             });
             $globalServiceCategories = Cache::remember('global_service_categories_footer', 3600, function () {
-                return \App\Models\Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'service-categories'))
+                return Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'service-categories'))
                     ->orderBy('sort_order')
                     ->get(['id', 'name', 'slug']);
             });

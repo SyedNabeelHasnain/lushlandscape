@@ -1,6 +1,7 @@
 <?php
+
 // refactor_blocks.php
-$dir = new RecursiveDirectoryIterator(__DIR__ . '/resources/views');
+$dir = new RecursiveDirectoryIterator(__DIR__.'/resources/views');
 $iter = new RecursiveIteratorIterator($dir);
 $files = new RegexIterator($iter, '/^.+\.blade\.php$/i', RecursiveRegexIterator::GET_MATCH);
 

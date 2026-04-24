@@ -121,7 +121,7 @@ return new class extends Migration
                 $table->dropIndex('idx_faqs_category_order');
             });
         }
-        
+
         Schema::table('service_categories', function (Blueprint $table) {
             $table->dropIndex('idx_service_categories_status_sort');
         });

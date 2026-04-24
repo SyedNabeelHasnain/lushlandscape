@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 
 class Term extends Model
 {
@@ -51,8 +51,9 @@ class Term extends Model
     public function getHeroMediaAttribute()
     {
         if (isset($this->data['hero_media_id'])) {
-            return \App\Models\MediaAsset::find($this->data['hero_media_id']);
+            return MediaAsset::find($this->data['hero_media_id']);
         }
+
         return null;
     }
 
@@ -79,14 +80,15 @@ class Term extends Model
     public function getFrontendUrlAttribute()
     {
         if ($this->taxonomy && $this->taxonomy->slug === 'service-categories') {
-            return url('/services/' . ltrim($this->slug, '/'));
+            return url('/services/'.ltrim($this->slug, '/'));
         }
         if ($this->taxonomy && $this->taxonomy->slug === 'portfolio-categories') {
-            return url('/portfolio/category/' . ltrim($this->slug, '/'));
+            return url('/portfolio/category/'.ltrim($this->slug, '/'));
         }
         if ($this->taxonomy && $this->taxonomy->slug === 'blog-categories') {
-            return url('/blog/category/' . ltrim($this->slug, '/'));
+            return url('/blog/category/'.ltrim($this->slug, '/'));
         }
-        return url('/' . $this->slug);
+
+        return url('/'.$this->slug);
     }
 }

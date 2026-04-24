@@ -15,13 +15,13 @@ class BlogController extends Controller
 {
     public function index(PageContextService $pageContext)
     {
-        $posts = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
+        $posts = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
             ->with(['terms', 'author'])
             ->orderByDesc('published_at')
             ->paginate(12);
 
-        $categories = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'blog-categories'))
-            ->whereHas('entries', fn($q) => $q->where('status', 'published'))
+        $categories = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'blog-categories'))
+            ->whereHas('entries', fn ($q) => $q->where('status', 'published'))
             ->orderBy('sort_order')
             ->get();
 
@@ -37,18 +37,18 @@ class BlogController extends Controller
 
     public function category(string $slug, PageContextService $pageContext)
     {
-        $category = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'blog-categories'))
+        $category = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'blog-categories'))
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $posts = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
-            ->whereHas('terms', fn($q) => $q->where('id', $category->id))
+        $posts = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
+            ->whereHas('terms', fn ($q) => $q->where('id', $category->id))
             ->with(['terms', 'author'])
             ->orderByDesc('published_at')
             ->paginate(12);
 
-        $categories = Term::whereHas('taxonomy', fn($q) => $q->where('slug', 'blog-categories'))
-            ->whereHas('entries', fn($q) => $q->where('status', 'published'))
+        $categories = Term::whereHas('taxonomy', fn ($q) => $q->where('slug', 'blog-categories'))
+            ->whereHas('entries', fn ($q) => $q->where('status', 'published'))
             ->orderBy('sort_order')
             ->get();
 
@@ -61,7 +61,7 @@ class BlogController extends Controller
             .SchemaService::webPage(
                 $category->data['meta_title'] ?? ($category->name.' Blog Articles'),
                 $category->data['meta_description'] ?? ($category->description ?? ''),
-                url('/blog/category/' . $category->slug)
+                url('/blog/category/'.$category->slug)
             );
 
         $blocks = BlockBuilderService::getBlocks('blog_category', $category->id);
@@ -87,12 +87,12 @@ class BlogController extends Controller
 
     public function show(string $slug, PageContextService $pageContext)
     {
-        $post = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('slug', $slug)->where('status', 'published')->with(['terms', 'author'])->firstOrFail();
+        $post = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'blog-post'))->where('slug', $slug)->where('status', 'published')->with(['terms', 'author'])->firstOrFail();
         $category = $post->terms->first();
 
         $breadcrumbs = [
             ['label' => 'Blog', 'url' => url('/blog')],
-            ['label' => $category->name ?? 'Blog', 'url' => $category ? url('/blog/category/' . $category->slug) : url('/blog')],
+            ['label' => $category->name ?? 'Blog', 'url' => $category ? url('/blog/category/'.$category->slug) : url('/blog')],
             ['label' => $post->title],
         ];
 
@@ -109,15 +109,15 @@ class BlogController extends Controller
 
         $relatedPosts = collect();
         if ($category) {
-            $relatedPosts = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
-                ->whereHas('terms', fn($q) => $q->where('id', $category->id))
+            $relatedPosts = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
+                ->whereHas('terms', fn ($q) => $q->where('id', $category->id))
                 ->where('id', '!=', $post->id)
                 ->with(['terms'])
                 ->take(3)
                 ->get();
         }
 
-        $popularPosts = Entry::whereHas('contentType', fn($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
+        $popularPosts = Entry::whereHas('contentType', fn ($q) => $q->where('slug', 'blog-post'))->where('status', 'published')
             ->where('id', '!=', $post->id)
             ->orderByDesc('published_at')
             ->take(5)
